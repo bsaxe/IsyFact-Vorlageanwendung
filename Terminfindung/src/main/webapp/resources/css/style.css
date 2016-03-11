@@ -1,0 +1,130 @@
+/*
+ * #%L
+ * Terminfindung
+ * %%
+ * Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+@CHARSET "ISO-8859-1";
+
+.selectAbschliessen {
+	white-space: nowrap;
+}
+
+.selectAbschliessen div[class="col-lg-6"] {
+	width: 80%;
+}
+
+.navbar {
+	margin-top: 15px;
+}
+
+.teilnehmerTd label {
+	width: 0;
+}
+
+input[type=radio] {
+	opacity: 1;
+	margin-top: -1px;
+	vertical-align: middle;
+}
+
+input[type=checkbox] {
+	opacity: 1;
+}
+
+.selectAbschliessen td {
+	min-width: 135px;
+	padding: 5px;
+}
+
+.selectAbschliessen td input[type=radio] {
+	margin-left:45%;
+}
+
+.selectAbschliessen label {
+	color: black;
+}
+
+.selectTable {
+	margin-left: 137px;
+	padding: 5px;
+}
+
+.borderTd {
+	border: 1px solid grey;
+	text-align: center;
+}
+
+.anzahlTd {
+	text-align: center;
+}
+
+.dateForZeitraeume {
+	background-color: lightblue;
+}
+
+.tdTrue {
+	opacity: 0.5;
+	background-color: green;
+}
+
+.tdFalse {
+	opacity: 0.5;
+	background-color: red;
+}
+
+.tdHaveTo {
+	opacity: 0.5;
+	background-color: orange;
+}
+
+.tdDefTrue {
+	opacity: 0.5;
+	background-color: orange;
+}
+
+.tableZeiten tr td {
+	padding: 5px;
+}
+
+input[type=submit] {
+	margin-left: 10px;
+	margin-top: 25px;
+}
+
+.buttonTerminAdd {
+	margin-left: 62%;
+	margin-top: 25px;
+}
+
+.chosenTable th {
+    background-color: #fafafa;
+	padding:4px;
+}
+
+.chosenTable td {
+    border-top: 1px dotted #a3a3a3;
+    text-align: left;
+    padding: 4px;
+    background-color: #fafafa;
+}
+
+.deleteTable td {
+    border: 1px solid #a3a3a3;
+    text-align: left;
+    padding: 4px;
+    width: 100px;
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+	<!-- Model -->
+	<var name="erstellenModel"
+		class="de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenModel" />
+	<!-- Initialisieren des Models -->
+	<on-start>
+		<evaluate expression="erstellenController.initialisiereModel(erstellenModel)" />
+	</on-start>
+	
+	<!-- Erster View -->
+	<view-state id="erstellenViewState1" model="erstellenModel">
+		<transition on="add" to="erstellenViewState1" validate="false">
+			<evaluate expression="erstellenController.addDatum(erstellenModel)" />
+		</transition>
+		<transition on="continue" to="validiereContinue" validate="false"/>
+		<transition on="loeschen" to="erstellenViewState1" validate="false">
+			<evaluate expression="erstellenController.delDatum(erstellenModel)" />
+		</transition>
+	</view-state>
+	
+	<!-- Weiterleitung vom erstem View auf diesen Descision-State, wenn validierung erfolgreich, weiter -->
+	<decision-state id="validiereContinue">
+		<if test="erstellenController.validiereEingabefelder(erstellenModel)" then="erstellenViewState2"
+			else="erstellenViewState1" />
+	</decision-state>
+
+	<view-state id="erstellenViewState2">
+		<transition on="back" to="erstellenViewState1" />
+		<transition on="create" to="erstellenViewState3">
+			<evaluate expression="erstellenController.speichereModel(erstellenModel)"></evaluate>
+		</transition>
+	</view-state>
+
+	<view-state id="erstellenViewState3">
+	</view-state>
+
+	<exception-handler bean="myExceptionHandler"/>
+
+</flow>

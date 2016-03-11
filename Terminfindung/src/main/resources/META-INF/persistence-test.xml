@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<persistence-unit name="defaultPU">
+		<class>de.msg.terminfindung.persistence.entity.Zeitraum</class>
+		<class>de.msg.terminfindung.persistence.entity.Teilnehmer</class>
+		<class>de.msg.terminfindung.persistence.entity.Terminfindung</class>
+		<class>de.msg.terminfindung.persistence.entity.Organisator</class>
+		<class>de.msg.terminfindung.persistence.entity.Tag</class>
+		<class>de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum</class>
+		<properties>
+			<property name="hibernate.ejb.cfgfile" value="hibernate-test.cfg.xml" />
+		</properties>
+	</persistence-unit>
+</persistence>

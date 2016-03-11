@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <import resource="awk/dozer.xml" />
+	<import resource="spring-context.xml"/>
+
+	<!-- load H2 jdbc properties -->
+	<context:property-placeholder location="classpath:jdbc-h2.properties" />
+
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- Factory-Bean, um den Shared-Entity-Manager für die DAOs zu erzeugen -->
+	<bean id="entityManagerFactoryBean"
+		class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="classpath*:META-INF/persistence.xml" />
+		<property name="persistenceUnitName" value="defaultPU" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+				<property name="database" value="H2" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource">
+		<property name="URL" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!-- ToDo: Datenbank über DBUnit initialisieren -->
+	<jdbc:initialize-database>
+		<jdbc:script location="classpath:schema.sql" />
+		<jdbc:script location="classpath:test-data.sql" />
+	</jdbc:initialize-database>
+
+
+	<!-- Abstrakte Basisklasse für DAOs -->
+	<bean id="abstractDao" class="de.bund.bva.pliscommon.persistence.dao.AbstractDao"
+		abstract="true">
+		<property name="entityManager" ref="entityManagerFactoryBean" />
+	</bean>
+
+	<!-- Beans für DAO's -->
+
+	<bean id="terminfindungImpl"
+		class="de.msg.terminfindung.persistence.dao.impl.TerminfindungImpl"
+		parent="abstractDao">
+	</bean>
+
+	<bean id="zeitraumImpl"
+		class="de.msg.terminfindung.persistence.dao.impl.ZeitraumImpl"
+		parent="abstractDao" />
+
+	<bean id="teilnehmerImpl"
+		class="de.msg.terminfindung.persistence.dao.impl.TeilnehmerImpl"
+		parent="abstractDao" />
+
+	<bean id="teilnehmerZeitraumImpl"
+		class="de.msg.terminfindung.persistence.dao.impl.TeilnehmerZeitraumImpl"
+		parent="abstractDao" />
+
+	<bean id="erstellungImpl"
+		class="de.msg.terminfindung.core.erstellung.impl.ErstellungImpl">
+		<property name="terminfindungDao" ref="terminfindungImpl" />
+		<property name="teilnehmerDao" ref="teilnehmerImpl" />
+		<property name="zeitraumDao" ref="zeitraumImpl" />
+		<property name="teilnehmerZeitraumDao" ref="teilnehmerZeitraumImpl" />
+	</bean>
+
+	<bean id="awkWrapperImpl"
+		class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
+		<property name="erstellung" ref="erstellungImpl"/>
+		<property name="beanMapper" ref="beanMapper"/>
+	</bean>
+
+</beans>

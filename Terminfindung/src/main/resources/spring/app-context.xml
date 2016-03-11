@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/context 
+	    http://www.springframework.org/schema/context/spring-context-4.1.xsd 
+	    http://www.springframework.org/schema/util 
+	    http://www.springframework.org/schema/util/spring-util-4.1.xsd
+	    http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+    <!-- <aop:aspectj-autoproxy /> -->
+
+    <bean id="ausnahmeIdMapper"
+          class="de.bund.bva.isyfact.common.web.exception.common.impl.AusnahmeIdMapperImpl">
+        <constructor-arg>
+            <value>WEBGI99999</value>
+        </constructor-arg>
+    </bean>
+
+
+    <!-- Diese Spring-Konfiguration importiert die Komponenten des Anwendungskerns, der Persistenz und des Querschnitts. -->
+    <import resource="spring-context.xml"/>
+    <import resource="gui/awk-wrapper.xml"/>
+    <import resource="querschnitt/plis-sicherheit.xml"/>
+    <import resource="querschnitt/plis-sicherheit-web.xml"/>
+    <import resource="querschnitt/plis-konfiguration.xml"/>
+
+    <import resource="awk/komponenten.xml"/>
+    <import resource="awk/dozer.xml"/>
+
+    <!-- Factory-Bean, um den Shared-Entity-Manager für die DAOs zu erzeugen -->
+    <bean id="entityManagerFactoryBean"
+          class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Abstrakte Basisklasse für DAOs -->
+    <bean id="abstractDao" class="de.bund.bva.pliscommon.persistence.dao.AbstractDao"
+          abstract="true">
+        <property name="entityManager" ref="entityManagerFactoryBean"/>
+    </bean>
+
+
+    <!-- Diese Bean sorgt dafür, dass in mit @Repository annotierten DAOs die
+        JPA-Exception auf die besser behandelbaren Spring-Persistence-Exceptions
+        übersetzt werden -->
+    <bean
+            class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <!-- TransaktionsManager -->
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Beans für DAO's -->
+
+    <bean id="terminfindungImpl"
+          class="de.msg.terminfindung.persistence.dao.impl.TerminfindungImpl"
+          parent="abstractDao">
+    </bean>
+
+    <bean id="zeitraumImpl"
+          class="de.msg.terminfindung.persistence.dao.impl.ZeitraumImpl"
+          parent="abstractDao"/>
+
+    <bean id="teilnehmerImpl"
+          class="de.msg.terminfindung.persistence.dao.impl.TeilnehmerImpl"
+          parent="abstractDao"/>
+
+    <bean id="terminImpl"
+          class="de.msg.terminfindung.persistence.dao.impl.TerminImpl"
+          parent="abstractDao"/>
+
+    <bean id="teilnehmerZeitraumImpl"
+          class="de.msg.terminfindung.persistence.dao.impl.TeilnehmerZeitraumImpl"
+          parent="abstractDao"/>
+
+    <bean id="awkWrapperImpl"
+          class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
+        <property name="erstellung" ref="erstellungImpl"></property>
+        <property name="teilnahme" ref="teilnahmeImpl"></property>
+        <property name="beanMapper" ref="beanMapper"></property>
+    </bean>
+
+    <beans profile="!dev">
+        <bean id="appDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+              destroy-method="close" p:driverClassName="oracle.jdbc.OracleDriver"
+              p:url="jdbc:oracle:thin:@localhost:1521:XE" p:username="terminfindung"
+              p:password="terminfindung" p:maxActive="5" p:testOnBorrow="true"
+              p:timeBetweenEvictionRunsMillis="180000" p:numTestsPerEvictionRun="5"
+              p:validationQuery="SELECT 1 from dual" p:maxWait="10000">
+        </bean>
+
+        <bean id="entityManagerFactory"
+              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="persistenceProviderClass" value="org.hibernate.ejb.HibernatePersistence"/>
+            <property name="persistenceUnitName" value="hibernatePersistence"/>
+            <property name="dataSource">
+                <ref bean="appDataSource"/>
+            </property>
+            <property name="jpaDialect">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+            </property>
+            <property name="jpaProperties">
+                <props>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                    <prop key="hibernate.connection.isolation">4</prop>
+                    <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                    <prop key="hibernate.connection.useUnicode">true</prop>
+                    <prop key="hibernate.connection.characterEncoding">utf-8</prop>
+                    <prop key="hibernate.jdbc.batch_size">0</prop>
+                    <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
+                    <prop key="hibernate.show_sql">false</prop>
+                    <prop key="hibernate.format_sql">false</prop>
+                    <prop key="hibernate.default_schema">terminfindung</prop>
+                    <prop key="hibernate.ejb.cfgfile">hibernate.cfg.xml</prop>
+                    <prop key="hibernate.ejb.metamodel.generation">enabled</prop>
+                </props>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="dev">
+        <context:property-placeholder location="classpath:config/jpa.properties" />
+
+        <bean id="appDataSource" class="org.h2.jdbcx.JdbcDataSource" primary="true">
+            <property name="URL" value="${jdbc.url}"/>
+            <property name="user" value="${jdbc.user}"/>
+            <property name="password" value="${jdbc.password}"/>
+        </bean>
+
+        <jdbc:initialize-database data-source="appDataSource">
+            <jdbc:script location="classpath:schema.sql"/>
+            <jdbc:script location="classpath:test-data.sql"/>
+        </jdbc:initialize-database>
+
+        <bean id="entityManagerFactory"
+              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="persistenceXmlLocation" value="classpath*:META-INF/persistence-test.xml" />
+            <property name="persistenceUnitName" value="defaultPU" />
+            <property name="dataSource" ref="appDataSource" />
+            <property name="jpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                    <property name="generateDdl" value="true" />
+                    <property name="database" value="H2" />
+                </bean>
+            </property>
+        </bean>
+    </beans>
+</beans>
+    

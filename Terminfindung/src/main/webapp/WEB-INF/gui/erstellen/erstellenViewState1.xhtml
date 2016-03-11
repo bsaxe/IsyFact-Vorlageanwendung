@@ -1,0 +1,85 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+	xmlns:debug="http://java.sun.com/jsf/composite/debug"
+	template="/WEB-INF/common/commonSite.xhtml">
+
+	<ui:define name="inhaltsbereich">
+		<isy:panelGroup>
+			<isy:panel>
+				<f:facet name="panelHeader">
+						Terminfindung erstellen - Daten und Tage eingeben
+				</f:facet>
+				<f:facet name="panelBody">
+					<p/>
+					<div class="form-horizontal">
+						<div class="row row-df">
+							<div class="col-lg-4">
+								<isy:formInput reference="name" value="#{erstellenModel.name}"
+									label="Titel der Veranstaltung" required="true" />
+								<isy:formInput reference="orgName" value="#{erstellenModel.orgName}"
+									label="Ihr Name" required="true" />
+								<isy:formDate reference="stringTempDate"
+									value="#{erstellenModel.stringTempDate}" label="Tag ausw&auml;hlen"
+									placeholder="#{erstellenModel.stringPlaceholderDate}" />
+								<isy:button styleClass="buttonTerminAdd" action="add"
+									value="Tag hinzufügen" />
+							</div>
+							<div class="col-lg-1"></div>
+							<div class="col-lg-5">
+								<div class="form-group">
+									<h:dataTable value="#{erstellenModel.tage}" var="tag"
+										styleClass="chosenTable">
+										<h:column>
+											<f:facet name="header">Ausgew&auml;hlte Tage:</f:facet>
+											<h:outputText value="#{tag.datum}">
+												<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+											</h:outputText>
+										</h:column>
+										<h:column>
+											<h:commandLink action="loeschen">
+												<h:graphicImage library="images" name="trash_can.png"
+													style="max-height:15px" />
+												<f:setPropertyActionListener value="#{tag}"
+													target="#{erstellenModel.selectedTermin}" />
+											</h:commandLink>
+										</h:column>
+									</h:dataTable>
+								</div>
+							</div>
+						</div>
+						<hr />
+						<isy:button action="back" value="Zurück" disabled="true" />
+						<isy:button action="continue" value="Weiter"
+							disabled="#{erstellenModel.tage.size() == 0}" />
+					</div>
+				</f:facet>
+			</isy:panel>
+			<isy:panel rendered="#{erstellenModel.testMode}">
+				Running in Test Mode
+			</isy:panel>
+		</isy:panelGroup>
+	</ui:define>
+</ui:composition>

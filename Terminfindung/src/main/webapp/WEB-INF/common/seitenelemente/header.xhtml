@@ -1,0 +1,63 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<!-- TODO: Template durch Referenz auf plis-web ersetzen, falls möglich. -->
+<!-- TODO: Template durch Referenz auf plis-web ersetzen, falls möglich. -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rf="http://java.sun.com/jsf/composite/registerfactory">
+
+    <div class="header-colorbar"></div>
+
+    <div class="header-content" role="banner">
+
+         <h:graphicImage library="images" name="IsyFactSchriftzug.jpeg"/>
+
+        <div class="pull-right text-right">
+
+            <div class="brand">    
+            	<h:graphicImage library="images" name="IsyFactLogo.jpeg"/>            
+                <span>Terminfindung</span>
+            </div>
+
+            <form class="form-horizontal" role="form">
+                <ui:fragment
+                    rendered="#{not empty globalConfigurationModel and not globalConfigurationModel.jsEnabled}">
+                    <img class="icon icon-nojs" src="${request.contextPath}/app/resources/img/no-js.png"
+                        alt="Javascript ist deaktiviert." />
+                </ui:fragment>
+                <ui:fragment rendered="#{not empty globalFlowModel.sachbearbeiterName}">
+                    <span class="icon icon-user"></span> #{globalFlowModel.sachbearbeiterName}
+                    <!-- Der Abmelden Button wird vorerst auskommentiert. Dieser sollte nach der Portalintegration des neuen -->
+                    <!-- Stylgeguides verwendet werden. -->
+                    <!-- <button class="btn btn-default" type="button">Abmelden</button> -->
+                </ui:fragment>
+            </form>
+
+            <div class="btn-group">
+                <ul aria-labelledby="dropdownMenu1" role="menu" class="dropdown-menu">
+                    <li role="presentation" class="selected"><a href="#" tabindex="-1" role="menuitem">Logout</a></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Preferences</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</ui:composition>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+	<var name="verwaltenModel" 
+		class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenModel" />
+    <var name="tfNummer" class="java.lang.String"/>
+
+	<view-state id="verwaltenViewState">
+        <on-entry>
+            <set name="tfNummer" value="requestParameters.tfnr" type="java.lang.String" />
+            <evaluate expression="tfNumberHolder.updateIfNotNull(tfNummer)"/>
+            <evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)" />
+        </on-entry>
+
+        <transition on="abschliessen" to="abschliessenViewState" />
+		<transition on="loeschen" to="loeschenViewState" />
+		<transition on="changeView" to="changeViewState" />
+	</view-state>
+
+	<subflow-state id="abschliessenViewState" subflow="abschliessenFlow" >
+		<transition on="finished" to="verwaltenViewState">
+			<evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)"/>
+		</transition>
+	</subflow-state>
+
+	<subflow-state id="loeschenViewState" subflow="loeschenFlow">
+		<transition on="finished" to="verwaltenViewState"/>
+	</subflow-state>
+
+	<!-- Redirect ist noch nicht implementiert. -->
+	<!-- An dieser Stelle muss der Verwalten-Flow beendet werden und eine -->
+	<!-- Weiterleitung auf den Teilnehmen-Flow erzeugt werden. -->
+	<!-- Dabei muss die Terminfindungsnummer (als Request Parameter) übergeben werden. -->
+	<!-- TODO: Teminfindungsnummer übergeben -->
+	<end-state id="changeViewState"/>
+	<!-- <end-state id="changeViewState"  view="flowRedirect:teilnehmenFlow"></end-state> -->
+
+</flow>
