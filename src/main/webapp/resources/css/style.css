@@ -35,6 +35,11 @@
 	width: 0;
 }
 
+body{
+	min-width: 100%;
+	max-width: 100%;
+}
+
 input[type=radio] {
 	opacity: 1;
 	margin-top: -1px;
