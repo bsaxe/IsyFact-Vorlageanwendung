@@ -23,13 +23,19 @@ package de.msg.terminfindung.core.erstellung.impl;
 
 import java.util.List;
 
-import de.msg.terminfindung.persistence.dao.*;
-import de.msg.terminfindung.persistence.entity.*;
 import org.springframework.beans.factory.InitializingBean;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.core.erstellung.Erstellung;
+import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
+import de.msg.terminfindung.persistence.dao.TeilnehmerZeitraumDao;
+import de.msg.terminfindung.persistence.dao.TerminDao;
+import de.msg.terminfindung.persistence.dao.TerminfindungDao;
+import de.msg.terminfindung.persistence.dao.ZeitraumDao;
 import de.msg.terminfindung.persistence.entity.Tag;
+import de.msg.terminfindung.persistence.entity.Terminfindung;
+import de.msg.terminfindung.persistence.entity.Zeitraum;
 
 /**
  * Interface der Anwendungskomponente "Erstellung" zur Erstellung von Terminfindungen
@@ -52,10 +58,15 @@ public class ErstellungImpl implements Erstellung, InitializingBean {
 
 	/**
 	 * Liest eine Terminfindung mithilfe des Terminfindungs DAO.
+	 * @throws TerminfindungBusinessException im Falle einer ungültigen bzw. nicht vorhandener Terminfindunsnummer
 	 */
 	@Override
-	public Terminfindung leseTerminfindung(Long terminfindung_nr) {
-		return terminfindungDao.sucheMitId(terminfindung_nr);
+	public Terminfindung leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException {
+		Terminfindung tf = terminfindungDao.sucheMitId(terminfindung_nr);
+		if( tf == null){
+			throw new TerminfindungBusinessException(FehlerSchluessel.MSG_TERMINFINDUNG_NICHT_GEFUNDEN, terminfindung_nr.toString());
+		}
+		return tf; 
 	}
 
 	/**

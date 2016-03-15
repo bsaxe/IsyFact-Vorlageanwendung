@@ -22,7 +22,7 @@ package de.msg.terminfindung.core.erstellung.impl;
 
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.gui.konstanten.FehlerSchluessel;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;

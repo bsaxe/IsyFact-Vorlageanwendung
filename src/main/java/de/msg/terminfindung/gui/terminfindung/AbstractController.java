@@ -23,7 +23,9 @@ package de.msg.terminfindung.gui.terminfindung;
 
 import de.bund.bva.isyfact.common.web.global.GlobalFlowController;
 import de.bund.bva.pliscommon.konfiguration.common.ReloadableKonfiguration;
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
 import de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung;
 import de.msg.terminfindung.gui.util.TFNumberHolder;
@@ -82,17 +84,23 @@ public abstract class AbstractController<T extends AbstractModel>{
 	 * Parameters bestimmt.
 	 *
 	 * @param model Das Model
+	 * @throws TerminfindungBusinessException 
 	 */
 	protected void holeTerminfindung (T model) throws TerminfindungTechnicalException {
 
         if (tfNumberHolder.getNumber() == null) {
-            throw new TerminfindungTechnicalException("TF91001");
+            throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_KEINE_TERMINFINDUNGSNR);
         }
 
 		LOG.info("Hole Terminfindung vom Anwendungskern für Terminfindungsnummer " + tfNumberHolder.getNumber());
 
-		ViewTerminfindung terminfindung = awk.ladeTerminfindung(tfNumberHolder.getNumber());
-		model.setTerminfindung(terminfindung);
+		ViewTerminfindung terminfindung;
+		try {
+			terminfindung = awk.ladeTerminfindung(tfNumberHolder.getNumber());
+			model.setTerminfindung(terminfindung);
+		} catch (TerminfindungBusinessException e) {
+			getGlobalFlowController().getMessageController().writeAndLogException(e);
+		}
 	}
 
 	public boolean isTestMode () { return konfiguration.getAsBoolean("terminfindung.test.mode"); }

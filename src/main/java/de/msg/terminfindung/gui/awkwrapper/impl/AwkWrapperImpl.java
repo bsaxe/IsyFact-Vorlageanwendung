@@ -22,10 +22,10 @@ package de.msg.terminfindung.gui.awkwrapper.impl;
 
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.core.erstellung.Erstellung;
 import de.msg.terminfindung.core.teilnahme.Teilnahme;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
-import de.msg.terminfindung.gui.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.gui.terminfindung.model.*;
 import de.msg.terminfindung.persistence.entity.*;
 import org.apache.log4j.Logger;
@@ -93,7 +93,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 	/* (non-Javadoc)
 	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#ladeTerminfindung(long)
 	 */
-	public ViewTerminfindung ladeTerminfindung(long terminfindungsNr) {
+	public ViewTerminfindung ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException {
 
 		Terminfindung tf = erstellung.leseTerminfindung(terminfindungsNr);
 		return map(tf);	

@@ -1,5 +1,7 @@
 package de.msg.terminfindung.gui.terminfindung.verwalten;
 
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+
 /*
  * #%L
  * Terminfindung
@@ -41,6 +43,7 @@ public class VerwaltenController extends AbstractController<VerwaltenModel> {
 	 * Initialisiert das Model.
 	 * 
 	 * @param model Das Model
+	 * @throws TerminfindungBusinessException 
 	 */
 	public void initialisiereModel(VerwaltenModel model) throws TerminfindungTechnicalException {
 

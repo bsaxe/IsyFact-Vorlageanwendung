@@ -35,7 +35,7 @@ import de.msg.terminfindung.persistence.entity.Zeitraum;
  */
 public interface Erstellung {
 
-	Terminfindung 	leseTerminfindung(Long terminfindung_nr);
+	Terminfindung 	leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException;
 	void 			loescheZeitraeume(Terminfindung terminfindung, List<Zeitraum> zeitraumList);
 	Terminfindung 	erstelleTerminfindung(String orgName,String veranstName,List<Tag> tagList) throws TerminfindungBusinessException;
 	void 			setzeVeranstaltungstermin(Terminfindung terminfindung, long zeitraumNr) throws TerminfindungBusinessException;

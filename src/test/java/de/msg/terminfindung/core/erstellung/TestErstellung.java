@@ -43,6 +43,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
@@ -65,9 +66,10 @@ public class TestErstellung {
 	Erstellung erstellung;
 	/**
 	 * Test method for {@link de.msg.terminfindung.core.erstellung.impl.ErstellungImpl#leseTerminfindung(java.lang.Long)}.
+	 * @throws TerminfindungBusinessException 
 	 */
 	@Test
-	public void testLeseTerminfindung() {
+	public void testLeseTerminfindung() throws TerminfindungBusinessException {
 		
 		// Testdaten werde bei der Datenbank-Initialisierung durch JDBC bereitgestellt.
 		// Siehe Test-SQL-Skript "test-data.sql" in src/test/resources

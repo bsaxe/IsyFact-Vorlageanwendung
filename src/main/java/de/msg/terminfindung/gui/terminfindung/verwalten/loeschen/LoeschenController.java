@@ -49,6 +49,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 	 * Initialisiert das Model mit einer vorgegebenen Terminfindung.
 	 * 
 	 * @param model Das Model
+	 * @throws TerminfindungBusinessException 
 	 */
 	public void initialisiereModel(LoeschenModel model) throws TerminfindungTechnicalException {
 

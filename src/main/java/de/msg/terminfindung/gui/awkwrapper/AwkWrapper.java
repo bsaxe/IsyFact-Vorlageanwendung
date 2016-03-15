@@ -44,8 +44,9 @@ public interface AwkWrapper {
 	 * 
 	 * @param terminfindungsNr Die Id einer Terminfindung
 	 * @return die Terminfindung falls diese existiert, sonst null 
+	 * @throws TerminfindungBusinessException im Falle einer ungültigen bzw. nicht vorhandener Terminfindunsnummer
 	 */	
-    ViewTerminfindung ladeTerminfindung(long terminfindungsNr);
+    ViewTerminfindung ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException;
     
     /**
      * Erstellt eine neue Terminfidung.

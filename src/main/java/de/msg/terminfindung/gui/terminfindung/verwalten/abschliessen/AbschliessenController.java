@@ -43,6 +43,7 @@ public class AbschliessenController extends AbstractController<AbschliessenModel
 	 * Diese Methode initialisiert das Model, d.h es wird zum einen, falls es
 	 * bereits existiert, geleert und zum anderen mit den Daten aus der
 	 * Datenbank gefüllt.
+	 * @throws TerminfindungBusinessException 
 	 */
 	public void initialisiereModel(AbschliessenModel model) throws TerminfindungTechnicalException {
 

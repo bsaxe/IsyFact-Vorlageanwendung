@@ -22,7 +22,8 @@ package de.msg.terminfindung.gui.util;
 
 
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.gui.konstanten.FehlerSchluessel;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
+
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package de.msg.terminfindung.gui.konstanten;
+package de.msg.terminfindung.common.konstanten;
 
 /*
  * #%L
@@ -32,6 +32,9 @@ public abstract class FehlerSchluessel {
 	/** Fehler beim Zugriff auf einen Zeitraum innerhalb einer Terminfindung. */
 	public static final String MSG_ZEITRAUM_NICHT_GEFUNDEN = "TRMIN10010";
 	
+	/** Die übergebene Terminfindungsnummer {0} konnte keiner Terminfindung zugeordnet werden.*/
+    public static final String MSG_TERMINFINDUNG_NICHT_GEFUNDEN = "TRMIN10011";
+	
 	/** Es ist ein technischer Fehler im Modul plisweb-gui aufgetreten: {0} . */
     public static final String MSG_ALLGEMEINER_TECHNISCHER_FEHER_MIT_PARAMETER = "TRMIN90000";
 
@@ -49,5 +52,7 @@ public abstract class FehlerSchluessel {
 
     /** Es ist ein technischer Fehler im Modul plisweb-gui aufgetreten. */
     public static final String MSG_ALLGEMEINER_TECHNISCHER_FEHLER = "TRMIN99999";
+    
+    
     
 }
