@@ -23,13 +23,13 @@ package de.msg.terminfindung.gui.terminfindung.verwalten.loeschen;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 
 import javax.swing.text.View;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 	 */
 	public void loescheZeitraeume (LoeschenModel model) {
 
-		List<ViewZeitraum> viewZeitraumList = new ArrayList<>();
+		List<ZeitraumModel> viewZeitraumList = new ArrayList<>();
 		for (Long zeitraum_nr : model.getCheckedByUser().keySet())  {
 			if (model.getCheckedByUser().get(zeitraum_nr)) {
 				LOG.debug("Is  checked :" + zeitraum_nr);
@@ -87,7 +87,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 		}
 
 		try {
-			ViewTerminfindung terminfindung = super.getAwk().loescheZeitraeume(model.getTerminfindung(), viewZeitraumList);
+			TerminfindungModel terminfindung = super.getAwk().loescheZeitraeume(model.getTerminfindung(), viewZeitraumList);
 			model.setTerminfindung(terminfindung);
 
 		} catch (TerminfindungBusinessException e) {

@@ -65,11 +65,11 @@ public class AwkWrapperImpl implements AwkWrapper {
 	/* (non-Javadoc)
 	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#erstelleTerminfindung(java.lang.String, java.lang.String, java.util.List)
 	 */
-	public ViewTerminfindung erstelleTerminfindung(String organisatorName,
-			String veranstaltungsName, List<ViewTag> tage) throws TerminfindungBusinessException {
+	public TerminfindungModel erstelleTerminfindung(String organisatorName,
+			String veranstaltungsName, List<TagModel> tage) throws TerminfindungBusinessException {
 
 		List<Tag> termine = new ArrayList<>();
-		for (ViewTag tag : tage) {
+		for (TagModel tag : tage) {
 
 			Tag termin = new Tag(tag.getDatum());
 
@@ -93,20 +93,20 @@ public class AwkWrapperImpl implements AwkWrapper {
 	/* (non-Javadoc)
 	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#ladeTerminfindung(long)
 	 */
-	public ViewTerminfindung ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException {
+	public TerminfindungModel ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException {
 
 		Terminfindung tf = erstellung.leseTerminfindung(terminfindungsNr);
 		return map(tf);	
 	}
 
 	/* (non-Javadoc)
-	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#setzeVeranstaltungstermin(de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung, long)
+	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#setzeVeranstaltungstermin(de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel, long)
 	 */
-	public ViewTerminfindung setzeVeranstaltungstermin (ViewTerminfindung viewTerminfindung, long zeitraumNr) throws TerminfindungBusinessException  {
+	public TerminfindungModel setzeVeranstaltungstermin (TerminfindungModel terminfindungModel, long zeitraumNr) throws TerminfindungBusinessException  {
 		
-		if (viewTerminfindung == null) throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
+		if (terminfindungModel == null) throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 		
-		Terminfindung terminfindung = erstellung.leseTerminfindung(viewTerminfindung.getTerminfnd_Nr());
+		Terminfindung terminfindung = erstellung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
 
 		erstellung.setzeVeranstaltungstermin (terminfindung, zeitraumNr);
 		
@@ -115,33 +115,33 @@ public class AwkWrapperImpl implements AwkWrapper {
 	}
 	
 	/* (non-Javadoc)
-	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#bestaetigeTeilnahme(de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung, de.msg.terminfindung.gui.terminfindung.model.ViewTeilnehmer, java.util.Map)
+	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#bestaetigeTeilnahme(de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel, de.msg.terminfindung.gui.terminfindung.model.TeilnehmerModel, java.util.Map)
 	 */
-	public ViewTerminfindung bestaetigeTeilnahme(ViewTerminfindung viewTerminfindung, ViewTeilnehmer viewTeilnehmer, Map<ViewZeitraum, ViewPraeferenz> viewTerminwahl) throws TerminfindungBusinessException  {
+	public TerminfindungModel bestaetigeTeilnahme(TerminfindungModel terminfindungModel, TeilnehmerModel teilnehmerModel, Map<ZeitraumModel, PraeferenzModel> viewTerminwahl) throws TerminfindungBusinessException  {
 		
-		if (viewTerminfindung == null || viewTeilnehmer == null || viewTerminwahl == null) 
+		if (terminfindungModel == null || teilnehmerModel == null || viewTerminwahl == null) 
 			throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 
 		// Übertrage die Datenstrukturen aus dem View in die Struktur des Anwendungskerns
 		// Lese die Terminfindung anhand ihrer Id
-		Terminfindung terminfindung = erstellung.leseTerminfindung(viewTerminfindung.getTerminfnd_Nr());
+		Terminfindung terminfindung = erstellung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
 	
 		// Der Teilnehmer wird neu erzeugt, der Name wird übertragen
 		Teilnehmer teilnehmer = new Teilnehmer();
-		teilnehmer.setName(viewTeilnehmer.getName());
+		teilnehmer.setName(teilnehmerModel.getName());
 		
 		// Suche in den gegebenen Zeiträumen der Terminwahl nach den IDs der Zeiträume, die in der Map übergeben wurden
 		// Konstruiere daraus die entsprechende Map für den Aufruf des Anwendungskerns
 		Map<Zeitraum, Praeferenz> terminwahl = new HashMap <>();
-		for (ViewZeitraum viewZeitraum : viewTerminwahl.keySet()) {
+		for (ZeitraumModel zeitraumModel : viewTerminwahl.keySet()) {
 
-			Zeitraum zeitraum = terminfindung.findeZeitraumById(viewZeitraum.getZeitraum_nr());
+			Zeitraum zeitraum = terminfindung.findeZeitraumById(zeitraumModel.getZeitraum_nr());
 
 			// Wenn in der Terminfindung kein Zeitraum mit der gesuchten Id exisistiert ist die Anfrage ungültig
 			if (zeitraum == null) throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 
 			// Bilder den View-Präferenzwert auf den entsprechenden Persistenz-Präferenzwert ab und speichere
-			Praeferenz praeferenz = map(viewTerminwahl.get(viewZeitraum));
+			Praeferenz praeferenz = map(viewTerminwahl.get(zeitraumModel));
 			terminwahl.put(zeitraum, praeferenz);
 		}
 		// rufe den Anwendungskern auf
@@ -153,23 +153,23 @@ public class AwkWrapperImpl implements AwkWrapper {
 
 	
 	/* (non-Javadoc)
-	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#loescheZeitraum(de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung, de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum)
+	 * @see de.msg.terminfindung.gui.awkwrapper.AwkWrapper#loescheZeitraum(de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel, de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel)
 	 */
-	public ViewTerminfindung loescheZeitraeume(ViewTerminfindung viewTerminfindung, List<ViewZeitraum> viewZeitraeume) throws TerminfindungBusinessException{
+	public TerminfindungModel loescheZeitraeume(TerminfindungModel terminfindungModel, List<ZeitraumModel> viewZeitraeume) throws TerminfindungBusinessException{
 
-		if (viewTerminfindung == null || viewZeitraeume == null )
+		if (terminfindungModel == null || viewZeitraeume == null )
 			throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 
 		// Übertrage die Datenstrukturen aus dem View in die Struktur des Anwendungskerns
 		// Lese die Terminfindung anhand ihrer Id, Konstruiere die entsprechende Liste für den Aufruf des
 		// Anwendungskerns
 		List<Zeitraum> zeitraumList = new ArrayList<>();
-		Terminfindung terminfindung = erstellung.leseTerminfindung(viewTerminfindung.getTerminfnd_Nr());
+		Terminfindung terminfindung = erstellung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
 
 		// Hole zu jedem zu löschenden Zeitraum das entsprechende Objekt des Anwendungskerns
-		for (ViewZeitraum viewZeitraum : viewZeitraeume) {
+		for (ZeitraumModel zeitraumModel : viewZeitraeume) {
 
-			Zeitraum zeitraum = terminfindung.findeZeitraumById(viewZeitraum.getZeitraum_nr());
+			Zeitraum zeitraum = terminfindung.findeZeitraumById(zeitraumModel.getZeitraum_nr());
 			// Wenn in der Terminfindung kein Zeitraum mit der gesuchten Id exisistiert ist die Anfrage ungültig
 			if (zeitraum == null) throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 
@@ -192,11 +192,11 @@ public class AwkWrapperImpl implements AwkWrapper {
 	 * @param terminfindung Das Persistenz-Objekt der Terminfindung
 	 * @return Das View-Objekt der Terminfindung
 	 */
-	private ViewTerminfindung map(Terminfindung terminfindung) {
+	private TerminfindungModel map(Terminfindung terminfindung) {
 
-		ViewTerminfindung viewTerminfindung = beanMapper.map(terminfindung, ViewTerminfindung.class);
-		initialisierePraeferenzenFuerTeilnehmer(viewTerminfindung);
-		return viewTerminfindung;	
+		TerminfindungModel terminfindungModel = beanMapper.map(terminfindung, TerminfindungModel.class);
+		initialisierePraeferenzenFuerTeilnehmer(terminfindungModel);
+		return terminfindungModel;	
 	}
 
 	/**
@@ -209,13 +209,13 @@ public class AwkWrapperImpl implements AwkWrapper {
 	 * ebenfalls eigener Mapping Code erforderlich wäre (Einzelne Enum-Werte können von Dozer
 	 * standardmäßig nicht abgebildet werden.)
 	 *
-	 * @param viewPraeferenz der View-Präferenzwert
+	 * @param praeferenzModel der View-Präferenzwert
 	 * @return der Persistenz-Präferenzwert
 	 * @throws TerminfindungBusinessException Wird bei unbekannten View-Präferenzewerten erzeugt
 	 */
-	private Praeferenz map (ViewPraeferenz viewPraeferenz) throws TerminfindungBusinessException{
+	private Praeferenz map (PraeferenzModel praeferenzModel) throws TerminfindungBusinessException{
 
-		switch (viewPraeferenz) {
+		switch (praeferenzModel) {
 			case JA: return Praeferenz.JA;
 			case NEIN : return Praeferenz.NEIN;
 			case WENN_ES_SEIN_MUSS : return Praeferenz.WENN_ES_SEIN_MUSS;
@@ -230,10 +230,10 @@ public class AwkWrapperImpl implements AwkWrapper {
 	 * 
 	 * @param vtf Die Terminfindung
 	 */
-	private void initialisierePraeferenzenFuerTeilnehmer(ViewTerminfindung vtf) {
+	private void initialisierePraeferenzenFuerTeilnehmer(TerminfindungModel vtf) {
 		
-		for (ViewZeitraum zeitraum : vtf.getAlleZeitraeume()) {
-			for (ViewTeilnehmerZeitraum vtz : zeitraum.getTeilnehmerZeitraeume()) {
+		for (ZeitraumModel zeitraum : vtf.getAlleZeitraeume()) {
+			for (TeilnehmerZeitraumModel vtz : zeitraum.getTeilnehmerZeitraeume()) {
 				vtz.getTeilnehmer().getPraeferenzen().add(vtz);
 			}
 		}

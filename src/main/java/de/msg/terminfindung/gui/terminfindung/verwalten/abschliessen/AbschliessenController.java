@@ -25,7 +25,7 @@ import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
@@ -71,7 +71,7 @@ public class AbschliessenController extends AbstractController<AbschliessenModel
 		long zeitraumNr = model.getSelectedZeitraumNr();
 
 		try {
-			ViewTerminfindung terminfindung = awk.setzeVeranstaltungstermin(model.getTerminfindung(), zeitraumNr);
+			TerminfindungModel terminfindung = awk.setzeVeranstaltungstermin(model.getTerminfindung(), zeitraumNr);
 			model.setTerminfindung(terminfindung);		
 		}
 		catch (TerminfindungBusinessException e) {

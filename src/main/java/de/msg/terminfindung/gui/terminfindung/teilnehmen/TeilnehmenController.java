@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.gui.terminfindung.model.ViewPraeferenz;
+import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
 import de.msg.terminfindung.persistence.entity.Praeferenz;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -35,8 +35,8 @@ import org.springframework.stereotype.Controller;
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTeilnehmer;
-import de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum;
+import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 /**
  * Controller für den Teilnahme Flow
@@ -92,17 +92,17 @@ public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
 	public void speichereTeilnehmer(TeilnehmenModel model) {
 		if (fuehreValidierungDurch(model)) {
 
-			Map<ViewZeitraum, ViewPraeferenz> terminwahl = new HashMap<>();
+			Map<ZeitraumModel, PraeferenzModel> terminwahl = new HashMap<>();
 
-			for (ViewZeitraum zeitraum : model.getTerminfindung().getAlleZeitraeume()) {
+			for (ZeitraumModel zeitraum : model.getTerminfindung().getAlleZeitraeume()) {
 
 				int ordinal = Integer.parseInt(String.valueOf(model.getZeitraumAuswahl().getCheckedRadio().get(zeitraum.getZeitraum_nr())));
-				ViewPraeferenz praeferenz = ViewPraeferenz.values()[ordinal];
+				PraeferenzModel praeferenz = PraeferenzModel.values()[ordinal];
 
 				terminwahl.put(zeitraum, praeferenz);
 			}
 
-			ViewTeilnehmer teilnehmer = new ViewTeilnehmer();
+			TeilnehmerModel teilnehmer = new TeilnehmerModel();
 			teilnehmer.setName(model.getTeilnehmerName());
 			try {
 				model.setTerminfindung(super.getAwk().bestaetigeTeilnahme(model.getTerminfindung(), teilnehmer, terminwahl));

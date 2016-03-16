@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import de.msg.terminfindung.gui.terminfindung.AbstractModel;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 
 /**
  * Model des Erstellen Flows
@@ -47,7 +47,7 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 	private String stringPlaceholderDate ="";
 	/** Speicher einen Tag, der in der Eingabemaske durch Klicken auf das Trash-Icon
 	 * zum Löschen ausgewählt wurde */
-	private ViewTag selectedTermin;
+	private TagModel selectedTermin;
 
 	public String getName() {
 		return name;
@@ -65,11 +65,11 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 		this.orgName = orgName;
 	}
 
-	public ViewTag getSelectedTermin() {
+	public TagModel getSelectedTermin() {
 		return selectedTermin;
 	}
 
-	public void setSelectedTermin(ViewTag selectedTermin) {
+	public void setSelectedTermin(TagModel selectedTermin) {
 		this.selectedTermin = selectedTermin;
 	}
 

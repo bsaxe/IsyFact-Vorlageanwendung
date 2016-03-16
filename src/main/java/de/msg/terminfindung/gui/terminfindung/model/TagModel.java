@@ -32,19 +32,19 @@ import java.util.List;
  *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
-public class ViewTag implements Serializable,Comparable<ViewTag>{
+public class TagModel implements Serializable,Comparable<TagModel>{
 
 	private static final long serialVersionUID = -5975535556486949171L;
 
 	private long tag_nr;
     private Date datum;
-    private List<ViewZeitraum> zeitraeume = new ArrayList<>();
+    private List<ZeitraumModel> zeitraeume = new ArrayList<>();
 
-	public ViewTag() {
+	public TagModel() {
 		super();
 	}
 
-	public ViewTag(long tag_nr) {
+	public TagModel(long tag_nr) {
 		super();
 		this.tag_nr = tag_nr;
 	}
@@ -69,16 +69,16 @@ public class ViewTag implements Serializable,Comparable<ViewTag>{
 		return zeitraeume.size();
 	}
 
-	public List<ViewZeitraum> getZeitraeume() {
+	public List<ZeitraumModel> getZeitraeume() {
 		return zeitraeume;
 	}
 
-	public void setZeitraeume(List<ViewZeitraum> zeitraeume) {
+	public void setZeitraeume(List<ZeitraumModel> zeitraeume) {
 		this.zeitraeume = zeitraeume;
 	}
 	
 	@Override
-	public int compareTo(ViewTag tag) {
+	public int compareTo(TagModel tag) {
 		return this.getDatum().compareTo(tag.getDatum());
 
 	}

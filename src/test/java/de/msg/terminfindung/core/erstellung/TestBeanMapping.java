@@ -80,11 +80,11 @@ public class TestBeanMapping {
 
 		
 		Terminfindung tf = new Terminfindung();
-		ViewTerminfindung viewTerminfindung = beanMapper.map(tf, ViewTerminfindung.class);
+		TerminfindungModel terminfindungModel = beanMapper.map(tf, TerminfindungModel.class);
 
 		// TODO: Komplexere Objektstruktur aufbauen und testen
 		
-		assertNotNull(viewTerminfindung);
+		assertNotNull(terminfindungModel);
 		
 	}
 
@@ -99,37 +99,37 @@ public class TestBeanMapping {
 	public void testMapViewToPersistence() {
 
 		// Erzeuge Terminfindung
-		ViewTerminfindung viewTerminfindung = new ViewTerminfindung();
+		TerminfindungModel terminfindungModel = new TerminfindungModel();
 
 		// Erzeuge Teilnehmer und füge sie zur Terminfindung hinzu
-		ViewTeilnehmer viewTeilnehmer1 = new ViewTeilnehmer();
+		TeilnehmerModel viewTeilnehmer1 = new TeilnehmerModel();
 		viewTeilnehmer1.setName("Teilnehmer1");
-		ViewTeilnehmer viewTeilnehmer2 = new ViewTeilnehmer();
+		TeilnehmerModel viewTeilnehmer2 = new TeilnehmerModel();
 		viewTeilnehmer2.setName("Teilnehmer2");
-		ViewTeilnehmer viewTeilnehmer3 = new ViewTeilnehmer();
+		TeilnehmerModel viewTeilnehmer3 = new TeilnehmerModel();
 		viewTeilnehmer3.setName("Teilnehmer3");
 
-		viewTerminfindung.getTeilnehmer().add(viewTeilnehmer1);
-		viewTerminfindung.getTeilnehmer().add(viewTeilnehmer2);
-		viewTerminfindung.getTeilnehmer().add(viewTeilnehmer3);
+		terminfindungModel.getTeilnehmer().add(viewTeilnehmer1);
+		terminfindungModel.getTeilnehmer().add(viewTeilnehmer2);
+		terminfindungModel.getTeilnehmer().add(viewTeilnehmer3);
 
 		// Erzeuge Tage und füge sie zur Terminfindung hinzu
-		ViewTag viewTag1 = new ViewTag();
+		TagModel viewTag1 = new TagModel();
 		viewTag1.setDatum(DATE1);
-		ViewTag viewTag2 = new ViewTag();
+		TagModel viewTag2 = new TagModel();
 		viewTag2.setDatum(DATE2);
 
-		viewTerminfindung.getTage().add(viewTag1);
-		viewTerminfindung.getTage().add(viewTag2);
+		terminfindungModel.getTage().add(viewTag1);
+		terminfindungModel.getTage().add(viewTag2);
 
 		// Erzeuge Zeitraume und fuege sie den Tagen hinzu 
-		ViewZeitraum viewZeitraum1 = (new ViewZeitraum());
+		ZeitraumModel viewZeitraum1 = (new ZeitraumModel());
 		viewZeitraum1.setBeschreibung("Zeitraum1");
-		ViewZeitraum viewZeitraum2 = new ViewZeitraum();
+		ZeitraumModel viewZeitraum2 = new ZeitraumModel();
 		viewZeitraum2.setBeschreibung("Zeitraum2");
-		ViewZeitraum viewZeitraum3 = new ViewZeitraum();
+		ZeitraumModel viewZeitraum3 = new ZeitraumModel();
 		viewZeitraum3.setBeschreibung("Zeitraum3");
-		ViewZeitraum viewZeitraum4 = new ViewZeitraum();
+		ZeitraumModel viewZeitraum4 = new ZeitraumModel();
 		viewZeitraum4.setBeschreibung("Zeitraum4");
 
 		viewTag1.getZeitraeume().add(viewZeitraum1);
@@ -138,18 +138,18 @@ public class TestBeanMapping {
 		viewTag2.getZeitraeume().add(viewZeitraum4);
 
 		// Erzeuge Präferenzen der Teilnehmer für die Zeiträume und füge sie den Zeiträumen hinzu
-		ViewTeilnehmerZeitraum viewPraeferenz1 = new ViewTeilnehmerZeitraum();
+		TeilnehmerZeitraumModel viewPraeferenz1 = new TeilnehmerZeitraumModel();
 		viewPraeferenz1.setTeilnehmer(viewTeilnehmer1);
-		viewPraeferenz1.setPraeferenz(ViewPraeferenz.JA);
-		ViewTeilnehmerZeitraum viewPraeferenz2 = new ViewTeilnehmerZeitraum();
+		viewPraeferenz1.setPraeferenz(PraeferenzModel.JA);
+		TeilnehmerZeitraumModel viewPraeferenz2 = new TeilnehmerZeitraumModel();
 		viewPraeferenz2.setTeilnehmer(viewTeilnehmer1);
-		viewPraeferenz2.setPraeferenz(ViewPraeferenz.WENN_ES_SEIN_MUSS);
-		ViewTeilnehmerZeitraum viewPraeferenz3 = new ViewTeilnehmerZeitraum();
+		viewPraeferenz2.setPraeferenz(PraeferenzModel.WENN_ES_SEIN_MUSS);
+		TeilnehmerZeitraumModel viewPraeferenz3 = new TeilnehmerZeitraumModel();
 		viewPraeferenz3.setTeilnehmer(viewTeilnehmer2);
-		viewPraeferenz3.setPraeferenz(ViewPraeferenz.WENN_ES_SEIN_MUSS);
-		ViewTeilnehmerZeitraum viewPraeferenz4 = new ViewTeilnehmerZeitraum();
+		viewPraeferenz3.setPraeferenz(PraeferenzModel.WENN_ES_SEIN_MUSS);
+		TeilnehmerZeitraumModel viewPraeferenz4 = new TeilnehmerZeitraumModel();
 		viewPraeferenz4.setTeilnehmer(viewTeilnehmer2);
-		viewPraeferenz4.setPraeferenz(ViewPraeferenz.JA);
+		viewPraeferenz4.setPraeferenz(PraeferenzModel.JA);
 		
 		viewZeitraum1.getTeilnehmerZeitraeume().add(viewPraeferenz1);
 		viewZeitraum2.getTeilnehmerZeitraeume().add(viewPraeferenz2);
@@ -158,7 +158,7 @@ public class TestBeanMapping {
 		
 		
 		// Führe das Mapping durch und teste das Ergebnis
-		Terminfindung tf = beanMapper.map(viewTerminfindung, Terminfindung.class);
+		Terminfindung tf = beanMapper.map(terminfindungModel, Terminfindung.class);
 		
 		assertNotNull(tf);
 		assertNotNull(tf.getTeilnehmer());

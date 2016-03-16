@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenModel;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 
 /**
  * Die Klasse stellt Hilfsmethoden für das Vergleichen und das Handling von Datumswerten bereit
@@ -38,12 +38,12 @@ public class DateUtil {
 
 	private static DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
-	public static boolean isSameDay (ViewTag tag, Date date) {
+	public static boolean isSameDay (TagModel tag, Date date) {
 		return (dateFormat.format(tag.getDatum()).equals(dateFormat.format(date)));
 	}
 
-	public static boolean containsDay(List<ViewTag> list, Date date) {
-		for (ViewTag tag : list) {
+	public static boolean containsDay(List<TagModel> list, Date date) {
+		for (TagModel tag : list) {
 			if (isSameDay(tag, date)) return true;
 		}
 		return false;

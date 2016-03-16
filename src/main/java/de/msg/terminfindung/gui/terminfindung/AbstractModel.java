@@ -22,9 +22,9 @@ package de.msg.terminfindung.gui.terminfindung;
 
 
 import de.msg.terminfindung.gui.terminfindung.model.RequestData;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung;
-import de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,8 +40,8 @@ public abstract class AbstractModel implements Serializable {
 	
 	private static final long serialVersionUID = -2479477611892278312L;
 
-	private ViewTerminfindung terminfindung;	
-	private List<ViewTag> tage = new ArrayList<>();
+	private TerminfindungModel terminfindung;	
+	private List<TagModel> tage = new ArrayList<>();
 	private long selectedZeitraumNr;
 	private RequestData requestData;
     private boolean testMode = false;
@@ -54,22 +54,22 @@ public abstract class AbstractModel implements Serializable {
 		this.requestData = requestData;
 	}
 
-	public boolean zeitraumIsDefZeitraum(ViewZeitraum viewZeitraum){
-		return (viewZeitraum.getZeitraum_nr() == this.selectedZeitraumNr);
+	public boolean zeitraumIsDefZeitraum(ZeitraumModel zeitraumModel){
+		return (zeitraumModel.getZeitraum_nr() == this.selectedZeitraumNr);
 	}
 
-	public void setTage(List<ViewTag> termine) {
+	public void setTage(List<TagModel> termine) {
 		this.tage = termine;
 	}
 
-	public List<ViewTag> getTage() {
+	public List<TagModel> getTage() {
 		return tage;
 	}
-	public ViewTerminfindung getTerminfindung() {
+	public TerminfindungModel getTerminfindung() {
 		return terminfindung;
 	}
 
-	public void setTerminfindung(ViewTerminfindung terminfindung) {
+	public void setTerminfindung(TerminfindungModel terminfindung) {
 		this.terminfindung = terminfindung;
 	}
 

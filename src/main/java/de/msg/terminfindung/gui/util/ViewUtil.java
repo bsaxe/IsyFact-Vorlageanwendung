@@ -23,8 +23,8 @@ package de.msg.terminfindung.gui.util;
 
 import java.io.Serializable;
 
-import de.msg.terminfindung.gui.terminfindung.model.ViewPraeferenz;
-import de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum;
+import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import org.apache.log4j.Logger;
 import org.springframework.webflow.context.ExternalContext;
 
@@ -47,7 +47,7 @@ public class ViewUtil implements Serializable{
 	 * @param praeferenzWert Praeferenz (Ja, Nein, Wenn es sein muss)
 	 * @return Ein entsprechender String, der dem Namen des Styles für die graphische Darstellung entspricht.
 	 */
-	public static String getClassForPraeferenz(ViewPraeferenz praeferenzWert) {
+	public static String getClassForPraeferenz(PraeferenzModel praeferenzWert) {
 
 		switch (praeferenzWert) {
 		    case NEIN: return "tdFalse";

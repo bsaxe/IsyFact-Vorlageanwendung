@@ -21,9 +21,9 @@ package de.msg.terminfindung.gui.util;
  */
 
 
-import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung;
-import de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,22 +42,22 @@ public class DataGenerator {
      *
      * @return Eine fest vorgegebene Test-Liste mit Terminen
      */
-    public static List<ViewTag> generateTage()  {
+    public static List<TagModel> generateTage()  {
 
         // Erzeuge eine Liste von drei Tagen
-       List<ViewTag> tage = new ArrayList<>();
+       List<TagModel> tage = new ArrayList<>();
         for (int i=0; i<=2; i++) {
 
-            ViewTag tag = new ViewTag();
+            TagModel tag = new TagModel();
             // Tage beginnem vom aktuellen Datum an
             tag.setDatum(DateUtil.getNDaysFromToday(i));
             tage.add(tag);
 
             // Erzeuge drei Zeiträume für jeden Tage
-            List<ViewZeitraum> zeitraeume = new ArrayList<>();
+            List<ZeitraumModel> zeitraeume = new ArrayList<>();
             for (int j=0; j<=2; j++) {
 
-                ViewZeitraum zeitraum = new ViewZeitraum();
+                ZeitraumModel zeitraum = new ZeitraumModel();
                 zeitraum.setBeschreibung("Tag "+ i + ", Zeitraum " + j);
                 zeitraeume.add(zeitraum);
             }

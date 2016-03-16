@@ -25,7 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 
-import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 
 /**
  * @author msg systems ag, Maximilian Falter
@@ -33,12 +33,12 @@ import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
  * (Klasse zum Abbilden der Logik des StartModels)
  */
 @Deprecated
-public class MyDateComparator implements Comparator<ViewTag> {
+public class MyDateComparator implements Comparator<TagModel> {
     protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
 
 	@Override
-	public int compare(ViewTag o1, ViewTag o2) {
+	public int compare(TagModel o1, TagModel o2) {
 		return DATE_FORMAT.format(o1.getDatum()).compareTo(DATE_FORMAT.format(o2.getDatum()));
 	}
 }

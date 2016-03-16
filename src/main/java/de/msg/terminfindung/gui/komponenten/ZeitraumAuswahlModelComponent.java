@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
-import de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.persistence.entity.Praeferenz;
 
 /**
@@ -52,10 +52,10 @@ public class ZeitraumAuswahlModelComponent implements Serializable {
 	 * 
 	 * @param tage Die Liste der Tage mit den darin enthaltenen Zeiträumen je Tag
 	 */
-	public void init(List<ViewTag> tage) {
+	public void init(List<TagModel> tage) {
 			
-		for (ViewTag tag : tage) {
-			for (ViewZeitraum zeitraum : tag.getZeitraeume()) {
+		for (TagModel tag : tage) {
+			for (ZeitraumModel zeitraum : tag.getZeitraeume()) {
 				this.getCheckedRadio().put(zeitraum.getZeitraum_nr(), Praeferenz.NEIN.ordinal()); // initialisiere mit 0 = Nein
 			}
 		}

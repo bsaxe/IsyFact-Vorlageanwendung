@@ -34,7 +34,7 @@ import de.msg.terminfindung.persistence.entity.Zeitraum;
  * @author msg systems ag, Dirk Jäger
  * */
 
-public class ViewTerminfindung implements Serializable{
+public class TerminfindungModel implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -47,23 +47,23 @@ public class ViewTerminfindung implements Serializable{
      * Der vom Veranstalter letztlich ausgwählte Termin der Veranstaltung.
      * Dieser Termin (=Zeitraum an einem Tag) wird bei Abschluss der Terminfindung gesetzt.
      */
-	private ViewZeitraum defZeitraum;
+	private ZeitraumModel defZeitraum;
 
     /**
      * Die Liste der zur Auwahl stehenden Tage.
      * Jeder Tag enthält mindestens einen Zeitraum an diesem Tag.
      */
-	private List<ViewTag> tage = new ArrayList<>();
+	private List<TagModel> tage = new ArrayList<>();
 
     /**
      * Die Liste der Teilnehmer.
      */
-	private List<ViewTeilnehmer> teilnehmer = new ArrayList<>();
+	private List<TeilnehmerModel> teilnehmer = new ArrayList<>();
 
     /**
      * Der Name des Organisators.
      */
-    private ViewOrganisator organisator;
+    private OrganisatorModel organisator;
 
     /**
      * Der Name der Veranstaltung.
@@ -71,19 +71,19 @@ public class ViewTerminfindung implements Serializable{
 	private String veranstName = "";
 
 	/**
-	 * Sucht in einer ViewTerminfindung nach einem Zeitraum mit der angegebenen Id.
+	 * Sucht in einer TerminfindungModel nach einem Zeitraum mit der angegebenen Id.
 	 * 
 	 * @param zeitraumId Die gesuchte Id
 	 * @return Der Zeitraum, wenn er in der Terminfindung vorhanden ist, sonst null.
 	 */
-	public ViewZeitraum findeZeitraumById (long zeitraumId) {
+	public ZeitraumModel findeZeitraumById (long zeitraumId) {
 		
-		ViewZeitraum result = null;
+		ZeitraumModel result = null;
 		if (tage == null) return null;
 		
-		for (ViewTag t : tage) {
+		for (TagModel t : tage) {
 			if (t.getZeitraeume() != null) {
-				for (ViewZeitraum z : t.getZeitraeume()) {
+				for (ZeitraumModel z : t.getZeitraeume()) {
 					if (z.getZeitraum_nr() == zeitraumId) result=z;
 				}
 			}
@@ -102,7 +102,7 @@ public class ViewTerminfindung implements Serializable{
 		
 		if (teilnehmer == null) return false;
 		
-		for (ViewTeilnehmer tn : teilnehmer) {
+		for (TeilnehmerModel tn : teilnehmer) {
 			if (tn.getName().equals(name)) return true;
 		}	
 		return false;
@@ -115,15 +115,15 @@ public class ViewTerminfindung implements Serializable{
 	 * 
 	 * @return Liste all Zeitraeume sortiert nach Tagen
 	 */
-	public List<ViewZeitraum> getAlleZeitraeume () {
+	public List<ZeitraumModel> getAlleZeitraeume () {
 		
 		if (tage == null) return null;
 
-		List<ViewZeitraum> result = new ArrayList<>();
+		List<ZeitraumModel> result = new ArrayList<>();
 		
-		for (ViewTag t : tage) {
+		for (TagModel t : tage) {
 			if (t.getZeitraeume() != null) {
-				for (ViewZeitraum z : t.getZeitraeume()) {
+				for (ZeitraumModel z : t.getZeitraeume()) {
 					result.add(z);
 				}
 			}
@@ -154,35 +154,35 @@ public class ViewTerminfindung implements Serializable{
 		this.terminfnd_Nr = terminfnd_Nr;
 	}
 
-	public ViewZeitraum getDefZeitraum() {
+	public ZeitraumModel getDefZeitraum() {
 		return defZeitraum;
 	}
 
-	public void setDefZeitraum(ViewZeitraum defZeitraum) {
+	public void setDefZeitraum(ZeitraumModel defZeitraum) {
 		this.defZeitraum = defZeitraum;
 	}
 
-	public List<ViewTag> getTage() {
+	public List<TagModel> getTage() {
 		return tage;
 	}
 
-	public void setTage(List<ViewTag> tage) {
+	public void setTage(List<TagModel> tage) {
 		this.tage= tage;
 	}
 
-	public List<ViewTeilnehmer> getTeilnehmer() {
+	public List<TeilnehmerModel> getTeilnehmer() {
 		return teilnehmer;
 	}
 
-	public void setTeilnehmer(List<ViewTeilnehmer> teilnehmer) {
+	public void setTeilnehmer(List<TeilnehmerModel> teilnehmer) {
 		this.teilnehmer = teilnehmer;
 	}
 
-	public ViewOrganisator getOrganisator() {
+	public OrganisatorModel getOrganisator() {
 		return organisator;
 	}
 
-	public void setOrganisator(ViewOrganisator organisator) {
+	public void setOrganisator(OrganisatorModel organisator) {
 		this.organisator= organisator;
 	}
 

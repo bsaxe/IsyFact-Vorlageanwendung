@@ -31,7 +31,7 @@
 
   <mapping>
     <class-a>de.msg.terminfindung.persistence.entity.Terminfindung</class-a>
-    <class-b>de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung</class-b>
+    <class-b>de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel</class-b>
       <field>
         <a>termine</a>
         <b>tage</b>

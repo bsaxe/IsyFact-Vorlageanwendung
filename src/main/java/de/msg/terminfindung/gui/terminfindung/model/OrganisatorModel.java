@@ -21,12 +21,21 @@ package de.msg.terminfindung.gui.terminfindung.model;
  */
 
 
-/**
- * View Objekt (enum) für Präferenzwerte.
- *
- * @author msg systems ag, Dirk Jäger
- */
-public enum ViewPraeferenz {
+import java.io.Serializable;
 
-    NEIN, JA, WENN_ES_SEIN_MUSS
+/**
+ * Die Klasse speichert die Daten des Organisators in der View-Schicht
+ */
+public class OrganisatorModel implements Serializable{
+
+	private String name = "";
+	private static final long serialVersionUID = 1L;
+	
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String Name) {
+		this.name = Name;
+	}
 }

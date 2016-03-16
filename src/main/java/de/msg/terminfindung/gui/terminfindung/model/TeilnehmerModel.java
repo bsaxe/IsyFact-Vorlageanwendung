@@ -35,15 +35,15 @@ import org.apache.log4j.Logger;
  * @author msg systems ag, Dirk Jäger
  */
 
-public class ViewTeilnehmer implements Serializable {
+public class TeilnehmerModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = Logger.getLogger(ViewTeilnehmer.class);
+	private static final Logger LOG = Logger.getLogger(TeilnehmerModel.class);
 	
 	private long teilnehmer_Nr;
 	private String name = "";
-	private List<ViewTeilnehmerZeitraum> praeferenzen = new ArrayList<>();
+	private List<TeilnehmerZeitraumModel> praeferenzen = new ArrayList<>();
 	
 	public long getTeilnehmer_Nr() {
 		return teilnehmer_Nr;
@@ -57,10 +57,10 @@ public class ViewTeilnehmer implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<ViewTeilnehmerZeitraum> getPraeferenzen() {
+	public List<TeilnehmerZeitraumModel> getPraeferenzen() {
 		return praeferenzen;
 	}
-	public void setPraeferenzen(List<ViewTeilnehmerZeitraum> praeferenzen) {
+	public void setPraeferenzen(List<TeilnehmerZeitraumModel> praeferenzen) {
 		this.praeferenzen = praeferenzen;
 	}
 	
@@ -72,14 +72,14 @@ public class ViewTeilnehmer implements Serializable {
 	 * @param zeitraum Der Zeitraum
 	 * @return der Praeferenzwert für diesen Zeitraum
 	 */
-	public ViewPraeferenz getPraeferenz(ViewZeitraum zeitraum) {
+	public PraeferenzModel getPraeferenz(ZeitraumModel zeitraum) {
 		
-		ViewPraeferenz result=ViewPraeferenz.NEIN;
+		PraeferenzModel result=PraeferenzModel.NEIN;
 		
 		if (zeitraum != null) {
-			for (ViewTeilnehmerZeitraum praeferenz : praeferenzen) {
+			for (TeilnehmerZeitraumModel praeferenz : praeferenzen) {
 				
-				ViewZeitraum vz = praeferenz.getZeitraum();
+				ZeitraumModel vz = praeferenz.getZeitraum();
 				
 				if (vz == null) {
 					LOG.warn("Zeitraum war null für Präferenz " + praeferenz);

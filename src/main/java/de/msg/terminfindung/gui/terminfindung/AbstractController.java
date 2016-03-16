@@ -27,7 +27,7 @@ import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import de.msg.terminfindung.gui.util.TFNumberHolder;
 import org.apache.log4j.Logger;
 
@@ -94,7 +94,7 @@ public abstract class AbstractController<T extends AbstractModel>{
 
 		LOG.info("Hole Terminfindung vom Anwendungskern für Terminfindungsnummer " + tfNumberHolder.getNumber());
 
-		ViewTerminfindung terminfindung;
+		TerminfindungModel terminfindung;
 		try {
 			terminfindung = awk.ladeTerminfindung(tfNumberHolder.getNumber());
 			model.setTerminfindung(terminfindung);

@@ -23,32 +23,32 @@ package de.msg.terminfindung.gui.terminfindung.model;
 
 import java.io.Serializable;
 
-public class ViewTeilnehmerZeitraum implements Serializable {
+public class TeilnehmerZeitraumModel implements Serializable {
 
 	private long teilnehmerZeitraum_Nr;
 
-	private ViewPraeferenz praeferenz;
+	private PraeferenzModel praeferenz;
 	
 	private static final long serialVersionUID = 1L;
 
-	ViewTeilnehmer teilnehmer;
+	TeilnehmerModel teilnehmer;
 	
-	ViewZeitraum zeitraum;
+	ZeitraumModel zeitraum;
 
-	public ViewTeilnehmerZeitraum() {
+	public TeilnehmerZeitraumModel() {
 		super();
 	}
 
-	public ViewTeilnehmerZeitraum(ViewTeilnehmer teilnehmer, ViewPraeferenz praeferenz) {
+	public TeilnehmerZeitraumModel(TeilnehmerModel teilnehmer, PraeferenzModel praeferenz) {
 		this.teilnehmer = teilnehmer;
 		this.praeferenz = praeferenz;
 	}
 
-	public ViewPraeferenz getPraeferenz() {
+	public PraeferenzModel getPraeferenz() {
 		return this.praeferenz;
 	}
 
-	public void setPraeferenz(ViewPraeferenz praeferenz) {
+	public void setPraeferenz(PraeferenzModel praeferenz) {
 		this.praeferenz = praeferenz;
 	}
 
@@ -60,19 +60,19 @@ public class ViewTeilnehmerZeitraum implements Serializable {
 		this.teilnehmerZeitraum_Nr = teilnehmerZeitraum_Nr;
 	}
 
-	public ViewTeilnehmer getTeilnehmer() {
+	public TeilnehmerModel getTeilnehmer() {
 		return teilnehmer;
 	}
 
-	public void setTeilnehmer(ViewTeilnehmer teilnehmer) {
+	public void setTeilnehmer(TeilnehmerModel teilnehmer) {
 		this.teilnehmer = teilnehmer;
 	}
 
-	public ViewZeitraum getZeitraum() {
+	public ZeitraumModel getZeitraum() {
 		return zeitraum;
 	}
 
-	public void setZeitraum(ViewZeitraum zeitraum) {
+	public void setZeitraum(ZeitraumModel zeitraum) {
 		this.zeitraum = zeitraum;
 	}
 }

@@ -33,9 +33,9 @@ import org.springframework.stereotype.Controller;
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTag;
-import de.msg.terminfindung.gui.terminfindung.model.ViewTerminfindung;
-import de.msg.terminfindung.gui.terminfindung.model.ViewZeitraum;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.gui.util.DateUtil;
 
 /**
@@ -110,7 +110,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 			else {
 				LOG.debug("Füge Tag hinzu.");
 				// erzeuge ein neues Objekt für den Tag
-				ViewTag tag = new ViewTag();
+				TagModel tag = new TagModel();
 				// setze in dem neuen Objekt die Zeitraum-Objekte
 				erzeugeZeitraeume(tag);
 				// setze das Datum
@@ -140,7 +140,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 		LOG.debug("Speichere Terminfindung.");
 
 		try {
-			ViewTerminfindung terminfindung = super.getAwk().erstelleTerminfindung(model.getOrgName(), model.getName(), model.getTage());
+			TerminfindungModel terminfindung = super.getAwk().erstelleTerminfindung(model.getOrgName(), model.getName(), model.getTage());
 			model.setTerminfindung(terminfindung);
 		} catch (TerminfindungBusinessException e) {
 
@@ -185,12 +185,12 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
     /**
      * Erzeugt die Default-Anzahl von Zeiträumen pro Tag.
      * Die Methode wird beim Anlegen eines neuen Tages intern aufgerufen.
-     * @param tag Eine Referenz auf das {@link ViewTag} Objekt, in dem die Zeiträume angelegt werden.
+     * @param tag Eine Referenz auf das {@link TagModel} Objekt, in dem die Zeiträume angelegt werden.
      */
-    private void erzeugeZeitraeume (ViewTag tag) {
+    private void erzeugeZeitraeume (TagModel tag) {
 
 		for (int i = 0; i <= ZEITRAEUME_PRO_TAG; i++) {
-			tag.getZeitraeume().add(new ViewZeitraum());
+			tag.getZeitraeume().add(new ZeitraumModel());
 		}
 	}
 }

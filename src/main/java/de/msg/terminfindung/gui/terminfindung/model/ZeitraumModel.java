@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
-public class ViewZeitraum implements Serializable{
+public class ZeitraumModel implements Serializable{
 
 	private static final long serialVersionUID = -457050384959229232L;
 
@@ -48,18 +48,18 @@ public class ViewZeitraum implements Serializable{
     /**
      * Der Tag, an dem der Zeitraum liegt.
      */
-	private ViewTag tag;
+	private TagModel tag;
     /**
      * Eine Liste von Präferenzen für diesen Zeitraum aus Sicht des Zeitraums.
      * Wenn ein Teilnehmer eine Präferenz für diesen Zeitraum angibt,
-     * wird in dieser Liste ein Objekt der Klasse {@link ViewTeilnehmerZeitraum}
+     * wird in dieser Liste ein Objekt der Klasse {@link TeilnehmerZeitraumModel}
      * hinzugefügt, das die Verbindung zwischen dem Teilnehmer und dem Zeitraum herstellt.
      * "Präferenz" für einen Zeitraum bedeutet nicht unbedingt, dass der Teilnehmer
      * sich FÜR diesen Zeitraum entscheidet, d.h. mit "Ja" abstimmt.
      * Jeder Teilnehmer trägt immer für jeden Zeitraum eine Präferenz ein wenn er abstimmt.
      * In diesem Sinne sind auch "Nein" und "Wenn es sein muss" Präferenzen.
      */
-	private List<ViewTeilnehmerZeitraum> teilnehmerZeitraeume = new ArrayList<>();
+	private List<TeilnehmerZeitraumModel> teilnehmerZeitraeume = new ArrayList<>();
 
     /**
      * Auswertung der Präferenzen durch Zählen der abgegebenen Stimmen für den Zeitraum.
@@ -73,27 +73,27 @@ public class ViewZeitraum implements Serializable{
 
 		Integer[] count={0,0,0};
 		
-		for (ViewTeilnehmerZeitraum tz : teilnehmerZeitraeume) {
-			if (tz.getPraeferenz() == ViewPraeferenz.NEIN) count [0]++;
-			else if (tz.getPraeferenz() == ViewPraeferenz.JA) count [1]++;
-			else if (tz.getPraeferenz() == ViewPraeferenz.WENN_ES_SEIN_MUSS) count [2]++;
+		for (TeilnehmerZeitraumModel tz : teilnehmerZeitraeume) {
+			if (tz.getPraeferenz() == PraeferenzModel.NEIN) count [0]++;
+			else if (tz.getPraeferenz() == PraeferenzModel.JA) count [1]++;
+			else if (tz.getPraeferenz() == PraeferenzModel.WENN_ES_SEIN_MUSS) count [2]++;
 		}
 		return count;
 	}
 	
-	public List<ViewTeilnehmerZeitraum> getTeilnehmerZeitraeume() {
+	public List<TeilnehmerZeitraumModel> getTeilnehmerZeitraeume() {
 		return teilnehmerZeitraeume;
 	}
 	public void setTeilnehmerZeitraeume(
-			List<ViewTeilnehmerZeitraum> teilnehmerZeitraeume) {
+			List<TeilnehmerZeitraumModel> teilnehmerZeitraeume) {
 		this.teilnehmerZeitraeume = teilnehmerZeitraeume;
 	}
-	public ViewZeitraum(long zeitraum_nr, String beschreibung) {
+	public ZeitraumModel(long zeitraum_nr, String beschreibung) {
 		super();
 		this.zeitraum_nr = zeitraum_nr;
 		this.beschreibung = beschreibung;
 	}
-	public ViewZeitraum() {
+	public ZeitraumModel() {
 		super();
 	}
 	public long getZeitraum_nr() {
@@ -108,10 +108,10 @@ public class ViewZeitraum implements Serializable{
 	public void setBeschreibung(String beschreibung) {
 		this.beschreibung = beschreibung;
 	}
-	public ViewTag getTag() {
+	public TagModel getTag() {
 		return tag;
 	}
-	public void setTag(ViewTag tag) {
+	public void setTag(TagModel tag) {
 		this.tag = tag;
 	}
 	
