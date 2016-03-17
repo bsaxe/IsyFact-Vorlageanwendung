@@ -28,5 +28,15 @@ package de.msg.terminfindung.gui.terminfindung.model;
  */
 public enum PraeferenzModel {
 
-    NEIN, JA, WENN_ES_SEIN_MUSS
+    NEIN(0/*"tdFalse"*/), JA(1/*"tdTrue"*/), WENN_ES_SEIN_MUSS(2/*"tdHaveTo"*/);
+    
+	private int prefNumber;	
+	
+    PraeferenzModel(int prefNumber){
+    	this.prefNumber = prefNumber;
+    }
+    
+    public int getPrefNumber(){
+    	return prefNumber;
+    }
 }

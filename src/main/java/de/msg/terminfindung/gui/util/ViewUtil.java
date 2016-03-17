@@ -39,23 +39,7 @@ public class ViewUtil implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOG = Logger.getLogger(ViewUtil.class);
-	/**
-	 * Liefert zu einem Präferenzwert die CCS Style-Klasse für die Anzeige des Tabellenfeldes.
-	 * 
-	 * TODO: Über JSF-Ressourcen lösen statt es explizit in dieser Methode auszuprogrammieren.
-	 * 
-	 * @param praeferenzWert Praeferenz (Ja, Nein, Wenn es sein muss)
-	 * @return Ein entsprechender String, der dem Namen des Styles für die graphische Darstellung entspricht.
-	 */
-	public static String getClassForPraeferenz(PraeferenzModel praeferenzWert) {
 
-		switch (praeferenzWert) {
-		    case NEIN: return "tdFalse";
-		    case JA: return "tdTrue";
-			case WENN_ES_SEIN_MUSS:	return "tdHaveTo";
-		    default:return "";
-		}
-	}
 
     /**
      * Liest einen Request-Parameter aus der URL und gibt dessen Wert zurück

@@ -78,18 +78,4 @@ public class AbschliessenController extends AbstractController<AbschliessenModel
 				LOG.error("Fehler beim Abschluss der Terminfindung: " + e.getMessage());
 		}
 	}
-
-	public String getClassForPraeferenz(Byte praeferenzWert) {
-
-		switch (praeferenzWert) {
-		case 0:
-			return "tdFalse";
-		case 1:
-			return "tdTrue";
-		case 2:
-			return "tdHaveTo";
-		default:
-			return "";
-		}
-	}
 }

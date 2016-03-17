@@ -68,8 +68,10 @@
 											<ui:repeat
 												value="#{abschliessenModel.terminfindung.alleZeitraeume}"
 												var="zeitraum">
-												<td
-													class="borderTd #{viewUtil.getClassForPraeferenz(teilnehmer.getPraeferenz(zeitraum))}"></td>
+												<c:set var="prefNumber" value="#{teilnehmer.getPraeferenz(zeitraum).getPrefNumber()}" />
+												<td class="borderTd #{(prefNumber == 0)? 'tdFalse' : (
+																		(prefNumber == 1)? 'tdTrue' : (
+																			(prefNumber == 2)? 'tdHaveTo' : ''))}"></td>
 											</ui:repeat>
 										</tr>
 									</ui:repeat>
