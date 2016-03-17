@@ -1,5 +1,15 @@
 package de.msg.terminfindung.gui.awkwrapper.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.dozer.Mapper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 /*
  * #%L
  * Terminfindung
@@ -25,18 +35,19 @@ import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.core.erstellung.Erstellung;
 import de.msg.terminfindung.core.teilnahme.Teilnahme;
+import de.msg.terminfindung.core.verwaltung.Verwaltung;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
-import de.msg.terminfindung.gui.terminfindung.model.*;
-import de.msg.terminfindung.persistence.entity.*;
-import org.apache.log4j.Logger;
-import org.dozer.Mapper;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerModel;
+import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerZeitraumModel;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
+import de.msg.terminfindung.persistence.entity.Praeferenz;
+import de.msg.terminfindung.persistence.entity.Tag;
+import de.msg.terminfindung.persistence.entity.Teilnehmer;
+import de.msg.terminfindung.persistence.entity.Terminfindung;
+import de.msg.terminfindung.persistence.entity.Zeitraum;
 
 /**
  * Implementierung des Anwendungskern-Wrappers.
@@ -52,6 +63,10 @@ public class AwkWrapperImpl implements AwkWrapper {
 	 * Die Komponente des Anwendungskerns für die Erstellung von Terminfindungen 
 	 */
 	private Erstellung erstellung;
+	/**
+	 * Die Komponente des Anwendungskerns für die Erstellung von Terminfindungen 
+	 */
+	private Verwaltung verwaltung;
 	/**
 	 * Die Komponente des Anwendungskerns für die Teilnahme an Terminfindungen
 	 */
@@ -95,7 +110,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 	 */
 	public TerminfindungModel ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException {
 
-		Terminfindung tf = erstellung.leseTerminfindung(terminfindungsNr);
+		Terminfindung tf = verwaltung.leseTerminfindung(terminfindungsNr);
 		return map(tf);	
 	}
 
@@ -106,9 +121,9 @@ public class AwkWrapperImpl implements AwkWrapper {
 		
 		if (terminfindungModel == null) throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 		
-		Terminfindung terminfindung = erstellung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
 
-		erstellung.setzeVeranstaltungstermin (terminfindung, zeitraumNr);
+		verwaltung.setzeVeranstaltungstermin (terminfindung, zeitraumNr);
 		
 		// gib die aktualisierte Terminfindung als Ergebnis zurück
 		return map(terminfindung);
@@ -124,7 +139,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 
 		// Übertrage die Datenstrukturen aus dem View in die Struktur des Anwendungskerns
 		// Lese die Terminfindung anhand ihrer Id
-		Terminfindung terminfindung = erstellung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
 	
 		// Der Teilnehmer wird neu erzeugt, der Name wird übertragen
 		Teilnehmer teilnehmer = new Teilnehmer();
@@ -164,7 +179,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 		// Lese die Terminfindung anhand ihrer Id, Konstruiere die entsprechende Liste für den Aufruf des
 		// Anwendungskerns
 		List<Zeitraum> zeitraumList = new ArrayList<>();
-		Terminfindung terminfindung = erstellung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
 
 		// Hole zu jedem zu löschenden Zeitraum das entsprechende Objekt des Anwendungskerns
 		for (ZeitraumModel zeitraumModel : viewZeitraeume) {
@@ -177,7 +192,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 		}
 
 		// rufe den Anwendungskern auf
-		erstellung.loescheZeitraeume(terminfindung, zeitraumList);
+		verwaltung.loescheZeitraeume(terminfindung, zeitraumList);
 
 		// gib die aktualisierte Terminfindung als Ergebnis zurück
 		return map(terminfindung);
@@ -259,6 +274,14 @@ public class AwkWrapperImpl implements AwkWrapper {
 		this.beanMapper = beanMapper;
 	}
 
+	public Verwaltung getVerwaltung() {
+		return verwaltung;
+	}
+
+	public void setVerwaltung(Verwaltung verwaltung) {
+		this.verwaltung = verwaltung;
+	}
+	
 	public Erstellung getErstellung() {
 		return erstellung;
 	}

@@ -44,6 +44,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.core.verwaltung.Verwaltung;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
@@ -63,9 +64,9 @@ public class TestErstellung {
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	
 	@Autowired
-	Erstellung erstellung;
+	Verwaltung verwaltung;
 	/**
-	 * Test method for {@link de.msg.terminfindung.core.erstellung.impl.ErstellungImpl#leseTerminfindung(java.lang.Long)}.
+	 * Test method for {@link de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl#leseTerminfindung(java.lang.Long)}.
 	 * @throws TerminfindungBusinessException 
 	 */
 	@Test
@@ -74,7 +75,7 @@ public class TestErstellung {
 		// Testdaten werde bei der Datenbank-Initialisierung durch JDBC bereitgestellt.
 		// Siehe Test-SQL-Skript "test-data.sql" in src/test/resources
 		
-		Terminfindung tf = erstellung.leseTerminfindung(2L);
+		Terminfindung tf = verwaltung.leseTerminfindung(2L);
 		
 		assertNotNull(tf);
 		assertNotNull(tf.getTermine());

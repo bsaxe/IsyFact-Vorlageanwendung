@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import de.msg.terminfindung.core.verwaltung.Verwaltung;
 import de.msg.terminfindung.gui.terminfindung.model.*;
 import org.dozer.Mapper;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class TestBeanMapping {
 	Mapper beanMapper;
 	
 	@Autowired
-	Erstellung erstellung;
+	Verwaltung verwaltung;
 
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	Date DATE1=dateParse("2100-01-01");

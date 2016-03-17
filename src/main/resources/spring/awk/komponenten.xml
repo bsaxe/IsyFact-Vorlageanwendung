@@ -39,6 +39,11 @@
 	<bean id="erstellungImpl"
 		class="de.msg.terminfindung.core.erstellung.impl.ErstellungImpl">
 		<property name="terminfindungDao" ref="terminfindungImpl"/>
+	</bean>
+	
+	<bean id="verwaltungImpl"
+		class="de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl">
+		<property name="terminfindungDao" ref="terminfindungImpl"/>
 		<property name="teilnehmerDao" ref="teilnehmerImpl"/>
 		<property name="tagDao" ref="terminImpl"/>
 		<property name="zeitraumDao" ref="zeitraumImpl"/>

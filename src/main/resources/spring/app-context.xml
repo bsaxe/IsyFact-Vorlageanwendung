@@ -111,6 +111,7 @@
     <bean id="awkWrapperImpl"
           class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
         <property name="erstellung" ref="erstellungImpl"></property>
+        <property name="verwaltung" ref="verwaltungImpl"></property>
         <property name="teilnahme" ref="teilnahmeImpl"></property>
         <property name="beanMapper" ref="beanMapper"></property>
     </bean>
