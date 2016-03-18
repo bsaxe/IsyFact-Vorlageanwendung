@@ -50,12 +50,6 @@
 		<transition on="finished" to="verwaltenViewState"/>
 	</subflow-state>
 
-	<!-- Redirect ist noch nicht implementiert. -->
-	<!-- An dieser Stelle muss der Verwalten-Flow beendet werden und eine -->
-	<!-- Weiterleitung auf den Teilnehmen-Flow erzeugt werden. -->
-	<!-- Dabei muss die Terminfindungsnummer (als Request Parameter) übergeben werden. -->
-	<!-- TODO: Teminfindungsnummer übergeben -->
-	<end-state id="changeViewState"/>
-	<!-- <end-state id="changeViewState"  view="flowRedirect:teilnehmenFlow"></end-state> -->
+	<end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfnr=#{tfNummer}" />
 
 </flow>
