@@ -65,6 +65,7 @@
 		<webflow:flow-location path="/WEB-INF/gui/erstellen/erstellenFlow.xml" />
 		<webflow:flow-location path="/WEB-INF/gui/teilnehmen/teilnehmenFlow.xml" />
 		<webflow:flow-location path="/WEB-INF/gui/login/loginFlow.xml" />
+		<webflow:flow-location path="/WEB-INF/gui/startFlow.xml" />
 	</webflow:flow-registry>
 
 	<webflow:flow-builder-services id="flowBuilderServices"
