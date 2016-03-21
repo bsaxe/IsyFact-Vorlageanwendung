@@ -48,14 +48,14 @@ import de.msg.terminfindung.persistence.entity.Terminfindung;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Profile("dev")
 @DirtiesContext(classMode=ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 public class TestTerminfindungDao {
 
 	@Autowired
 	private TerminfindungDao tfDAO;
 	
 	@Test
-	@Rollback(true)
-	@Transactional
+	@Rollback
 	public void testSpeichern() {
 		assertNotNull(tfDAO);
 		Terminfindung tf = new Terminfindung(new Organisator("Sepp"),"Grillfest 2015");
@@ -63,7 +63,7 @@ public class TestTerminfindungDao {
 	}
 	
 	@Test
-	@Rollback(true)
+	@Rollback
 	@Transactional
 	public void testSuchenMitId() {
 		assertNotNull(tfDAO);
@@ -72,7 +72,7 @@ public class TestTerminfindungDao {
 	}
 	
 	@Test
-	@Rollback(true)
+	@Rollback
 	@Transactional
 	public void testLoesche() {
 		assertNotNull(tfDAO);

@@ -26,8 +26,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestTeilnehmerDao.class, TestTeilnehmerZeitraumDao.class,
-		TestTerminfindungDao.class, TestZeitraumDao.class })
+@SuiteClasses({TestTeilnehmerDao.class, TestTeilnehmerZeitraumDao.class,
+        TestTerminfindungDao.class, TestZeitraumDao.class})
 public class TestAllDaos {
 
 }

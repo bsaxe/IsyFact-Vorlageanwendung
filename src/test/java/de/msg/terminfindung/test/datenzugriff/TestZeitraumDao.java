@@ -41,43 +41,41 @@ import org.springframework.transaction.annotation.Transactional;
 import de.msg.terminfindung.persistence.dao.ZeitraumDao;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
-@ContextConfiguration(locations = { "classpath:spring/test-app-context.xml" })
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
-		TransactionalTestExecutionListener.class })
+@ContextConfiguration(locations = {"classpath:spring/test-app-context.xml"})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+        TransactionalTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Profile("dev")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 public class TestZeitraumDao {
-	
-	@Autowired
-	private ZeitraumDao ztDao;
 
-	@Test
-	@Rollback(true)
-	@Transactional
-	public void testSpeichern() {
-		assertNotNull(ztDao);
-		Zeitraum zt = new Zeitraum("Mittags");
-		ztDao.speichere(zt);
-	}
+    @Autowired
+    private ZeitraumDao ztDao;
 
-	@Test
-	@Rollback(true)
-	@Transactional
-	public void testSuchenMitId() {
-		assertNotNull(ztDao);
-		Zeitraum zt = ztDao.sucheMitId(5L);
-		assertNotNull(zt);
-	}
+    @Test
+    @Rollback
+    public void testSpeichern() {
+        assertNotNull(ztDao);
+        Zeitraum zt = new Zeitraum("Mittags");
+        ztDao.speichere(zt);
+    }
 
-	@Test
-	@Rollback(true)
-	@Transactional
-	public void testLoesche() {
-		assertNotNull(ztDao);
-		ztDao.loesche(ztDao.sucheMitId(5L));
-		Zeitraum zt = ztDao.sucheMitId(5L);
-		assertNull(zt);
-	}
+    @Test
+    @Rollback
+    public void testSuchenMitId() {
+        assertNotNull(ztDao);
+        Zeitraum zt = ztDao.sucheMitId(5L);
+        assertNotNull(zt);
+    }
+
+    @Test
+    @Rollback
+    public void testLoesche() {
+        assertNotNull(ztDao);
+        ztDao.loesche(ztDao.sucheMitId(5L));
+        Zeitraum zt = ztDao.sucheMitId(5L);
+        assertNull(zt);
+    }
 
 }

@@ -21,12 +21,8 @@ package de.msg.terminfindung.test.datenzugriff;
  */
 
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-
+import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
+import de.msg.terminfindung.persistence.entity.Teilnehmer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,56 +37,44 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
-import de.msg.terminfindung.persistence.entity.Teilnehmer;
-import de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-@ContextConfiguration(locations = { "classpath:spring/test-app-context.xml" })
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
-    TransactionalTestExecutionListener.class })
+@ContextConfiguration(locations = {"classpath:spring/test-app-context.xml"})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+        TransactionalTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Profile("dev")
-@DirtiesContext(classMode=ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 public class TestTeilnehmerDao {
 
-	@Autowired
-	private TeilnehmerDao tlDAO;
-	
-	@Test
-	@Rollback(true)
-	@Transactional
-	public void testSpeichern() {
-		assertNotNull(tlDAO);
-		Teilnehmer tl = new Teilnehmer("Sepp");
-		tlDAO.speichere(tl);
-	}
-	
-	@Test
-	@Rollback(true)
-	@Transactional
-	public void testSuchenMitId() {
-		assertNotNull(tlDAO);
-		Teilnehmer tl = tlDAO.sucheMitId(1200L);
-		assertNotNull(tl);
-	}
-	
-	@Test
-	@Rollback(true)
-	@Transactional
-	public void testLoesche() {
-		assertNotNull(tlDAO);
-		tlDAO.loesche(tlDAO.sucheMitId(1200L));
-		Teilnehmer tf = tlDAO.sucheMitId(1200L);
-		assertNull(tf);
-	}
-	
-	@Test
-	@Rollback(true)
-	@Transactional
-	public void testLadePraeferenzZuTeilnehmer() {
-		assertNotNull(tlDAO);
-		Collection<TeilnehmerZeitraum> list = tlDAO.ladePraeferenzZuTeilnehmer(tlDAO.sucheMitId(1200L));
-		assertTrue(list.size()==1);
-	}
-	
+    @Autowired
+    private TeilnehmerDao tlDAO;
+
+    @Test
+    @Rollback
+    public void testSpeichern() {
+        assertNotNull(tlDAO);
+        Teilnehmer tl = new Teilnehmer("Sepp");
+        tlDAO.speichere(tl);
+    }
+
+    @Test
+    @Rollback
+    public void testSuchenMitId() {
+        assertNotNull(tlDAO);
+        Teilnehmer tl = tlDAO.sucheMitId(1200L);
+        assertNotNull(tl);
+    }
+
+    @Test
+    @Rollback
+    public void testLoesche() {
+        assertNotNull(tlDAO);
+        tlDAO.loesche(tlDAO.sucheMitId(1200L));
+        Teilnehmer tf = tlDAO.sucheMitId(1200L);
+        assertNull(tf);
+    }
+
 }

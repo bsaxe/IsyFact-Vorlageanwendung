@@ -59,7 +59,7 @@ public class AwfTerminfindungErstellenTest {
     //ToDo: Für weitere Tests, DAO mocken und injecten
 
     List<Tag> termine;
-    AwfTerminfindungErstellen awfTerminfindungErstellen = new AwfTerminfindungErstellen();
+    private AwfTerminfindungErstellen awfTerminfindungErstellen = new AwfTerminfindungErstellen();
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();

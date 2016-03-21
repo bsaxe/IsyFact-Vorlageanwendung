@@ -50,14 +50,14 @@ import de.msg.terminfindung.persistence.entity.Zeitraum;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Profile("dev")
 @DirtiesContext(classMode=ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 public class TestTeilnehmerZeitraumDao {
 
 	@Autowired
 	private TeilnehmerZeitraumDao tzDao;
 	
 	@Test
-	@Rollback(true)
-	@Transactional
+	@Rollback
 	public void testSpeichern() {
 		assertNotNull(tzDao);
 		TeilnehmerZeitraum tz = new TeilnehmerZeitraum(new Teilnehmer("Seppe"), new Zeitraum("abends"), Praeferenz.NEIN);
@@ -65,7 +65,7 @@ public class TestTeilnehmerZeitraumDao {
 	}
 	
 	@Test
-	@Rollback(true)
+	@Rollback
 	@Transactional
 	public void testSuchenMitId() {
 		assertNotNull(tzDao);
@@ -74,7 +74,7 @@ public class TestTeilnehmerZeitraumDao {
 	}
 	
 	@Test
-	@Rollback(true)
+	@Rollback
 	@Transactional
 	public void testLoesche() {
 		assertNotNull(tzDao);
