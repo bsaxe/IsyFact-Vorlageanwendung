@@ -45,81 +45,63 @@
 								</h:panelGroup>
 								<table class="selectAbschliessen">
 									<tr>
-										<td></td>
-										<ui:repeat var="tag"
-											value="#{teilnehmenModel.terminfindung.tage}">
-											<td colspan="#{tag.anzahlZeitraeume}"
-												class="borderTd dateForZeitraeume"><h:outputText
-													value="#{tag.datum}">
-													<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-												</h:outputText></td>
-										</ui:repeat>
+										<th>Datum</th>
+										<th>Zeitraum</th>
+										<th>Zusagen</th>
+										<th>Unter vorbehalt</th>
+										<th>Absagen</th>
+										<th></th>				
 									</tr>
-									<tr>
-										<td></td>
-										<ui:repeat var="zeitraum"
-											value="#{teilnehmenModel.terminfindung.alleZeitraeume}">
-											<td class="borderTd #{teilnehmenModel.zeitraumIsDefZeitraum(zeitraum) ? 'tdDefTrue' : ''}">
-												<h:outputText value="#{zeitraum.beschreibung}" />
-											</td>
-										</ui:repeat>
-									</tr>
- 
-									<ui:repeat var="teilnehmer" value="#{teilnehmenModel.terminfindung.teilnehmer}">
-										<tr> 
-											<td>
-												<h:outputText value="#{teilnehmer.name}"/>
-											</td> 
-											<ui:repeat
-												value="#{teilnehmenModel.terminfindung.alleZeitraeume}"
-												var="zeitraum">
-												<c:set var="prefNumber" value="#{teilnehmer.getPraeferenz(zeitraum).getPrefNumber()}" />
-												<td class="borderTd #{(prefNumber == 0)? 'tdFalse' : (
-																		(prefNumber == 1)? 'tdTrue' : (
-																			(prefNumber == 2)? 'tdHaveTo' : ''))}"></td>
-											</ui:repeat> 
-										</tr>
-									</ui:repeat>
-										 
-									<tr>
-										<h:panelGroup rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}">
-											<td class="teilnehmerTd">
-												<isy:formInput
-													reference="teilnehmerName"
-													value="#{teilnehmenModel.teilnehmerName}"
-													disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
-											</td>
-											<ui:repeat var="zeitraum"
-												value="#{teilnehmenModel.terminfindung.alleZeitraeume}">
-												<td><h:selectOneRadio required="true"
-														layout="pageDirection"
+									<ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
+										<ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+											<tr>
+												<td>
+													<h:outputText value="#{tag.datum}" rendered="#{tag.zeitraeume.get(0).zeitraum_nr == zeitraum.zeitraum_nr}">
+														<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+													</h:outputText>
+												</td>
+												<td class="borderTd #{teilnehmenModel.zeitraumIsDefZeitraum(zeitraum) ? 'tdDefTrue' : ''}">
+													<h:outputText value="#{zeitraum.beschreibung}" />
+												</td>
+												<td class="borderTd tdTrue">
+													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[1]}"/>
+												</td>
+												<td class="borderTd tdHaveTo">
+													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[2]}"/>
+												</td>
+												<td class="borderTd tdFalse">
+													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[0]}"/>
+												</td>
+												<td>
+													<h:selectOneRadio required="true" rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"
+														layout="lineDirection" style="width: 10%"
 														disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"
 														value="#{teilnehmenModel.zeitraumAuswahl.checkedRadio[zeitraum.zeitraum_nr]}">
-														<f:selectItem itemValue="1" itemLabel="Ja" />
-														<f:selectItem itemValue="2" itemLabel="(Ja)" />
-														<f:selectItem itemValue="0" itemLabel="Nein" />
+														<f:selectItem itemValue="1" itemLabel="J" />
+														<f:selectItem itemValue="2" itemLabel="V" />
+														<f:selectItem itemValue="0" itemLabel="N" />
 													</h:selectOneRadio>
 												</td>
-											</ui:repeat>
-										</h:panelGroup>
-									</tr>
-
-									<tr>
-										<td/>
-										<ui:repeat value="#{teilnehmenModel.terminfindung.alleZeitraeume}" var="zeitraum">
-											<c:set var="anzahlStimmen" value="#{zeitraum.zaehleStimmen()}"/>												
-											<td class="anzahlTd">#{anzahlStimmen[1]+anzahlStimmen[2]}</td>
+											</tr>
 										</ui:repeat>
-									</tr>
-
+									</ui:repeat>
 								</table>
-							</div>
+							</div>							
 						</div>
 						<hr />
-						<isy:button action="saveAllFalse" value="Ich kann nicht"
-							disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
-						<isy:button action="save" value="Speichern"
-							disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
+						<div class="col-lg-4">
+							<h:outputLabel for="anzahlTeilnehmerLabel" value="Gesamtanzahl Teilnehmer: "/>
+							<h:outputText id="anzahlTeilnehmer" value="#{teilnehmenModel.terminfindung.teilnehmer.size()}" style="font-weight:bold"/>							
+							<isy:formInput
+								reference="teilnehmerName"
+								value="#{teilnehmenModel.teilnehmerName}"
+								label="Name:"
+								disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
+							<isy:button action="saveAllFalse" value="Ich kann nicht"
+								disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
+							<isy:button action="save" value="Speichern"
+								disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
+						</div>
 					</div>
 				</f:facet>
 			</isy:panel>
