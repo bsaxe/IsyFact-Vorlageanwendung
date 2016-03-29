@@ -24,6 +24,7 @@ package de.msg.terminfindung.test.datenzugriff;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import de.msg.terminfindung.common.konstanten.TestProfile;
 import de.msg.terminfindung.persistence.entity.Praeferenz;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +49,7 @@ import de.msg.terminfindung.persistence.entity.Zeitraum;
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
     TransactionalTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
-@Profile("dev")
+@Profile(TestProfile.UNIT_TEST)
 @DirtiesContext(classMode=ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
 public class TestTeilnehmerZeitraumDao {

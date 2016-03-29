@@ -24,6 +24,9 @@ package de.msg.terminfindung.test.datenzugriff;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import com.google.common.base.Joiner;
+import de.msg.terminfindung.common.konstanten.TestProfile;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +49,7 @@ import de.msg.terminfindung.persistence.entity.Terminfindung;
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
     TransactionalTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
-@Profile("dev")
+@Profile(TestProfile.UNIT_TEST)
 @DirtiesContext(classMode=ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
 public class TestTerminfindungDao {

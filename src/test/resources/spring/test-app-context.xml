@@ -67,11 +67,11 @@
 	</bean>
 
 	<!-- ToDo: Datenbank über DBUnit initialisieren -->
-	<jdbc:initialize-database>
+<!--	<jdbc:initialize-database>
 		<jdbc:script location="classpath:schema.sql" />
 		<jdbc:script location="classpath:test-data.sql" />
 	</jdbc:initialize-database>
-
+-->
 
 	<!-- Abstrakte Basisklasse für DAOs -->
 	<bean id="abstractDao" class="de.bund.bva.pliscommon.persistence.dao.AbstractDao"

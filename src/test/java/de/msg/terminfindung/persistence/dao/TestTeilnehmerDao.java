@@ -1,4 +1,4 @@
-package de.msg.terminfindung.test.datenzugriff;
+package de.msg.terminfindung.persistence.dao;
 
 /*
  * #%L
@@ -21,62 +21,64 @@ package de.msg.terminfindung.test.datenzugriff;
  */
 
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import de.msg.terminfindung.common.konstanten.TestProfile;
+import de.msg.terminfindung.persistence.entity.Teilnehmer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.msg.terminfindung.persistence.dao.ZeitraumDao;
-import de.msg.terminfindung.persistence.entity.Zeitraum;
+import static org.junit.Assert.*;
 
 @ContextConfiguration(locations = {"classpath:spring/test-app-context.xml"})
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionDbUnitTestExecutionListener.class,
+        DbUnitTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Profile(TestProfile.UNIT_TEST)
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
-public class TestZeitraumDao {
+public class TestTeilnehmerDao {
+
+    private static final Long TEILNEHMER_ID = 2L;
 
     @Autowired
-    private ZeitraumDao ztDao;
+    private TeilnehmerDao teilnehmerDao;
 
     @Test
-    @Rollback
+    @DatabaseSetup("testTeilnehmerDaoSetup.xml")
+    @ExpectedDatabase(value = "testTeilnehmerDaoSpeichernExpected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testSpeichern() {
-        assertNotNull(ztDao);
-        Zeitraum zt = new Zeitraum("Mittags");
-        ztDao.speichere(zt);
+        teilnehmerDao.speichere(new Teilnehmer("Sepp"));
     }
 
     @Test
-    @Rollback
+    @DatabaseSetup("testTeilnehmerDaoSetup.xml")
     public void testSuchenMitId() {
-        assertNotNull(ztDao);
-        Zeitraum zt = ztDao.sucheMitId(5L);
-        assertNotNull(zt);
+        Teilnehmer teilnehmer = teilnehmerDao.sucheMitId(TEILNEHMER_ID);
+
+        assertNotNull(teilnehmer);
+        assertEquals("Herbert", teilnehmer.getName());
     }
 
     @Test
-    @Rollback
+    @DatabaseSetup("testTeilnehmerDaoSetup.xml")
     public void testLoesche() {
-        assertNotNull(ztDao);
-        ztDao.loesche(ztDao.sucheMitId(5L));
-        Zeitraum zt = ztDao.sucheMitId(5L);
-        assertNull(zt);
+        Teilnehmer teilnehmer = teilnehmerDao.sucheMitId(TEILNEHMER_ID);
+        teilnehmerDao.loesche(teilnehmer);
+
+        assertNull(teilnehmerDao.sucheMitId(TEILNEHMER_ID));
     }
 
 }
