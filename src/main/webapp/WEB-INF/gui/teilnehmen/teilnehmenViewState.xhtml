@@ -34,8 +34,7 @@
 				<f:facet name="panelHeader">
 						Teilnehmer
 					</f:facet>
-
-				<f:facet name="panelBody">
+				<f:facet name="panelBody" >
 					<div class="form-horizontal">
 						<div class="row row-df">
 							<div class="col-lg-4">
@@ -43,12 +42,21 @@
 									<h:outputText value="Die Terminfindung für diesen Termin ist bereits abgeschlossen"/>
 									<p/>
 								</h:panelGroup>
+								<h:panelGroup>					
+									<h:outputLabel for="teilnehmerLabel" value="Eingetragene Teilnehmer(#{teilnehmenModel.terminfindung.teilnehmer.size()}): "/>
+									<h:outputText id="teilnehmerLabel" value="#{teilnehmenModel.terminfindung.teilnehmerLabel}" style="font-weight:bold; padding-inline-start: 15px"/>														
+									<isy:formInput
+										reference="teilnehmerName"
+										value="#{teilnehmenModel.teilnehmerName}"
+										label="Name:"										
+										rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"/>									
+								</h:panelGroup>								
 								<table class="selectAbschliessen">
 									<tr>
 										<th>Datum</th>
 										<th>Zeitraum</th>
 										<th>Zusagen</th>
-										<th>Unter vorbehalt</th>
+										<th>Unter Vorbehalt</th>
 										<th>Absagen</th>
 										<th></th>				
 									</tr>
@@ -65,16 +73,28 @@
 												</td>
 												<td class="borderTd tdTrue">
 													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[1]}"/>
+													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
+            											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 1)}"
+            											data-toggle="tooltip" class="btn btn-link rf-popover" data-original-title="" title="" >
+            											<span class="icon icon-info"></span></a>
 												</td>
 												<td class="borderTd tdHaveTo">
 													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[2]}"/>
+													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
+            											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 2)}"
+            											data-toggle="tooltip" class="btn btn-link rf-popover" data-original-title="" title="" >
+            											<span class="icon icon-info"></span></a>
 												</td>
 												<td class="borderTd tdFalse">
 													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[0]}"/>
+													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
+            											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 0)}"
+            											data-toggle="tooltip" class="btn btn-link rf-popover" data-original-title="" title="" >
+            											<span class="icon icon-info"></span></a>
 												</td>
-												<td>
+												<td class="radioJVN">
 													<h:selectOneRadio required="true" rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"
-														layout="lineDirection" style="width: 10%"
+														layout="lineDirection"
 														disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"
 														value="#{teilnehmenModel.zeitraumAuswahl.checkedRadio[zeitraum.zeitraum_nr]}">
 														<f:selectItem itemValue="1" itemLabel="J" />
@@ -90,13 +110,6 @@
 						</div>
 						<hr />
 						<div class="col-lg-4">
-							<h:outputLabel for="anzahlTeilnehmerLabel" value="Gesamtanzahl Teilnehmer: "/>
-							<h:outputText id="anzahlTeilnehmer" value="#{teilnehmenModel.terminfindung.teilnehmer.size()}" style="font-weight:bold"/>							
-							<isy:formInput
-								reference="teilnehmerName"
-								value="#{teilnehmenModel.teilnehmerName}"
-								label="Name:"
-								disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
 							<isy:button action="saveAllFalse" value="Ich kann nicht"
 								disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
 							<isy:button action="save" value="Speichern"
