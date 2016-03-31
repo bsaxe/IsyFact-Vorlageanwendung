@@ -71,26 +71,26 @@
 												<td class="borderTd #{teilnehmenModel.zeitraumIsDefZeitraum(zeitraum) ? 'tdDefTrue' : ''}">
 													<h:outputText value="#{zeitraum.beschreibung}" />
 												</td>
-												<td class="borderTd tdTrue">
-													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[1]}"/>
+												<td class="borderTd tdTrue">													
 													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
             											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 1)}"
-            											data-toggle="tooltip" class="btn btn-link rf-popover" data-original-title="" title="" >
-            											<span class="icon icon-info"></span></a>
+            											data-toggle="tooltip" class="rf-popover" data-original-title="" title="" >
+            											<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[1]}"/>
+            										</a>
 												</td>
 												<td class="borderTd tdHaveTo">
-													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[2]}"/>
 													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
             											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 2)}"
-            											data-toggle="tooltip" class="btn btn-link rf-popover" data-original-title="" title="" >
-            											<span class="icon icon-info"></span></a>
+            											data-toggle="tooltip" class="rf-popover" data-original-title="" title="" >
+            											<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[2]}"/>
+            										</a>
 												</td>
 												<td class="borderTd tdFalse">
-													<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[0]}"/>
 													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
             											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 0)}"
-            											data-toggle="tooltip" class="btn btn-link rf-popover" data-original-title="" title="" >
-            											<span class="icon icon-info"></span></a>
+            											data-toggle="tooltip" class="rf-popover" data-original-title="" title="" >
+            											<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[0]}"/>
+            										</a>
 												</td>
 												<td class="radioJVN">
 													<h:selectOneRadio required="true" rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"

@@ -41,8 +41,8 @@
 	</view-state>
 
 	<subflow-state id="abschliessenViewState" subflow="abschliessenFlow" >
-		<transition on="finished" to="verwaltenViewState">
-			<evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)"/>
+		<transition on="finished" to="verwaltenViewState">						
+			<evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)"/>			
 		</transition>
 	</subflow-state>
 
@@ -50,6 +50,6 @@
 		<transition on="finished" to="verwaltenViewState"/>
 	</subflow-state>
 
-	<end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfnr=#{tfNummer}" />
+	<end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfnr=#{tfNumberHolder.number}" />
 
 </flow>
