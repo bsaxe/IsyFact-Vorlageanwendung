@@ -1,0 +1,13 @@
+<dataset>
+    <Teilnehmer teilnehmer_nr="1" name="Klaus"/>
+    <Teilnehmer teilnehmer_nr="2" name="Herbert"/>
+    <Teilnehmer teilnehmer_nr="3" name="Sepp"/>
+
+    <Zeitraum zeitraum_nr="1" beschreibung="9-11 Uhr"/>
+    <Zeitraum zeitraum_nr="2" beschreibung="über Mittag"/>
+
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="1" teilnehmer_nr="1" zeitraum_nr="1" praeferenz="0" />
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="2" teilnehmer_nr="1" zeitraum_nr="2" praeferenz="1" />
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="3" teilnehmer_nr="2" zeitraum_nr="1" praeferenz="2" />
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="4" teilnehmer_nr="2" zeitraum_nr="2" praeferenz="1" />
+</dataset>

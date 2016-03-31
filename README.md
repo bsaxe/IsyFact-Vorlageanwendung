@@ -3,7 +3,11 @@ Die Vorlageanwendung der IsyFact zeigt anhand einer Anwendung zur gemeinsamen Pl
 
 **Wichtig:** Der aktuelle Stand der Anwendung entspricht dem einer Alpha-Version. Die Anwendung ist lauffähig und demonstriert bereits den Einsatz von Teilen der IsyFact-Standards. Sie ist allerdings nicht als fertig zu betrachten und kann möglicherweise gravierende Fehler beinhalten. Die Vorlageanwendung wird ständig von einem gemeinsamen Team des Bundesverwaltungsamts und der msg systems ag weiterentwickelt.
 
+## Entwicklungsumgebung
 In Kürze finden Sie hier eine Beschreibung, wie Sie eine Entwicklungsumgebung für die Vorlageanwendung aufbauen.
+
+### Spring-Profile
+Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarbeit leichter zu gestalten. Das Profil `produktion` ist als Standard voreingestellt und startet die Anwendung unter Produktionsbedingungen. Das Profil `entwicklung` ist für den Betrieb innerhalb einer Entwicklungsumgebung vorgesehen und verwendet u.a. eine In-Memory-Datenbank.
 
 ## IsyFact
 Die IsyFact ist eine Software Factory für den Bau von komplexen IT-Anwendungslandschaften, die vom Bundesverwaltungsamt entwickelt wurde. Sie bündelt bestehendes technisches Know-how um Anwendungssysteme effizienter entwickeln und betreiben zu können.

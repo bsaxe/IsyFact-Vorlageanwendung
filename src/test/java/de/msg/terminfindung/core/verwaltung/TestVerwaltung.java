@@ -21,15 +21,13 @@ package de.msg.terminfindung.core.verwaltung;
  */
 
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.common.konstanten.TestProfile;
+import de.msg.terminfindung.persistence.entity.Terminfindung;
+import de.msg.terminfindung.persistence.entity.Zeitraum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,22 +38,21 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.core.verwaltung.Verwaltung;
-import de.msg.terminfindung.persistence.entity.Terminfindung;
-import de.msg.terminfindung.persistence.entity.Zeitraum;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author msg systems ag, Maximilian Falter
  */
 @ContextConfiguration(locations = {"classpath:spring/test-app-context.xml"})
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionDbUnitTestExecutionListener.class,
+        DbUnitTestExecutionListener.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-@Profile("dev")
+@Profile(TestProfile.UNIT_TEST)
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
 public class TestVerwaltung {
@@ -69,20 +66,22 @@ public class TestVerwaltung {
      * @throws TerminfindungBusinessException
      */
     @Test
+    @DatabaseSetup("testVerwaltungSetup.xml")
     public void testLeseTerminfindung() throws TerminfindungBusinessException {
 
         // Testdaten werde bei der Datenbank-Initialisierung durch JDBC bereitgestellt.
         // Siehe Test-SQL-Skript "test-data.sql" in src/test/resources
 
-        Terminfindung tf = verwaltung.leseTerminfindung(2L);
+        Terminfindung tf = verwaltung.leseTerminfindung(1L);
 
         assertNotNull(tf);
         assertNotNull(tf.getTermine());
-        assert (tf.getTermine().size() == 1);
+        assertEquals(1, tf.getTermine().size());
+
         List<Zeitraum> zeitraeume = tf.getTermine().get(0).getZeitraeume();
-        assert (zeitraeume != null);
-        assert (zeitraeume.size() == 1);
-        assert (zeitraeume.get(0).getBeschreibung().equals("abends"));
+        assertNotNull(zeitraeume);
+        assertEquals(1, zeitraeume.size());
+        assertEquals("abends", zeitraeume.get(0).getBeschreibung());
     }
 
     /**
