@@ -23,62 +23,33 @@ package de.msg.terminfindung.persistence.dao;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import de.msg.terminfindung.common.konstanten.TestProfile;
-import de.msg.terminfindung.persistence.entity.Teilnehmer;
-import org.junit.Test;
+import org.junit.After;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/test-app-context.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionDbUnitTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@RunWith(SpringJUnit4ClassRunner.class)
 @Profile(TestProfile.UNIT_TEST)
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
-public class TestTeilnehmerDao {
+public abstract class AbstraktDaoTest {
 
-    private static final Long TEILNEHMER_ID = 2L;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Autowired
-    private TeilnehmerDao teilnehmerDao;
-
-    @Test
-    @DatabaseSetup("testTeilnehmerDaoSetup.xml")
-    @ExpectedDatabase(value = "testTeilnehmerDaoSpeichernExpected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
-    public void testSpeichern() {
-        teilnehmerDao.speichere(new Teilnehmer("Sepp"));
-    }
-
-    @Test
-    @DatabaseSetup("testTeilnehmerDaoSetup.xml")
-    public void testSuchenMitId() {
-        Teilnehmer teilnehmer = teilnehmerDao.sucheMitId(TEILNEHMER_ID);
-
-        assertNotNull(teilnehmer);
-        assertEquals("Herbert", teilnehmer.getName());
-    }
-
-    @Test
-    @DatabaseSetup("testTeilnehmerDaoSetup.xml")
-    public void testLoesche() {
-        Teilnehmer teilnehmer = teilnehmerDao.sucheMitId(TEILNEHMER_ID);
-        teilnehmerDao.loesche(teilnehmer);
-
-        assertNull(teilnehmerDao.sucheMitId(TEILNEHMER_ID));
+    @After
+    public void commit() {
+        em.flush();
     }
 
 }
