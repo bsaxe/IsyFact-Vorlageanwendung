@@ -121,12 +121,12 @@
         <dependency>
             <groupId>de.bund.bva.pliscommon</groupId>
             <artifactId>plis-persistence</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.3</version>
         </dependency>
         <dependency>
             <groupId>de.bund.bva.pliscommon</groupId>
             <artifactId>plis-sicherheit</artifactId>
-            <version>1.3.0</version>
+            <version>1.3.8</version>
             <exclusions>
                 <exclusion>
                     <groupId>de.bund.bva.pliscommon</groupId>
@@ -141,7 +141,7 @@
         <dependency>
             <groupId>de.bund.bva.pliscommon</groupId>
             <artifactId>plis-aufrufkontext</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.14</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
