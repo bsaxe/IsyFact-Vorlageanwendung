@@ -21,6 +21,7 @@
 
 .selectAbschliessen {
 	white-space: nowrap;
+	background-color: transparent; 
 }
 
 .selectAbschliessen div[class="col-lg-6"] {
@@ -81,24 +82,20 @@ input[type=checkbox] {
 	background-color: lightblue;
 }
 
-.tdTrue {
-	opacity: 0.5;
-	background-color: green;
+.tdTrue {	
+	background-color: #90C745;
 }
 
-.tdFalse {
-	opacity: 0.5;
-	background-color: red;
+.tdFalse {	
+	background-color: #d03232;
 }
 
-.tdHaveTo {
-	opacity: 0.5;
-	background-color: orange;
+.tdHaveTo {	
+	background-color: #F59D35;
 }
 
 .tdDefTrue {
-	opacity: 0.5;
-	background-color: orange;
+	background-color: #F59D35;
 }
 
 .tableZeiten tr td {
@@ -132,4 +129,13 @@ input[type=submit] {
     text-align: left;
     padding: 4px;
     width: 100px;
+}
+
+.radioJVN table tbody tr td{
+	max-width: 60px;
+	min-width: 60px;
+}
+
+.radioJVN table{
+	background-color: transparent;
 }

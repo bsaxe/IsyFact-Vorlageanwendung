@@ -194,4 +194,32 @@ public class TerminfindungModel implements Serializable{
 		this.veranstName = veranstName;
 	}
 	
+	public String getTeilnehmerLabel(){
+		StringBuilder alleTeilnehmer = new StringBuilder();
+		for (TeilnehmerModel teilnehmerModel : getTeilnehmer()) {
+			alleTeilnehmer.append(teilnehmerModel.getName());
+			alleTeilnehmer.append(", ");
+		} 		
+		if(alleTeilnehmer.length() > 0){
+			return alleTeilnehmer.delete(alleTeilnehmer.length() - 2, alleTeilnehmer.length()).toString();
+		}else{
+			return alleTeilnehmer.toString();
+		}
+		
+	}
+	
+	public String getTeilnehmerLabel(ZeitraumModel zeitraumModel, Integer pref){
+		StringBuilder alleTeilnehmer = new StringBuilder();
+		for (TeilnehmerZeitraumModel teilnehmerZeitraumModel : zeitraumModel.getTeilnehmerZeitraeume()) {
+			if(teilnehmerZeitraumModel.getPraeferenz().getPrefNumber() == pref.intValue()){
+				alleTeilnehmer.append(teilnehmerZeitraumModel.getTeilnehmer().getName());
+				alleTeilnehmer.append(", ");
+			}
+		} 		
+		if(alleTeilnehmer.length() > 0){
+			return alleTeilnehmer.delete(alleTeilnehmer.length() - 2, alleTeilnehmer.length()).toString();
+		}else{
+			return alleTeilnehmer.toString();
+		}
+	}
 }
