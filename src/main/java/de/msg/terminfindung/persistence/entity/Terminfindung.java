@@ -22,6 +22,7 @@ package de.msg.terminfindung.persistence.entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -68,13 +69,13 @@ public class Terminfindung implements Serializable {
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn(name="terminfnd_nr", referencedColumnName="terminfnd_nr")
 	@OrderBy("datum ASC")
-	private List<Tag> termine;
+	private List<Tag> termine = new ArrayList<>();
 	
 	@OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn(name="terminfnd_nr", referencedColumnName="terminfnd_nr")
 	@OrderBy("name ASC")
-	private List<Teilnehmer> teilnehmer;
+	private List<Teilnehmer> teilnehmer = new ArrayList<>();
 	
 	@Embedded private Organisator organisator;
 	
