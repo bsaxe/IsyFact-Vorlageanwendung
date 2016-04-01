@@ -36,26 +36,25 @@ import org.apache.log4j.Logger;
  * Basisklasse aller Controller.
  * Die Klasse hält die Referenz zum Anwendungskern.
  *
- * @author msg systems ag, Maximilian Falter, Dirk Jäger
- *
  * @param <T> Die Klasse des Models
+ * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
-public abstract class AbstractController<T extends AbstractModel>{
-	
-	private static final Logger LOG = Logger.getLogger(AbstractController.class);
-	
-	protected AwkWrapper awk;
+public abstract class AbstractController<T extends AbstractModel> {
+
+    private static final Logger LOG = Logger.getLogger(AbstractController.class);
+
+    protected AwkWrapper awk;
 
     protected TFNumberHolder tfNumberHolder;
 
-	protected GlobalFlowController globalFlowController;
+    protected GlobalFlowController globalFlowController;
 
-	protected ReloadableKonfiguration konfiguration;
+    protected ReloadableKonfiguration konfiguration;
 
-	protected void initialisiereModell (AbstractModel model) {
+    protected void initialisiereModell(AbstractModel model) {
 
-		model.setTestMode (this.isTestMode());
-	}
+        model.setTestMode(this.isTestMode());
+    }
 
     /**
      * Wandelt einen String in einen long Wert um.
@@ -65,53 +64,49 @@ public abstract class AbstractController<T extends AbstractModel>{
      * @param str der String
      * @return der String als long Wert
      */
-	private long convertStringToLong (String str) {
+    private long convertStringToLong(String str) {
 
-		long longValue;
-		try {
-			longValue = Long.parseLong(str.substring(0, str.length() - 1));
-		}
-		catch (NumberFormatException e) {
-			LOG.warn("NumberFormatException beim Umwandlung des Strings " + str + " nach long. Gebe 0L als Ergebnis zurück." );
-			longValue = 0L;
-		}
-		return longValue;
-	}
+        long longValue;
+        try {
+            longValue = Long.parseLong(str.substring(0, str.length() - 1));
+        } catch (NumberFormatException e) {
+            LOG.warn("NumberFormatException beim Umwandlung des Strings " + str + " nach long. Gebe 0L als Ergebnis zurück.");
+            longValue = 0L;
+        }
+        return longValue;
+    }
 
-	/**
-	 * Holt die Terminfindung aus dem Anwendungkern.
-	 * Die Nummer der Terminfindung wird anhand des übergebenen Request
-	 * Parameters bestimmt.
-	 *
-	 * @param model Das Model
-	 * @throws TerminfindungBusinessException 
-	 */
-	protected void holeTerminfindung (T model) throws TerminfindungTechnicalException {
+    /**
+     * Holt die Terminfindung aus dem Anwendungkern.
+     * Die Nummer der Terminfindung wird anhand des übergebenen Request
+     * Parameters bestimmt.
+     *
+     * @param model Das Model
+     * @throws TerminfindungBusinessException
+     */
+    protected void holeTerminfindung(T model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
         if (tfNumberHolder.getNumber() == null) {
             throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_KEINE_TERMINFINDUNGSNR);
         }
 
-		LOG.info("Hole Terminfindung vom Anwendungskern für Terminfindungsnummer " + tfNumberHolder.getNumber());
+        LOG.info("Hole Terminfindung vom Anwendungskern für Terminfindungsnummer " + tfNumberHolder.getNumber());
 
-		TerminfindungModel terminfindung;
-		try {
-			terminfindung = awk.ladeTerminfindung(tfNumberHolder.getNumber());
-			model.setTerminfindung(terminfindung);
-		} catch (TerminfindungBusinessException e) {
-			getGlobalFlowController().getMessageController().writeAndLogException(e);
-		}
-	}
+        TerminfindungModel terminfindung = awk.ladeTerminfindung(tfNumberHolder.getNumber());
+        model.setTerminfindung(terminfindung);
+    }
 
-	public boolean isTestMode () { return konfiguration.getAsBoolean("terminfindung.test.mode"); }
+    public boolean isTestMode() {
+        return konfiguration.getAsBoolean("terminfindung.test.mode");
+    }
 
-	public AwkWrapper getAwk() {
-		return awk;
-	}
+    public AwkWrapper getAwk() {
+        return awk;
+    }
 
-	public void setAwk(AwkWrapper awk) {
-		this.awk = awk;
-	}
+    public void setAwk(AwkWrapper awk) {
+        this.awk = awk;
+    }
 
     public TFNumberHolder getTfNumberHolder() {
         return tfNumberHolder;
@@ -123,18 +118,18 @@ public abstract class AbstractController<T extends AbstractModel>{
 
     public GlobalFlowController getGlobalFlowController() {
         return globalFlowController;
-	}
+    }
 
-	public void setGlobalFlowController(
-			GlobalFlowController globalFlowController) {
-		this.globalFlowController = globalFlowController;
-	}
+    public void setGlobalFlowController(
+            GlobalFlowController globalFlowController) {
+        this.globalFlowController = globalFlowController;
+    }
 
-	public ReloadableKonfiguration getKonfiguration() {
-		return konfiguration;
-	}
+    public ReloadableKonfiguration getKonfiguration() {
+        return konfiguration;
+    }
 
-	public void setKonfiguration(ReloadableKonfiguration konfiguration) {
-		this.konfiguration = konfiguration;
-	}
+    public void setKonfiguration(ReloadableKonfiguration konfiguration) {
+        this.konfiguration = konfiguration;
+    }
 }

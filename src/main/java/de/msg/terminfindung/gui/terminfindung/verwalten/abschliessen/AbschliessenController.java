@@ -45,7 +45,7 @@ public class AbschliessenController extends AbstractController<AbschliessenModel
 	 * Datenbank gefüllt.
 	 * @throws TerminfindungBusinessException 
 	 */
-	public void initialisiereModel(AbschliessenModel model) throws TerminfindungTechnicalException {
+	public void initialisiereModel(AbschliessenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
 		LOG.info("Initialisiere das Modell.");
 		model.getTage().clear();

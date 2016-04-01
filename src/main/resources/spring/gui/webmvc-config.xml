@@ -58,6 +58,7 @@
 
 	<webflow:flow-registry id="flowRegistry"
 		flow-builder-services="flowBuilderServices" >
+		<webflow:flow-location path="/WEB-INF/gui/common/parentFlow.xml" />
 		<webflow:flow-location path="/WEB-INF/gui/verwalten/verwaltenFlow.xml" />
 		<webflow:flow-location path="/WEB-INF/gui/verwalten/abschliessen/abschliessenFlow.xml" />
 		<webflow:flow-location path="/WEB-INF/gui/verwalten/loeschen/loeschenFlow.xml" />
