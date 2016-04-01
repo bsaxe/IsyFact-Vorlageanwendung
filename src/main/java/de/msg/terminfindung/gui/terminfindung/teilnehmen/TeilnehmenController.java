@@ -54,7 +54,7 @@ public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
 	 * @param model Das Model
 	 * @throws TerminfindungBusinessException 
 	 */
-	public void initialisiereModel(TeilnehmenModel model) throws TerminfindungTechnicalException{
+	public void initialisiereModel(TeilnehmenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException{
 
 		LOG.info("Initialisiere das Modell.");
 

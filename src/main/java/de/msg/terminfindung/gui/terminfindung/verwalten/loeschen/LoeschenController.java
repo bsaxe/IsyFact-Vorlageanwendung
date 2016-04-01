@@ -51,7 +51,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 	 * @param model Das Model
 	 * @throws TerminfindungBusinessException 
 	 */
-	public void initialisiereModel(LoeschenModel model) throws TerminfindungTechnicalException {
+	public void initialisiereModel(LoeschenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
 		LOG.info("Initialisiere das Modell.");
 		super.holeTerminfindung(model);

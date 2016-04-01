@@ -1,0 +1,32 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<dataset>
+    <Teilnehmer teilnehmer_nr="1" name="Klaus"/>
+    <Teilnehmer teilnehmer_nr="2" name="Herbert"/>
+    <Teilnehmer teilnehmer_nr="3" name="Sepp"/>
+
+    <Zeitraum zeitraum_nr="1" beschreibung="9-11 Uhr"/>
+    <Zeitraum zeitraum_nr="2" beschreibung="über Mittag"/>
+
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="1" teilnehmer_nr="1" zeitraum_nr="1" praeferenz="0" />
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="2" teilnehmer_nr="1" zeitraum_nr="2" praeferenz="1" />
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="3" teilnehmer_nr="2" zeitraum_nr="1" praeferenz="2" />
+    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="4" teilnehmer_nr="2" zeitraum_nr="2" praeferenz="1" />
+</dataset>

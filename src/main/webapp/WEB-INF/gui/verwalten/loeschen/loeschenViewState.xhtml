@@ -36,30 +36,63 @@
 				<f:facet name="panelBody">
 					<div class="form-horizontal">
 						<div class="row row-df">
-							<div>
-								<table id="selectLoeschen" class="deleteTable">
-									<tr>
-										<ui:repeat var="tag" value="#{loeschenModel.terminfindung.tage}">
-											<td colspan="#{tag.anzahlZeitraeume}" class="dateForZeitraeume"><h:outputText
-													value="#{tag.datum}">
-													<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-												</h:outputText></td>
+							<div class="col-lg-4">
+								<div class="selectAbschliessen">
+									<table id="selectLoeschen" class="selectAbschliessen">
+										<tr>
+											<th>Datum</th>
+											<th>Zeitraum</th>
+											<th>Zusagen</th>
+											<th>Unter Vorbehalt</th>
+											<th>Absagen</th>
+											<th></th>
+										</tr>
+										<ui:repeat var="tag"
+											value="#{loeschenModel.terminfindung.tage}">
+											<ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+												<tr>
+													<td><h:outputText value="#{tag.datum}"
+															rendered="#{tag.zeitraeume.get(0).zeitraum_nr == zeitraum.zeitraum_nr}">
+															<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+														</h:outputText></td>
+													<td
+														class="borderTd #{loeschenModel.zeitraumIsDefZeitraum(zeitraum) ? 'tdDefTrue' : ''}">
+														<h:outputText value="#{zeitraum.beschreibung}" />
+													</td>
+													<td class="borderTd tdTrue"><a data-delay="100"
+														data-trigger="hover" data-title="" data-placement="top"
+														data-content="#{loeschenModel.terminfindung.getTeilnehmerLabel(zeitraum, 1)}"
+														data-toggle="tooltip" class="rf-popover"
+														data-original-title="" title=""> <h:outputText
+																style="color:black;font-weight:bold"
+																value="#{zeitraum.zaehleStimmen()[1]}" />
+													</a></td>
+													<td class="borderTd tdHaveTo"><a data-delay="100"
+														data-trigger="hover" data-title="" data-placement="top"
+														data-content="#{loeschenModel.terminfindung.getTeilnehmerLabel(zeitraum, 2)}"
+														data-toggle="tooltip" class="rf-popover"
+														data-original-title="" title=""> <h:outputText
+																style="color:black;font-weight:bold"
+																value="#{zeitraum.zaehleStimmen()[2]}" />
+													</a></td>
+													<td class="borderTd tdFalse"><a data-delay="100"
+														data-trigger="hover" data-title="" data-placement="top"
+														data-content="#{loeschenModel.terminfindung.getTeilnehmerLabel(zeitraum, 0)}"
+														data-toggle="tooltip" class="rf-popover"
+														data-original-title="" title=""> <h:outputText
+																style="color:black;font-weight:bold"
+																value="#{zeitraum.zaehleStimmen()[0]}" />
+													</a></td>
+													<td><h:selectBooleanCheckbox required="true"
+															id="selectedZeitraum"
+															disabled="#{loeschenModel.terminfindung.abgeschlossen}"
+															value="#{loeschenModel.checkedByUser[zeitraum.zeitraum_nr]}" />
+													</td>
+												</tr>
+											</ui:repeat>
 										</ui:repeat>
-									</tr>
-									<tr>
-										<ui:repeat var="zeitraum" value="#{loeschenModel.terminfindung.alleZeitraeume}">
-											<td><h:outputText value="#{zeitraum.beschreibung}" /></td>
-										</ui:repeat>
-									</tr>
-									<tr>
-										<ui:repeat var="zeitraum" value="#{loeschenModel.terminfindung.alleZeitraeume}">
-											<td><h:selectBooleanCheckbox required="true"
-													id="selectedZeitraum"
-													disabled="#{loeschenModel.terminfindung.abgeschlossen}"
-													value="#{loeschenModel.checkedByUser[zeitraum.zeitraum_nr]}" /></td>
-										</ui:repeat>
-									</tr>
-								</table>
+									</table>
+								</div>
 							</div>
 						</div>
 						<hr />

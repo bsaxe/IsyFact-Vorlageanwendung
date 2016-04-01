@@ -22,7 +22,7 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd" parent="parentFlow">
 
 	<var name="loeschenModel"
 		 class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenModel"/>
@@ -46,5 +46,4 @@
 
 	<end-state id="finished"/>
 
-	<exception-handler bean="myExceptionHandler"/>
 </flow>

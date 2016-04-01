@@ -23,9 +23,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
@@ -33,19 +32,12 @@
         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
         http://www.springframework.org/schema/context 
 	    http://www.springframework.org/schema/context/spring-context-4.1.xsd 
-	    http://www.springframework.org/schema/util 
-	    http://www.springframework.org/schema/util/spring-util-4.1.xsd
 	    http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
-    <!-- <aop:aspectj-autoproxy /> -->
+        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
     <bean id="ausnahmeIdMapper"
           class="de.bund.bva.isyfact.common.web.exception.common.impl.AusnahmeIdMapperImpl">
-        <constructor-arg>
-            <value>WEBGI99999</value>
-        </constructor-arg>
+        <constructor-arg value="WEBGI99999"/>
     </bean>
 
 
@@ -110,13 +102,13 @@
 
     <bean id="awkWrapperImpl"
           class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
-        <property name="erstellung" ref="erstellungImpl"></property>
-        <property name="verwaltung" ref="verwaltungImpl"></property>
-        <property name="teilnahme" ref="teilnahmeImpl"></property>
-        <property name="beanMapper" ref="beanMapper"></property>
+        <property name="erstellung" ref="erstellungImpl"/>
+        <property name="verwaltung" ref="verwaltungImpl"/>
+        <property name="teilnahme" ref="teilnahmeImpl"/>
+        <property name="beanMapper" ref="beanMapper"/>
     </bean>
 
-    <beans profile="!dev">
+    <beans profile="produktion">
         <bean id="appDataSource" class="org.apache.commons.dbcp.BasicDataSource"
               destroy-method="close" p:driverClassName="oracle.jdbc.OracleDriver"
               p:url="jdbc:oracle:thin:@localhost:1521:XE" p:username="terminfindung"
@@ -154,8 +146,8 @@
         </bean>
     </beans>
 
-    <beans profile="dev">
-        <context:property-placeholder location="classpath:config/jpa.properties" />
+    <beans profile="entwicklung">
+        <context:property-placeholder location="classpath:config/jpa.properties"/>
 
         <bean id="appDataSource" class="org.h2.jdbcx.JdbcDataSource" primary="true">
             <property name="URL" value="${jdbc.url}"/>
@@ -170,13 +162,13 @@
 
         <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            <property name="persistenceXmlLocation" value="classpath*:META-INF/persistence-test.xml" />
-            <property name="persistenceUnitName" value="defaultPU" />
-            <property name="dataSource" ref="appDataSource" />
+            <property name="persistenceXmlLocation" value="classpath*:META-INF/persistence-test.xml"/>
+            <property name="persistenceUnitName" value="defaultPU"/>
+            <property name="dataSource" ref="appDataSource"/>
             <property name="jpaVendorAdapter">
                 <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                    <property name="generateDdl" value="true" />
-                    <property name="database" value="H2" />
+                    <property name="generateDdl" value="true"/>
+                    <property name="database" value="H2"/>
                 </bean>
             </property>
         </bean>

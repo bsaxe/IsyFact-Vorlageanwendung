@@ -22,6 +22,7 @@ package de.msg.terminfindung.persistence.entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,8 +65,8 @@ public class Tag implements Serializable {
 	@Fetch(FetchMode.SELECT)
 	@JoinColumn(name="tag_nr", referencedColumnName="tag_nr")
 	@OrderBy("zeitraum_Nr")
-	private List<Zeitraum> zeitraeume;
-
+	private List<Zeitraum> zeitraeume = new ArrayList<>();
+	
 	public Tag() {
 		super();
 	}   
