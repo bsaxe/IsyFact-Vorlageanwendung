@@ -20,16 +20,12 @@ package de.msg.terminfindung.persistence.dao;
  * #L%
  */
 
-
-import de.bund.bva.pliscommon.persistence.dao.Dao;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
+
 /**
  * DAO fuer den Zugriff auf die Entity Zeitraum
- * @author msg systems ag, Maximilian Falter
  *
+ * @author msg systems ag, Maximilian Falter
  */
-public interface ZeitraumDao extends Dao<Zeitraum,Long>{
-	
-	void updateZeitraum(Zeitraum zeitraum);
-
+public interface ZeitraumDao extends AbstraktDao<Zeitraum> {
 }

@@ -20,15 +20,12 @@ package de.msg.terminfindung.persistence.dao;
  * #L%
  */
 
-
-import de.bund.bva.pliscommon.persistence.dao.Dao;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
+
 /**
  * DAO fuer den Zugriff auf die Entity Terminfindung
- * @author msg systems ag, Maximilian Falter
  *
+ * @author msg systems ag, Maximilian Falter
  */
-public interface TerminfindungDao extends Dao<Terminfindung,Long>{
-	
-	void updateTerminfindung(Terminfindung t);
+public interface TerminfindungDao extends AbstraktDao<Terminfindung> {
 }

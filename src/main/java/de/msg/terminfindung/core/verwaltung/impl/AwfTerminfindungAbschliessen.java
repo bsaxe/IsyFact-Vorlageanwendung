@@ -67,7 +67,7 @@ public class AwfTerminfindungAbschliessen {
 		}
 
 		terminfindung.setDefZeitraum(zeitraum);
-		dao.updateTerminfindung(terminfindung);
+		dao.aktualisiere(terminfindung);
 	}
 	
 	/**

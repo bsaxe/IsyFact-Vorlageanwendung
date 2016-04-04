@@ -31,7 +31,7 @@ import de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum;
  * @author msg systems ag, Maximilian Falter
  *
  */
-public interface TeilnehmerDao extends Dao<Teilnehmer,Long>{
+public interface TeilnehmerDao extends AbstraktDao<Teilnehmer>{
 		
 	Collection<TeilnehmerZeitraum> ladePraeferenzZuTeilnehmer(Teilnehmer teilnehmer);
 }

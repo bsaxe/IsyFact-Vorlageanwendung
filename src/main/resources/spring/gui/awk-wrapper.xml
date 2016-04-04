@@ -20,16 +20,24 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
                          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
 
     <!-- =========== -->
     <!-- AWK-Wrapper -->
     <!-- =========== -->
     <!-- 
-    <bean id="flowAwkWrapper" class="de.bund.bva.pliscommon.pliswebgui.gui.flows.awkwrapper.impl.FlowAwkWrapperImpl"/>
+    <bean id="flowAwkWrapper" class="de.bund.bva.pliscommon.pliswebgui.gui.flows.awkwrapper.jpa.FlowAwkWrapperImpl"/>
 	 -->
+
+    <bean id="awkWrapperImpl" class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
+        <property name="erstellung" ref="erstellungImpl"/>
+        <property name="verwaltung" ref="verwaltungImpl"/>
+        <property name="teilnahme" ref="teilnahmeImpl"/>
+        <property name="beanMapper" ref="beanMapper"/>
+    </bean>
+
     <!-- Ausnahme ID - Mapper -->
     <!-- Dieser Mapper wird auch automatisch für das PLIS-Web Exception Handling verwendet -->
     <bean id="ausnahmeIdMapper" class="de.bund.bva.isyfact.common.web.exception.common.impl.AusnahmeIdMapperImpl">

@@ -21,7 +21,6 @@ package de.msg.terminfindung.persistence.dao;
  */
 
 
-import de.bund.bva.pliscommon.persistence.dao.Dao;
 import de.msg.terminfindung.persistence.entity.Tag;
 
 /**
@@ -29,7 +28,6 @@ import de.msg.terminfindung.persistence.entity.Tag;
  *
  * @author msg systems ag, Dirk Jäger
  */
-public interface TerminDao extends Dao<Tag,Long> {
+public interface TerminDao extends AbstraktDao<Tag> {
 
-    void updateTermin(Tag tag);
 }

@@ -37,7 +37,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/test-app-context.xml"})
+@ContextConfiguration(locations = {"classpath:spring/test-persistence.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionDbUnitTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @Profile(TestProfile.UNIT_TEST)

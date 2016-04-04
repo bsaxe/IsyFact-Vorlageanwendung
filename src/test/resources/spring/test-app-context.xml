@@ -79,20 +79,20 @@
     <!-- Beans für DAO's -->
 
     <bean id="terminfindungImpl"
-          class="de.msg.terminfindung.persistence.dao.impl.TerminfindungImpl"
+          class="de.msg.terminfindung.persistence.dao.jpa.JpaTerminfindungDao"
           parent="abstractDao">
     </bean>
 
     <bean id="zeitraumImpl"
-          class="de.msg.terminfindung.persistence.dao.impl.ZeitraumImpl"
+          class="de.msg.terminfindung.persistence.dao.jpa.JpaZeitraumDao"
           parent="abstractDao"/>
 
     <bean id="teilnehmerImpl"
-          class="de.msg.terminfindung.persistence.dao.impl.TeilnehmerImpl"
+          class="de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerDao"
           parent="abstractDao"/>
 
     <bean id="teilnehmerZeitraumImpl"
-          class="de.msg.terminfindung.persistence.dao.impl.TeilnehmerZeitraumImpl"
+          class="de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerZeitraumDao"
           parent="abstractDao"/>
 
     <bean id="erstellungImpl"

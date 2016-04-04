@@ -93,7 +93,7 @@ public class AwfTermineLoeschen {
             }
         }
 
-        terminfindungDao.updateTerminfindung(terminfindung);
+        terminfindungDao.aktualisiere(terminfindung);
 	}
 
 	/*--------------------------------------------------------------------------

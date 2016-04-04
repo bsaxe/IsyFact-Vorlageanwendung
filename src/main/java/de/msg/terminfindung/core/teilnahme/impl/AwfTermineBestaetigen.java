@@ -66,7 +66,7 @@ public class AwfTermineBestaetigen {
 			// zeitraumDao.updateZeitraum(zeitraum);
 		}
 		
-		terminfindungDao.updateTerminfindung(terminfindung);
+		terminfindungDao.aktualisiere(terminfindung);
 	}
 
 	/*------------------------------------------------------------
