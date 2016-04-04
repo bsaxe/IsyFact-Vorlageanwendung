@@ -36,30 +36,48 @@
 				<f:facet name="panelBody">
 					<p/>
 					<div class="form-horizontal">
-						<div class="row row-df">
-							<div class="col-lg-4">
-								<h:dataTable value="#{erstellenModel.tage}" var="tag" class="tableZeiten">
+
+
+						<h:dataTable value="#{erstellenModel.tage}" var="tag"
+							class="tableZeiten">
+							<h:column>
+								<f:facet name="header">Datum</f:facet>
+								<h:outputText value="#{tag.datum}">
+									<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+								</h:outputText>
+							</h:column>
+							<h:column>
+								<f:facet name="header">Zeitraum</f:facet>
+								<h:dataTable value="#{tag.zeitraeume}" var="zeitraum"
+									class="tableZeiten">
 									<h:column>
-										<f:facet name="header">Datum</f:facet>
-										<h:outputText value="#{tag.datum}">
-											<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-										</h:outputText>
+										<h:outputText value="#{zeitraum.beschreibung}" />
 									</h:column>
 									<h:column>
-										<f:facet name="header">Zeitraum 1</f:facet>
-										<h:inputText value="#{tag.zeitraeume[0].beschreibung}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">Zeitraum 2</f:facet>
-										<h:inputText value="#{tag.zeitraeume[1].beschreibung}" />
-									</h:column>
-									<h:column>
-										<f:facet name="header">Zeitraum 3</f:facet>
-										<h:inputText value="#{tag.zeitraeume[2].beschreibung}" />
+										<h:commandLink action="loeschen">
+											<h:graphicImage library="images" name="trash_can.png"
+												style="max-height:15px" />
+											<f:setPropertyActionListener value="#{zeitraum}"
+												target="#{erstellenModel.selectedZeitraum}" />
+										</h:commandLink>
 									</h:column>
 								</h:dataTable>
-							</div>
-						</div>
+								<h:selectOneMenu id="vonZeit" value="#{tag.vonZeitraum}" converter="calCon">
+									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="von" 
+									itemValue="#{von}" itemLabel="#{von}"/>
+								</h:selectOneMenu>									
+								<h:selectOneMenu id="bisZeit" value="#{tag.bisZeitraum}">								
+									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="bis" 
+									itemValue="#{bis}" itemLabel="#{bis}"/>
+								</h:selectOneMenu>
+								<h:commandLink action="hinzufuegen">
+									<h:graphicImage library="images" name="add_icon.png"
+										style="max-height:15px" />
+									<f:setPropertyActionListener value="#{tag}"
+												target="#{erstellenModel.selectedTermin}" />
+								</h:commandLink>
+							</h:column>
+						</h:dataTable>
 						<hr />
 						<isy:button id="buttonBack" action="back" value="Zur&uuml;ck" />
 						<isy:button id="buttonTest" action="create"

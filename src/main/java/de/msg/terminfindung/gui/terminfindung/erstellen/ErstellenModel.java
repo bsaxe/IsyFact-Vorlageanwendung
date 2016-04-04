@@ -22,10 +22,12 @@ package de.msg.terminfindung.gui.terminfindung.erstellen;
 
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 import de.msg.terminfindung.gui.terminfindung.AbstractModel;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
+import de.msg.terminfindung.gui.util.DataGenerator;
 
 /**
  * Model des Erstellen Flows
@@ -48,6 +50,11 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 	/** Speicher einen Tag, der in der Eingabemaske durch Klicken auf das Trash-Icon
 	 * zum Löschen ausgewählt wurde */
 	private TagModel selectedTermin;
+	/** Speicher einen Zeitraum, der in der Eingabemaske durch Klicken auf das Trash-Icon
+	 * zum Löschen ausgewählt wurde */
+	private ZeitraumModel selectedZeitraum;
+	/** Zur Auswahl stehende mögliche Zeiträume */
+	private List<String> alleZeitraeume = DataGenerator.getUhrzeitAuswahl();	
 
 	public String getName() {
 		return name;
@@ -79,6 +86,18 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 
 	public void setStringTempDate(String stringTempDate) {
 		this.stringTempDate = stringTempDate;
+	}	
+
+	public ZeitraumModel getSelectedZeitraum() {
+		return selectedZeitraum;
+	}
+
+	public void setSelectedZeitraum(ZeitraumModel selectedZeitraum) {
+		this.selectedZeitraum = selectedZeitraum;
+	}
+
+	public List<String> getAlleZeitraeume() {
+		return alleZeitraeume;
 	}
 
 	public String getStringPlaceholderDate() { return stringPlaceholderDate; }

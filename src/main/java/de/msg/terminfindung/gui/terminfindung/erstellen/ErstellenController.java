@@ -156,6 +156,26 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 	public void delDatum(ErstellenModel model) {
 		model.getTage().remove(model.getSelectedTermin());
 	}
+	
+	/**
+	 * Loescht einen Zaitraum aus der lokalen Liste der Zeitraeume (Daten)
+	 * @param model Das Modell
+	 */
+	public void delZeitraum(ErstellenModel model){
+		for (TagModel tag : model.getTage()) {
+			tag.getZeitraeume().remove(model.getSelectedZeitraum());
+		}
+	}
+	
+	/**
+	 * Fügt einen Zaitraum zu der lokalen Liste der Zeitraeume (Daten)
+	 * @param model Das Modell
+	 */
+	public void addZeitraum(ErstellenModel model){
+		ZeitraumModel zeitraum = new ZeitraumModel();
+		zeitraum.setBeschreibung(model.getSelectedTermin().getVonZeitraum() + " - " + model.getSelectedTermin().getBisZeitraum());
+		model.getSelectedTermin().getZeitraeume().add(zeitraum);
+	}
 
 	/**
 	 * Validiert das Modell vor dem Speichern.

@@ -39,6 +39,11 @@ public class TagModel implements Serializable,Comparable<TagModel>{
 	private long tag_nr;
     private Date datum;
     private List<ZeitraumModel> zeitraeume = new ArrayList<>();
+    
+    /** der Ausgewählte Zeitraum von */
+	private String vonZeitraum;
+	/** der Ausgewählte Zeitraum bis */
+	private String bisZeitraum;
 
 	public TagModel() {
 		super();
@@ -81,5 +86,21 @@ public class TagModel implements Serializable,Comparable<TagModel>{
 	public int compareTo(TagModel tag) {
 		return this.getDatum().compareTo(tag.getDatum());
 
+	}
+
+	public String getVonZeitraum() {
+		return vonZeitraum;
+	}
+
+	public void setVonZeitraum(String vonZeitraum) {
+		this.vonZeitraum = vonZeitraum;
+	}
+
+	public String getBisZeitraum() {
+		return bisZeitraum;
+	}
+
+	public void setBisZeitraum(String bisZeitraum) {
+		this.bisZeitraum = bisZeitraum;
 	}
 }
