@@ -20,17 +20,28 @@ package de.msg.terminfindung.core.erstellung;
  * #L%
  */
 
-import java.util.List;
-
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 
+import java.util.List;
+
 /**
  * Interface der Anwendungskomponente "Erstellung" zur Erstellung von Terminfindungen
+ *
  * @author bva Vadim Richter
  */
 public interface Erstellung {
 
-	Terminfindung 	erstelleTerminfindung(String orgName,String veranstName,List<Tag> tagList) throws TerminfindungBusinessException;
+    /**
+     * Erstellt eine neue Terminfindung.
+     *
+     * @param organisatorName   Name des Organisators
+     * @param veranstaltungName Name der Veranstaltung
+     * @param termine           Termine, an denen die Veranstaltung stattfinden könnte
+     * @return die neu erstelle Terminfindung.
+     * @throws TerminfindungBusinessException falls fachliche Fehler in den Eingabedaten sind.
+     */
+    Terminfindung erstelleTerminfindung(String organisatorName, String veranstaltungName, List<Tag> termine)
+            throws TerminfindungBusinessException;
 }

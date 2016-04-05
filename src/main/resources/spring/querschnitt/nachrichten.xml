@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Auflösung von Nachrichten -->
+
+    <!-- Bereitstellung der Nachrichten in einer MessageSource. -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" lazy-init="false">
+        <property name="basenames">
+            <list>
+                <value>resources/nachrichten/fehler</value>
+                <value>resources/nachrichten/maskentexte</value>
+                <value>resources/nachrichten/titles</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Hilfsklasse für den statischen Zugriff auf die MessageSource. -->
+    <bean id="messageSourceHolder" class="de.bund.bva.pliscommon.util.spring.MessageSourceHolder"/>
+
+</beans>

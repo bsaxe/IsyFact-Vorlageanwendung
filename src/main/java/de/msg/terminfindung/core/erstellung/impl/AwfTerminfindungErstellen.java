@@ -21,9 +21,6 @@ package de.msg.terminfindung.core.erstellung.impl;
  */
 
 
-import java.util.Iterator;
-import java.util.List;
-
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
@@ -32,57 +29,55 @@ import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Diese Klasse implementiert den Anwendungsfall "Terminfindung erstellen"
  *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
 
-public class AwfTerminfindungErstellen {
+class AwfTerminfindungErstellen {
 
-    public TerminfindungDao dao;
+    private final TerminfindungDao dao;
 
-    public TerminfindungDao getDao() {
-        return dao;
-    }
-
-    public void setDao(TerminfindungDao dao) {
+    AwfTerminfindungErstellen(TerminfindungDao dao) {
         this.dao = dao;
     }
 
     /**
-     * Erstellt eine neue Terminfindung mit den angegebenen Daten.
-     * Die Methode erhält als Eingabeparameter den Namen des Organisators, den Namen
-     * der Veranstaltung und eine Liste von Terminen. Die Eingabeparameter dürfen nicht
-     * leer sein, andernfalls wird eine fachliche Exception erzeugt.
+     * Erstellt eine neue Terminfindung mit den angegebenen Daten. Die Methode erhält als Eingabeparameter den Namen des
+     * Organisators, den Namen der Veranstaltung und eine Liste von Terminen. Die Eingabeparameter dürfen nicht leer
+     * sein, andernfalls wird eine fachliche Exception erzeugt.
      *
-     * @param orgName   Name des Organisators
-     * @param veranstName Name der Veranstaltung
-     * @param termine Liste der Termine, die zur Auswahl stehen.
+     * @param organisatorName   Name des Organisators
+     * @param veranstaltungName Name der Veranstaltung
+     * @param termine           Liste der Termine, die zur Auswahl stehen.
      * @return Die neu erzeugte Terminfindung
      * @throws TerminfindungBusinessException
      */
 
-    public Terminfindung erstelleTerminfindung(String orgName,
-                                               String veranstName, List<Tag> termine) throws TerminfindungBusinessException {
+    Terminfindung erstelleTerminfindung(String organisatorName, String veranstaltungName, List<Tag> termine)
+            throws TerminfindungBusinessException {
 
         // Überprüfe, ob die übergebenen Parameter sinnvolle Werte enthalten
 
-        if (orgName == null) {
-            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG, "orgName", "null");
+        if (organisatorName == null) {
+            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG, "organisatorName", "null");
         }
-        if (veranstName == null) {
-            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG, "veranstName", "null");
+        if (veranstaltungName == null) {
+            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG, "veranstaltungName", "null");
         }
         if (termine == null) {
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG, "termine", "null");
         }
-        if (termine != null && termine.size() == 0) {
+        if (termine.size() == 0) {
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_LISTE_LEER, "termine");
         }
 
         // Lege eine neue Terminfindung an
-        Terminfindung t = new Terminfindung(new Organisator(orgName), veranstName);
+        Terminfindung t = new Terminfindung(new Organisator(organisatorName), veranstaltungName);
         bereinigeZeitraeumeInTerminliste(termine);
 
         t.setTermine(termine);
@@ -92,9 +87,8 @@ public class AwfTerminfindungErstellen {
     }
 
     /**
-     * Bereinigt die Zeiträume in der übergebenen Liste von Terminen.
-     * Leere Zeiträume (ohne Beschreibung) werden gelöscht.
-     * Wenn für einen Tag kein Zeitraum vorhanden ist, wird der gesamte Tag gelöscht.
+     * Bereinigt die Zeiträume in der übergebenen Liste von Terminen. Leere Zeiträume (ohne Beschreibung) werden
+     * gelöscht. Wenn für einen Tag kein Zeitraum vorhanden ist, wird der gesamte Tag gelöscht.
      *
      * @param termine Die Liste der Termine
      */

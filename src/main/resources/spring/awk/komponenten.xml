@@ -23,13 +23,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
-    <bean id="erstellungImpl"
-          class="de.msg.terminfindung.core.erstellung.impl.ErstellungImpl">
-        <property name="terminfindungDao" ref="terminfindungDao"/>
+    <bean id="erstellung" class="de.msg.terminfindung.core.erstellung.impl.ErstellungImpl">
+        <constructor-arg ref="terminfindungDao"/>
     </bean>
 
-    <bean id="verwaltungImpl"
-          class="de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl">
+    <bean id="verwaltung" class="de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl">
         <property name="terminfindungDao" ref="terminfindungDao"/>
         <property name="teilnehmerDao" ref="teilnehmerDao"/>
         <property name="tagDao" ref="terminDao"/>
@@ -37,8 +35,7 @@
         <property name="teilnehmerZeitraumDao" ref="teilnehmerZeitraumDao"/>
     </bean>
 
-    <bean id="teilnahmeImpl"
-          class="de.msg.terminfindung.core.teilnahme.impl.TeilnahmeImpl">
+    <bean id="teilnahme" class="de.msg.terminfindung.core.teilnahme.impl.TeilnahmeImpl">
         <property name="terminfindungDao" ref="terminfindungDao"/>
         <property name="teilnehmerDao" ref="teilnehmerDao"/>
         <property name="zeitraumDao" ref="zeitraumDao"/>

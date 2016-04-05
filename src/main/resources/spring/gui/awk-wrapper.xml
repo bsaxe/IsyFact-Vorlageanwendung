@@ -20,9 +20,7 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-                         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
     <!-- =========== -->
     <!-- AWK-Wrapper -->
@@ -32,9 +30,9 @@
 	 -->
 
     <bean id="awkWrapperImpl" class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
-        <property name="erstellung" ref="erstellungImpl"/>
-        <property name="verwaltung" ref="verwaltungImpl"/>
-        <property name="teilnahme" ref="teilnahmeImpl"/>
+        <property name="erstellung" ref="erstellung"/>
+        <property name="verwaltung" ref="verwaltung"/>
+        <property name="teilnahme" ref="teilnahme"/>
         <property name="beanMapper" ref="beanMapper"/>
     </bean>
 
