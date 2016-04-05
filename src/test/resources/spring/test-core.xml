@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+    <import resource="querschnitt/nachrichten.xml" />
+    <import resource="awk/komponenten.xml"/>
+
+    <bean id="teilnehmerDao" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="de.msg.terminfindung.persistence.dao.TeilnehmerDao"/>
+    </bean>
+    <bean id="teilnehmerZeitraumDao" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="de.msg.terminfindung.persistence.dao.TeilnehmerZeitraumDao"/>
+    </bean>
+    <bean id="terminDao" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="de.msg.terminfindung.persistence.dao.TerminDao"/>
+    </bean>
+    <bean id="terminfindungDao" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="de.msg.terminfindung.persistence.dao.TerminfindungDao"/>
+    </bean>
+    <bean id="zeitraumDao" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="de.msg.terminfindung.persistence.dao.ZeitraumDao"/>
+    </bean>
+</beans>

@@ -36,6 +36,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+/**
+ * Basisklasse für Unit-Tests von DAOs. Jeder Test läuft in einer Transaktion ab. Für die Tests wird nur die
+ * Persistenzschicht der Anwendung aufgebaut. Zur Bereitstellung von Testdaten kommt DBUnit zum Einsatz, das hier mit
+ * Hilfe entsprechender {@link org.springframework.test.context.TestExecutionListeners} konfiguriert wird.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/test-persistence.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionDbUnitTestExecutionListener.class,
@@ -47,6 +52,10 @@ public abstract class AbstraktDaoTest {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Übermittelt alle vom Entity Manager zwischengespeicherten Operationen an die Datenbank. Dies ist notwendig, damit
+     * DBUnit die Datenbank nach dem Test korrekt mit den erwarteten Daten vergleichen kann.
+     */
     @After
     public void commit() {
         em.flush();

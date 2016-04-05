@@ -95,9 +95,8 @@
           class="de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerZeitraumDao"
           parent="abstractDao"/>
 
-    <bean id="erstellungImpl"
-          class="de.msg.terminfindung.core.erstellung.impl.ErstellungImpl">
-        <property name="terminfindungDao" ref="terminfindungImpl"/>
+    <bean id="erstellung" class="de.msg.terminfindung.core.erstellung.impl.ErstellungImpl">
+        <constructor-arg ref="terminfindungImpl"/>
     </bean>
 
     <bean id="verwaltungImpl"
@@ -110,7 +109,7 @@
 
     <bean id="awkWrapperImpl"
           class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
-        <property name="erstellung" ref="erstellungImpl"/>
+        <property name="erstellung" ref="erstellung"/>
         <property name="verwaltung" ref="verwaltungImpl"/>
         <property name="beanMapper" ref="beanMapper"/>
     </bean>

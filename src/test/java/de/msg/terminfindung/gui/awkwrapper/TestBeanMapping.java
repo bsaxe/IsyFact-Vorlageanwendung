@@ -1,4 +1,4 @@
-package de.msg.terminfindung.core.verwaltung;
+package de.msg.terminfindung.gui.awkwrapper;
 
 /*
  * #%L
@@ -21,17 +21,12 @@ package de.msg.terminfindung.core.verwaltung;
  */
 
 
-
-import static org.junit.Assert.assertNotNull;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
+import de.msg.terminfindung.core.AbstraktCoreTest;
 import de.msg.terminfindung.core.verwaltung.Verwaltung;
 import de.msg.terminfindung.gui.terminfindung.model.*;
+import de.msg.terminfindung.persistence.entity.Tag;
+import de.msg.terminfindung.persistence.entity.Teilnehmer;
+import de.msg.terminfindung.persistence.entity.Terminfindung;
 import org.dozer.Mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,14 +41,19 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.msg.terminfindung.persistence.entity.Teilnehmer;
-import de.msg.terminfindung.persistence.entity.Tag;
-import de.msg.terminfindung.persistence.entity.Terminfindung;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author msg systems ag, Maximilian Falter
  *
  */
+// TODO GUI-Test, da hier der AWK-Wrapper benutzt wird!
 @ContextConfiguration(locations = { "classpath:spring/test-app-context.xml" })
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
     TransactionalTestExecutionListener.class })
@@ -61,41 +61,41 @@ import de.msg.terminfindung.persistence.entity.Terminfindung;
 @Profile("dev")
 @DirtiesContext(classMode=ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
-public class TestBeanMapping {
-	
+public class TestBeanMapping extends AbstraktCoreTest{
+
 	@Autowired
 	private Mapper beanMapper;
-	
+
 	@Autowired
 	private Verwaltung verwaltung;
 
-	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	Date DATE1=dateParse("2100-01-01");
 	Date DATE2=dateParse("2100-01-02");
 	Date DATE3=dateParse("2100-01-03");
 	Date DATE4=dateParse("2100-01-04");
 	Date DATE5=dateParse("2100-01-05");
-	
+
 	@Test
 	public void testBeanMapperExists() {
 
-		
+
 		Terminfindung tf = new Terminfindung();
 		TerminfindungModel terminfindungModel = beanMapper.map(tf, TerminfindungModel.class);
 
 		// TODO: Komplexere Objektstruktur aufbauen und testen
-		
+
 		assertNotNull(terminfindungModel);
-		
+
 	}
 
 	@Test
 	public void testMapPersistenceToView() {
-		
+
 		// TODO: Implementierung des Tests für das Mapping: Persistence -> View-Modell
 		assert(true);
 	}
-	
+
 	@Test
 	public void testMapViewToPersistence() {
 
@@ -123,7 +123,7 @@ public class TestBeanMapping {
 		terminfindungModel.getTage().add(viewTag1);
 		terminfindungModel.getTage().add(viewTag2);
 
-		// Erzeuge Zeitraume und fuege sie den Tagen hinzu 
+		// Erzeuge Zeitraume und fuege sie den Tagen hinzu
 		ZeitraumModel viewZeitraum1 = (new ZeitraumModel());
 		viewZeitraum1.setBeschreibung("Zeitraum1");
 		ZeitraumModel viewZeitraum2 = new ZeitraumModel();
@@ -151,39 +151,39 @@ public class TestBeanMapping {
 		TeilnehmerZeitraumModel viewPraeferenz4 = new TeilnehmerZeitraumModel();
 		viewPraeferenz4.setTeilnehmer(viewTeilnehmer2);
 		viewPraeferenz4.setPraeferenz(PraeferenzModel.JA);
-		
+
 		viewZeitraum1.getTeilnehmerZeitraeume().add(viewPraeferenz1);
 		viewZeitraum2.getTeilnehmerZeitraeume().add(viewPraeferenz2);
 		viewZeitraum3.getTeilnehmerZeitraeume().add(viewPraeferenz3);
 		viewZeitraum4.getTeilnehmerZeitraeume().add(viewPraeferenz4);
-		
-		
+
+
 		// Führe das Mapping durch und teste das Ergebnis
 		Terminfindung tf = beanMapper.map(terminfindungModel, Terminfindung.class);
-		
+
 		assertNotNull(tf);
 		assertNotNull(tf.getTeilnehmer());
 		assertNotNull(tf.getTermine());
-		
+
 		List<Teilnehmer> teilnehmer = tf.getTeilnehmer();
 		assert(teilnehmer.get(0).getName().equals("Teilnehmer1"));
 		assert(teilnehmer.get(1).getName().equals("Teilnehmer2"));
 		assert(teilnehmer.get(2).getName().equals("Teilnehmer3"));
-		
+
 		List<Tag> tage = tf.getTermine();
 		assert(tage.get(0).getZeitraeume().get(0).getTeilnehmerZeitraeume().get(0).getTeilnehmer().getName().equals("Teilnehmer1"));
 	}
 
 	private Date dateParse(String str) {
 
-		Date result=null; 
+		Date result=null;
 		try {
 			result = dateFormat.parse(str);
-		} 
+		}
 		catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
+
 }

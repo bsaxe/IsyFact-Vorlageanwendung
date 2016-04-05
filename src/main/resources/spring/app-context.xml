@@ -31,11 +31,15 @@
     </bean>
 
     <!-- Diese Spring-Konfiguration importiert die Komponenten des Anwendungskerns, der Persistenz und des Querschnitts. -->
+
     <import resource="spring-context.xml"/>
-    <import resource="gui/awk-wrapper.xml"/>
+    <import resource="querschnitt/nachrichten.xml" />
     <import resource="querschnitt/plis-sicherheit.xml"/>
     <import resource="querschnitt/plis-sicherheit-web.xml"/>
     <import resource="querschnitt/plis-konfiguration.xml"/>
+
+    <import resource="gui/awk-wrapper.xml"/>
+
 
     <import resource="awk/komponenten.xml"/>
     <import resource="awk/dozer.xml"/>
