@@ -23,6 +23,7 @@ package de.msg.terminfindung.gui.terminfindung.erstellen;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -112,11 +113,12 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 				// erzeuge ein neues Objekt für den Tag
 				TagModel tag = new TagModel();
 				// setze in dem neuen Objekt die Zeitraum-Objekte
-				erzeugeZeitraeume(tag);
+				//erzeugeZeitraeume(tag);
 				// setze das Datum
 				tag.setDatum(addedDate);
 				// füge den Tag zum Model hinzu
 				model.getTage().add(tag);
+				Collections.sort(model.getTage());
 				return;
 			}
 
@@ -138,12 +140,11 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 	public void speichereModel(ErstellenModel model) {
 
 		LOG.debug("Speichere Terminfindung.");
-
+		
 		try {
 			TerminfindungModel terminfindung = super.getAwk().erstelleTerminfindung(model.getOrgName(), model.getName(), model.getTage());
 			model.setTerminfindung(terminfindung);
-		} catch (TerminfindungBusinessException e) {
-
+		} catch (TerminfindungBusinessException e) {	
 			LOG.error("Fehler beim Erstellen der Terminfindung: " + e.getMessage());
 		}
 	}
@@ -172,9 +173,41 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 	 * @param model Das Modell
 	 */
 	public void addZeitraum(ErstellenModel model){
-		ZeitraumModel zeitraum = new ZeitraumModel();
-		zeitraum.setBeschreibung(model.getSelectedTermin().getVonZeitraum() + " - " + model.getSelectedTermin().getBisZeitraum());
-		model.getSelectedTermin().getZeitraeume().add(zeitraum);
+		
+		List<ValidationMessage> validationMessages = new ArrayList<>();
+		
+		boolean zeitraumExists = false;
+		for (ZeitraumModel zeitraumModel : model.getSelectedTermin().getZeitraeume()) {
+			if(zeitraumModel.getBeschreibung().equalsIgnoreCase(model.getSelectedTermin().getVonZeitraum() + " - " 
+					+ model.getSelectedTermin().getBisZeitraum())){
+				zeitraumExists = true;
+			}
+		}
+		
+		if(model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) == 0){
+			validationMessages.add(new ValidationMessage("DA",
+					"zeitraeume_" + model.getSelectedTermin().getTag_nr(), "Zeitraum",
+					"Zeitraum beginnt und Enden um die gleiche Uhrzeit."));
+		}
+		else if(model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) > 0){
+			validationMessages.add(new ValidationMessage("DA",
+					"zeitraeume_" + model.getSelectedTermin().getTag_nr(), "Zeitraum",
+					"Zeitraum startet nach seinem Ende."));
+		}
+		else if(zeitraumExists){
+			validationMessages.add(new ValidationMessage("DA",
+					"zeitraeume_" + model.getSelectedTermin().getTag_nr(), "Zeitraum",
+					"Zeitraum existiert bereits."));
+		}
+		else{
+			ZeitraumModel zeitraum = new ZeitraumModel();
+			zeitraum.setBeschreibung(model.getSelectedTermin().getVonZeitraum() + " - " + model.getSelectedTermin().getBisZeitraum());
+			model.getSelectedTermin().getZeitraeume().add(zeitraum);
+			Collections.sort(model.getSelectedTermin().getZeitraeume());
+			return;
+		}
+		
+		this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
 	}
 
 	/**
@@ -196,6 +229,33 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 		}
 
 		this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
+
+		// Wenn die Liste der Message leer ist, gab es keine Validierungsfehler,
+		// Gib in diesem Fall true zurück
+		return (validationMessages.isEmpty());
+	}
+	
+	/**
+	 * Validiert das Modell vor dem Speichern. Es wird geprüft ob alle Tage mindestens einen Zeitraum beinhalten.
+	 * Falls das Modell konsistent ist, wird es gespeichert.
+	 */
+	public boolean validiereErstellenModel(ErstellenModel model){
+		List<ValidationMessage> validationMessages = new ArrayList<>();
+		
+		for (TagModel tag : model.getTage()) {
+			if(tag.getZeitraeume().isEmpty()){
+				validationMessages.add(new ValidationMessage("DA",
+						"zeitraeume", "Datum",
+						"Dem Datum "+ tag.getDatum() +" ist kein Zeitraum zugeordnet."));
+			}
+		}
+		
+		if(validationMessages.isEmpty()){
+			speichereModel(model);
+		}
+		else{
+			this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
+		}
 
 		// Wenn die Liste der Message leer ist, gab es keine Validierungsfehler,
 		// Gib in diesem Fall true zurück

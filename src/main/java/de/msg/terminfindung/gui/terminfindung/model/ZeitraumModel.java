@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
-public class ZeitraumModel implements Serializable{
+public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable{
 
 	private static final long serialVersionUID = -457050384959229232L;
 
@@ -113,6 +113,11 @@ public class ZeitraumModel implements Serializable{
 	}
 	public void setTag(TagModel tag) {
 		this.tag = tag;
+	}
+
+	@Override
+	public int compareTo(ZeitraumModel o) {		
+		return getBeschreibung().compareTo(o.getBeschreibung());
 	}
 	
 }

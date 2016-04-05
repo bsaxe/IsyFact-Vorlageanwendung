@@ -24,6 +24,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:sf="http://www.springframework.org/tags/faces"
 	xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+	xmlns:isye="http://java.sun.com/jsf/composite/isyfact_ext"
 	xmlns:debug="http://java.sun.com/jsf/composite/debug"
 	template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
@@ -69,19 +70,20 @@
 								<h:selectOneMenu id="bisZeit" value="#{tag.bisZeitraum}">								
 									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="bis" 
 									itemValue="#{bis}" itemLabel="#{bis}"/>
-								</h:selectOneMenu>
-								<h:commandLink action="hinzufuegen">
-									<h:graphicImage library="images" name="add_icon.png"
-										style="max-height:15px" />
-									<f:setPropertyActionListener value="#{tag}"
-												target="#{erstellenModel.selectedTermin}" />
-								</h:commandLink>
+								</h:selectOneMenu>								
+								<isye:validatingCommandLink id="zeitraeume_#{tag.tag_nr}" action="hinzufuegen"
+									imageLib="images" imageName="add_icon.png" style="max-height:15px" reference="zeitraeume_#{tag.tag_nr}" 
+									propValue="#{tag}" propTarget="#{erstellenModel.selectedTermin}">																
+	            				</isye:validatingCommandLink>	            				
 							</h:column>
 						</h:dataTable>
 						<hr />
-						<isy:button id="buttonBack" action="back" value="Zur&uuml;ck" />
-						<isy:button id="buttonTest" action="create"
-							value="Terminfindung erstellen" />
+						<div class="col-lg-4">
+							<isy:button id="buttonBack" action="back" value="Zur&uuml;ck" />
+							<isye:validatingButton id="buttonTest" action="create"
+								value="Terminfindung erstellen" reference="zeitraeume" >							
+	            			</isye:validatingButton>
+           				</div>
 					</div>
 				</f:facet>
 			</isy:panel>

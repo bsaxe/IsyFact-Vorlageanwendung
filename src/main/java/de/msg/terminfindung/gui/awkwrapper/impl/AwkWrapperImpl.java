@@ -84,19 +84,20 @@ public class AwkWrapperImpl implements AwkWrapper {
 			String veranstaltungsName, List<TagModel> tage) throws TerminfindungBusinessException {
 
 		List<Tag> termine = new ArrayList<>();
-		for (TagModel tag : tage) {
+		List<Zeitraum> zeitraeume;
+		for (TagModel tagModel : tage) {
 
-			Tag termin = new Tag(tag.getDatum());
+			Tag tag = new Tag(tagModel.getDatum());
 
-			List<Zeitraum> zeitraeume = new ArrayList<>();
-			for (int i = 0; i < 3; i++) {
+			zeitraeume = new ArrayList<>();
+			for (ZeitraumModel zeitraumModel : tagModel.getZeitraeume()) {
 
-				Zeitraum zeitraum = new Zeitraum(tag.getZeitraeume().get(i).getBeschreibung());
+				Zeitraum zeitraum = new Zeitraum(zeitraumModel.getBeschreibung());
 				zeitraeume.add(zeitraum);
 				
 			}
-			termin.setZeitraeume(zeitraeume);
-			termine.add(termin);
+			tag.setZeitraeume(zeitraeume);
+			termine.add(tag);
 		}		
 		
 		Terminfindung terminfindung = erstellung.erstelleTerminfindung(organisatorName, veranstaltungsName, termine);

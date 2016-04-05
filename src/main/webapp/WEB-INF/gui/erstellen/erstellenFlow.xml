@@ -51,9 +51,7 @@
 
 	<view-state id="erstellenViewState2">
 		<transition on="back" to="erstellenViewState1" />
-		<transition on="create" to="erstellenViewState3">
-			<evaluate expression="erstellenController.speichereModel(erstellenModel)"></evaluate>
-		</transition>
+		<transition on="create" to="validiereModel" />		
 		<transition on="loeschen" to="erstellenViewState2" validate="false">
 			<evaluate expression="erstellenController.delZeitraum(erstellenModel)" />
 		</transition>
@@ -61,6 +59,11 @@
 			<evaluate expression="erstellenController.addZeitraum(erstellenModel)" />
 		</transition>
 	</view-state>
+	
+	<decision-state id="validiereModel">
+		<if test="erstellenController.validiereErstellenModel(erstellenModel)" then="erstellenViewState3"
+			else="erstellenViewState2" />
+	</decision-state>
 
 	<view-state id="erstellenViewState3">
 	</view-state>
