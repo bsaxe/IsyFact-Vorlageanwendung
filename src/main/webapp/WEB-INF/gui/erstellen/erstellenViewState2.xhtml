@@ -37,8 +37,6 @@
 				<f:facet name="panelBody">
 					<p/>
 					<div class="form-horizontal">
-
-
 						<h:dataTable value="#{erstellenModel.tage}" var="tag"
 							class="tableZeiten">
 							<h:column>
@@ -63,6 +61,8 @@
 										</h:commandLink>
 									</h:column>
 								</h:dataTable>
+							</h:column>
+							<h:column>
 								<h:selectOneMenu id="vonZeit" value="#{tag.vonZeitraum}" converter="calCon">
 									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="von" 
 									itemValue="#{von}" itemLabel="#{von}"/>
@@ -71,19 +71,19 @@
 									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="bis" 
 									itemValue="#{bis}" itemLabel="#{bis}"/>
 								</h:selectOneMenu>								
-								<isye:validatingCommandLink id="zeitraeume_#{tag.tag_nr}" action="hinzufuegen"
-									imageLib="images" imageName="add_icon.png" style="max-height:15px" reference="zeitraeume_#{tag.tag_nr}" 
-									propValue="#{tag}" propTarget="#{erstellenModel.selectedTermin}">																
-	            				</isye:validatingCommandLink>	            				
+								<isye:validatingIconButton id="zeitraeume_#{tag.shortDate}" action="hinzufuegen"
+									imageLib="images" imageName="add_icon.png" reference="zeitraeume_#{tag.shortDate}"
+									inLine="true">	
+									<f:setPropertyActionListener value="#{tag}" for="actionEvent"
+										target="#{erstellenModel.selectedTermin}" />															
+	            				</isye:validatingIconButton>	            				
 							</h:column>
 						</h:dataTable>
-						<hr />
-						<div class="col-lg-4">
-							<isy:button id="buttonBack" action="back" value="Zur&uuml;ck" />
-							<isye:validatingButton id="buttonTest" action="create"
-								value="Terminfindung erstellen" reference="zeitraeume" >							
-	            			</isye:validatingButton>
-           				</div>
+						<hr />						
+						<isy:button id="buttonBack" action="back" value="Zur&uuml;ck" />
+						<isye:validatingButton id="buttonTest" action="create" inLine="true"
+							value="Terminfindung erstellen" reference="zeitraeume" >							
+            			</isye:validatingButton>           				
 					</div>
 				</f:facet>
 			</isy:panel>

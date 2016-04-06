@@ -19,6 +19,8 @@
     <composite:attribute name="disabled" type="Boolean" default="false" />
     <!-- zur aktuellen Druckansicht-Anzeige aus dem BasisModel. -->
     <composite:attribute name="showPrintView" type="Boolean" default="#{not empty basisModel and basisModel.showPrintView}" />
+    <!-- Legt fest, ob die Komponente in gleicher Zeile gerendered werden soll -->
+	<composite:attribute name="inLine" required="false" type="Boolean" default="false"/>     
 
     <!-- AJAX: Welches Form ausgeführt werden soll. -->
     <composite:attribute name="execute" required="false" default="@form" />
@@ -47,7 +49,7 @@
 	<ui:param name="existsValidationError"
 		value="#{not empty validationMessages}" />
 
-	<div class="form-group#{existsValidationError ? ' has-error has-feedback': ''}">
+	<div class="form-group#{existsValidationError ? ' has-error has-feedback': ''}#{cc.attrs.inLine ? ' inLineBlock' : ''}">
 				
 	    <ui:fragment rendered="#{cc.attrs.globalConfig.jsEnabled}">
 	        <h:commandButton id="ajax_button" styleClass="btn btn-default #{cc.attrs.styleClass}"

@@ -11,16 +11,14 @@
     <composite:attribute name="reference" required="true" />
     <!-- Die auszuführende Aktion. -->
     <composite:attribute name="action" required="true" targets="commandLink" />
-  
+    <!-- Definiert eine mögliches action event von einem property action listener -->
+    <composite:actionSource name="actionEvent" targets="commandLink"/>
     <!-- Image Library -->
     <composite:attribute name="imageLib" required="false" default="" />
     <!-- Image Name -->
     <composite:attribute name="imageName" required="false" default="" />
-    
-    <composite:attribute name="propValue" required="false" default="" />
-    
-    <composite:attribute name="propTarget" required="false" default="" />
-   
+    <!-- Legt fest, ob die Komponente in gleicher Zeile gerendered werden soll -->
+	<composite:attribute name="inLine" required="false" type="Boolean" default="false"/>       
     <!-- Ob der Button deaktivert ist oder nicht. -->
     <composite:attribute name="disabled" type="Boolean" default="false" />
     <!-- zur aktuellen Druckansicht-Anzeige aus dem BasisModel. -->
@@ -53,13 +51,11 @@
 	<ui:param name="existsValidationError"
 		value="#{not empty validationMessages}" />
 
-	<div class="#{existsValidationError ? ' has-error has-feedback': ''}">				
+	<div class="#{existsValidationError ? ' has-error has-feedback ': ''}#{cc.attrs.inLine ? ' inLineBlock' : ''}" >				
 	   
-		<ui:fragment rendered="#{cc.attrs.globalConfig.jsEnabled}">
-			<h:commandLink id="commandLink" disabled="#{btnDisabled}">
-				<h:graphicImage id="image" library="#{cc.attrs.imageLib}" name="#{cc.attrs.imageName}" />
-				<f:setPropertyActionListener value="#{cc.attrs.propValue}"
-					target="#{cc.attrs.propTarget}" />
+		<ui:fragment rendered="#{cc.attrs.globalConfig.jsEnabled}" >
+			<h:commandLink id="commandLink" disabled="#{btnDisabled}" >
+				<h:graphicImage id="image" library="#{cc.attrs.imageLib}" name="#{cc.attrs.imageName}" style="max-height:18px"/>				
 			</h:commandLink>
 		</ui:fragment>
 

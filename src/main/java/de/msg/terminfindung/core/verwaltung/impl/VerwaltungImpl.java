@@ -27,14 +27,12 @@ import org.springframework.beans.factory.InitializingBean;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
-import de.msg.terminfindung.core.erstellung.impl.AwfTerminfindungErstellen;
 import de.msg.terminfindung.core.verwaltung.Verwaltung;
 import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
 import de.msg.terminfindung.persistence.dao.TeilnehmerZeitraumDao;
 import de.msg.terminfindung.persistence.dao.TerminDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.dao.ZeitraumDao;
-import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 

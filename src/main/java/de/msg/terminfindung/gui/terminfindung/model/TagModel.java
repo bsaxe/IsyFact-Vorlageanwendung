@@ -22,9 +22,11 @@ package de.msg.terminfindung.gui.terminfindung.model;
 
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Die Klasse speichert die Daten eines Tags in der View Schicht.
@@ -64,6 +66,10 @@ public class TagModel implements Serializable,Comparable<TagModel>{
 
 	public Date getDatum() {
 		return datum;
+	}
+	
+	public String getShortDate(){
+		return DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(datum);
 	}
 
 	public void setDatum(Date datum) {

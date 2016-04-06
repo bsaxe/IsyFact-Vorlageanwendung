@@ -1,5 +1,7 @@
 package de.msg.terminfindung.gui.terminfindung.erstellen;
 
+import java.text.DateFormat;
+
 /*
  * #%L
  * Terminfindung
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.msg.terminfindung.gui.util.DataGenerator;
 import org.apache.log4j.Logger;
@@ -186,17 +189,17 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 		
 		if(model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) == 0){
 			validationMessages.add(new ValidationMessage("DA",
-					"zeitraeume_" + model.getSelectedTermin().getTag_nr(), "Zeitraum",
+					"zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
 					"Zeitraum beginnt und Enden um die gleiche Uhrzeit."));
 		}
 		else if(model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) > 0){
 			validationMessages.add(new ValidationMessage("DA",
-					"zeitraeume_" + model.getSelectedTermin().getTag_nr(), "Zeitraum",
+					"zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
 					"Zeitraum startet nach seinem Ende."));
 		}
 		else if(zeitraumExists){
 			validationMessages.add(new ValidationMessage("DA",
-					"zeitraeume_" + model.getSelectedTermin().getTag_nr(), "Zeitraum",
+					"zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
 					"Zeitraum existiert bereits."));
 		}
 		else{
@@ -246,7 +249,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 			if(tag.getZeitraeume().isEmpty()){
 				validationMessages.add(new ValidationMessage("DA",
 						"zeitraeume", "Datum",
-						"Dem Datum "+ tag.getDatum() +" ist kein Zeitraum zugeordnet."));
+						"Dem Datum "+ tag.getShortDate() +" ist kein Zeitraum zugeordnet."));
 			}
 		}
 		
