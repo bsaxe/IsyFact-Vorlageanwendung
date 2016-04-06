@@ -28,18 +28,15 @@
     </bean>
 
     <bean id="verwaltung" class="de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl">
-        <property name="terminfindungDao" ref="terminfindungDao"/>
-        <property name="teilnehmerDao" ref="teilnehmerDao"/>
-        <property name="tagDao" ref="terminDao"/>
-        <property name="zeitraumDao" ref="zeitraumDao"/>
-        <property name="teilnehmerZeitraumDao" ref="teilnehmerZeitraumDao"/>
+        <constructor-arg ref="terminfindungDao"/>
+        <constructor-arg ref="zeitraumDao"/>
+        <constructor-arg ref="terminDao"/>
     </bean>
 
     <bean id="teilnahme" class="de.msg.terminfindung.core.teilnahme.impl.TeilnahmeImpl">
-        <property name="terminfindungDao" ref="terminfindungDao"/>
-        <property name="teilnehmerDao" ref="teilnehmerDao"/>
-        <property name="zeitraumDao" ref="zeitraumDao"/>
-        <property name="teilnehmerZeitraumDao" ref="teilnehmerZeitraumDao"/>
+        <constructor-arg ref="terminfindungDao"/>
+        <constructor-arg ref="teilnehmerDao"/>
+        <constructor-arg ref="teilnehmerZeitraumDao"/>
     </bean>
 
 </beans>

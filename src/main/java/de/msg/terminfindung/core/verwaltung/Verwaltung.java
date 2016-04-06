@@ -21,21 +21,29 @@ package de.msg.terminfindung.core.verwaltung;
  */
 
 
-import java.util.List;
-
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
+import java.util.List;
+
 /**
  * Interface der Anwendungskomponente "Verwaltung" zur Verwaltung von Terminfindungen
+ *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
 public interface Verwaltung {
 
-	Terminfindung 	leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException;
-	void 			loescheZeitraeume(Terminfindung terminfindung, List<Zeitraum> zeitraumList);	
-	void 			setzeVeranstaltungstermin(Terminfindung terminfindung, long zeitraumNr) throws TerminfindungBusinessException;
+    /**
+     * Liest eine Terminfindung anhand ihrer ID.
+     *
+     * @param terminfindung_nr ID der Terminfindung
+     * @throws TerminfindungBusinessException wenn es keine Terminfindung mit dieser ID gibt.
+     */
+    Terminfindung leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException;
+
+    void loescheZeitraeume(Terminfindung terminfindung, List<Zeitraum> zeitraumList);
+
+    void setzeVeranstaltungstermin(Terminfindung terminfindung, long zeitraumNr) throws TerminfindungBusinessException;
 
 }

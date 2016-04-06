@@ -78,12 +78,12 @@
 
     <!-- Beans für DAO's -->
 
-    <bean id="terminfindungImpl"
+    <bean id="terminfindungDao"
           class="de.msg.terminfindung.persistence.dao.jpa.JpaTerminfindungDao"
           parent="abstractDao">
     </bean>
 
-    <bean id="zeitraumImpl"
+    <bean id="zeitraumDao"
           class="de.msg.terminfindung.persistence.dao.jpa.JpaZeitraumDao"
           parent="abstractDao"/>
 
@@ -95,22 +95,22 @@
           class="de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerZeitraumDao"
           parent="abstractDao"/>
 
+    <bean id="terminDao" class="de.msg.terminfindung.persistence.dao.jpa.JpaTerminDao" parent="abstractDao" />
+
     <bean id="erstellung" class="de.msg.terminfindung.core.erstellung.impl.ErstellungImpl">
-        <constructor-arg ref="terminfindungImpl"/>
+        <constructor-arg ref="terminfindungDao"/>
     </bean>
 
-    <bean id="verwaltungImpl"
-          class="de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl">
-        <property name="terminfindungDao" ref="terminfindungImpl"/>
-        <property name="teilnehmerDao" ref="teilnehmerImpl"/>
-        <property name="zeitraumDao" ref="zeitraumImpl"/>
-        <property name="teilnehmerZeitraumDao" ref="teilnehmerZeitraumImpl"/>
+    <bean id="verwaltung" class="de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl">
+        <constructor-arg ref="terminfindungDao"/>
+        <constructor-arg ref="zeitraumDao"/>
+        <constructor-arg ref="terminDao"/>
     </bean>
 
     <bean id="awkWrapperImpl"
           class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
         <property name="erstellung" ref="erstellung"/>
-        <property name="verwaltung" ref="verwaltungImpl"/>
+        <property name="verwaltung" ref="verwaltung"/>
         <property name="beanMapper" ref="beanMapper"/>
     </bean>
 

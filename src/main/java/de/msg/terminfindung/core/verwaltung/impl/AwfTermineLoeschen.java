@@ -33,51 +33,53 @@ import java.util.List;
 
 /**
  * @author msg systems ag, Dirk Jäger
- *
- * Diese Klasse implementiert den Anwendungsfall "Termine loeschen"
+ *         <p>
+ *         Diese Klasse implementiert den Anwendungsfall "Termine loeschen"
  */
-public class AwfTermineLoeschen {
-	
-	private ZeitraumDao zeitraumDao;
-	private TerminDao tagDao;
-    private TerminfindungDao terminfindungDao;
+class AwfTermineLoeschen {
+
+    private final ZeitraumDao zeitraumDao;
+    private final TerminDao tagDao;
+    private final TerminfindungDao terminfindungDao;
+
+    AwfTermineLoeschen(ZeitraumDao zeitraumDao, TerminDao tagDao, TerminfindungDao terminfindungDao) {
+        this.zeitraumDao = zeitraumDao;
+        this.tagDao = tagDao;
+        this.terminfindungDao = terminfindungDao;
+    }
 
     /**
-     * Lösche einen einzelnen Zeitraum aus einer Terminfindung.
-     * Die Methode prüft nicht, ob der Tag, zu dem der Zeitraum gehört,
-     * danach noch weitere Zeiträume enthält
+     * Lösche einen einzelnen Zeitraum aus einer Terminfindung. Die Methode prüft nicht, ob der Tag, zu dem der Zeitraum
+     * gehört, danach noch weitere Zeiträume enthält
      *
-     * @param terminfindung Die Terminfindung
-     * @param zeitraum Der zu löschende Zeitraum
+     * @param zeitraum der zu löschende Zeitraum
      */
-    private void loescheZeitraum(Terminfindung terminfindung, Zeitraum zeitraum){
+    private void loescheZeitraum(Zeitraum zeitraum) {
 
-		// Hole zuerst den Tag, zu dem der Zeitraum gehört
-		Tag tag= zeitraum.getTag();
+        // Hole zuerst den Tag, zu dem der Zeitraum gehört
+        Tag tag = zeitraum.getTag();
 
-		// Lösche dann den Zeitraum
+        // Lösche dann den Zeitraum
         tag.getZeitraeume().remove(zeitraum);
-		zeitraumDao.loesche(zeitraum);
-	}
+        zeitraumDao.loesche(zeitraum);
+    }
 
     /**
-     * Löscht eine Liste von Zeiträumen aus einer Terminfindung.
-     * Die Methode prüft ob durch das Löschen leere Tage (ohne
-     * zugeordnete Zeiträume) entstehen und löscht diese dann
-     * ebenfalls
+     * Löscht eine Liste von Zeiträumen aus einer Terminfindung. Die Methode prüft ob durch das Löschen leere Tage (ohne
+     * zugeordnete Zeiträume) entstehen und löscht diese dann ebenfalls
      *
      * @param terminfindung Die Terminfindung
-     * @param zeitraumList Die Liste der Zeiträume
+     * @param zeitraumList  Die Liste der Zeiträume
      */
-	public void loescheZeitraeume(Terminfindung terminfindung,
-                                  List<Zeitraum> zeitraumList) {
+    void loescheZeitraeume(Terminfindung terminfindung,
+                           List<Zeitraum> zeitraumList) {
 
         // Lösche die Zeiträume aus der Liste
-		if (zeitraumList != null) {
-			for (Zeitraum z : zeitraumList) {
-				loescheZeitraum(terminfindung, z);
-			}
-		}
+        if (zeitraumList != null) {
+            for (Zeitraum z : zeitraumList) {
+                loescheZeitraum(z);
+            }
+        }
 
         // Iteriere über alle Tage, falls nach dem Löschen ein Tag keine
         // Zeiträume mehr hat, löschen den Tag.
@@ -94,34 +96,6 @@ public class AwfTermineLoeschen {
         }
 
         terminfindungDao.aktualisiere(terminfindung);
-	}
-
-	/*--------------------------------------------------------------------------
-	 *  Getter und Setter
-	 *--------------------------------------------------------------------------*/
-
-    public ZeitraumDao getZeitraumDao() {
-        return zeitraumDao;
-    }
-
-    public void setZeitraumDao(ZeitraumDao zeitraumDao) {
-        this.zeitraumDao = zeitraumDao;
-    }
-
-    public TerminDao getTagDao() {
-        return tagDao;
-    }
-
-    public void setTagDao(TerminDao tagDao) {
-        this.tagDao = tagDao;
-    }
-
-    public TerminfindungDao getTerminfindungDao() {
-        return terminfindungDao;
-    }
-
-    public void setTerminfindungDao(TerminfindungDao terminfindungDao) {
-        this.terminfindungDao = terminfindungDao;
     }
 
 }

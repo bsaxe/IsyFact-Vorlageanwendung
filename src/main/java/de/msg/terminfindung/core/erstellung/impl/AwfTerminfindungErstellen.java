@@ -28,6 +28,7 @@ import de.msg.terminfindung.persistence.entity.Organisator;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Iterator;
 import java.util.List;
@@ -108,10 +109,10 @@ class AwfTerminfindungErstellen {
             Iterator<Zeitraum> iterZeitraum = tag.getZeitraeume().iterator();
             while (iterZeitraum.hasNext()) {
                 zeitraum = iterZeitraum.next();
-                if (!zeitraum.getBeschreibung().equals("")) {
-                    allEmpty = false;
-                } else {
+                if (StringUtils.isBlank(zeitraum.getBeschreibung())) {
                     iterZeitraum.remove();
+                } else {
+                    allEmpty = false;
                 }
             }
             if (allEmpty) {

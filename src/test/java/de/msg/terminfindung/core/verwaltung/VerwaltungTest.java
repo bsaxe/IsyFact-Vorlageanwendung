@@ -23,18 +23,21 @@ package de.msg.terminfindung.core.verwaltung;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.core.AbstraktCoreTest;
+import de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl;
+import de.msg.terminfindung.persistence.dao.TerminDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
+import de.msg.terminfindung.persistence.dao.ZeitraumDao;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -42,11 +45,30 @@ import static org.mockito.Mockito.when;
  */
 public class VerwaltungTest extends AbstraktCoreTest {
 
-    @Autowired
-    private Verwaltung verwaltung;
+    private static final Long TERMINFINDUNG_ID = 1L;
 
-    @Autowired
     private TerminfindungDao terminfindungDao;
+
+    private ZeitraumDao zeitraumDao;
+
+    private TerminDao terminDao;
+
+    @Before
+    public void init() {
+        terminfindungDao = mock(TerminfindungDao.class);
+        zeitraumDao = mock(ZeitraumDao.class);
+        terminDao = mock(TerminDao.class);
+
+        // Terminfindung-DAO-Mock konfigurieren
+        Terminfindung muster = new Terminfindung();
+        Tag tag = new Tag();
+        muster.getTermine().add(tag);
+        Zeitraum zeitraum = new Zeitraum();
+        zeitraum.setBeschreibung("abends");
+        tag.getZeitraeume().add(zeitraum);
+
+        when(terminfindungDao.sucheMitId(TERMINFINDUNG_ID)).thenReturn(muster);
+    }
 
     /**
      * Test method for {@link de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl#leseTerminfindung(java.lang.Long)}.
@@ -55,15 +77,7 @@ public class VerwaltungTest extends AbstraktCoreTest {
      */
     @Test
     public void testLeseTerminfindung() throws TerminfindungBusinessException {
-        // DAO-Mock konfigurieren
-        Terminfindung muster = new Terminfindung();
-        Tag tag = new Tag();
-        muster.getTermine().add(tag);
-        Zeitraum zeitraum = new Zeitraum();
-        zeitraum.setBeschreibung("abends");
-        tag.getZeitraeume().add(zeitraum);
-
-        when(terminfindungDao.sucheMitId(1L)).thenReturn(muster);
+        Verwaltung verwaltung = new VerwaltungImpl(terminfindungDao, zeitraumDao, terminDao);
 
         Terminfindung tf = verwaltung.leseTerminfindung(1L);
 
@@ -75,8 +89,6 @@ public class VerwaltungTest extends AbstraktCoreTest {
         assertNotNull(zeitraeume);
         assertEquals(1, zeitraeume.size());
         assertEquals("abends", zeitraeume.get(0).getBeschreibung());
-
-        reset(terminfindungDao);
     }
 
 

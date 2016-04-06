@@ -23,14 +23,15 @@ package de.msg.terminfindung.core.erstellung;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.core.AbstraktCoreTest;
+import de.msg.terminfindung.core.erstellung.impl.ErstellungImpl;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,8 +40,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.*;
 
 /**
  * Test für den Anwendungsfall "Terminfindung erstellen".
@@ -53,37 +53,13 @@ public class ErstellungTest extends AbstraktCoreTest {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    @Autowired
     private TerminfindungDao terminfindungDao;
 
-    @Autowired
-    private Erstellung erstellung;
+    @Before
+    public void init() {
+        terminfindungDao = mock(TerminfindungDao.class);
 
-    private Terminfindung tf;
-
-    @Test(expected = TerminfindungBusinessException.class)
-    public void erstelleTerminfindungTestOrgNameNull() throws TerminfindungBusinessException {
-        erstellung.erstelleTerminfindung(null, "Veranstaltung", new ArrayList<Tag>());
-    }
-
-    @Test(expected = TerminfindungBusinessException.class)
-    public void erstelleTerminfindungTestVeranstNameNull() throws TerminfindungBusinessException {
-        erstellung.erstelleTerminfindung("Organisation", null, new ArrayList<Tag>());
-    }
-
-    @Test(expected = TerminfindungBusinessException.class)
-    public void erstelleTerminfindungTestTerminListeNull() throws TerminfindungBusinessException {
-        erstellung.erstelleTerminfindung("Organisation", "Veranstaltung", null);
-    }
-
-    @Test(expected = TerminfindungBusinessException.class)
-    public void erstelleTerminfindungTestTerminListeLeer() throws TerminfindungBusinessException {
-        erstellung.erstelleTerminfindung("Organisation", "Veranstaltung", new ArrayList<Tag>());
-    }
-
-    @Test
-    public void testErstelleTerminfindung() throws Exception {
-        // DAO-Mock konfigurieren
+        // Terminfindung-DAO-Mock konfigurieren
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
@@ -98,7 +74,37 @@ public class ErstellungTest extends AbstraktCoreTest {
                 return tf;
             }
         }).when(terminfindungDao).sucheMitId(TERMINFINDUNG_ID);
+    }
 
+    private Terminfindung tf;
+
+    @Test(expected = TerminfindungBusinessException.class)
+    public void erstelleTerminfindungTestOrgNameNull() throws TerminfindungBusinessException {
+        Erstellung erstellung = new ErstellungImpl(terminfindungDao);
+        erstellung.erstelleTerminfindung(null, "Veranstaltung", new ArrayList<Tag>());
+    }
+
+    @Test(expected = TerminfindungBusinessException.class)
+    public void erstelleTerminfindungTestVeranstNameNull() throws TerminfindungBusinessException {
+        Erstellung erstellung = new ErstellungImpl(terminfindungDao);
+        erstellung.erstelleTerminfindung("Organisation", null, new ArrayList<Tag>());
+    }
+
+    @Test(expected = TerminfindungBusinessException.class)
+    public void erstelleTerminfindungTestTerminListeNull() throws TerminfindungBusinessException {
+        Erstellung erstellung = new ErstellungImpl(terminfindungDao);
+        erstellung.erstelleTerminfindung("Organisation", "Veranstaltung", null);
+    }
+
+    @Test(expected = TerminfindungBusinessException.class)
+    public void erstelleTerminfindungTestTerminListeLeer() throws TerminfindungBusinessException {
+        Erstellung erstellung = new ErstellungImpl(terminfindungDao);
+        erstellung.erstelleTerminfindung("Organisation", "Veranstaltung", new ArrayList<Tag>());
+    }
+
+    @Test
+    public void testErstelleTerminfindung() throws Exception {
+        Erstellung erstellung = new ErstellungImpl(terminfindungDao);
 
         List<Tag> termine = new ArrayList<>();
         Tag t1 = new Tag(DATE_FORMAT.parse("2100-01-01"));
