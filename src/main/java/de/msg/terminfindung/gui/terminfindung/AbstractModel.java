@@ -55,7 +55,10 @@ public abstract class AbstractModel implements Serializable {
 	}
 
 	public boolean zeitraumIsDefZeitraum(ZeitraumModel zeitraumModel){
-		return (zeitraumModel.getZeitraum_nr() == this.selectedZeitraumNr);
+		if (terminfindung.getDefZeitraum() != null) {
+			return zeitraumModel.getId() == getTerminfindung().getDefZeitraum().getId();
+		}
+		return false;
 	}
 
 	public void setTage(List<TagModel> termine) {
