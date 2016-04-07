@@ -104,11 +104,6 @@
             <property name="password" value="${jdbc.password}"/>
         </bean>
 
-        <jdbc:initialize-database data-source="dataSource">
-            <jdbc:script location="classpath:schema.sql"/>
-            <jdbc:script location="classpath:test-data.sql"/>
-        </jdbc:initialize-database>
-
         <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
             <property name="persistenceProviderClass" value="org.hibernate.ejb.HibernatePersistence"/>
