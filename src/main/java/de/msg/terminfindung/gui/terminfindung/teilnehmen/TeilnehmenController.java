@@ -21,22 +21,20 @@ package de.msg.terminfindung.gui.terminfindung.teilnehmen;
  */
 
 
+import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
+import de.msg.terminfindung.gui.terminfindung.AbstractController;
+import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
+import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
-import de.msg.terminfindung.persistence.entity.Praeferenz;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-
-import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
-import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 /**
  * Controller für den Teilnahme Flow
@@ -96,7 +94,7 @@ public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
 
 			for (ZeitraumModel zeitraum : model.getTerminfindung().getAlleZeitraeume()) {
 
-				int ordinal = Integer.parseInt(String.valueOf(model.getZeitraumAuswahl().getCheckedRadio().get(zeitraum.getZeitraum_nr())));
+				int ordinal = Integer.parseInt(String.valueOf(model.getZeitraumAuswahl().getCheckedRadio().get(zeitraum.getId())));
 				PraeferenzModel praeferenz = PraeferenzModel.values()[ordinal];
 
 				terminwahl.put(zeitraum, praeferenz);

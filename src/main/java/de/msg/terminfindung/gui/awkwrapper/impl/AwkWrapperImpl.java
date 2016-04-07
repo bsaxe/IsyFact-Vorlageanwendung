@@ -102,7 +102,7 @@ public class AwkWrapperImpl implements AwkWrapper {
         if (terminfindungModel == null)
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 
-        Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
+        Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
 
         verwaltung.setzeVeranstaltungstermin(terminfindung, zeitraumNr);
 
@@ -118,7 +118,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 
         // Übertrage die Datenstrukturen aus dem View in die Struktur des Anwendungskerns
         // Lese die Terminfindung anhand ihrer Id
-        Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
+        Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
 
         // Der Teilnehmer wird neu erzeugt, der Name wird übertragen
         Teilnehmer teilnehmer = new Teilnehmer();
@@ -129,7 +129,7 @@ public class AwkWrapperImpl implements AwkWrapper {
         Map<Zeitraum, Praeferenz> terminwahl = new HashMap<>();
         for (ZeitraumModel zeitraumModel : viewTerminwahl.keySet()) {
 
-            Zeitraum zeitraum = terminfindung.findeZeitraumById(zeitraumModel.getZeitraum_nr());
+            Zeitraum zeitraum = terminfindung.findeZeitraumById(zeitraumModel.getId());
 
             // Wenn in der Terminfindung kein Zeitraum mit der gesuchten Id exisistiert ist die Anfrage ungültig
             if (zeitraum == null) throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
@@ -156,12 +156,12 @@ public class AwkWrapperImpl implements AwkWrapper {
         // Lese die Terminfindung anhand ihrer Id, Konstruiere die entsprechende Liste für den Aufruf des
         // Anwendungskerns
         List<Zeitraum> zeitraumList = new ArrayList<>();
-        Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getTerminfnd_Nr());
+        Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
 
         // Hole zu jedem zu löschenden Zeitraum das entsprechende Objekt des Anwendungskerns
         for (ZeitraumModel zeitraumModel : viewZeitraeume) {
 
-            Zeitraum zeitraum = terminfindung.findeZeitraumById(zeitraumModel.getZeitraum_nr());
+            Zeitraum zeitraum = terminfindung.findeZeitraumById(zeitraumModel.getId());
             // Wenn in der Terminfindung kein Zeitraum mit der gesuchten Id exisistiert ist die Anfrage ungültig
             if (zeitraum == null) throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 

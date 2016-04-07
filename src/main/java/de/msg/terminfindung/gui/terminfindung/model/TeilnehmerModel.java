@@ -21,11 +21,11 @@ package de.msg.terminfindung.gui.terminfindung.model;
  */
 
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 /**
  * Die Klasse speichert die Daten eines Teilnehmers in der View-Schicht.
@@ -41,15 +41,15 @@ public class TeilnehmerModel implements Serializable {
 
 	private static final Logger LOG = Logger.getLogger(TeilnehmerModel.class);
 	
-	private long teilnehmer_Nr;
+	private long id;
 	private String name = "";
 	private List<TeilnehmerZeitraumModel> praeferenzen = new ArrayList<>();
 	
-	public long getTeilnehmer_Nr() {
-		return teilnehmer_Nr;
+	public long getId() {
+		return id;
 	}
-	public void setTeilnehmer_Nr(long teilnehmer_Nr) {
-		this.teilnehmer_Nr = teilnehmer_Nr;
+	public void setId(long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -85,7 +85,7 @@ public class TeilnehmerModel implements Serializable {
 					LOG.warn("Zeitraum war null für Präferenz " + praeferenz);
 				}
 				else {
-					if (vz.getZeitraum_nr() == zeitraum.getZeitraum_nr()) {
+					if (vz.getId() == zeitraum.getId()) {
 						
 						result = praeferenz.getPraeferenz();
 					}

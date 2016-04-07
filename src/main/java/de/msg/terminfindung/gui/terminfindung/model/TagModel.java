@@ -38,7 +38,7 @@ public class TagModel implements Serializable,Comparable<TagModel>{
 
 	private static final long serialVersionUID = -5975535556486949171L;
 
-	private long tag_nr;
+	private long id;
     private Date datum;
     private List<ZeitraumModel> zeitraeume = new ArrayList<>();
     
@@ -51,17 +51,17 @@ public class TagModel implements Serializable,Comparable<TagModel>{
 		super();
 	}
 
-	public TagModel(long tag_nr) {
+	public TagModel(long id) {
 		super();
-		this.tag_nr = tag_nr;
+		this.id = id;
 	}
 	
-	public long getTag_nr() {
-		return tag_nr;
+	public long getId() {
+		return id;
 	}
 
-	public void setTag_nr(long tag_nr) {
-		this.tag_nr = tag_nr;
+	public void setId(long tag_nr) {
+		this.id = tag_nr;
 	}
 
 	public Date getDatum() {

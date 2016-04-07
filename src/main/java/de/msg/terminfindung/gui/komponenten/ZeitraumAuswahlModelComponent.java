@@ -21,14 +21,14 @@ package de.msg.terminfindung.gui.komponenten;
  */
 
 
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
+import de.msg.terminfindung.persistence.entity.Praeferenz;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.msg.terminfindung.gui.terminfindung.model.TagModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-import de.msg.terminfindung.persistence.entity.Praeferenz;
 
 /**
  * Modellkomponente zum Verwalten der Auswahl eines Zeitraums in der GUI.
@@ -56,7 +56,7 @@ public class ZeitraumAuswahlModelComponent implements Serializable {
 			
 		for (TagModel tag : tage) {
 			for (ZeitraumModel zeitraum : tag.getZeitraeume()) {
-				this.getCheckedRadio().put(zeitraum.getZeitraum_nr(), Praeferenz.NEIN.ordinal()); // initialisiere mit 0 = Nein
+				this.getCheckedRadio().put(zeitraum.getId(), Praeferenz.NEIN.ordinal()); // initialisiere mit 0 = Nein
 			}
 		}
 	}

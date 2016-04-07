@@ -19,15 +19,13 @@ package de.msg.terminfindung.gui.terminfindung.model;
  * limitations under the License.
  * #L%
  */
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
-import de.msg.terminfindung.persistence.entity.Tag;
-import de.msg.terminfindung.persistence.entity.Terminfindung;
-import de.msg.terminfindung.persistence.entity.Zeitraum;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 
 @RunWith(BlockJUnit4ClassRunner.class)
@@ -39,8 +37,8 @@ public class TestTerminfindungModel {
 		ZeitraumModel zeitraumModel1 = new ZeitraumModel();
 		ZeitraumModel zeitraumModel2 = new ZeitraumModel();
 		
-		zeitraumModel1.setZeitraum_nr(1);
-		zeitraumModel2.setZeitraum_nr(22);
+		zeitraumModel1.setId(1);
+		zeitraumModel2.setId(22);
 				
 		tagModel.getZeitraeume().add(zeitraumModel1);
 		tagModel.getZeitraeume().add(zeitraumModel2);

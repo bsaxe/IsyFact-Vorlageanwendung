@@ -21,11 +21,10 @@ package de.msg.terminfindung.gui.terminfindung.teilnehmen;
  */
 
 
-
-import java.io.Serializable;
-
 import de.msg.terminfindung.gui.komponenten.ZeitraumAuswahlModelComponent;
 import de.msg.terminfindung.gui.terminfindung.AbstractModel;
+
+import java.io.Serializable;
 
 /**
  * Model fuer den Teilnehmen Flow

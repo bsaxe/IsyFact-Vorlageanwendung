@@ -24,9 +24,6 @@ package de.msg.terminfindung.gui.terminfindung.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import de.msg.terminfindung.persistence.entity.Zeitraum;
 
 /**
  * Die Klasse speichert eine Terminfindung in der View-Schicht.
@@ -41,7 +38,7 @@ public class TerminfindungModel implements Serializable{
     /**
      * Die Nummer (Id) der Terminfindung
      */
-	private long terminfnd_Nr;
+	private long id;
 
     /**
      * Der vom Veranstalter letztlich ausgwählte Termin der Veranstaltung.
@@ -68,7 +65,7 @@ public class TerminfindungModel implements Serializable{
     /**
      * Der Name der Veranstaltung.
      */
-	private String veranstName = "";
+	private String veranstaltungName = "";
 
 	/**
 	 * Sucht in einer TerminfindungModel nach einem Zeitraum mit der angegebenen Id.
@@ -84,7 +81,7 @@ public class TerminfindungModel implements Serializable{
 		for (TagModel t : tage) {
 			if (t.getZeitraeume() != null) {
 				for (ZeitraumModel z : t.getZeitraeume()) {
-					if (z.getZeitraum_nr() == zeitraumId) result=z;
+					if (z.getId() == zeitraumId) result=z;
 				}
 			}
 		}
@@ -146,12 +143,12 @@ public class TerminfindungModel implements Serializable{
 	
 	/* Getter und Setter */
 	
-	public long getTerminfnd_Nr() {
-		return terminfnd_Nr;
+	public long getId() {
+		return id;
 	}
 
-	public void setTerminfnd_Nr(long terminfnd_Nr) {
-		this.terminfnd_Nr = terminfnd_Nr;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public ZeitraumModel getDefZeitraum() {
@@ -186,12 +183,12 @@ public class TerminfindungModel implements Serializable{
 		this.organisator= organisator;
 	}
 
-	public String getVeranstName() {
-		return veranstName;
+	public String getVeranstaltungName() {
+		return veranstaltungName;
 	}
 
-	public void setVeranstName(String veranstName) {
-		this.veranstName = veranstName;
+	public void setVeranstaltungName(String veranstaltungName) {
+		this.veranstaltungName = veranstaltungName;
 	}
 	
 	public String getTeilnehmerLabel(){

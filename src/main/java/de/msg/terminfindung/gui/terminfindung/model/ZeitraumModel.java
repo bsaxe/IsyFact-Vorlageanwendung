@@ -40,7 +40,7 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable{
      * Sie identifiziert einen Zeitraum damit eindeutig ohne Angabe des Tages,
      * an dem der Zeitraum liegt.
      */
-	private long zeitraum_nr;
+	private long id;
     /**
      * Beschreibung des Zeitraums.
      */
@@ -88,19 +88,19 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable{
 			List<TeilnehmerZeitraumModel> teilnehmerZeitraeume) {
 		this.teilnehmerZeitraeume = teilnehmerZeitraeume;
 	}
-	public ZeitraumModel(long zeitraum_nr, String beschreibung) {
+	public ZeitraumModel(long id, String beschreibung) {
 		super();
-		this.zeitraum_nr = zeitraum_nr;
+		this.id = id;
 		this.beschreibung = beschreibung;
 	}
 	public ZeitraumModel() {
 		super();
 	}
-	public long getZeitraum_nr() {
-		return zeitraum_nr;
+	public long getId() {
+		return id;
 	}
-	public void setZeitraum_nr(long zeitraum_nr) {
-		this.zeitraum_nr = zeitraum_nr;
+	public void setId(long id) {
+		this.id = id;
 	}
 	public String getBeschreibung() {
 		return beschreibung;
