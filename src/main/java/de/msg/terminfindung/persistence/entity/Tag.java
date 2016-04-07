@@ -21,79 +21,48 @@ package de.msg.terminfindung.persistence.entity;
  */
 
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 
 /**
  * Entity implementation class for Entity: Tag
  *
  * @author msg systems ag, Maximilian Falter
- *
  */
 @Entity
-@Table(name = "tag")
-public class Tag implements Serializable {
+public class Tag extends AbstraktEntitaet {
+    private static final long serialVersionUID = 1L;
 
-	   
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "tag_nr")
-	private long tag_Nr;
-	
-	@Column(name = "datum")
-	private Date datum;
-	private static final long serialVersionUID = 1L;
-	@OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL},orphanRemoval=true)
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn(name="tag_nr", referencedColumnName="tag_nr")
-	@OrderBy("zeitraum_Nr")
-	private List<Zeitraum> zeitraeume = new ArrayList<>();
-	
-	public Tag() {
-		super();
-	}   
-	
-	public Tag(Date datum) {
-		super();
-		this.datum = datum;
-	}
+    private Date datum;
 
-	public long getTag_Nr() {
-		return this.tag_Nr;
-	}
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "tag_id")
+    @OrderBy("id ASC")
+    private List<Zeitraum> zeitraeume = new ArrayList<>();
 
-	public void setTag_Nr(long TerminNr) {
-		this.tag_Nr = TerminNr;
-	}   
-	public Date getDatum() {
-		return this.datum;
-	}
+    public Tag() {
+    }
 
-	public void setDatum(Date Datum) {
-		this.datum = Datum;
-	}
-	public List<Zeitraum> getZeitraeume() {
-		return zeitraeume;
-	}
-	public void setZeitraeume(List<Zeitraum> zeitraeume) {
-		this.zeitraeume = zeitraeume;
-	}
+    public Tag(Date datum) {
+        this.datum = datum;
+    }
+
+    public Date getDatum() {
+        return this.datum;
+    }
+
+    public void setDatum(Date Datum) {
+        this.datum = Datum;
+    }
+
+    public List<Zeitraum> getZeitraeume() {
+        return zeitraeume;
+    }
+
+    public void setZeitraeume(List<Zeitraum> zeitraeume) {
+        this.zeitraeume = zeitraeume;
+    }
 }

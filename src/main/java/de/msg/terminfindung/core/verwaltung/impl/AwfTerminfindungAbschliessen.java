@@ -59,7 +59,7 @@ class AwfTerminfindungAbschliessen {
         // Stelle sicher, dass die Terminfindung einen Zeitraum mit der angegebenen Nummer enthält
         Zeitraum zeitraum = findeZeitraumInTermin(terminfindung, zeitraumNr);
         if (zeitraum == null) {
-            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_ZEITRAUM_NICHT_GEFUNDEN, String.valueOf(terminfindung.getTerminfnd_Nr()), String.valueOf(zeitraumNr));
+            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_ZEITRAUM_NICHT_GEFUNDEN, String.valueOf(terminfindung.getId()), String.valueOf(zeitraumNr));
         }
 
         terminfindung.setDefZeitraum(zeitraum);
@@ -83,7 +83,7 @@ class AwfTerminfindungAbschliessen {
 
         for (Tag tag : terminfindung.getTermine()) {
             for (Zeitraum zeitraum : tag.getZeitraeume()) {
-                if (zeitraum.getZeitraum_Nr() == zeitraumNr) {
+                if (zeitraum.getId() == zeitraumNr) {
                     result = zeitraum;
                 }
             }

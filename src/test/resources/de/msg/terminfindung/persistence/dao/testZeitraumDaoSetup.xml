@@ -18,6 +18,6 @@
   #L%
   -->
 <dataset>
-    <Zeitraum zeitraum_nr="1" beschreibung="9-11 Uhr" />
-    <Zeitraum zeitraum_nr="2" beschreibung="über Mittag" />
+    <Zeitraum id="1" beschreibung="9-11 Uhr" />
+    <Zeitraum id="2" beschreibung="über Mittag" />
 </dataset>

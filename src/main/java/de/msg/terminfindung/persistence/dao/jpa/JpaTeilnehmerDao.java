@@ -21,16 +21,14 @@ package de.msg.terminfindung.persistence.dao.jpa;
  */
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.persistence.Query;
-
-import de.bund.bva.pliscommon.persistence.dao.AbstractDao;
 import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
 import de.msg.terminfindung.persistence.entity.Teilnehmer;
 import de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum;
+
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Implementierung fuer die TeilnehmerDAO
@@ -46,7 +44,7 @@ public class JpaTeilnehmerDao extends AbstraktJpaDao<Teilnehmer> implements Teil
 	public Collection<TeilnehmerZeitraum> ladePraeferenzZuTeilnehmer(
 			Teilnehmer teilnehmer) {
 		Query query = super.getEntityManager().createNamedQuery("leseTeilnehmerPraeferenzMitId");
-		query.setParameter("nr", teilnehmer.getTeilnehmer_Nr());
+		query.setParameter("nr", teilnehmer.getId());
 		List<TeilnehmerZeitraum> tz = new ArrayList<>(query.getResultList().size());
 		for(Object o:query.getResultList()){
 			tz.add((TeilnehmerZeitraum) o);

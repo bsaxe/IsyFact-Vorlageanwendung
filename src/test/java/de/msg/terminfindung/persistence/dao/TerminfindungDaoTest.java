@@ -42,7 +42,7 @@ public class TerminfindungDaoTest extends AbstraktDaoTest {
     @DatabaseSetup("testTerminfindungDaoSetup.xml")
     @ExpectedDatabase(value = "testTerminfindungDaoSpeichern.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testSpeichern() {
-        terminfindungDao.speichere(new Terminfindung(new Organisator("Sepp"), "Grillfest 2016"));
+        terminfindungDao.speichere(new Terminfindung("Grillfest 2016", new Organisator("Sepp")));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class TerminfindungDaoTest extends AbstraktDaoTest {
 
         assertNotNull(terminfindung);
         assertEquals("Herbert", terminfindung.getOrganisator().getName());
-        assertEquals("Spieleabend IsyFact", terminfindung.getVeranstName());
+        assertEquals("Spieleabend IsyFact", terminfindung.getVeranstaltungName());
     }
 
     @Test

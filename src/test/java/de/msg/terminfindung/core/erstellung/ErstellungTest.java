@@ -38,7 +38,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -64,7 +65,7 @@ public class ErstellungTest extends AbstraktCoreTest {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 tf = invocation.getArgumentAt(0, Terminfindung.class);
-                tf.setTerminfnd_Nr(TERMINFINDUNG_ID);
+                tf.setId(TERMINFINDUNG_ID);
                 return null;
             }
         }).when(terminfindungDao).speichere(any(Terminfindung.class));
@@ -124,8 +125,8 @@ public class ErstellungTest extends AbstraktCoreTest {
         Terminfindung terminfindung = erstellung.erstelleTerminfindung("Max", "Grillfest 2015", termine);
         assertNotNull(terminfindung);
 
-        long tfId = terminfindung.getTerminfnd_Nr();
-        assertTrue(tfId != 0);
+        long tfId = terminfindung.getId();
+        assertNotNull(tfId);
 
         terminfindung = terminfindungDao.sucheMitId(tfId);
 

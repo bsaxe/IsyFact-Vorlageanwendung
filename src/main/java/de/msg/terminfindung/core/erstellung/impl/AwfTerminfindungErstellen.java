@@ -78,12 +78,12 @@ class AwfTerminfindungErstellen {
         }
 
         // Lege eine neue Terminfindung an
-        Terminfindung t = new Terminfindung(new Organisator(organisatorName), veranstaltungName);
+        Terminfindung terminfindung = new Terminfindung(veranstaltungName, new Organisator(organisatorName));
         bereinigeZeitraeumeInTerminliste(termine);
 
-        t.setTermine(termine);
-        dao.speichere(t);
-        return t;
+        terminfindung.setTermine(termine);
+        dao.speichere(terminfindung);
+        return terminfindung;
 
     }
 

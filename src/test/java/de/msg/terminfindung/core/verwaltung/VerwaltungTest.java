@@ -24,9 +24,7 @@ package de.msg.terminfindung.core.verwaltung;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.core.AbstraktCoreTest;
 import de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl;
-import de.msg.terminfindung.persistence.dao.TerminDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
-import de.msg.terminfindung.persistence.dao.ZeitraumDao;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
@@ -49,15 +47,9 @@ public class VerwaltungTest extends AbstraktCoreTest {
 
     private TerminfindungDao terminfindungDao;
 
-    private ZeitraumDao zeitraumDao;
-
-    private TerminDao terminDao;
-
     @Before
     public void init() {
         terminfindungDao = mock(TerminfindungDao.class);
-        zeitraumDao = mock(ZeitraumDao.class);
-        terminDao = mock(TerminDao.class);
 
         // Terminfindung-DAO-Mock konfigurieren
         Terminfindung muster = new Terminfindung();
@@ -77,7 +69,7 @@ public class VerwaltungTest extends AbstraktCoreTest {
      */
     @Test
     public void testLeseTerminfindung() throws TerminfindungBusinessException {
-        Verwaltung verwaltung = new VerwaltungImpl(terminfindungDao, zeitraumDao, terminDao);
+        Verwaltung verwaltung = new VerwaltungImpl(terminfindungDao);
 
         Terminfindung tf = verwaltung.leseTerminfindung(1L);
 

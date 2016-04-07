@@ -1,6 +1,7 @@
 package de.msg.terminfindung.persistence.dao;
 
 import de.bund.bva.pliscommon.persistence.dao.Dao;
+import de.msg.terminfindung.persistence.entity.AbstraktEntitaet;
 
 /**
  * Basis-Interface alle DAOs der Anwendung. Fügt gegenüber des Interfaces aus plis-persistence eine Methode zum
@@ -8,7 +9,7 @@ import de.bund.bva.pliscommon.persistence.dao.Dao;
  *
  * @author Stefan Dellmuth, msg systems ag
  */
-public interface AbstraktDao<T> extends Dao<T, Long> {
+public interface AbstraktDao<T extends AbstraktEntitaet> extends Dao<T, Long> {
 
     /**
      * Aktualisiert eine veränderte, zurvor persistierte Entität.

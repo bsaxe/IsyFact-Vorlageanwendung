@@ -94,9 +94,8 @@ public class AwfTerminfindungErstellenTest extends AbstraktCoreTest {
 
             for (int k = 0; k <= 4; k++) {
                 Zeitraum zeitraum = new Zeitraum();
-                zeitraum.setTag(tag);
-                zeitraum.setZeitraum_Nr(1000 * i + k);
-                zeitraum.setBeschreibung("Testzeitraum" + zeitraum.getZeitraum_Nr());
+                zeitraum.setId(1000L * i + k);
+                zeitraum.setBeschreibung("Testzeitraum" + zeitraum.getId());
                 tag.getZeitraeume().add(zeitraum);
             }
         }

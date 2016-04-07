@@ -20,10 +20,7 @@ package de.msg.terminfindung.core.verwaltung.impl;
  * #L%
  */
 
-
-import de.msg.terminfindung.persistence.dao.TerminDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
-import de.msg.terminfindung.persistence.dao.ZeitraumDao;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
@@ -32,36 +29,16 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * Diese Klasse implementiert den Anwendungsfall "Termine loeschen"
+ *
  * @author msg systems ag, Dirk Jäger
- *         <p>
- *         Diese Klasse implementiert den Anwendungsfall "Termine loeschen"
  */
 class AwfTermineLoeschen {
 
-    private final ZeitraumDao zeitraumDao;
-    private final TerminDao tagDao;
     private final TerminfindungDao terminfindungDao;
 
-    AwfTermineLoeschen(ZeitraumDao zeitraumDao, TerminDao tagDao, TerminfindungDao terminfindungDao) {
-        this.zeitraumDao = zeitraumDao;
-        this.tagDao = tagDao;
+    AwfTermineLoeschen(TerminfindungDao terminfindungDao) {
         this.terminfindungDao = terminfindungDao;
-    }
-
-    /**
-     * Lösche einen einzelnen Zeitraum aus einer Terminfindung. Die Methode prüft nicht, ob der Tag, zu dem der Zeitraum
-     * gehört, danach noch weitere Zeiträume enthält
-     *
-     * @param zeitraum der zu löschende Zeitraum
-     */
-    private void loescheZeitraum(Zeitraum zeitraum) {
-
-        // Hole zuerst den Tag, zu dem der Zeitraum gehört
-        Tag tag = zeitraum.getTag();
-
-        // Lösche dann den Zeitraum
-        tag.getZeitraeume().remove(zeitraum);
-        zeitraumDao.loesche(zeitraum);
     }
 
     /**
@@ -75,23 +52,22 @@ class AwfTermineLoeschen {
                            List<Zeitraum> zeitraumList) {
 
         // Lösche die Zeiträume aus der Liste
-        if (zeitraumList != null) {
-            for (Zeitraum z : zeitraumList) {
-                loescheZeitraum(z);
+        for (Tag tag : terminfindung.getTermine()) {
+            Iterator<Zeitraum> zeitraeume = tag.getZeitraeume().iterator();
+            while (zeitraeume.hasNext()) {
+                Zeitraum zeitraum = zeitraeume.next();
+                if (zeitraumList.contains(zeitraum)) {
+                    zeitraeume.remove();
+                }
             }
         }
 
-        // Iteriere über alle Tage, falls nach dem Löschen ein Tag keine
-        // Zeiträume mehr hat, löschen den Tag.
-        List<Tag> tagList = terminfindung.getTermine();
-        if (tagList != null) {
-            Iterator<Tag> tagIterator = terminfindung.getTermine().iterator();
-            while (tagIterator.hasNext()) {
-                Tag tag = tagIterator.next();
-                if (tag.getZeitraeume().isEmpty()) {
-                    tagDao.loesche(tag);
-                    tagIterator.remove();
-                }
+        // Falls nach dem Löschen ein Tag keine Zeiträume mehr hat, wird der Tag gelöscht.
+        Iterator<Tag> tagIterator = terminfindung.getTermine().iterator();
+        while (tagIterator.hasNext()) {
+            Tag tag = tagIterator.next();
+            if (tag.getZeitraeume().isEmpty()) {
+                tagIterator.remove();
             }
         }
 

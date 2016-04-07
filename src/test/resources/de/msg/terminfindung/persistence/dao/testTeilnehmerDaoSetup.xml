@@ -18,6 +18,6 @@
   #L%
   -->
 <dataset>
-    <Teilnehmer teilnehmer_nr="1" name="Klaus" />
-    <Teilnehmer teilnehmer_nr="2" name="Herbert" />
+    <Teilnehmer id="1" name="Klaus" />
+    <Teilnehmer id="2" name="Herbert" />
 </dataset>

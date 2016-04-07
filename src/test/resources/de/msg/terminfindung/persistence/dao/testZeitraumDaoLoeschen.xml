@@ -18,5 +18,5 @@
   #L%
   -->
 <dataset>
-    <Zeitraum zeitraum_nr="1" beschreibung="9-11 Uhr" />
+    <Zeitraum id="1" beschreibung="9-11 Uhr" />
 </dataset>

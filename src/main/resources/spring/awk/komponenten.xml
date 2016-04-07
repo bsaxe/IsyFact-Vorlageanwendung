@@ -29,8 +29,6 @@
 
     <bean id="verwaltung" class="de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl">
         <constructor-arg ref="terminfindungDao"/>
-        <constructor-arg ref="zeitraumDao"/>
-        <constructor-arg ref="terminDao"/>
     </bean>
 
     <bean id="teilnahme" class="de.msg.terminfindung.core.teilnahme.impl.TeilnahmeImpl">

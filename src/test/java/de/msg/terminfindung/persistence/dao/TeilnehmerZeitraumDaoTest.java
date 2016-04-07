@@ -71,8 +71,8 @@ public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
         TeilnehmerZeitraum teilnehmerZeitraum = tzDao.sucheMitId(TEILNEHMER_ZEITRAUM_ID);
 
         assertNotNull(teilnehmerZeitraum);
-        assertEquals(2, teilnehmerZeitraum.getTeilnehmer().getTeilnehmer_Nr());
-        assertEquals(ZEITRAUM_MITTAGS, Long.valueOf(teilnehmerZeitraum.getZeitraum().getZeitraum_Nr()));
+        assertEquals(Long.valueOf(2L), teilnehmerZeitraum.getTeilnehmer().getId());
+        assertEquals(ZEITRAUM_MITTAGS, teilnehmerZeitraum.getZeitraum().getId());
         assertEquals(Praeferenz.JA, teilnehmerZeitraum.getPraeferenz());
     }
 

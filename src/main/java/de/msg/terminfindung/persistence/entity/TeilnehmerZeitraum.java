@@ -20,81 +20,62 @@ package de.msg.terminfindung.persistence.entity;
  * #L%
  */
 
-
-import java.io.Serializable;
-
-import javax.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToOne;
 
 /**
- * Entity implementation class for Entity: TeilnehmerZeitraum
- * Stellt die Entity/Tabelle fuer die Praeferenz eines Teilnehmers dar
- * Diese Zwischenentitaet/tabelle wird benoetigt, da jeder Teilnehmer zu mehreren Zeitraeumen
- * eine Praeferenz hat und jeder Zeitraum von mehreren Teilnehmern praeferiert werden kann
+ * Entity implementation class for Entity: TeilnehmerZeitraum Stellt die Entity/Tabelle fuer die Praeferenz eines
+ * Teilnehmers dar Diese Zwischenentitaet/tabelle wird benoetigt, da jeder Teilnehmer zu mehreren Zeitraeumen eine
+ * Praeferenz hat und jeder Zeitraum von mehreren Teilnehmern praeferiert werden kann
  *
  * @author msg systems ag, Maximilian Falter
  */
 @Entity
-@Table(name = "teilnehmerzeitraum")
-public class TeilnehmerZeitraum implements Serializable {
+public class TeilnehmerZeitraum extends AbstraktEntitaet {
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "teilnehmerZeitraum_nr")
-	private long teilnehmerZeitraum_Nr;
+    @Enumerated(value = EnumType.ORDINAL)
+    private Praeferenz praeferenz;
 
-	@Enumerated(value = EnumType.ORDINAL)
-	private Praeferenz praeferenz;
-	
-	private static final long serialVersionUID = 1L;
+    @OneToOne
+    Teilnehmer teilnehmer;
 
-	@OneToOne
-	@JoinColumn(name="teilnehmer_nr")
-	Teilnehmer teilnehmer;
-	
-	@OneToOne
-	@JoinColumn(name="zeitraum_nr")
-	Zeitraum zeitraum;
+    @OneToOne
+    Zeitraum zeitraum;
 
-	public TeilnehmerZeitraum() {
-		super();
-	}
+    public TeilnehmerZeitraum() {
 
-	public TeilnehmerZeitraum(Teilnehmer teilnehmer, Zeitraum zeitraum, Praeferenz praeferenz) {
-		this.teilnehmer = teilnehmer;
-		this.zeitraum   = zeitraum;
-		this.praeferenz = praeferenz;
-	}
+    }
 
-	public Praeferenz getPraeferenz() {
-		return this.praeferenz;
-	}
+    public TeilnehmerZeitraum(Teilnehmer teilnehmer, Zeitraum zeitraum, Praeferenz praeferenz) {
+        this.teilnehmer = teilnehmer;
+        this.zeitraum = zeitraum;
+        this.praeferenz = praeferenz;
+    }
 
-	public void setPraeferenz(Praeferenz praeferenz) {
-		this.praeferenz = praeferenz;
-	}
+    public Praeferenz getPraeferenz() {
+        return this.praeferenz;
+    }
 
-	public long getTeilnehmerZeitraum_Nr() {
-		return teilnehmerZeitraum_Nr;
-	}
+    public void setPraeferenz(Praeferenz praeferenz) {
+        this.praeferenz = praeferenz;
+    }
 
-	public void setTeilnehmerZeitraum_Nr(long teilnehmerZeitraum_Nr) {
-		this.teilnehmerZeitraum_Nr = teilnehmerZeitraum_Nr;
-	}
+    public Teilnehmer getTeilnehmer() {
+        return teilnehmer;
+    }
 
-	public Teilnehmer getTeilnehmer() {
-		return teilnehmer;
-	}
+    public void setTeilnehmer(Teilnehmer teilnehmer) {
+        this.teilnehmer = teilnehmer;
+    }
 
-	public void setTeilnehmer(Teilnehmer teilnehmer) {
-		this.teilnehmer = teilnehmer;
-	}
+    public Zeitraum getZeitraum() {
+        return zeitraum;
+    }
 
-	public Zeitraum getZeitraum() {
-		return zeitraum;
-	}
-
-	public void setZeitraum(Zeitraum zeitraum) {
-		this.zeitraum = zeitraum;
-	}
+    public void setZeitraum(Zeitraum zeitraum) {
+        this.zeitraum = zeitraum;
+    }
 }

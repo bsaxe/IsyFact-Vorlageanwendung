@@ -24,9 +24,7 @@ package de.msg.terminfindung.core.verwaltung.impl;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.core.verwaltung.Verwaltung;
-import de.msg.terminfindung.persistence.dao.TerminDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
-import de.msg.terminfindung.persistence.dao.ZeitraumDao;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
@@ -46,9 +44,9 @@ public class VerwaltungImpl implements Verwaltung {
 
     private final TerminfindungDao terminfindungDao;
 
-    public VerwaltungImpl(TerminfindungDao terminfindungDao, ZeitraumDao zeitraumDao, TerminDao terminDao) {
+    public VerwaltungImpl(TerminfindungDao terminfindungDao) {
         awfTerminfindungAbschliessen = new AwfTerminfindungAbschliessen(terminfindungDao);
-        awfTermineLoeschen = new AwfTermineLoeschen(zeitraumDao, terminDao, terminfindungDao);
+        awfTermineLoeschen = new AwfTermineLoeschen(terminfindungDao);
         this.terminfindungDao = terminfindungDao;
     }
 
