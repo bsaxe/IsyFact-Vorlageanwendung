@@ -50,10 +50,10 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.anyListOf;
+import static org.mockito.Mockito.anyMapOf;
 import static org.mockito.Mockito.*;
 
 /**
@@ -118,7 +118,7 @@ public class AwkWrapperTest {
 
     @Test
     public void testBeanMapperViewZuPersistenz() throws TerminfindungBusinessException {
-        when(erstellung.erstelleTerminfindung(anyString(), anyString(), anyList())).thenAnswer(new Answer<Terminfindung>() {
+        when(erstellung.erstelleTerminfindung(anyString(), anyString(), anyListOf(Tag.class))).thenAnswer(new Answer<Terminfindung>() {
             @Override
             public Terminfindung answer(InvocationOnMock invocation) throws Throwable {
                 String organisator = invocation.getArgumentAt(0, String.class);
@@ -155,7 +155,7 @@ public class AwkWrapperTest {
                 }
                 return null;
             }
-        }).when(teilnahme).bestaetigeTeilnahme(any(Terminfindung.class), any(Teilnehmer.class), anyMap());
+        }).when(teilnahme).bestaetigeTeilnahme(any(Terminfindung.class), any(Teilnehmer.class), anyMapOf(Zeitraum.class, Praeferenz.class));
 
         AwkWrapper awkWrapper = new AwkWrapperImpl(erstellung, verwaltung, teilnahme, beanMapper);
 

@@ -30,94 +30,97 @@ import java.util.List;
  *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
-public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable{
+public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable {
 
-	private static final long serialVersionUID = -457050384959229232L;
+    private static final long serialVersionUID = -457050384959229232L;
 
     /**
-     * Nummer (Id) des Zeitraums.
-     * Die Id des Zeitraums ist eindeutig über alle Tage der Terminfindung hinweg.
-     * Sie identifiziert einen Zeitraum damit eindeutig ohne Angabe des Tages,
-     * an dem der Zeitraum liegt.
+     * Nummer (Id) des Zeitraums. Die Id des Zeitraums ist eindeutig über alle Tage der Terminfindung hinweg. Sie
+     * identifiziert einen Zeitraum damit eindeutig ohne Angabe des Tages, an dem der Zeitraum liegt.
      */
-	private long id;
+    private Long id;
     /**
      * Beschreibung des Zeitraums.
      */
-	private String beschreibung;
+    private String beschreibung;
     /**
      * Der Tag, an dem der Zeitraum liegt.
      */
-	private TagModel tag;
+    private TagModel tag;
     /**
-     * Eine Liste von Präferenzen für diesen Zeitraum aus Sicht des Zeitraums.
-     * Wenn ein Teilnehmer eine Präferenz für diesen Zeitraum angibt,
-     * wird in dieser Liste ein Objekt der Klasse {@link TeilnehmerZeitraumModel}
-     * hinzugefügt, das die Verbindung zwischen dem Teilnehmer und dem Zeitraum herstellt.
-     * "Präferenz" für einen Zeitraum bedeutet nicht unbedingt, dass der Teilnehmer
-     * sich FÜR diesen Zeitraum entscheidet, d.h. mit "Ja" abstimmt.
-     * Jeder Teilnehmer trägt immer für jeden Zeitraum eine Präferenz ein wenn er abstimmt.
-     * In diesem Sinne sind auch "Nein" und "Wenn es sein muss" Präferenzen.
+     * Eine Liste von Präferenzen für diesen Zeitraum aus Sicht des Zeitraums. Wenn ein Teilnehmer eine Präferenz für
+     * diesen Zeitraum angibt, wird in dieser Liste ein Objekt der Klasse {@link TeilnehmerZeitraumModel} hinzugefügt,
+     * das die Verbindung zwischen dem Teilnehmer und dem Zeitraum herstellt. "Präferenz" für einen Zeitraum bedeutet
+     * nicht unbedingt, dass der Teilnehmer sich FÜR diesen Zeitraum entscheidet, d.h. mit "Ja" abstimmt. Jeder
+     * Teilnehmer trägt immer für jeden Zeitraum eine Präferenz ein wenn er abstimmt. In diesem Sinne sind auch "Nein"
+     * und "Wenn es sein muss" Präferenzen.
      */
-	private List<TeilnehmerZeitraumModel> teilnehmerZeitraeume = new ArrayList<>();
+    private List<TeilnehmerZeitraumModel> teilnehmerZeitraeume = new ArrayList<>();
 
     /**
-     * Auswertung der Präferenzen durch Zählen der abgegebenen Stimmen für den Zeitraum.
-     * Die Methode durchläuft dazu die Liste der Präferenzen und
-     * zählt, wie viele davon "Ja", "Nein" oder "Wenn es sein muss" sind.
+     * Auswertung der Präferenzen durch Zählen der abgegebenen Stimmen für den Zeitraum. Die Methode durchläuft dazu die
+     * Liste der Präferenzen und zählt, wie viele davon "Ja", "Nein" oder "Wenn es sein muss" sind.
      *
-     * @return Ein Integer Array mit drei Elementen, die die "Ja", "Nein" und "Wenn es sein muss"
-     * Stimmen angeben.
+     * @return Ein Integer Array mit drei Elementen, die die "Ja", "Nein" und "Wenn es sein muss" Stimmen angeben.
      */
-	public Integer[] zaehleStimmen () {
+    public Integer[] zaehleStimmen() {
 
-		Integer[] count={0,0,0};
-		
-		for (TeilnehmerZeitraumModel tz : teilnehmerZeitraeume) {
-			if (tz.getPraeferenz() == PraeferenzModel.NEIN) count [0]++;
-			else if (tz.getPraeferenz() == PraeferenzModel.JA) count [1]++;
-			else if (tz.getPraeferenz() == PraeferenzModel.WENN_ES_SEIN_MUSS) count [2]++;
-		}
-		return count;
-	}
-	
-	public List<TeilnehmerZeitraumModel> getTeilnehmerZeitraeume() {
-		return teilnehmerZeitraeume;
-	}
-	public void setTeilnehmerZeitraeume(
-			List<TeilnehmerZeitraumModel> teilnehmerZeitraeume) {
-		this.teilnehmerZeitraeume = teilnehmerZeitraeume;
-	}
-	public ZeitraumModel(long id, String beschreibung) {
-		super();
-		this.id = id;
-		this.beschreibung = beschreibung;
-	}
-	public ZeitraumModel() {
-		super();
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getBeschreibung() {
-		return beschreibung;
-	}
-	public void setBeschreibung(String beschreibung) {
-		this.beschreibung = beschreibung;
-	}
-	public TagModel getTag() {
-		return tag;
-	}
-	public void setTag(TagModel tag) {
-		this.tag = tag;
-	}
+        Integer[] count = {0, 0, 0};
 
-	@Override
-	public int compareTo(ZeitraumModel o) {		
-		return getBeschreibung().compareTo(o.getBeschreibung());
-	}
-	
+        for (TeilnehmerZeitraumModel tz : teilnehmerZeitraeume) {
+            if (tz.getPraeferenz() == PraeferenzModel.NEIN) count[0]++;
+            else if (tz.getPraeferenz() == PraeferenzModel.JA) count[1]++;
+            else if (tz.getPraeferenz() == PraeferenzModel.WENN_ES_SEIN_MUSS) count[2]++;
+        }
+        return count;
+    }
+
+    public List<TeilnehmerZeitraumModel> getTeilnehmerZeitraeume() {
+        return teilnehmerZeitraeume;
+    }
+
+    public void setTeilnehmerZeitraeume(
+            List<TeilnehmerZeitraumModel> teilnehmerZeitraeume) {
+        this.teilnehmerZeitraeume = teilnehmerZeitraeume;
+    }
+
+    public ZeitraumModel(long id, String beschreibung) {
+        super();
+        this.id = id;
+        this.beschreibung = beschreibung;
+    }
+
+    public ZeitraumModel() {
+        super();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public TagModel getTag() {
+        return tag;
+    }
+
+    public void setTag(TagModel tag) {
+        this.tag = tag;
+    }
+
+    @Override
+    public int compareTo(ZeitraumModel o) {
+        return getBeschreibung().compareTo(o.getBeschreibung());
+    }
+
 }

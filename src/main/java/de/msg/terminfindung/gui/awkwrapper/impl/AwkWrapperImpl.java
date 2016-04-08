@@ -174,17 +174,13 @@ public class AwkWrapperImpl implements AwkWrapper {
 
     /**
      * Kapselt das Mapping zwischen dem Persistenz-Objekt und dem View-Objekt einer Terminfindung. Die Methode verwendet
-     * intern Dozer für das eigentlichen Mapping. Zusätzlich werden weitere Datenstrukturen im Zielobjekt
-     * initialisiert.
+     * intern Dozer für das eigentlichen Mapping.
      *
      * @param terminfindung Das Persistenz-Objekt der Terminfindung
      * @return Das View-Objekt der Terminfindung
      */
     private TerminfindungModel map(Terminfindung terminfindung) {
-
-        TerminfindungModel terminfindungModel = beanMapper.map(terminfindung, TerminfindungModel.class);
-        initialisierePraeferenzenFuerTeilnehmer(terminfindungModel);
-        return terminfindungModel;
+        return beanMapper.map(terminfindung, TerminfindungModel.class);
     }
 
     /**
@@ -210,21 +206,6 @@ public class AwkWrapperImpl implements AwkWrapper {
                 return Praeferenz.WENN_ES_SEIN_MUSS;
             default:
                 throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
-        }
-    }
-
-    /**
-     * Stellt die Rückwärtsverkettung von Teilnehmern zu ihren Praeferenzen her. TODO: Das sollte im Persistenzmodell
-     * abgebildet werden, dann kann diese Methode entfallen.
-     *
-     * @param vtf Die Terminfindung
-     */
-    private void initialisierePraeferenzenFuerTeilnehmer(TerminfindungModel vtf) {
-
-        for (ZeitraumModel zeitraum : vtf.getAlleZeitraeume()) {
-            for (TeilnehmerZeitraumModel vtz : zeitraum.getTeilnehmerZeitraeume()) {
-                vtz.getTeilnehmer().getPraeferenzen().add(vtz);
-            }
         }
     }
 

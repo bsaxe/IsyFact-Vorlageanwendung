@@ -26,16 +26,23 @@ import java.io.Serializable;
 /**
  * Die Klasse speichert die Daten des Organisators in der View-Schicht
  */
-public class OrganisatorModel implements Serializable{
+public class OrganisatorModel implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	private String name = "";
-	private static final long serialVersionUID = 1L;
-	
-	public String getName() {
-		return this.name;
-	}
+    private String name = "";
 
-	public void setName(String Name) {
-		this.name = Name;
-	}
+    public OrganisatorModel(String name) {
+        this.name = name;
+    }
+
+    public OrganisatorModel() {
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String Name) {
+        this.name = Name;
+    }
 }

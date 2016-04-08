@@ -37,8 +37,8 @@ public class TestTerminfindungModel {
 		ZeitraumModel zeitraumModel1 = new ZeitraumModel();
 		ZeitraumModel zeitraumModel2 = new ZeitraumModel();
 		
-		zeitraumModel1.setId(1);
-		zeitraumModel2.setId(22);
+		zeitraumModel1.setId(1L);
+		zeitraumModel2.setId(22L);
 				
 		tagModel.getZeitraeume().add(zeitraumModel1);
 		tagModel.getZeitraeume().add(zeitraumModel2);
