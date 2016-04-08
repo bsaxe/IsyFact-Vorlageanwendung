@@ -48,44 +48,41 @@ public class AwkWrapperImpl implements AwkWrapper {
     /**
      * Komponente des Anwendungskerns für die Erstellung von Terminfindungen
      */
-    private Erstellung erstellung;
+    private final Erstellung erstellung;
+
     /**
      * Komponente des Anwendungskerns für die Verwaltung von Terminfindungen
      */
-    private Verwaltung verwaltung;
+    private final Verwaltung verwaltung;
+
     /**
      * Komponente des Anwendungskerns für die Teilnahme an Terminfindungen
      */
-    private Teilnahme teilnahme;
+    private final Teilnahme teilnahme;
+
     /**
      * Bean-Mapper für die Abbildung zwischen View-Objekten und Persistenz-Objekten
      */
-    private Mapper beanMapper;
+    private final Mapper beanMapper;
+
+    public AwkWrapperImpl(Erstellung erstellung, Verwaltung verwaltung, Teilnahme teilnahme, Mapper beanMapper) {
+        this.erstellung = erstellung;
+        this.verwaltung = verwaltung;
+        this.teilnahme = teilnahme;
+        this.beanMapper = beanMapper;
+    }
 
     @Override
     public TerminfindungModel erstelleTerminfindung(String organisatorName,
                                                     String veranstaltungName, List<TagModel> tage) throws TerminfindungBusinessException {
 
         List<Tag> termine = new ArrayList<>();
-        List<Zeitraum> zeitraeume;
-        for (TagModel tagModel : tage) {
-
-            Tag tag = new Tag(tagModel.getDatum());
-
-            zeitraeume = new ArrayList<>();
-            for (ZeitraumModel zeitraumModel : tagModel.getZeitraeume()) {
-
-                Zeitraum zeitraum = new Zeitraum(zeitraumModel.getBeschreibung());
-                zeitraeume.add(zeitraum);
-
-            }
-            tag.setZeitraeume(zeitraeume);
-            termine.add(tag);
+        for (TagModel tag : tage) {
+            termine.add(beanMapper.map(tag, Tag.class));
         }
 
         Terminfindung terminfindung = erstellung.erstelleTerminfindung(organisatorName, veranstaltungName, termine);
 
-        //gib die Terminfindung als Ergebnis zurück
         return map(terminfindung);
     }
 
@@ -231,39 +228,4 @@ public class AwkWrapperImpl implements AwkWrapper {
         }
     }
 
-	/*--------------------------------------------------------------------------
-     *  Getter und Setter
-	 *--------------------------------------------------------------------------*/
-
-    public Teilnahme getTeilnahme() {
-        return teilnahme;
-    }
-
-    public void setTeilnahme(Teilnahme teilnahme) {
-        this.teilnahme = teilnahme;
-    }
-
-    public Mapper getBeanMapper() {
-        return beanMapper;
-    }
-
-    public void setBeanMapper(Mapper beanMapper) {
-        this.beanMapper = beanMapper;
-    }
-
-    public Verwaltung getVerwaltung() {
-        return verwaltung;
-    }
-
-    public void setVerwaltung(Verwaltung verwaltung) {
-        this.verwaltung = verwaltung;
-    }
-
-    public Erstellung getErstellung() {
-        return erstellung;
-    }
-
-    public void setErstellung(Erstellung erstellung) {
-        this.erstellung = erstellung;
-    }
 }

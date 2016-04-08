@@ -20,69 +20,50 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-                    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
-	<!-- Allgemeine Controller -->
-	<import resource="classpath:resources/plis-web/spring/controller.xml" />
+    <!-- Allgemeine Controller -->
+    <import resource="classpath:resources/plis-web/spring/controller.xml"/>
 
-	<!-- Holder Bean für die Terminfindungsnummer, wird von außen als Requestparameter gesetzt -->
+    <!-- Holder Bean für die Terminfindungsnummer, wird von außen als Requestparameter gesetzt -->
 
-	<bean id="tfNumberHolder" class="de.msg.terminfindung.gui.util.TFNumberHolder"/>
+    <bean id="tfNumberHolder" class="de.msg.terminfindung.gui.util.TFNumberHolder"/>
 
-	<!-- Flows -->
+    <!-- Flows -->
 
-	<bean id="abstractController"
-		class="de.msg.terminfindung.gui.terminfindung.AbstractController"
-		abstract="true">
-		<property name="awk" ref="awkWrapperImpl" />
-		<property name="tfNumberHolder" ref="tfNumberHolder" />
-		<property name="konfiguration" ref="konfiguration" />
-	</bean>
+    <bean id="abstractController"
+          class="de.msg.terminfindung.gui.terminfindung.AbstractController"
+          abstract="true">
+        <property name="awk" ref="awkWrapper"/>
+        <property name="tfNumberHolder" ref="tfNumberHolder"/>
+        <property name="konfiguration" ref="konfiguration"/>
+        <property name="globalFlowController" ref="globalFlowController"/>
+    </bean>
 
-	<bean id="erstellenController"
-		class="de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController"
-		parent="abstractController">
-		<property name="globalFlowController" ref="globalFlowController" />
-	</bean>
+    <bean id="erstellenController" class="de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController"
+          parent="abstractController"/>
 
-	<bean id="teilnehmenController"
-		class="de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController"
-		parent="abstractController">
-		<property name="globalFlowController" ref="globalFlowController" />
-	</bean>
+    <bean id="teilnehmenController" class="de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController"
+          parent="abstractController"/>
 
-	<bean id="verwaltenController"
-		class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController"
-		parent="abstractController">
-		<property name="globalFlowController" ref="globalFlowController" />
-	</bean>
+    <bean id="verwaltenController" class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController"
+          parent="abstractController"/>
 
-	<bean id="abschliessenController"
-		class="de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController"
-		parent="abstractController">
-		<property name="globalFlowController" ref="globalFlowController" />
-	</bean>
+    <bean id="abschliessenController"
+          class="de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController"
+          parent="abstractController"/>
 
-	<bean id="loeschenController"
-		  class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController"
-		  parent="abstractController">
-		<property name="globalFlowController" ref="globalFlowController" />
-	</bean>
+    <bean id="loeschenController" class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController"
+          parent="abstractController"/>
 
-	<bean id="loginController"
-		class="de.msg.terminfindung.gui.login.LoginController"
-		parent="abstractController">
-		<property name="globalFlowController" ref="globalFlowController" />
-		<property name="sicherheit" ref="sicherheit" />
-		<property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter" />
-	</bean>
+    <bean id="loginController" class="de.msg.terminfindung.gui.login.LoginController"
+          parent="abstractController">
+        <property name="sicherheit" ref="sicherheit"/>
+        <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+    </bean>
 
-	<bean id="adminController"
-		class="de.msg.terminfindung.gui.administration.AdminController"
-		parent="abstractController">
-		<property name="globalFlowController" ref="globalFlowController" />
-	</bean>
+    <bean id="adminController" class="de.msg.terminfindung.gui.administration.AdminController"
+          parent="abstractController"/>
 
 </beans>

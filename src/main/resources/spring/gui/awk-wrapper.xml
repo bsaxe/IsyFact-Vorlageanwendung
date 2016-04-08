@@ -24,12 +24,11 @@
                            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
     <!-- AWK-Wrapper -->
-
-    <bean id="awkWrapperImpl" class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
-        <property name="erstellung" ref="erstellung"/>
-        <property name="verwaltung" ref="verwaltung"/>
-        <property name="teilnahme" ref="teilnahme"/>
-        <property name="beanMapper" ref="beanMapper"/>
+    <bean id="awkWrapper" class="de.msg.terminfindung.gui.awkwrapper.impl.AwkWrapperImpl">
+        <constructor-arg ref="erstellung" />
+        <constructor-arg ref="verwaltung" />
+        <constructor-arg ref="teilnahme" />
+        <constructor-arg ref="beanMapper" />
     </bean>
 
     <!-- Ausnahme ID - Mapper -->
