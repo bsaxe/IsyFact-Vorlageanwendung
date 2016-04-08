@@ -161,7 +161,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
     }
 
     /**
-     * Loescht einen Zaitraum aus der lokalen Liste der Zeitraeume (Daten)
+     * Löscht einen Zeitraum aus der lokalen Liste der Zeitraeume (Daten)
      *
      * @param model Das Modell
      */

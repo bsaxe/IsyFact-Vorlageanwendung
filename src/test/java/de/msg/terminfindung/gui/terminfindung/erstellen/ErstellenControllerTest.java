@@ -6,7 +6,7 @@ import de.msg.terminfindung.gui.terminfindung.model.OrganisatorModel;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-import org.junit.Before;
+import de.msg.terminfindung.gui.testdaten.GuiTestdaten;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -26,39 +26,35 @@ import static org.mockito.Mockito.*;
  */
 public class ErstellenControllerTest {
 
-    private AwkWrapper awkWrapper;
-
-    @Before
-    public void init() {
-        awkWrapper = mock(AwkWrapper.class);
-    }
-
     @Test
     public void testLoescheZeitraum() throws Exception {
         ErstellenController controller = new ErstellenController();
 
-        TagModel tagModel = new TagModel();
-        ZeitraumModel zeitraumModel1 = new ZeitraumModel(1L, "morgens");
-        ZeitraumModel zeitraumModel2 = new ZeitraumModel(2L, "abends");
+        // Vorbereitung der Testdaten
+        TagModel termin = GuiTestdaten.erstelleTermin();
+        int anzahlZeitraeume = termin.getZeitraeume().size();
+        ZeitraumModel geloeschterZeitraum = termin.getZeitraeume().get(0);
 
-        tagModel.getZeitraeume().add(zeitraumModel1);
-        tagModel.getZeitraeume().add(zeitraumModel2);
-
-        // Vorbereitung des View-Models
         ErstellenModel model = new ErstellenModel();
-        model.getTage().add(tagModel);
-        model.setSelectedZeitraum(zeitraumModel1);
+        model.getTage().add(termin);
+        model.setSelectedZeitraum(geloeschterZeitraum);
 
+        // Test
         controller.delZeitraum(model);
 
         assertNotNull(model);
         assertNotNull(model.getTage());
-        assertTrue(model.getTage().get(0).getZeitraeume().contains(zeitraumModel2));
-        assertFalse(model.getTage().get(0).getZeitraeume().contains(zeitraumModel1));
+        assertEquals(anzahlZeitraeume - 1, model.getTage().get(0).getZeitraeume().size());
+        assertFalse(model.getTage().get(0).getZeitraeume().contains(geloeschterZeitraum));
     }
 
     @Test
     public void testValidiereErstellenModel() throws TerminfindungBusinessException {
+        // Vorbereitung des Testobjekts
+        ErstellenController controller = new ErstellenController();
+        AwkWrapper awkWrapper = mock(AwkWrapper.class);
+        controller.setAwk(awkWrapper);
+
         when(awkWrapper.erstelleTerminfindung(anyString(), anyString(), anyListOf(TagModel.class))).thenAnswer(new Answer<TerminfindungModel>() {
             @Override
             public TerminfindungModel answer(InvocationOnMock invocation) throws Throwable {
@@ -74,52 +70,45 @@ public class ErstellenControllerTest {
             }
         });
 
-        ErstellenController controller = new ErstellenController();
-        controller.setAwk(awkWrapper);
+        // Vorbereitung der Testdaten
+        TagModel termin = GuiTestdaten.erstelleTermin();
+        int anzahlZeitraeume = termin.getZeitraeume().size();
 
-        TagModel tagModel = new TagModel();
-        ZeitraumModel zeitraumModel1 = new ZeitraumModel(1L, "morgens");
-        ZeitraumModel zeitraumModel2 = new ZeitraumModel(2L, "abends");
-
-        tagModel.getZeitraeume().add(zeitraumModel1);
-        tagModel.getZeitraeume().add(zeitraumModel2);
-
-        // Vorbereitung des View-Models
         ErstellenModel model = new ErstellenModel();
         model.setName("Hans' Geburtstag");
         model.setOrgName("Hans");
-        model.getTage().add(tagModel);
+        model.getTage().add(termin);
 
+        // Test
         assertTrue(controller.validiereErstellenModel(model));
+
         verify(awkWrapper).erstelleTerminfindung(anyString(), anyString(), anyListOf(TagModel.class));
         verifyNoMoreInteractions(awkWrapper);
 
         assertNotNull(model.getTerminfindung());
         assertNotNull(model.getTage());
-        assertTrue(model.getTerminfindung().getTage().get(0).getZeitraeume().contains(zeitraumModel2));
-        assertTrue(model.getTerminfindung().getTage().get(0).getZeitraeume().contains(zeitraumModel1));
+        assertEquals(anzahlZeitraeume, model.getTage().get(0).getZeitraeume().size());
+        for (ZeitraumModel zeitraum : termin.getZeitraeume()) {
+            assertTrue(model.getTerminfindung().getTage().get(0).getZeitraeume().contains(zeitraum));
+        }
     }
 
     @Test
     public void testValidiereErstellenModelAusnahme() throws TerminfindungBusinessException {
-        when(awkWrapper.erstelleTerminfindung(anyString(), anyString(), anyListOf(TagModel.class))).thenThrow(TerminfindungBusinessException.class);
-
+        // Vorbereitung des Testobjekts
         ErstellenController controller = new ErstellenController();
+        AwkWrapper awkWrapper = mock(AwkWrapper.class);
         controller.setAwk(awkWrapper);
 
-        TagModel tagModel = new TagModel();
-        ZeitraumModel zeitraumModel1 = new ZeitraumModel(1L, "morgens");
-        ZeitraumModel zeitraumModel2 = new ZeitraumModel(2L, "abends");
+        when(awkWrapper.erstelleTerminfindung(anyString(), anyString(), anyListOf(TagModel.class))).thenThrow(TerminfindungBusinessException.class);
 
-        tagModel.getZeitraeume().add(zeitraumModel1);
-        tagModel.getZeitraeume().add(zeitraumModel2);
-
-        // Vorbereitung des View-Models
+        // Vorbereitung der Testdaten
         ErstellenModel model = new ErstellenModel();
         model.setName("Hans' Geburtstag");
         model.setOrgName("Hans");
-        model.getTage().add(tagModel);
+        model.getTage().add(GuiTestdaten.erstelleTermin());
 
+        // Test
         assertFalse(controller.validiereErstellenModel(model));
     }
 

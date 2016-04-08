@@ -52,11 +52,10 @@ public class TagModel implements Serializable, Comparable<TagModel> {
     private String bisZeitraum;
 
     public TagModel() {
-        super();
+
     }
 
-    public TagModel(long id) {
-        super();
+    public TagModel(Long id) {
         this.id = id;
     }
 
