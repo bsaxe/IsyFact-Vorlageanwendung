@@ -44,7 +44,7 @@ public class ErstellenControllerTest {
                 TerminfindungModel terminfindung = new TerminfindungModel();
                 terminfindung.setOrganisator(new OrganisatorModel(organisatorName));
                 terminfindung.setVeranstaltungName(veranstaltungName);
-                terminfindung.setTage(termine);
+                terminfindung.getTage().addAll(termine);
                 return terminfindung;
             }
         });

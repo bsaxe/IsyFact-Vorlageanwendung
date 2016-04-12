@@ -197,15 +197,9 @@ public class AwkWrapperTest {
 
 
         // Erzeuge Teilnehmer und füge sie zur Terminfindung hinzu
-        TeilnehmerModel viewTeilnehmer1 = new TeilnehmerModel();
-        viewTeilnehmer1.setName("Teilnehmer1");
-        viewTeilnehmer1.setId(nextId++);
-        TeilnehmerModel viewTeilnehmer2 = new TeilnehmerModel();
-        viewTeilnehmer2.setName("Teilnehmer2");
-        viewTeilnehmer2.setId(nextId++);
-        TeilnehmerModel viewTeilnehmer3 = new TeilnehmerModel();
-        viewTeilnehmer3.setName("Teilnehmer3");
-        viewTeilnehmer3.setId(nextId++);
+        TeilnehmerModel viewTeilnehmer1 = new TeilnehmerModel(nextId++, "Teilnehmer1");
+        TeilnehmerModel viewTeilnehmer2 = new TeilnehmerModel(nextId++, "Teilnehmer2");
+        TeilnehmerModel viewTeilnehmer3 = new TeilnehmerModel(nextId++, "Teilnehmer3");
 
         // Erzeuge Präferenzen der Teilnehmer für die Zeiträume und füge sie den Zeiträumen hinzu
         Map<ZeitraumModel, PraeferenzModel> praeferenz = new HashMap<>();

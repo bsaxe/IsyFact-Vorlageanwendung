@@ -36,6 +36,14 @@ public class TeilnehmerModel implements Serializable {
 
     private String name;
 
+    public TeilnehmerModel(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public TeilnehmerModel() {
+    }
+
     public Long getId() {
         return id;
     }
