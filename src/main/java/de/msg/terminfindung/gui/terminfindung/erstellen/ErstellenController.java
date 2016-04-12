@@ -66,11 +66,11 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 
         if (model.isTestMode()) {
             LOG.debug("TestMode: Erzeuge Tage");
-            model.setTage(DataGenerator.generateTage());
+            model.setTage(DataGenerator.generateTage(getKonfiguration()));
             model.setName("Test-Veranstaltung");
             model.setOrgName("Test-Organisation");
         }
-    }
+    }  
 
     /**
      * Fügt einen Tag zur Liste der Tage hinzu.
@@ -118,6 +118,8 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
                     //erzeugeZeitraeume(tag);
                     // setze das Datum
                     tag.setDatum(addedDate);
+                    tag.setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
+                    tag.setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
                     // füge den Tag zum Model hinzu
                     model.getTage().add(tag);
                     Collections.sort(model.getTage());
@@ -174,6 +176,8 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
             ZeitraumModel zeitraum = new ZeitraumModel();
             zeitraum.setBeschreibung(model.getSelectedTermin().getVonZeitraum() + " - " + model.getSelectedTermin().getBisZeitraum());
             model.getSelectedTermin().getZeitraeume().add(zeitraum);
+            model.getSelectedTermin().setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
+            model.getSelectedTermin().setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
             Collections.sort(model.getSelectedTermin().getZeitraeume());
             return;
         }

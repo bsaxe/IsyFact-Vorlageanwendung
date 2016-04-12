@@ -10,7 +10,7 @@
 	<!-- Die Referenz des Objekts. -->
     <composite:attribute name="reference" required="true" />
     <!-- Die auszuführende Aktion. -->
-    <composite:attribute name="action" required="true" targets="ajax_button button" />
+    <composite:attribute name="action" required="true" targets="ajax_button" />
     <!-- Die zu ergänzenden Style-Klassen. -->
     <composite:attribute name="styleClass" required="false" />
     <!-- Das Label des Buttons. -->
@@ -49,18 +49,14 @@
 	<ui:param name="existsValidationError"
 		value="#{not empty validationMessages}" />
 
-	<div class="form-group#{existsValidationError ? ' has-error has-feedback': ''}#{cc.attrs.inLine ? ' inLineBlock' : ''}">
+	<div class="form-group#{existsValidationError ? ' has-error has-feedback': ''}#{cc.attrs.inLine ? ' inLineBlockButton' : ''}">
 				
 	    <ui:fragment rendered="#{cc.attrs.globalConfig.jsEnabled}">
 	        <h:commandButton id="ajax_button" styleClass="btn btn-default #{cc.attrs.styleClass}"
 	            value="#{cc.attrs.value}" disabled="#{btnDisabled}">
 	            <f:ajax execute="#{cc.attrs.execute}" render="#{cc.attrs.render}" onevent="#{cc.attrs.block ? 'blockUi' : ''}"/>
 	        </h:commandButton>
-	    </ui:fragment>
-	    <ui:fragment rendered="#{not cc.attrs.globalConfig.jsEnabled}">
-	        <h:commandButton id="button" styleClass="btn btn-default #{cc.attrs.styleClass}"
-	            value="#{cc.attrs.value}" disabled="#{btnDisabled}" />
-	    </ui:fragment>    	
+	    </ui:fragment>   	
     	
     	<!-- Bei Validierungsfehlern -->
         <isyi:formValidationIcon validationModel="#{cc.attrs.validationModel}"
