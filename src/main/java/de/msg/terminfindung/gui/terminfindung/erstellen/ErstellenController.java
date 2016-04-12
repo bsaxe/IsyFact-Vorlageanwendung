@@ -48,16 +48,6 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 
     private static final Logger LOG = Logger.getLogger(ErstellenController.class);
 
-    /**
-     * Die maximale Anzahl von Tagen, die eine Terminfindung enthalten kann
-     */
-    public final int MAX_NUMBER_OF_DAYS = 10;
-
-    /**
-     * Die Anzahl der Zeiträume, die ein Benutzer pro Tag angeben kann
-     */
-    public final int ZEITRAEUME_PRO_TAG = 3;
-
     public void initialisiereModel(ErstellenModel model) {
         super.initialisiereModell(model);
 
@@ -83,7 +73,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // maximale Anzahl von Tagen schon vorhanden?
-        if (model.getTage().size() >= MAX_NUMBER_OF_DAYS) {
+        if (model.getTage().size() >= getKonfiguration().getAsInteger("termin.tag.max.number")) {
             validationMessages.add(new ValidationMessage("DA",
                     "stringTempDate", "Datum",
                     "Bereits max. Anzahl an Daten hinzugefügt"));
@@ -159,8 +149,13 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
                 zeitraumExists = true;
             }
         }
-
-        if (model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) == 0) {
+        // maximale Anzahl von Tagen schon vorhanden?
+        if (model.getSelectedTermin().getZeitraeume().size() >= getKonfiguration().getAsInteger("termin.tag.zeitraum.max.number")) {
+            validationMessages.add(new ValidationMessage("DA",
+            		"zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
+                    "Bereits max. Anzahl an Daten hinzugefügt"));
+        }
+        else if (model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) == 0) {
             validationMessages.add(new ValidationMessage("DA",
                     "zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
                     "Zeitraum beginnt und Enden um die gleiche Uhrzeit."));
