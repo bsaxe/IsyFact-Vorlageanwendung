@@ -8,6 +8,7 @@ import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.gui.util.DataGenerator;
 import de.msg.terminfindung.gui.util.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
@@ -76,7 +77,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
      *
      * @param model Das Modell
      */
-    public void addDatum(ErstellenModel model) {
+    public void fuegeDatumHinzu(ErstellenModel model) {
 
         Date addedDate;
         List<ValidationMessage> validationMessages = new ArrayList<>();
@@ -132,43 +133,12 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
     }
 
     /**
-     * Speichert die neu angelegte Terminfindung. Die Methode ruft dazu den Wrapper des Anwendungskerns mit den Daten
-     * auf, die im Modell vorliegen.
-     *
-     * @param model Das Modell, dessen Inhalt gespeichert wird
-     */
-    private boolean speichereModel(ErstellenModel model) {
-
-        LOG.debug("Speichere Terminfindung.");
-
-        try {
-            TerminfindungModel terminfindung = getAwk().erstelleTerminfindung(model.getOrgName(), model.getName(), model.getTage());
-            model.setTerminfindung(terminfindung);
-            return true;
-        } catch (TerminfindungBusinessException e) {
-            LOG.error("Fehler beim Erstellen der Terminfindung: " + e.getMessage());
-            return false;
-        }
-    }
-
-    /**
      * Loescht einen Tag aus der lokalen Liste der Tage (Daten)
      *
      * @param model Das Modell
      */
-    public void delDatum(ErstellenModel model) {
+    public void loescheDatum(ErstellenModel model) {
         model.getTage().remove(model.getSelectedTermin());
-    }
-
-    /**
-     * Löscht einen Zeitraum aus der lokalen Liste der Zeitraeume (Daten)
-     *
-     * @param model Das Modell
-     */
-    public void delZeitraum(ErstellenModel model) {
-        for (TagModel tag : model.getTage()) {
-            tag.getZeitraeume().remove(model.getSelectedZeitraum());
-        }
     }
 
     /**
@@ -176,7 +146,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
      *
      * @param model Das Modell
      */
-    public void addZeitraum(ErstellenModel model) {
+    public void fuegeZeitraumHinzu(ErstellenModel model) {
 
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
@@ -212,34 +182,44 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
     }
 
     /**
+     * Löscht einen Zeitraum aus der lokalen Liste der Zeitraeume (Daten)
+     *
+     * @param model Das Modell
+     */
+    public void loescheZeitraum(ErstellenModel model) {
+        for (TagModel tag : model.getTage()) {
+            tag.getZeitraeume().remove(model.getSelectedZeitraum());
+        }
+    }
+
+    /**
      * Validiert das Modell vor dem Speichern. Es wird geprüft, ob die Pflichtfelder gefüllt sind.
      *
      * @param model Das Modell
      * @return true wenn alle Pflichtfelder gefüllt sind, sonst false
      */
-    public boolean validiereEingabefelder(ErstellenModel model) {
+    public boolean validiereStammdaten(ErstellenModel model) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
-        if (model.getName().equals("")) {
-            validationMessages.add(new ValidationMessage("TI", "name",
-                    "Titel", "Benötigtes Feld"));
+        if (StringUtils.isBlank(model.getName())) {
+            validationMessages.add(new ValidationMessage("TI", "name", "Titel", "Benötigtes Feld"));
         }
-        if (model.getOrgName().equals("")) {
-            validationMessages.add(new ValidationMessage("NA", "orgName",
-                    "Ihr Name", "Benötigtes Feld"));
+        if (StringUtils.isBlank(model.getOrgName())) {
+            validationMessages.add(new ValidationMessage("NA", "orgName", "Ihr Name", "Benötigtes Feld"));
         }
 
-        this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
-
-        // Wenn die Liste der Message leer ist, gab es keine Validierungsfehler,
-        // Gib in diesem Fall true zurück
-        return (validationMessages.isEmpty());
+        if (validationMessages.isEmpty()) {
+            return true;
+        } else {
+            globalFlowController.getValidationController().processValidationMessages(validationMessages);
+            return false;
+        }
     }
 
     /**
      * Validiert das Modell vor dem Speichern. Es wird geprüft ob alle Tage mindestens einen Zeitraum beinhalten. Falls
      * das Modell konsistent ist, wird es gespeichert.
      */
-    public boolean validiereErstellenModel(ErstellenModel model) {
+    public boolean validiereTermine(ErstellenModel model) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         for (TagModel tag : model.getTage()) {
@@ -253,21 +233,29 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
         if (validationMessages.isEmpty()) {
             return speichereModel(model);
         } else {
-            this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
+            globalFlowController.getValidationController().processValidationMessages(validationMessages);
             return false;
         }
     }
 
     /**
-     * Erzeugt die Default-Anzahl von Zeiträumen pro Tag. Die Methode wird beim Anlegen eines neuen Tages intern
-     * aufgerufen.
+     * Speichert die neu angelegte Terminfindung. Die Methode ruft dazu den Wrapper des Anwendungskerns mit den Daten
+     * auf, die im Modell vorliegen.
      *
-     * @param tag Eine Referenz auf das {@link TagModel} Objekt, in dem die Zeiträume angelegt werden.
+     * @param model Das Modell, dessen Inhalt gespeichert wird
      */
-    private void erzeugeZeitraeume(TagModel tag) {
+    private boolean speichereModel(ErstellenModel model) {
 
-        for (int i = 0; i <= ZEITRAEUME_PRO_TAG; i++) {
-            tag.getZeitraeume().add(new ZeitraumModel());
+        LOG.debug("Speichere Terminfindung.");
+
+        try {
+            TerminfindungModel terminfindung = getAwk().erstelleTerminfindung(model.getOrgName(), model.getName(), model.getTage());
+            model.setTerminfindung(terminfindung);
+            return true;
+        } catch (TerminfindungBusinessException e) {
+            LOG.error("Fehler beim Erstellen der Terminfindung: " + e.getMessage());
+            return false;
         }
     }
+
 }

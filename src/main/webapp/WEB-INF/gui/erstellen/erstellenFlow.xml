@@ -34,34 +34,34 @@
 	
 	<!-- Erster View -->
 	<view-state id="erstellenViewState1" model="erstellenModel">
+		<transition on="continue" to="validiereStammdaten" validate="false"/>
 		<transition on="add" to="erstellenViewState1" validate="false">
-			<evaluate expression="erstellenController.addDatum(erstellenModel)" />
+			<evaluate expression="erstellenController.fuegeDatumHinzu(erstellenModel)" />
 		</transition>
-		<transition on="continue" to="validiereContinue" validate="false"/>
 		<transition on="loeschen" to="erstellenViewState1" validate="false">
-			<evaluate expression="erstellenController.delDatum(erstellenModel)" />
+			<evaluate expression="erstellenController.loescheDatum(erstellenModel)" />
 		</transition>
 	</view-state>
 	
 	<!-- Weiterleitung vom erstem View auf diesen Descision-State, wenn validierung erfolgreich, weiter -->
-	<decision-state id="validiereContinue">
-		<if test="erstellenController.validiereEingabefelder(erstellenModel)" then="erstellenViewState2"
+	<decision-state id="validiereStammdaten">
+		<if test="erstellenController.validiereStammdaten(erstellenModel)" then="erstellenViewState2"
 			else="erstellenViewState1" />
 	</decision-state>
 
 	<view-state id="erstellenViewState2">
 		<transition on="back" to="erstellenViewState1" />
-		<transition on="create" to="validiereModel" />		
+		<transition on="create" to="validiereTermine" />
 		<transition on="loeschen" to="erstellenViewState2" validate="false">
-			<evaluate expression="erstellenController.delZeitraum(erstellenModel)" />
+			<evaluate expression="erstellenController.loescheZeitraum(erstellenModel)" />
 		</transition>
 		<transition on="hinzufuegen" to="erstellenViewState2" validate="false">
-			<evaluate expression="erstellenController.addZeitraum(erstellenModel)" />
+			<evaluate expression="erstellenController.fuegeZeitraumHinzu(erstellenModel)" />
 		</transition>
 	</view-state>
 	
-	<decision-state id="validiereModel">
-		<if test="erstellenController.validiereErstellenModel(erstellenModel)" then="erstellenViewState3"
+	<decision-state id="validiereTermine">
+		<if test="erstellenController.validiereTermine(erstellenModel)" then="erstellenViewState3"
 			else="erstellenViewState2" />
 	</decision-state>
 

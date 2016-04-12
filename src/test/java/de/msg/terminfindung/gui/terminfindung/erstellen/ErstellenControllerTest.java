@@ -1,5 +1,8 @@
 package de.msg.terminfindung.gui.terminfindung.erstellen;
 
+import de.bund.bva.isyfact.common.web.global.GlobalFlowController;
+import de.bund.bva.isyfact.common.web.validation.ValidationController;
+import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
 import de.msg.terminfindung.gui.terminfindung.model.OrganisatorModel;
@@ -26,35 +29,11 @@ import static org.mockito.Mockito.*;
  */
 public class ErstellenControllerTest {
 
-    @Test
-    public void testLoescheZeitraum() throws Exception {
-        ErstellenController controller = new ErstellenController();
+    private static final String ORGANISATOR_NAME = "Hans";
 
-        // Vorbereitung der Testdaten
-        TagModel termin = GuiTestdaten.erstelleTermin();
-        int anzahlZeitraeume = termin.getZeitraeume().size();
-        ZeitraumModel geloeschterZeitraum = termin.getZeitraeume().get(0);
+    private static final String VERANSTALTUNG_NAME = "Hans' Geburtstag";
 
-        ErstellenModel model = new ErstellenModel();
-        model.getTage().add(termin);
-        model.setSelectedZeitraum(geloeschterZeitraum);
-
-        // Test
-        controller.delZeitraum(model);
-
-        assertNotNull(model);
-        assertNotNull(model.getTage());
-        assertEquals(anzahlZeitraeume - 1, model.getTage().get(0).getZeitraeume().size());
-        assertFalse(model.getTage().get(0).getZeitraeume().contains(geloeschterZeitraum));
-    }
-
-    @Test
-    public void testValidiereErstellenModel() throws TerminfindungBusinessException {
-        // Vorbereitung des Testobjekts
-        ErstellenController controller = new ErstellenController();
-        AwkWrapper awkWrapper = mock(AwkWrapper.class);
-        controller.setAwk(awkWrapper);
-
+    private static void initialisiereAwkWrapper(AwkWrapper awkWrapper) throws TerminfindungBusinessException {
         when(awkWrapper.erstelleTerminfindung(anyString(), anyString(), anyListOf(TagModel.class))).thenAnswer(new Answer<TerminfindungModel>() {
             @Override
             public TerminfindungModel answer(InvocationOnMock invocation) throws Throwable {
@@ -69,20 +48,129 @@ public class ErstellenControllerTest {
                 return terminfindung;
             }
         });
+    }
+
+    @Test
+    public void testLoescheZeitraum() throws Exception {
+        // Vorbereitung des Testobjekts
+        ErstellenController controller = new ErstellenController();
+
+        // Vorbereitung der Testdaten
+        TagModel termin = GuiTestdaten.erstelleTermin();
+        int anzahlZeitraeume = termin.getZeitraeume().size();
+        ZeitraumModel geloeschterZeitraum = termin.getZeitraeume().get(0);
+
+        ErstellenModel model = new ErstellenModel();
+        model.getTage().add(termin);
+        model.setSelectedZeitraum(geloeschterZeitraum);
+
+        // Test
+        controller.loescheZeitraum(model);
+
+        assertNotNull(model);
+        assertNotNull(model.getTage());
+        assertEquals(anzahlZeitraeume - 1, model.getTage().get(0).getZeitraeume().size());
+        assertFalse(model.getTage().get(0).getZeitraeume().contains(geloeschterZeitraum));
+    }
+
+    @Test
+    public void testValidiereStammdatenErfolgreich() throws TerminfindungBusinessException {
+        // Vorbereitung des Testobjekts
+        ErstellenController controller = new ErstellenController();
+        AwkWrapper awkWrapper = mock(AwkWrapper.class);
+        controller.setAwk(awkWrapper);
+
+        // Vorbereitung der Testdaten
+        ErstellenModel model = new ErstellenModel();
+        model.setName(VERANSTALTUNG_NAME);
+        model.setOrgName(ORGANISATOR_NAME);
+
+        // Test
+        assertTrue(controller.validiereStammdaten(model));
+
+        verifyZeroInteractions(awkWrapper);
+
+        assertNull(model.getTerminfindung());
+    }
+
+    @Test
+    public void testValidiereStammdatenOrganisatorUngültig() throws TerminfindungBusinessException {
+        // Vorbereitung des Testobjekts
+        ErstellenController controller = new ErstellenController();
+
+        GlobalFlowController globalFlowController = new GlobalFlowController();
+        ValidationController validationController = mock(ValidationController.class);
+        globalFlowController.setValidationController(validationController);
+        controller.setGlobalFlowController(globalFlowController);
+
+        AwkWrapper awkWrapper = mock(AwkWrapper.class);
+        controller.setAwk(awkWrapper);
+
+        // Vorbereitung der Testdaten
+        ErstellenModel model = new ErstellenModel();
+        model.setName(VERANSTALTUNG_NAME);
+
+        // Test
+        assertFalse(controller.validiereStammdaten(model));
+
+        verifyZeroInteractions(awkWrapper);
+
+        verify(validationController).processValidationMessages(anyListOf(ValidationMessage.class));
+        verifyNoMoreInteractions(validationController);
+
+        assertNull(model.getTerminfindung());
+    }
+
+    @Test
+    public void testValidiereStammdatenNameUngültig() throws TerminfindungBusinessException {
+        // Vorbereitung des Testobjekts
+        ErstellenController controller = new ErstellenController();
+
+        GlobalFlowController globalFlowController = new GlobalFlowController();
+        ValidationController validationController = mock(ValidationController.class);
+        globalFlowController.setValidationController(validationController);
+        controller.setGlobalFlowController(globalFlowController);
+
+        AwkWrapper awkWrapper = mock(AwkWrapper.class);
+        controller.setAwk(awkWrapper);
+
+        // Vorbereitung der Testdaten
+        ErstellenModel model = new ErstellenModel();
+        model.setOrgName(ORGANISATOR_NAME);
+
+        // Test
+        assertFalse(controller.validiereStammdaten(model));
+
+        verifyZeroInteractions(awkWrapper);
+
+        verify(validationController).processValidationMessages(anyListOf(ValidationMessage.class));
+        verifyNoMoreInteractions(validationController);
+
+        assertNull(model.getTerminfindung());
+    }
+
+    @Test
+    public void testValidiereTermineErfolgreich() throws TerminfindungBusinessException {
+        // Vorbereitung des Testobjekts
+        ErstellenController controller = new ErstellenController();
+        AwkWrapper awkWrapper = mock(AwkWrapper.class);
+        controller.setAwk(awkWrapper);
+
+        initialisiereAwkWrapper(awkWrapper);
 
         // Vorbereitung der Testdaten
         TagModel termin = GuiTestdaten.erstelleTermin();
         int anzahlZeitraeume = termin.getZeitraeume().size();
 
         ErstellenModel model = new ErstellenModel();
-        model.setName("Hans' Geburtstag");
-        model.setOrgName("Hans");
+        model.setName(VERANSTALTUNG_NAME);
+        model.setOrgName(ORGANISATOR_NAME);
         model.getTage().add(termin);
 
         // Test
-        assertTrue(controller.validiereErstellenModel(model));
+        assertTrue(controller.validiereTermine(model));
 
-        verify(awkWrapper).erstelleTerminfindung(anyString(), anyString(), anyListOf(TagModel.class));
+        verify(awkWrapper).erstelleTerminfindung(ORGANISATOR_NAME, VERANSTALTUNG_NAME, model.getTage());
         verifyNoMoreInteractions(awkWrapper);
 
         assertNotNull(model.getTerminfindung());
@@ -94,7 +182,7 @@ public class ErstellenControllerTest {
     }
 
     @Test
-    public void testValidiereErstellenModelAusnahme() throws TerminfindungBusinessException {
+    public void testValidiereTermineMitAwkAusnahme() throws TerminfindungBusinessException {
         // Vorbereitung des Testobjekts
         ErstellenController controller = new ErstellenController();
         AwkWrapper awkWrapper = mock(AwkWrapper.class);
@@ -104,12 +192,42 @@ public class ErstellenControllerTest {
 
         // Vorbereitung der Testdaten
         ErstellenModel model = new ErstellenModel();
-        model.setName("Hans' Geburtstag");
-        model.setOrgName("Hans");
+        model.setName(VERANSTALTUNG_NAME);
+        model.setOrgName(ORGANISATOR_NAME);
         model.getTage().add(GuiTestdaten.erstelleTermin());
 
         // Test
-        assertFalse(controller.validiereErstellenModel(model));
+        assertFalse(controller.validiereTermine(model));
+
+        verify(awkWrapper).erstelleTerminfindung(ORGANISATOR_NAME, VERANSTALTUNG_NAME, model.getTage());
+        verifyNoMoreInteractions(awkWrapper);
+    }
+
+    @Test
+    public void testValidiereTermineMitFehlern() throws TerminfindungBusinessException {
+        // Vorbereitung des Testobjekts
+        ErstellenController controller = new ErstellenController();
+
+        GlobalFlowController globalFlowController = new GlobalFlowController();
+        globalFlowController.setValidationController(mock(ValidationController.class));
+        controller.setGlobalFlowController(globalFlowController);
+
+        AwkWrapper awkWrapper = mock(AwkWrapper.class);
+        controller.setAwk(awkWrapper);
+
+        initialisiereAwkWrapper(awkWrapper);
+
+        // Vorbereitung der Testdaten
+        ErstellenModel model = new ErstellenModel();
+        model.setName(VERANSTALTUNG_NAME);
+        model.setOrgName(ORGANISATOR_NAME);
+        model.getTage().add(GuiTestdaten.erstelleTermin());
+        model.getTage().get(0).getZeitraeume().clear();
+
+        // Test
+        assertFalse(controller.validiereTermine(model));
+
+        verifyZeroInteractions(awkWrapper);
     }
 
 }
