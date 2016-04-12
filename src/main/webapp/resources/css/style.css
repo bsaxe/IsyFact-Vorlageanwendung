@@ -145,6 +145,17 @@ input[type=submit] {
 	background-color: transparent;
 }
 
-.inLineBlock{
+.inLineBlockIconButton{
 	display:inline-block;
+	min-width: 60px;
 }
+
+.inLineBlockButton{
+	display:inline-block;
+	min-width: 200px;
+}
+
+.inLineBlockButton span{
+	margin-top: 25px;
+}
+

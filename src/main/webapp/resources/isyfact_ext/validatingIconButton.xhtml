@@ -51,20 +51,29 @@
 	<ui:param name="existsValidationError"
 		value="#{not empty validationMessages}" />
 
-	<div class="#{existsValidationError ? ' has-error has-feedback ': ''}#{cc.attrs.inLine ? ' inLineBlock' : ''}" >				
-	   
-		<ui:fragment rendered="#{cc.attrs.globalConfig.jsEnabled}" >
-			<h:commandLink id="commandLink" disabled="#{btnDisabled}" >
-				<h:graphicImage id="image" library="#{cc.attrs.imageLib}" name="#{cc.attrs.imageName}" style="max-height:18px"/>				
+	<div class="#{existsValidationError ? ' has-error has-feedback': ''}#{cc.attrs.inLine ? ' inLineBlockIconButton' : ''}">
+
+		<ui:fragment rendered="#{cc.attrs.globalConfig.jsEnabled}">
+			<h:commandLink id="commandLink" disabled="#{btnDisabled}">
+				<h:graphicImage id="image" library="#{cc.attrs.imageLib}"
+					name="#{cc.attrs.imageName}" style="max-height:18px" />
 			</h:commandLink>
 		</ui:fragment>
 
 		<!-- Bei Validierungsfehlern -->
-        <isyi:formValidationIcon validationModel="#{cc.attrs.validationModel}"
-            reference="#{cc.attrs.reference}" inputGroupAddonExistent="false" />
-            
-    </div>
-
+		<ui:fragment
+			rendered="#{existsValidationError and cc.attrs.globalConfig.jsEnabled}">
+			<span
+				class="form-control-feedback without-input-group-addon">
+				<a data-delay="100" data-trigger="hover" data-title=""
+				data-placement="top"
+				data-content="#{cc.attrs.validationModel.getCombinedValidationMessageForReference(cc.attrs.reference)}"
+				data-toggle="tooltip" class="btn btn-link rf-popover"
+				data-original-title="" title=""> <span class="icon icon-info"></span>
+			</a>
+			</span>
+		</ui:fragment>
+	</div>	
 </composite:implementation>
 
 </html>

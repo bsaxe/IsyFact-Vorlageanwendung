@@ -50,6 +50,8 @@ public class DataGenerator {
             TagModel tag = new TagModel();
             // Tage beginnem vom aktuellen Datum an
             tag.setDatum(DateUtil.getNDaysFromToday(i));
+            tag.setVonZeitraum(getUhrzeitAuswahl().get(36));
+            tag.setBisZeitraum(getUhrzeitAuswahl().get(40));
             tage.add(tag);
 
             // Erzeuge drei Zeiträume für jeden Tage
