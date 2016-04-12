@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bund.bva.pliscommon.konfiguration.common.ReloadableKonfiguration;
+
 /*
  * #%L
  * Terminfindung
@@ -38,10 +40,11 @@ public class DataGenerator {
     /**
      * Erzeugte eine Dummy-Liste von Tagen mit Zeiträumen.
      * Zum Befüllen des Modells für Testzwecke gedacht.
+     * @param reloadableKonfiguration 
      *
      * @return Eine fest vorgegebene Test-Liste mit Terminen
      */
-    public static List<TagModel> generateTage()  {
+    public static List<TagModel> generateTage(ReloadableKonfiguration reloadableKonfiguration)  {
     	DecimalFormat format = new DecimalFormat("00");		
         // Erzeuge eine Liste von drei Tagen
        List<TagModel> tage = new ArrayList<>();
@@ -50,8 +53,8 @@ public class DataGenerator {
             TagModel tag = new TagModel();
             // Tage beginnem vom aktuellen Datum an
             tag.setDatum(DateUtil.getNDaysFromToday(i));
-            tag.setVonZeitraum(getUhrzeitAuswahl().get(36));
-            tag.setBisZeitraum(getUhrzeitAuswahl().get(40));
+            tag.setVonZeitraum(reloadableKonfiguration.getAsString("termin.start.vorgabe"));
+            tag.setBisZeitraum(reloadableKonfiguration.getAsString("termin.ende.vorgabe"));
             tage.add(tag);
 
             // Erzeuge drei Zeiträume für jeden Tage

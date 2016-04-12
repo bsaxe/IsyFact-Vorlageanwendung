@@ -159,3 +159,7 @@ input[type=submit] {
 	margin-top: 25px;
 }
 
+.inLineBlockIconButton span{
+	margin-top: -5px;
+}
+
