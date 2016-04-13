@@ -17,105 +17,135 @@
   limitations under the License.
   #L%
   -->
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-				xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:f="http://java.sun.com/jsf/core"
-				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
-				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+                template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
-	<ui:define name="inhaltsbereich">
-		<isy:panelGroup>
-			<isy:panel>
-				<f:facet name="panelHeader">
-						Teilnehmer
-					</f:facet>
-				<f:facet name="panelBody" >
-					<div class="form-horizontal">
-						<div class="row row-df">
-							<div class="col-lg-4">
-								<h:panelGroup rendered="#{teilnehmenModel.terminfindung.abgeschlossen}">
-									<h:outputText value="Die Terminfindung für diesen Termin ist bereits abgeschlossen"/>
-									<p/>
-								</h:panelGroup>
-								<h:panelGroup>					
-									<h:outputLabel for="teilnehmerLabel" value="Eingetragene Teilnehmer(#{teilnehmenModel.terminfindung.teilnehmer.size()}): "/>
-									<h:outputText id="teilnehmerLabel" value="#{teilnehmenModel.terminfindung.teilnehmerLabel}" style="font-weight:bold; padding-inline-start: 15px"/>														
-									<isy:formInput
-										reference="teilnehmerName"
-										value="#{teilnehmenModel.teilnehmerName}"
-										label="Name:"										
-										rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"/>									
-								</h:panelGroup>								
-								<table class="selectAbschliessen">
-									<tr>
-										<th>Datum</th>
-										<th>Zeitraum</th>
-										<th>Zusagen</th>
-										<th>Unter Vorbehalt</th>
-										<th>Absagen</th>
-										<th></th>				
-									</tr>
-									<ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
-										<ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
-											<tr>
-												<td>
-													<h:outputText value="#{tag.datum}" rendered="#{tag.zeitraeume.get(0).id == zeitraum.id}">
-														<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-													</h:outputText>
-												</td>
-												<td class="borderTd #{teilnehmenModel.zeitraumIsDefZeitraum(zeitraum) ? 'tdDefTrue' : ''}">
-													<h:outputText value="#{zeitraum.beschreibung}" />
-												</td>
-												<td class="borderTd tdTrue">													
-													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
-            											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 1)}"
-            											data-toggle="tooltip" class="rf-popover" data-original-title="" title="" >
-            											<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[1]}"/>
-            										</a>
-												</td>
-												<td class="borderTd tdHaveTo">
-													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
-            											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 2)}"
-            											data-toggle="tooltip" class="rf-popover" data-original-title="" title="" >
-            											<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[2]}"/>
-            										</a>
-												</td>
-												<td class="borderTd tdFalse">
-													<a data-delay="100" data-trigger="hover" data-title="" data-placement="top"
-            											data-content="#{teilnehmenModel.terminfindung.getTeilnehmerLabel(zeitraum, 0)}"
-            											data-toggle="tooltip" class="rf-popover" data-original-title="" title="" >
-            											<h:outputText style="color:black;font-weight:bold" value="#{zeitraum.zaehleStimmen()[0]}"/>
-            										</a>
-												</td>
-												<td class="radioJVN">
-													<h:selectOneRadio required="true" rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"
-														layout="lineDirection"
-														disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"
-														value="#{teilnehmenModel.zeitraumAuswahl.checkedRadio[zeitraum.id]}">
-														<f:selectItem itemValue="1" itemLabel="J" />
-														<f:selectItem itemValue="2" itemLabel="V" />
-														<f:selectItem itemValue="0" itemLabel="N" />
-													</h:selectOneRadio>
-												</td>
-											</tr>
-										</ui:repeat>
-									</ui:repeat>
-								</table>
-							</div>							
-						</div>
-						<hr />
-						<div class="col-lg-4">
-							<isy:button action="saveAllFalse" value="Ich kann nicht"
-								disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
-							<isy:button action="save" value="Speichern"
-								disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" />
-						</div>
-					</div>
-				</f:facet>
-			</isy:panel>
-		</isy:panelGroup>
-	</ui:define>
+    <ui:define name="inhaltsbereich">
+        <isy:panelGroup>
+            <isy:panel>
+                <f:facet name="panelHeader">
+                    <h:outputText value="#{teilnehmenModel.terminfindung.veranstaltungName}"/>
+                </f:facet>
+                <f:facet name="panelBody">
+                    <div class="row row-df">
+                        <div class="col-lg-12">
+                            <dl class="dl-horizontal">
+                                <dt>Organisator</dt>
+                                <dd>#{teilnehmenModel.terminfindung.organisator.name}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </f:facet>
+            </isy:panel>
+            <isy:panel>
+                <f:facet name="panelHeader">
+                    <h:outputText value="#{msg['terminfindung.teilnehmer']}"/>
+                </f:facet>
+                <f:facet name="panelBody">
+                    <div class="row row-df">
+                        <div class="col-lg-12">
+                            <table class="selectAbschliessen">
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
+                                        <th class="borderTd" colspan="#{tag.zeitraeume.size()}">
+                                            <h:outputText value="#{tag.datum}">
+                                                <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+                                            </h:outputText>
+                                        </th>
+                                    </ui:repeat>
+                                </tr>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
+                                        <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+                                            <th class="borderTd #{teilnehmenModel.zeitraumIsDefZeitraum(zeitraum) ? 'ausgewaehlt' : ''}">
+                                                <h:outputText value="#{zeitraum.beschreibung}"/>
+                                            </th>
+                                        </ui:repeat>
+                                    </ui:repeat>
+                                </tr>
+                                <ui:repeat var="teilnehmer" value="#{teilnehmenModel.terminfindung.teilnehmer}">
+                                    <tr>
+                                        <td class="borderTd">
+                                            <h:outputText value="#{teilnehmer.name}"/>
+                                        </td>
+                                        <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
+                                            <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+                                                <td class="borderTd #{zeitraum.getPraeferenzFuerTeilnehmer(teilnehmer.name)}">
+                                                    &nbsp;
+                                                </td>
+                                            </ui:repeat>
+                                        </ui:repeat>
+                                    </tr>
+                                </ui:repeat>
+                                <tr>
+                                    <th>
+                                        <h:outputText class="anzahlTd" value="#{msg['termin.zusagen']}"/>
+                                    </th>
+                                    <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
+                                        <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+                                            <td class="anzahlTd">
+                                                <h:outputText value="#{zeitraum.zusagen}"/>
+                                                <h:outputText value=" + (#{zeitraum.unsicher})"
+                                                              rendered="#{zeitraum.unsicher > 0}"/>
+                                            </td>
+                                        </ui:repeat>
+                                    </ui:repeat>
+                                </tr>
+                                <h:panelGroup rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}">
+                                    <tr>
+                                        <td class="teilnehmerTd">
+                                            <isy:formInput
+                                                    reference="teilnehmerName"
+                                                    value="#{teilnehmenModel.teilnehmerName}"
+                                                    placeholder="Name"
+                                                    rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"/>
+                                        </td>
+                                        <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
+                                            <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+                                                <td class="radioJVN">
+                                                    <h:selectOneRadio required="true"
+
+                                                                      layout="pageDirection"
+                                                                      disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"
+                                                                      value="#{teilnehmenModel.zeitraumAuswahl.checkedRadio[zeitraum.id]}">
+                                                        <f:selectItem itemValue="1" itemLabel="#{msg['zeitraum.zusage']}"/>
+                                                        <f:selectItem itemValue="2" itemLabel="#{msg['zeitraum.unsicher']}"/>
+                                                        <f:selectItem itemValue="0" itemLabel="#{msg['zeitraum.absage']}"/>
+                                                    </h:selectOneRadio>
+                                                </td>
+                                            </ui:repeat>
+                                        </ui:repeat>
+                                    </tr>
+                                </h:panelGroup>
+                            </table>
+                            <h:panelGroup rendered="#{teilnehmenModel.terminfindung.abgeschlossen}">
+                                <strong>
+                                    <h:outputText value="#{msg['terminfindung.abgeschlossen']}"/>
+                                </strong>
+                            </h:panelGroup>
+
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row row-df">
+                        <div class="col-lg-12">
+                            <isy:button action="saveAllFalse" value="#{msg['aktion.absage']}"
+                                        disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"/>
+                            <isy:button action="save" value="#{msg['aktion.speichern']}"
+                                        disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"/>
+                        </div>
+                    </div>
+                </f:facet>
+            </isy:panel>
+        </isy:panelGroup>
+    </ui:define>
 </ui:composition>
 

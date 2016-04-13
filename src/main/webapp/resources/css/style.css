@@ -20,106 +20,106 @@
 @CHARSET "ISO-8859-1";
 
 .selectAbschliessen {
-	white-space: nowrap;
-	background-color: transparent; 
+    white-space: nowrap;
+    background-color: transparent;
 }
 
 .selectAbschliessen div[class="col-lg-6"] {
-	width: 80%;
+    width: 80%;
 }
 
 .navbar {
-	margin-top: 15px;
+    margin-top: 15px;
 }
 
 .teilnehmerTd label {
-	width: 0;
+    width: 0;
 }
 
-body{
-	min-width: 100%;
-	max-width: 100%;
+body {
+    min-width: 100%;
+    max-width: 100%;
 }
 
 input[type=radio] {
-	opacity: 1;
-	margin-top: -1px;
-	vertical-align: middle;
+    opacity: 1;
+    margin-top: -1px;
+    vertical-align: middle;
 }
 
 input[type=checkbox] {
-	opacity: 1;
+    opacity: 1;
 }
 
 .selectAbschliessen td {
-	min-width: 135px;
-	padding: 5px;
+    min-width: 135px;
+    padding: 5px;
 }
 
 .selectAbschliessen td input[type=radio] {
-	margin-left:45%;
+    margin-left: 25%;
 }
 
 .selectAbschliessen label {
-	color: black;
+    color: black;
 }
 
 .selectTable {
-	margin-left: 137px;
-	padding: 5px;
+    margin-left: 137px;
+    padding: 5px;
 }
 
 .borderTd {
-	border: 1px solid grey;
-	text-align: center;
+    border: 1px solid grey;
+    text-align: center;
 }
 
 .anzahlTd {
-	text-align: center;
+    text-align: center;
 }
 
 .dateForZeitraeume {
-	background-color: lightblue;
+    background-color: lightblue;
 }
 
-.tdTrue {	
-	background-color: #90C745;
+.JA {
+    background-color: #90C745;
 }
 
-.tdFalse {	
-	background-color: #d03232;
+.NEIN {
+    background-color: #d03232;
 }
 
-.tdHaveTo {	
-	background-color: #F59D35;
+.WENN_ES_SEIN_MUSS {
+    background-color: #F59D35;
 }
 
-.tdDefTrue {
-	background-color: #F59D35;
+.ausgewaehlt {
+    background-color: #F59D35;
 }
 
-.tableZeiten {	
-	background-color: transparent;
+.tableZeiten {
+    background-color: transparent;
 }
 
 .tableZeiten tr td {
-	vertical-align: text-top;
-	padding: 5px;	
+    vertical-align: text-top;
+    padding: 5px;
 }
 
 input[type=submit] {
-	margin-left: 10px;
-	margin-top: 25px;
+    margin-left: 10px;
+    margin-top: 25px;
 }
 
 .buttonTerminAdd {
-	margin-left: 62%;
-	margin-top: 25px;
+    margin-left: 62%;
+    margin-top: 25px;
 }
 
 .chosenTable th {
     background-color: #fafafa;
-	padding:4px;
+    padding: 4px;
 }
 
 .chosenTable td {
@@ -136,30 +136,25 @@ input[type=submit] {
     width: 100px;
 }
 
-.radioJVN table tbody tr td{
-	max-width: 60px;
-	min-width: 60px;
+.radioJVN table {
+    background-color: transparent;
 }
 
-.radioJVN table{
-	background-color: transparent;
+.inLineBlockIconButton {
+    display: inline-block;
+    min-width: 60px;
 }
 
-.inLineBlockIconButton{
-	display:inline-block;
-	min-width: 60px;
+.inLineBlockButton {
+    display: inline-block;
+    min-width: 200px;
 }
 
-.inLineBlockButton{
-	display:inline-block;
-	min-width: 200px;
+.inLineBlockButton span {
+    margin-top: 25px;
 }
 
-.inLineBlockButton span{
-	margin-top: 25px;
-}
-
-.inLineBlockIconButton span{
-	margin-top: -5px;
+.inLineBlockIconButton span {
+    margin-top: -5px;
 }
 
