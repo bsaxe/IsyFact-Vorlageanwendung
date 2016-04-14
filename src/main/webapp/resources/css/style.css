@@ -51,6 +51,10 @@ input[type=checkbox] {
     opacity: 1;
 }
 
+.hscroll {
+    overflow: auto;
+}
+
 .selectAbschliessen td {
     min-width: 135px;
     padding: 5px;
