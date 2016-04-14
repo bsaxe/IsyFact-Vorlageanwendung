@@ -58,6 +58,18 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable {
     private List<TeilnehmerZeitraumModel> teilnehmerZeitraeume = new ArrayList<>();
 
     /**
+     * Anzahl an Zusagen über alle Teilnehmer. Wird erst berechnet, wenn es zum ersten Mal von einer View benötigt
+     * wird.
+     */
+    private Integer zusagen;
+
+    /**
+     * Anzahl an Unsicheren über alle Teilnehmer. Wird erst berechnet, wenn es zum ersten Mal von einer View benötigt
+     * wird.
+     */
+    private Integer unsicher;
+
+    /**
      * Auswertung der Präferenzen durch Zählen der abgegebenen Stimmen für den Zeitraum. Die Methode durchläuft dazu die
      * Liste der Präferenzen und zählt, wie viele davon "Ja", "Nein" oder "Wenn es sein muss" sind.
      *
@@ -73,6 +85,39 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable {
             else if (tz.getPraeferenz() == PraeferenzModel.WENN_ES_SEIN_MUSS) count[2]++;
         }
         return count;
+    }
+
+    public int getZusagen() {
+        if (zusagen == null) {
+            zusagen = 0;
+            for (TeilnehmerZeitraumModel tz : teilnehmerZeitraeume) {
+                if (tz.getPraeferenz() == PraeferenzModel.JA) {
+                    zusagen++;
+                }
+            }
+        }
+        return zusagen;
+    }
+
+    public int getUnsicher() {
+        if (unsicher == null) {
+            unsicher = 0;
+            for (TeilnehmerZeitraumModel tz : teilnehmerZeitraeume) {
+                if (tz.getPraeferenz() == PraeferenzModel.WENN_ES_SEIN_MUSS) {
+                    unsicher++;
+                }
+            }
+        }
+        return unsicher;
+    }
+
+    public PraeferenzModel getPraeferenzFuerTeilnehmer(String name) {
+        for (TeilnehmerZeitraumModel teilnehmerZeitraum : teilnehmerZeitraeume) {
+            if (teilnehmerZeitraum.getTeilnehmer().getName().equals(name)) {
+                return teilnehmerZeitraum.getPraeferenz();
+            }
+        }
+        return PraeferenzModel.NEIN;
     }
 
     public List<TeilnehmerZeitraumModel> getTeilnehmerZeitraeume() {
