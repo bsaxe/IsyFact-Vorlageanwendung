@@ -54,7 +54,8 @@
                                 <tr>
                                     <th>&nbsp;</th>
                                     <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
-                                        <th class="borderTd" colspan="#{tag.zeitraeume.size()}">
+                                        <th class="borderTd #{tag.zeitraeume.contains(teilnehmenModel.terminfindung.defZeitraum) ? 'ausgewaehlt' : ''}"
+                                            colspan="#{tag.zeitraeume.size()}">
                                             <h:outputText value="#{tag.datum}">
                                                 <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
                                             </h:outputText>
@@ -86,8 +87,8 @@
                                     </tr>
                                 </ui:repeat>
                                 <tr>
-                                    <th>
-                                        <h:outputText class="anzahlTd" value="#{msg['termin.zusagen']}"/>
+                                    <th class="anzahlTd">
+                                        <h:outputText value="#{msg['termin.zusagen']}"/>
                                     </th>
                                     <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
                                         <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
@@ -129,12 +130,16 @@
                                     </tr>
                                 </h:panelGroup>
                             </table>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row row-df">
+                        <div class="col-lg-12">
                             <h:panelGroup rendered="#{teilnehmenModel.terminfindung.abgeschlossen}">
                                 <strong>
                                     <h:outputText value="#{msg['terminfindung.abgeschlossen']}"/>
                                 </strong>
                             </h:panelGroup>
-
                         </div>
                     </div>
                     <hr/>

@@ -19,21 +19,8 @@
  */
 @CHARSET "ISO-8859-1";
 
-.selectAbschliessen {
-    white-space: nowrap;
-    background-color: transparent;
-}
-
-.selectAbschliessen div[class="col-lg-6"] {
-    width: 80%;
-}
-
 .navbar {
     margin-top: 15px;
-}
-
-.teilnehmerTd label {
-    width: 0;
 }
 
 body {
@@ -55,13 +42,30 @@ input[type=checkbox] {
     overflow: auto;
 }
 
+.selectAbschliessen {
+    white-space: nowrap;
+    background-color: transparent;
+}
+
+.selectAbschliessen div[class="col-lg-6"] {
+    width: 80%;
+}
+
+.selectAbschliessen th {
+    padding: 3px;
+}
+
 .selectAbschliessen td {
-    min-width: 135px;
+    min-width: 110px;
     padding: 5px;
 }
 
 .selectAbschliessen td input[type=radio] {
     margin-left: 25%;
+}
+
+.selectAbschliessen td.anzahlTd input[type=radio] {
+    margin-left: 0;
 }
 
 .selectAbschliessen label {
@@ -82,7 +86,7 @@ input[type=checkbox] {
     text-align: center;
 }
 
-.dateForZeitraeume {
+.ausgewaehlt {
     background-color: lightblue;
 }
 
@@ -95,10 +99,6 @@ input[type=checkbox] {
 }
 
 .WENN_ES_SEIN_MUSS {
-    background-color: #F59D35;
-}
-
-.ausgewaehlt {
     background-color: #F59D35;
 }
 
