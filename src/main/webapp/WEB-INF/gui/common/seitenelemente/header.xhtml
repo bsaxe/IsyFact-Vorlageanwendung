@@ -17,31 +17,29 @@
   limitations under the License.
   #L%
   -->
-<!-- TODO: Template durch Referenz auf plis-web ersetzen, falls möglich. -->
-<!-- TODO: Template durch Referenz auf plis-web ersetzen, falls möglich. -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:rf="http://java.sun.com/jsf/composite/registerfactory">
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!-- TODO: Template durch Referenz auf plis-web ersetzen, falls möglich. -->
 
     <div class="header-colorbar"></div>
 
     <div class="header-content" role="banner">
 
-         <h:graphicImage library="images" name="IsyFactSchriftzug.jpeg"/>
+        <h:graphicImage library="images" name="IsyFactSchriftzug.jpeg"/>
 
         <div class="pull-right text-right">
 
-            <div class="brand">    
-            	<h:graphicImage library="images" name="IsyFactLogo.jpeg"/>            
+            <div class="brand">
+                <h:graphicImage library="images" name="IsyFactLogo.jpeg"/>
                 <span>Terminfindung</span>
             </div>
 
             <form class="form-horizontal" role="form">
                 <ui:fragment
-                    rendered="#{not empty globalConfigurationModel and not globalConfigurationModel.jsEnabled}">
+                        rendered="#{not empty globalConfigurationModel and not globalConfigurationModel.jsEnabled}">
                     <img class="icon icon-nojs" src="${request.contextPath}/app/resources/img/no-js.png"
-                        alt="Javascript ist deaktiviert." />
+                         alt="Javascript ist deaktiviert."/>
                 </ui:fragment>
                 <ui:fragment rendered="#{not empty globalFlowModel.sachbearbeiterName}">
                     <span class="icon icon-user"></span> #{globalFlowModel.sachbearbeiterName}

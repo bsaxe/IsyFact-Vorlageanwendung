@@ -39,6 +39,10 @@
         <param-value>true</param-value>
     </context-param>
     <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/WEB-INF/terminfindung.taglib.xml</param-value>
+    </context-param>
+    <context-param>
         <param-name>webAppRootKey</param-name>
         <param-value>terminfindung</param-value>
     </context-param>
