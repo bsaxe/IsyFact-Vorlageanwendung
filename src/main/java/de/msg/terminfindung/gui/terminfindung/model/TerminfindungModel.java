@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Die Klasse speichert eine Terminfindung in der View-Schicht.
@@ -136,6 +137,11 @@ public class TerminfindungModel implements Serializable {
 
         return defZeitraum != null;
     }
+
+    public boolean isFestgelegterZeitraum(ZeitraumModel zeitraumModel) {
+        return defZeitraum != null && Objects.equals(zeitraumModel.getId(), defZeitraum.getId());
+    }
+
 
 	/* Getter und Setter */
 

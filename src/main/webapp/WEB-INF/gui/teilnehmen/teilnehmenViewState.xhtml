@@ -37,56 +37,7 @@
                 <f:facet name="panelBody">
                     <div class="row row-df">
                         <div class="col-lg-12 hscroll">
-                            <table class="selectAbschliessen">
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
-                                        <th class="borderTd #{tag.zeitraeume.contains(teilnehmenModel.terminfindung.defZeitraum) ? 'ausgewaehlt' : ''}"
-                                            colspan="#{tag.zeitraeume.size()}">
-                                            <h:outputText value="#{tag.datum}">
-                                                <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
-                                            </h:outputText>
-                                        </th>
-                                    </ui:repeat>
-                                </tr>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
-                                        <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
-                                            <th class="borderTd #{teilnehmenModel.zeitraumIsDefZeitraum(zeitraum) ? 'ausgewaehlt' : ''}">
-                                                <h:outputText value="#{zeitraum.beschreibung}"/>
-                                            </th>
-                                        </ui:repeat>
-                                    </ui:repeat>
-                                </tr>
-                                <ui:repeat var="teilnehmer" value="#{teilnehmenModel.terminfindung.teilnehmer}">
-                                    <tr>
-                                        <td class="borderTd">
-                                            <h:outputText value="#{teilnehmer.name}"/>
-                                        </td>
-                                        <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
-                                            <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
-                                                <td class="borderTd #{zeitraum.getPraeferenzFuerTeilnehmer(teilnehmer.name)}">
-                                                    &nbsp;
-                                                </td>
-                                            </ui:repeat>
-                                        </ui:repeat>
-                                    </tr>
-                                </ui:repeat>
-                                <tr>
-                                    <th class="anzahlTd">
-                                        <h:outputText value="#{msg['termin.zusagen']}"/>
-                                    </th>
-                                    <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
-                                        <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
-                                            <td class="anzahlTd">
-                                                <h:outputText value="#{zeitraum.zusagen}"/>
-                                                <h:outputText value=" + (#{zeitraum.unsicher})"
-                                                              rendered="#{zeitraum.unsicher > 0}"/>
-                                            </td>
-                                        </ui:repeat>
-                                    </ui:repeat>
-                                </tr>
+                            <tf:termine terminfindung="#{teilnehmenModel.terminfindung}">
                                 <h:panelGroup rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}">
                                     <tr>
                                         <td class="teilnehmerTd">
@@ -116,7 +67,7 @@
                                         </ui:repeat>
                                     </tr>
                                 </h:panelGroup>
-                            </table>
+                            </tf:termine>
                         </div>
                     </div>
                     <hr/>

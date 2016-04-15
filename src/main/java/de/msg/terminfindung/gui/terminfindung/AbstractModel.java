@@ -21,14 +21,9 @@ package de.msg.terminfindung.gui.terminfindung;
  */
 
 
-import de.msg.terminfindung.gui.terminfindung.model.RequestData;
-import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Basisklasse für alle View-Models. Die Klasse bündelt Modell-Elemente, die in mehreren Views verwendet werden.
@@ -39,32 +34,8 @@ public abstract class AbstractModel implements Serializable {
     private static final long serialVersionUID = -2479477611892278312L;
 
     private TerminfindungModel terminfindung;
-    private List<TagModel> tage = new ArrayList<>();
-    private RequestData requestData;
+
     private boolean testMode = false;
-
-    public RequestData getRequestData() {
-        return requestData;
-    }
-
-    public void setRequestData(RequestData requestData) {
-        this.requestData = requestData;
-    }
-
-    public boolean zeitraumIsDefZeitraum(ZeitraumModel zeitraumModel) {
-        if (terminfindung.getDefZeitraum() != null) {
-            return zeitraumModel.getId() == getTerminfindung().getDefZeitraum().getId();
-        }
-        return false;
-    }
-
-    public void setTage(List<TagModel> termine) {
-        this.tage = termine;
-    }
-
-    public List<TagModel> getTage() {
-        return tage;
-    }
 
     public TerminfindungModel getTerminfindung() {
         return terminfindung;

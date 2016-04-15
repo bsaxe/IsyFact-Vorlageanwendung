@@ -9,4 +9,8 @@
         <tag-name>stammdaten</tag-name>
         <source>tags/stammdaten.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>termine</tag-name>
+        <source>tags/termine.xhtml</source>
+    </tag>
 </facelet-taglib>

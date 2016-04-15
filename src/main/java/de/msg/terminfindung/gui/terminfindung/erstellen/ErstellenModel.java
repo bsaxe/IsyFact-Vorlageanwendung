@@ -27,6 +27,7 @@ import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.gui.util.DataGenerator;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,6 +68,8 @@ public class ErstellenModel extends AbstractModel implements Serializable {
      * Zur Auswahl stehende mögliche Zeiträume
      */
     private List<String> alleZeitraeume = DataGenerator.getUhrzeitAuswahl();
+
+    private List<TagModel> tage = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -119,4 +122,13 @@ public class ErstellenModel extends AbstractModel implements Serializable {
     public void setStringPlaceholderDate(String stringPlaceholderDate) {
         this.stringPlaceholderDate = stringPlaceholderDate;
     }
+
+    public List<TagModel> getTage() {
+        return tage;
+    }
+
+    public void setTage(List<TagModel> termine) {
+        this.tage = termine;
+    }
+
 }
