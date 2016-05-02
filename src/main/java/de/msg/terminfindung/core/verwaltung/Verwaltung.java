@@ -45,5 +45,7 @@ public interface Verwaltung {
     void loescheZeitraeume(Terminfindung terminfindung, List<Zeitraum> zeitraumList);
 
     void setzeVeranstaltungstermin(Terminfindung terminfindung, long zeitraumNr) throws TerminfindungBusinessException;
+    
+    void aktualisiereTerminfindung(Terminfindung terminfindung, String organisatorName, String veranstaltungName);
 
 }

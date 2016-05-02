@@ -38,6 +38,7 @@
         <transition on="abschliessen" to="abschliessenViewState" />
 		<transition on="loeschen" to="loeschenViewState" />
 		<transition on="changeView" to="changeViewState" />
+		<transition on="aktualisiere" to="aktualisierenViewState" />
 	</view-state>
 
 	<subflow-state id="abschliessenViewState" subflow="abschliessenFlow" >
@@ -47,6 +48,10 @@
 	</subflow-state>
 
 	<subflow-state id="loeschenViewState" subflow="loeschenFlow">
+		<transition on="finished" to="verwaltenViewState"/>
+	</subflow-state>
+	
+	<subflow-state id="aktualisierenViewState" subflow="aktualisierenFlow">
 		<transition on="finished" to="verwaltenViewState"/>
 	</subflow-state>
 

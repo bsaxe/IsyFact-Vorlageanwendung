@@ -209,4 +209,16 @@ public class AwkWrapperImpl implements AwkWrapper {
         }
     }
 
+	@Override
+	public TerminfindungModel aktualisiereTerminfindung(TerminfindungModel terminfindungModel,
+			String veranstaltungsName, String organisatorName) throws TerminfindungBusinessException {
+		
+		 if (terminfindungModel == null || veranstaltungsName == null || organisatorName == null)
+	            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
+		
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
+		verwaltung.aktualisiereTerminfindung(terminfindung, organisatorName, veranstaltungsName);
+		return map(terminfindung);
+	}
+
 }

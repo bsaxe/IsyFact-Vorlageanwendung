@@ -40,6 +40,10 @@
 								<isy:formInput reference="formular1"
 									value="#{verwaltenModel.terminfindung.veranstaltungName}"
 									label="Name der Veranstaltung:" readonly="true" />
+									
+								<isy:formInput reference="formular3"
+									value="#{verwaltenModel.terminfindung.organisator.name}"
+									label="Name des Organisators:" readonly="true" />
  
 								<isy:formInput reference="formular2"
 									value="NN"
@@ -58,6 +62,8 @@
 					</p>					
 					</h:panelGroup>
 					<div class="form-horizontal">
+						<isy:button value="Stammdaten bearbeiten" action="aktualisiere"
+							disabled="#{verwaltenModel.terminfindung.abgeschlossen}" />
 						<isy:button value="Termine löschen" action="loeschen"
 							disabled="#{verwaltenModel.terminfindung.abgeschlossen}" />
 						<isy:button value="Terminfindung abschliessen"

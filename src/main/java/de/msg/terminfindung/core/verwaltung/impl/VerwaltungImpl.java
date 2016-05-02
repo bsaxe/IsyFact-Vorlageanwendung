@@ -41,12 +41,16 @@ public class VerwaltungImpl implements Verwaltung {
     private final AwfTerminfindungAbschliessen awfTerminfindungAbschliessen;
 
     private final AwfTermineLoeschen awfTermineLoeschen;
+    
+    private final AwfAktualisiereTerminfindung awfAktualisiereTerminfindung;
 
     private final TerminfindungDao terminfindungDao;
-
+    
+    
     public VerwaltungImpl(TerminfindungDao terminfindungDao) {
         awfTerminfindungAbschliessen = new AwfTerminfindungAbschliessen(terminfindungDao);
         awfTermineLoeschen = new AwfTermineLoeschen(terminfindungDao);
+        awfAktualisiereTerminfindung = new AwfAktualisiereTerminfindung(terminfindungDao);
         this.terminfindungDao = terminfindungDao;
     }
 
@@ -61,7 +65,6 @@ public class VerwaltungImpl implements Verwaltung {
 
     @Override
     public void setzeVeranstaltungstermin(Terminfindung terminfindung, long zeitraumNr) throws TerminfindungBusinessException {
-
         awfTerminfindungAbschliessen.setzeVeranstaltungstermin(terminfindung, zeitraumNr);
     }
 
@@ -69,5 +72,10 @@ public class VerwaltungImpl implements Verwaltung {
     public void loescheZeitraeume(Terminfindung terminfindung, List<Zeitraum> zeitraumList) {
         awfTermineLoeschen.loescheZeitraeume(terminfindung, zeitraumList);
     }
+
+	@Override
+	public void aktualisiereTerminfindung(Terminfindung terminfindung,  String organisatorName, String veranstaltungName) {
+		awfAktualisiereTerminfindung.aktualisiereTerminfindung(terminfindung, organisatorName, veranstaltungName);		
+	}
 
 }

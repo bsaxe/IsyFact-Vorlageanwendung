@@ -1,0 +1,75 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
+
+	<ui:define name="inhaltsbereich">
+		<isy:panelGroup>
+			<isy:panel>
+				<f:facet name="panelHeader">
+						Terminfindung verwalten
+					</f:facet>
+				<f:facet name="panelBody">
+
+					<div class="form-horizontal readonly">
+						<div class="row row-df">
+							<div class="col-lg-4">
+
+								<isy:formInput reference="formular1"
+									value="#{aktualisierenModel.veranstaltungsName}"
+									label="Name der Veranstaltung:" readonly="false" />
+									
+								<isy:formInput reference="formular3"
+									value="#{aktualisierenModel.organisatorName}"
+									label="Name des Organisators:" readonly="false" />
+ 
+								<isy:formInput reference="formular2"
+									value="NN"
+									label="Erstellungsdatum:" readonly="true" />
+							</div>
+						</div>
+					</div>
+					<h:panelGroup rendered="#{aktualisierenModel.terminfindung.abgeschlossen}"> 
+					<p>	
+						<h:outputText value="Die Terminfindung für diese Veranstaltung ist abgeschlossen."/><br/>
+						<h:outputText value="Der ausgewählte Termin ist der "/> 
+						<h:outputText value="#{aktualisierenModel.terminfindung.defZeitraum.tag.datum}">
+							<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+						</h:outputText>							
+						<h:outputText value=" (Zeitraum: #{aktualisierenModel.terminfindung.defZeitraum.beschreibung})."/>
+					</p>					
+					</h:panelGroup>
+					 <div class="row row-df">
+                        <div class="col-lg-12">
+                            <isy:button action="cancel" value="#{msg['aktion.zurueck']}"/>
+                            <isy:button action="save" value="#{msg['aktion.speichern']}"
+                                        disabled="#{aktualisierenModel.terminfindung.abgeschlossen}"/>
+                        </div>
+                    </div>
+		        </f:facet>					
+			</isy:panel>
+		</isy:panelGroup>
+	</ui:define>
+</ui:composition>

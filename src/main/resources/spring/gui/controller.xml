@@ -56,6 +56,10 @@
 
     <bean id="loeschenController" class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController"
           parent="abstractController"/>
+          
+    <bean id="aktualisierenController"
+          class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController"
+          parent="abstractController"/>
 
     <bean id="loginController" class="de.msg.terminfindung.gui.login.LoginController"
           parent="abstractController">

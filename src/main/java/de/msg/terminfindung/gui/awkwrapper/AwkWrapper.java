@@ -95,4 +95,14 @@ public interface AwkWrapper {
      * @throws TerminfindungBusinessException
      */
     TerminfindungModel loescheZeitraeume(TerminfindungModel terminfindungModel, List<ZeitraumModel> viewZeitraumList) throws TerminfindungBusinessException;
+    
+    /**
+     * Aktualisiert den Organisatornamen und Veranstaltungsnamen der übergebenen Terminfindung
+     * @param terminfindungModel
+     * @param veranstaltungsName
+     * @param organisatorName
+     * @return Die aktualisierte Terminfindung
+     * @throws TerminfindungBusinessException 
+     */
+    TerminfindungModel aktualisiereTerminfindung(TerminfindungModel terminfindungModel, String veranstaltungsName, String organisatorName) throws TerminfindungBusinessException;
 }
