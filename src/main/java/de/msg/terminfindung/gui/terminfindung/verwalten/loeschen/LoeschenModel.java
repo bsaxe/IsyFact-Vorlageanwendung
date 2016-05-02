@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.msg.terminfindung.gui.terminfindung.AbstractModel;
-import org.apache.commons.collections.map.HashedMap;
 
 /**
  * Model fuer den Löschen Flow

@@ -37,8 +37,9 @@ import java.io.Serializable;
  * @author msg systems ag, Dirk Jäger
  */
 public class TFNumberHolder implements Serializable{
+	private static final long serialVersionUID = -8673855660241394242L;
 
-    private static final Logger LOG = Logger.getLogger(TFNumberHolder.class);
+	private static final Logger LOG = Logger.getLogger(TFNumberHolder.class);
 
     /** Die gespeicherte Terminfindungsnummer */
     private Long number = null;

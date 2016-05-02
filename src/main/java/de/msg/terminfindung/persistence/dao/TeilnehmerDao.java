@@ -23,7 +23,6 @@ package de.msg.terminfindung.persistence.dao;
 
 import java.util.Collection;
 
-import de.bund.bva.pliscommon.persistence.dao.Dao;
 import de.msg.terminfindung.persistence.entity.Teilnehmer;
 import de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum;
 /**

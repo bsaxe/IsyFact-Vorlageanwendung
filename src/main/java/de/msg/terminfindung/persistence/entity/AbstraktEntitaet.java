@@ -11,8 +11,8 @@ import java.io.Serializable;
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public abstract class AbstraktEntitaet implements Serializable {
-
-    @Id
+	private static final long serialVersionUID = 1197581822091195412L;
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

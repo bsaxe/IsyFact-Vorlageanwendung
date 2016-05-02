@@ -23,8 +23,6 @@ package de.msg.terminfindung.gui.util;
 
 import java.io.Serializable;
 
-import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import org.apache.log4j.Logger;
 import org.springframework.webflow.context.ExternalContext;
 

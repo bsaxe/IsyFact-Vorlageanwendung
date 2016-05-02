@@ -55,27 +55,7 @@ public abstract class AbstractController<T extends AbstractModel> {
 
         model.setTestMode(this.isTestMode());
     }
-
-    /**
-     * Wandelt einen String in einen long Wert um.
-     * Wenn der String aufgrund einer NumberFormatException nicht
-     * umgewandelt werden kann, gibt die Methode 0L zurück
-     *
-     * @param str der String
-     * @return der String als long Wert
-     */
-    private long convertStringToLong(String str) {
-
-        long longValue;
-        try {
-            longValue = Long.parseLong(str.substring(0, str.length() - 1));
-        } catch (NumberFormatException e) {
-            LOG.warn("NumberFormatException beim Umwandlung des Strings " + str + " nach long. Gebe 0L als Ergebnis zurück.");
-            longValue = 0L;
-        }
-        return longValue;
-    }
-
+    
     /**
      * Holt die Terminfindung aus dem Anwendungkern.
      * Die Nummer der Terminfindung wird anhand des übergebenen Request

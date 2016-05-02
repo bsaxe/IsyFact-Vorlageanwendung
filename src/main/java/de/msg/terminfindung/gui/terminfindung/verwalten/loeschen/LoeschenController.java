@@ -1,5 +1,11 @@
 package de.msg.terminfindung.gui.terminfindung.verwalten.loeschen;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+
 /*
  * #%L
  * Terminfindung
@@ -23,17 +29,9 @@ package de.msg.terminfindung.gui.terminfindung.verwalten.loeschen;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-import de.msg.terminfindung.persistence.entity.Zeitraum;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
-
-import javax.swing.text.View;
-import java.util.ArrayList;
-import java.util.List;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 /**
  * Controller fuer den Loeschen Flow
