@@ -1,5 +1,7 @@
 package de.msg.terminfindung.core.verwaltung.impl;
 
+import java.util.Date;
+
 /*
  * #%L
  * Terminfindung
@@ -63,6 +65,7 @@ class AwfTerminfindungAbschliessen {
         }
 
         terminfindung.setDefZeitraum(zeitraum);
+        terminfindung.setUpdateDate(new Date());
         terminfindungDao.aktualisiere(terminfindung);
     }
 

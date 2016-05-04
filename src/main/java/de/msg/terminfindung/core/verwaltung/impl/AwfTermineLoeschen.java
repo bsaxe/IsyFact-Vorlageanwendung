@@ -25,6 +25,7 @@ import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,6 +52,7 @@ class AwfTermineLoeschen {
     void loescheZeitraeume(Terminfindung terminfindung,
                            List<Zeitraum> zeitraumList) {
 
+    	boolean deleted = false;
         // Lösche die Zeiträume aus der Liste
         for (Tag tag : terminfindung.getTermine()) {
             Iterator<Zeitraum> zeitraeume = tag.getZeitraeume().iterator();
@@ -58,6 +60,7 @@ class AwfTermineLoeschen {
                 Zeitraum zeitraum = zeitraeume.next();
                 if (zeitraumList.contains(zeitraum)) {
                     zeitraeume.remove();
+                    deleted = true;
                 }
             }
         }
@@ -71,6 +74,9 @@ class AwfTermineLoeschen {
             }
         }
 
+        if(deleted){
+        	terminfindung.setUpdateDate(new Date());
+        }
         terminfindungDao.aktualisiere(terminfindung);
     }
 

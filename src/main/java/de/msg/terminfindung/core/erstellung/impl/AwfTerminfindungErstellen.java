@@ -30,6 +30,7 @@ import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,6 +83,7 @@ class AwfTerminfindungErstellen {
         bereinigeZeitraeumeInTerminliste(termine);
 
         terminfindung.setTermine(termine);
+        terminfindung.setCreateDate(new Date());
         dao.speichere(terminfindung);
         return terminfindung;
 

@@ -24,10 +24,15 @@ package de.msg.terminfindung.gui.terminfindung.model;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Die Klasse speichert eine Terminfindung in der View-Schicht.
@@ -69,6 +74,17 @@ public class TerminfindungModel implements Serializable {
      * Der Name der Veranstaltung.
      */
     private String veranstaltungName = "";
+    
+    /**
+     * Erstellungsdatum der Terminfindung
+     */    
+    private Date createDate;
+    
+    /**
+     * Letztes Bearbeitungsdatum der Terminfinung (Schließt die Bearbeitung der Teilnehmerliste oder 
+     * des Mappings der Teilnehmer zu Zeiträumen nicht mit ein)
+     */    
+    private Date updateDate;
 
     /**
      * Sucht in einer TerminfindungModel nach einem Zeitraum mit der angegebenen Id.
@@ -193,7 +209,23 @@ public class TerminfindungModel implements Serializable {
         this.veranstaltungName = veranstaltungName;
     }
 
-    public String getTeilnehmerLabel() {
+    public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public String getTeilnehmerLabel() {
         List<String> teilnehmerNamen = new ArrayList<>();
         if (teilnehmer != null) {
             for (TeilnehmerModel t : teilnehmer) {

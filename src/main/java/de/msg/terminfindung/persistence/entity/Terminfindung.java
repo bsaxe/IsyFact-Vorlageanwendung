@@ -23,6 +23,7 @@ package de.msg.terminfindung.persistence.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -53,10 +54,26 @@ public class Terminfindung extends AbstraktEntitaet {
     @OrderBy("datum ASC")
     private List<Tag> termine = new ArrayList<>();
 
+    /**
+     * Liste der zur Teminfindung gehörender Teilnehmer
+     */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "terminfindung_id")
     @OrderBy("name ASC")
     private List<Teilnehmer> teilnehmer = new ArrayList<>();
+    
+    /**
+     * Erstellungsdatum der Terminfindung
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
+    
+    /**
+     * Letztes Bearbeitungsdatum der Terminfinung (Schließt die Bearbeitung der Teilnehmerliste oder 
+     * des Mappings der Teilnehmer zu Zeiträumen nicht mit ein)
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateDate;
 
     public Terminfindung() {
 
@@ -105,9 +122,25 @@ public class Terminfindung extends AbstraktEntitaet {
 
     public void setOrganisator(Organisator organisator) {
         this.organisator = organisator;
-    }
+    }    
 
-    /**
+    public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	/**
      * Sucht in einer Terminfindung nach einem Zeitraum mit der angegebenen Id.
      *
      * @param zeitraumId Die gesuchte Id

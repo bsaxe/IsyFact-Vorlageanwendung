@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact">
+    <!-- Eine statische Anzeige für die Stammdaten einer Terminfindung auf Basis eines isy:panel. -->
+
+    <isy:panel>        
+        <f:facet name="panelBody">            
+            <h:panelGroup>
+						<p>							
+							<h:outputText value="Die Terminfindung wurde am " />
+							<h:outputText
+								value="#{terminfindung.createDate}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+							<h:outputText
+								value=" erstellt" />
+							<h:outputText rendered="#{terminfindung.updateDate ne null}" value=" und zuletzt von #{terminfindung.organisator.name} am "/>
+							<h:outputText rendered="#{terminfindung.updateDate ne null}"
+								value="#{terminfindung.updateDate}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+							<h:outputText rendered="#{terminfindung.updateDate ne null}" value=" aktualisiert" />
+							<h:outputText value="." />
+						</p>
+					</h:panelGroup>
+        </f:facet>
+    </isy:panel>
+
+</ui:composition>

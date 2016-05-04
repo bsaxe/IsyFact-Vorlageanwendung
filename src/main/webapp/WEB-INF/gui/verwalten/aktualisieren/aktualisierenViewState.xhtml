@@ -23,20 +23,22 @@
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:f="http://java.sun.com/jsf/core"
 				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+				xmlns:c="http://java.sun.com/jsp/jstl/core"
+				xmlns:tf="http://bva.bund.de/jsf/facelets/terminfindung"
 				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
 	<ui:define name="inhaltsbereich">
 		<isy:panelGroup>
+			<tf:stammdaten terminfindung="#{aktualisierenModel.terminfindung}"/>
 			<isy:panel>
 				<f:facet name="panelHeader">
-						Terminfindung verwalten
+						Stammdaten aktualisieren
 					</f:facet>
 				<f:facet name="panelBody">
-
+					
 					<div class="form-horizontal readonly">
-						<div class="row row-df">
+						<div class="row row-df">						
 							<div class="col-lg-4">
-
 								<isy:formInput reference="formular1"
 									value="#{aktualisierenModel.terminfindung.veranstaltungName}"
 									label="Name der Veranstaltung:" readonly="false" />
@@ -44,24 +46,24 @@
 								<isy:formInput reference="formular3"
 									value="#{aktualisierenModel.terminfindung.organisator.name}"
 									label="Name des Organisators:" readonly="false" />
- 
-								<isy:formInput reference="formular2"
-									value="NN"
-									label="Erstellungsdatum:" readonly="true" />
 							</div>
 						</div>
 					</div>
-					<h:panelGroup rendered="#{aktualisierenModel.terminfindung.abgeschlossen}"> 
-					<p>	
-						<h:outputText value="Die Terminfindung für diese Veranstaltung ist abgeschlossen."/><br/>
-						<h:outputText value="Der ausgewählte Termin ist der "/> 
-						<h:outputText value="#{aktualisierenModel.terminfindung.defZeitraum.tag.datum}">
-							<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-						</h:outputText>							
-						<h:outputText value=" (Zeitraum: #{aktualisierenModel.terminfindung.defZeitraum.beschreibung})."/>
-					</p>					
+					<h:panelGroup rendered="#{aktualisierenModel.terminfindung.abgeschlossen}">
+						<p>
+							<h:outputText
+								value="Die Terminfindung für diese Veranstaltung ist abgeschlossen." />
+							<br />
+							<h:outputText value="Der ausgewählte Termin ist der " />
+							<h:outputText
+								value="#{aktualisierenModel.terminfindung.defZeitraum.tag.datum}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+							<h:outputText
+								value=" (Zeitraum: #{aktualisierenModel.terminfindung.defZeitraum.beschreibung})." />
+						</p>
 					</h:panelGroup>
-					 <div class="row row-df">
+					<div class="row row-df">
                         <div class="col-lg-12">
                             <isy:button action="cancel" value="#{msg['aktion.zurueck']}"/>
                             <isy:button action="save" value="#{msg['aktion.speichern']}"
@@ -70,6 +72,7 @@
                     </div>
 		        </f:facet>					
 			</isy:panel>
+			<tf:statuszeile terminfindung="#{aktualisierenModel.terminfindung}"/>
 		</isy:panelGroup>
 	</ui:define>
 </ui:composition>

@@ -23,34 +23,17 @@
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:f="http://java.sun.com/jsf/core"
 				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+				xmlns:tf="http://bva.bund.de/jsf/facelets/terminfindung"
 				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
 	<ui:define name="inhaltsbereich">
 		<isy:panelGroup>
+			<tf:stammdaten terminfindung="#{verwaltenModel.terminfindung}"/>
 			<isy:panel>
 				<f:facet name="panelHeader">
 						Terminfindung verwalten
 					</f:facet>
 				<f:facet name="panelBody">
-
-					<div class="form-horizontal readonly">
-						<div class="row row-df">
-							<div class="col-lg-4">
-
-								<isy:formInput reference="formular1"
-									value="#{verwaltenModel.terminfindung.veranstaltungName}"
-									label="Name der Veranstaltung:" readonly="true" />
-									
-								<isy:formInput reference="formular3"
-									value="#{verwaltenModel.terminfindung.organisator.name}"
-									label="Name des Organisators:" readonly="true" />
- 
-								<isy:formInput reference="formular2"
-									value="NN"
-									label="Erstellungsdatum:" readonly="true" />
-							</div>
-						</div>
-					</div>
 					<h:panelGroup rendered="#{verwaltenModel.terminfindung.abgeschlossen}"> 
 					<p>	
 						<h:outputText value="Die Terminfindung für diese Veranstaltung ist abgeschlossen."/><br/>
@@ -72,6 +55,7 @@
 					</div>
 		        </f:facet>					
 			</isy:panel>
+			<tf:statuszeile terminfindung="#{verwaltenModel.terminfindung}"/>
 		</isy:panelGroup>
 	</ui:define>
 </ui:composition>

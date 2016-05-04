@@ -7,8 +7,13 @@
     <namespace>http://bva.bund.de/jsf/facelets/terminfindung</namespace>
     <tag>
         <tag-name>stammdaten</tag-name>
-        <source>tags/stammdaten.xhtml</source>
+        <source>tags/stammdaten.xhtml</source>        
     </tag>
+    <tag>
+        <tag-name>statuszeile</tag-name>
+        <source>tags/statuszeile.xhtml</source>        
+    </tag>
+    
     <tag>
         <tag-name>termine</tag-name>
         <source>tags/termine.xhtml</source>
