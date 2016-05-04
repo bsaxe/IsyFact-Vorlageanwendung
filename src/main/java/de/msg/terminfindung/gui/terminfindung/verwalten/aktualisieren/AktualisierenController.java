@@ -28,20 +28,18 @@ public class AktualisierenController extends AbstractController<AktualisierenMod
 	public void initialisiereModel(AktualisierenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 		LOG.info("Initialisiere das Modell.");
 		super.holeTerminfindung(model);
-		model.setOrganisatorName(model.getTerminfindung().getOrganisator().getName());
-		model.setVeranstaltungsName(model.getTerminfindung().getVeranstaltungName());
 	}
 	
 	public boolean aktualisiereTerminfindung(AktualisierenModel model){
 		
 		List<ValidationMessage> validationMessages = new ArrayList<>();
 		
-		if (model.getVeranstaltungsName().isEmpty()) {
+		if (model.getTerminfindung().getVeranstaltungName().isEmpty()) {
             validationMessages.add(new ValidationMessage("DA",
                     "formular1", "Name der Veranstaltung",
                     "Name der Veranstaltung kann nicht leer sein."));
         }
-		if (model.getOrganisatorName().isEmpty()) {
+		if (model.getTerminfindung().getOrganisator().getName().isEmpty()) {
             validationMessages.add(new ValidationMessage("DA",
                     "formular3", "Name des Organisators",
                     "Name des Organisators kann nicht leer sein"));
@@ -53,8 +51,8 @@ public class AktualisierenController extends AbstractController<AktualisierenMod
 		}
 		else{
 			try {
-				super.getAwk().aktualisiereTerminfindung(model.getTerminfindung(), model.getVeranstaltungsName(), 
-						model.getOrganisatorName());
+				super.getAwk().aktualisiereTerminfindung(model.getTerminfindung(), model.getTerminfindung().getVeranstaltungName(), 
+						model.getTerminfindung().getOrganisator().getName());
 			} catch (TerminfindungBusinessException e) {
 				LOG.error("Aktualisieren der Terminfindung fehlgeschlagen", e);				
 			}
