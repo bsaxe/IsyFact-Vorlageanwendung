@@ -23,8 +23,18 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
                           http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" abstract="true">
+    <!-- Model -->
+	<var name="ausnahmeModel"
+		class="de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeModel" />
+		
+    <view-state id="fachlicherFehlerState" view="/WEB-INF/gui/common/fachlicherFehlerState.xhtml">
+    	<on-entry>
+    		<evaluate expression="ausnahmeController.initialisiereModel(ausnahmeModel, flowRequestContext)" />
+    	</on-entry>
+        <transition on="backToStart" to="backToStart"/>
+    </view-state>
 
-    <end-state id="fachlicherFehlerState" view="flowRedirect:startFlow" />
+	<end-state id="backToStart" view="flowRedirect:startFlow"/>
 
     <exception-handler bean="flowExceptionHandler" />
 </flow>

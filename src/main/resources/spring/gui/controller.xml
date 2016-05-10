@@ -62,8 +62,10 @@
           parent="abstractController"/>
           
     <bean id="startController"
-          class="de.msg.terminfindung.gui.terminfindung.start.StartController"
-          parent="abstractController"/>
+          class="de.msg.terminfindung.gui.terminfindung.start.StartController"/>
+          
+    <bean id="ausnahmeController"
+          class="de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeController"/>
 
     <bean id="loginController" class="de.msg.terminfindung.gui.login.LoginController"
           parent="abstractController">
