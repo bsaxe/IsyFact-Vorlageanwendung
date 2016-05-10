@@ -22,12 +22,26 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
-        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd" parent="basisFlow">
 
+	<!-- Model -->
+	<var name="startModel"
+		class="de.msg.terminfindung.gui.terminfindung.start.StartModel" />
+	<!-- Initialisieren des Models -->
+	<on-start>
+		<evaluate expression="startController.initialisiereModel(startModel)"/>
+	</on-start>
+	
     <!-- Erster View -->
     <view-state id="startViewState">
         <transition on="neueTerminfindung" to="erstellungViewState"/>
+        <transition on="techExc" to="startViewState">
+        	<evaluate expression="startController.werfeTechnicalException()"></evaluate>
+        </transition>
+        <transition on="busiExc" to="startViewState">
+        	<evaluate expression="startController.werfeBusinessException()"></evaluate>
+        </transition>
     </view-state>
-
+	
     <end-state id="erstellungViewState" view="flowRedirect:erstellenFlow" />
 </flow>

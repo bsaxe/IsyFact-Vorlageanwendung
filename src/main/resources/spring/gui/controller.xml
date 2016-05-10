@@ -60,6 +60,10 @@
     <bean id="aktualisierenController"
           class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController"
           parent="abstractController"/>
+          
+    <bean id="startController"
+          class="de.msg.terminfindung.gui.terminfindung.start.StartController"
+          parent="abstractController"/>
 
     <bean id="loginController" class="de.msg.terminfindung.gui.login.LoginController"
           parent="abstractController">

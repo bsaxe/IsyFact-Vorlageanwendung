@@ -2,6 +2,7 @@ package de.msg.terminfindung.gui.terminfindung.erstellen;
 
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
@@ -256,5 +257,4 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
             return false;
         }
     }
-
 }
