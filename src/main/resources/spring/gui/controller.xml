@@ -61,9 +61,6 @@
           class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController"
           parent="abstractController"/>
           
-    <bean id="startController"
-          class="de.msg.terminfindung.gui.terminfindung.start.StartController"/>
-          
     <bean id="ausnahmeController"
           class="de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeController"/>
 
