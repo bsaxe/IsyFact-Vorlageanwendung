@@ -26,13 +26,7 @@
 	
     <!-- Erster View -->
     <view-state id="startViewState">
-        <transition on="neueTerminfindung" to="erstellungViewState"/>
-        <transition on="techExc" to="startViewState">
-        	<evaluate expression="startController.werfeTechnicalException()"></evaluate>
-        </transition>
-        <transition on="busiExc" to="startViewState">
-        	<evaluate expression="startController.werfeBusinessException()"></evaluate>
-        </transition>
+        <transition on="neueTerminfindung" to="erstellungViewState"/>       
     </view-state>
 	
     <end-state id="erstellungViewState" view="flowRedirect:erstellenFlow" />
