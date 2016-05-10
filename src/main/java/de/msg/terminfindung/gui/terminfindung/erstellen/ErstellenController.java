@@ -1,23 +1,24 @@
 package de.msg.terminfindung.gui.terminfindung.erstellen;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.gui.util.DataGenerator;
 import de.msg.terminfindung.gui.util.DateUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 /*
  * #%L
@@ -47,7 +48,7 @@ import java.util.List;
 @Controller
 public class ErstellenController extends AbstractController<ErstellenModel> {
 
-    private static final Logger LOG = Logger.getLogger(ErstellenController.class);
+    private static final IsyLogger LOG = IsyLoggerFactory.getLogger(ErstellenController.class);
 
     public void initialisiereModel(ErstellenModel model) {
         super.initialisiereModell(model);
@@ -253,7 +254,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
             model.setTerminfindung(terminfindung);
             return true;
         } catch (TerminfindungBusinessException e) {
-            LOG.error("Fehler beim Erstellen der Terminfindung: " + e.getMessage());
+            LOG.errorFachdaten("Fehler beim Erstellen der Terminfindung", e);
             return false;
         }
     }

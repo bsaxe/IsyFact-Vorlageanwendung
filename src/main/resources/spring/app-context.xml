@@ -37,7 +37,8 @@
     <import resource="querschnitt/plis-sicherheit.xml"/>
     <import resource="querschnitt/plis-sicherheit-web.xml"/>
     <import resource="querschnitt/plis-konfiguration.xml"/>
-
+	<import resource="querschnitt/isy-logging.xml"/>
+	
     <import resource="gui/awk-wrapper.xml"/>
 
 
