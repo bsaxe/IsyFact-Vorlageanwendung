@@ -41,7 +41,7 @@ public class SessionAufrufKontextVerwalter<T extends SerializableAufrufKontextIm
 
 			// Ein paar Debug-Ausgaben
 			if (akontext != null) {
-				LOG.debugFachdaten("Aufrufkontext erfolgreich ermittelt für Benutzer " ,akontext.getDurchfuehrenderBenutzerKennung());
+				LOG.debugFachdaten("Aufrufkontext erfolgreich ermittelt für Benutzer: " + akontext.getDurchfuehrenderBenutzerKennung());
 				
 			} else {
 				LOG.debug("Kein Aufrufkontext im LoginVerwalter vorhangen (Return war null)");
@@ -62,10 +62,10 @@ public class SessionAufrufKontextVerwalter<T extends SerializableAufrufKontextIm
 
 		// Ein paar Debug-Ausgaben
 		if (akontext != null) {
-			LOG.debugFachdaten("Speichere Aufrufkontext in LoginVerwalter für Benutzer " ,akontext.getDurchfuehrenderBenutzerKennung());
+			LOG.debugFachdaten("Speichere Aufrufkontext in LoginVerwalter für Benutzer: " +  akontext.getDurchfuehrenderBenutzerKennung());
 			
 		} else {
-			LOG.debug("Speichere Aufrufkontext 'null' in LoginVerwalter");
+			LOG.debug("Speichere Aufrufkontext {} in LoginVerwalter", akontext);
 		}
 		super.setAufrufKontext(akontext);
 	}

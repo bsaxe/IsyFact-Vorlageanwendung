@@ -55,7 +55,7 @@ public class TFNumberHolder implements Serializable{
             // Wenn der übergebene String nicht null ist, wird versucht, ihn in einen Long Wert
             // zu parsen und diesen als neue Terminfindungsnummer im Holder abzuspeichern
 
-            LOG.debug("Update der TF-Nummer : ",tfNumberString);
+            LOG.debug("Update der TF-Nummer : " + tfNumberString);
             long terminfindungsNr;
             try {
                 terminfindungsNr = Long.parseLong(tfNumberString);
@@ -69,7 +69,7 @@ public class TFNumberHolder implements Serializable{
         else {
             // Nichts tun, der bisher gespeicherte Wert bleibt gespeichert
 
-            LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert " ,number);
+            LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert " + number);
         }
     }
 }
