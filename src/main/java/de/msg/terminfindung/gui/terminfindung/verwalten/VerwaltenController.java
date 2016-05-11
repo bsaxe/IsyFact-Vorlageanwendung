@@ -1,10 +1,12 @@
 package de.msg.terminfindung.gui.terminfindung.verwalten;
 
+import org.springframework.stereotype.Controller;
+
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
 
 /*
  * #%L
@@ -34,7 +36,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class VerwaltenController extends AbstractController<VerwaltenModel> {
 
-    private static final Logger LOG = Logger.getLogger(VerwaltenController.class);
+    private static final IsyLogger LOG = IsyLoggerFactory.getLogger(VerwaltenController.class);
 
     /**
      * Initialisiert das Model.
@@ -44,7 +46,7 @@ public class VerwaltenController extends AbstractController<VerwaltenModel> {
      */
     public void initialisiereModel(VerwaltenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
-        LOG.info("Initialisiere das Modell");
+        LOG.debug("Initialisiere das VerwaltenModell");
 
         super.holeTerminfindung(model);
         aktualisiereModel(model);
@@ -61,6 +63,6 @@ public class VerwaltenController extends AbstractController<VerwaltenModel> {
      */
     public void aktualisiereModel(VerwaltenModel model) {
 
-        LOG.info("Aktualisiere das Modell.");
+        LOG.debug("Aktualisiere das VerwaltenModell.");
     }
 }

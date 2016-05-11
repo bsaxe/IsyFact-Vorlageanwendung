@@ -1,5 +1,12 @@
 package de.msg.terminfindung.gui.terminfindung.teilnehmen;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+
 /*
  * #%L
  * Terminfindung
@@ -22,19 +29,14 @@ package de.msg.terminfindung.gui.terminfindung.teilnehmen;
 
 
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
 import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerModel;
 import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Controller für den Teilnahme Flow
@@ -44,7 +46,7 @@ import java.util.Map;
 @Controller
 public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
 
-    private static final Logger LOG = Logger.getLogger(TeilnehmenController.class);
+    private static final IsyLogger LOG = IsyLoggerFactory.getLogger(TeilnehmenController.class);
 
     /**
      * Initialisiert das Model.
@@ -54,7 +56,7 @@ public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
      */
     public void initialisiereModel(TeilnehmenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
-        LOG.info("Initialisiere das Modell.");
+        LOG.debug("Initialisiere das TeilnehmenModell.");
 
         super.holeTerminfindung(model);
         aktualisiereModel(model);
@@ -69,7 +71,7 @@ public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
      */
     public void aktualisiereModel(TeilnehmenModel model) {
 
-        LOG.info("Initialisiere das Teilnehmen-Modell.");
+        LOG.debug("aktualisiere das Teilnehmen-Modell.");
         model.setTeilnehmerName("");
 
         // initialisiere Datenstrukturen für die Darstellung:
@@ -101,7 +103,7 @@ public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
             try {
                 model.setTerminfindung(super.getAwk().bestaetigeTeilnahme(model.getTerminfindung(), teilnehmer, terminwahl));
             } catch (TerminfindungBusinessException e) {
-                LOG.error("Fehler beim Speichern des Teilnehmers: " + e.getMessage());
+                LOG.error("Fehler beim Speichern des Teilnehmers: ", e);
             }
         }
     }

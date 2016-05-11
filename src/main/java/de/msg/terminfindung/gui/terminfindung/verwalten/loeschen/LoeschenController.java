@@ -3,8 +3,10 @@ package de.msg.terminfindung.gui.terminfindung.verwalten.loeschen;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 
 /*
  * #%L
@@ -41,7 +43,7 @@ import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 @Controller
 public class LoeschenController extends AbstractController<LoeschenModel> {
 
-	private static final Logger LOG = Logger.getLogger(LoeschenController.class);
+	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(LoeschenController.class);
 
 	/**
 	 * Initialisiert das Model mit einer vorgegebenen Terminfindung.
@@ -51,7 +53,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 	 */
 	public void initialisiereModel(LoeschenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
-		LOG.info("Initialisiere das Modell.");
+		LOG.debug("Initialisiere das LoeschenModell.");
 		super.holeTerminfindung(model);
 	}
 
@@ -90,7 +92,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 
 		} catch (TerminfindungBusinessException e) {
 
-			LOG.error("Fehler beim Löschen der Terminfindung: " + e.getMessage());
+			LOG.error("Fehler beim Löschen der Terminfindung: ",e);
 		}
 	}
 }
