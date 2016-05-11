@@ -26,18 +26,11 @@
 
     <import resource="classpath:resources/plis-web/spring/webflow.xml"/>
 
-    <bean class="de.msg.terminfindung.gui.WebFlowConfiguration" />
+    <bean class="de.msg.terminfindung.gui.WebFlowConfiguration"/>
 
     <bean id="accessDecisionManager"
           class="de.bund.bva.pliscommon.sicherheit.web.DelegatingAccessDecisionManager">
         <property name="sicherheit" ref="sicherheit"/>
     </bean>
-
-<!--
-    <bean id="globalConfigurationModel"
-          class="de.bund.bva.isyfact.common.web.global.GlobalConfigurationModel">
-        <property name="jsEnabled" value="true"/>
-    </bean>
--->
 
 </beans>
