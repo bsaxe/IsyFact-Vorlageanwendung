@@ -72,7 +72,15 @@
 	<aop:config proxy-target-class="true">
 		<!-- Pointcuts an den Systemgrenzen -->
 		<aop:advisor order="1000" advice-ref="boundaryLogInterceptor"
-			pointcut="target(de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController)" />
+			pointcut="target(de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController) or 
+					target(de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController) or
+					target(de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController) or
+					target(de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController) or
+					target(de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController) or
+					target(de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController) or
+					target(de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeController) or
+					target(de.msg.terminfindung.gui.login.LoginController) or
+					target(de.msg.terminfindung.gui.administration.AdminController)"/>
 	</aop:config>
 
 </beans>

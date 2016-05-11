@@ -22,23 +22,23 @@
 	<aop:aspectj-autoproxy />
 
 	<!-- Interceptor zum Loggen an Systemgrenzen. -->
-	<bean id="boundaryLogInterceptor"
+	<bean id="boundaryLogInterceptor" depends-on="konfiguration"
 		class="de.bund.bva.isyfact.logging.util.LoggingMethodInterceptor">
-<!-- 		<property name="loggeDauer" value="${isylogging.boundary.loggeDauer}" /> -->
-<!-- 		<property name="loggeAufruf" value="${isylogging.boundary.loggeAufruf}" /> -->
-<!-- 		<property name="loggeErgebnis" value="${isylogging.boundary.loggeErgebnis}" /> -->
+		<property name="loggeDauer" value="${isylogging.boundary.loggeDauer}" />
+		<property name="loggeAufruf" value="${isylogging.boundary.loggeAufruf}" />
+		<property name="loggeErgebnis" value="${isylogging.boundary.loggeErgebnis}" />
 <!-- 		<property name="loggeDaten" value="${isylogging.boundary.loggeDaten}" /> -->
-<!-- 		<property name="loggeDatenBeiException" value="${isylogging.boundary.loggeDatenBeiException}" /> -->
+		<property name="loggeDatenBeiException" value="${isylogging.boundary.loggeDatenBeiException}" />
 	</bean>
 
 	<!-- Interceptor zum Loggen an Komponentengrenzen. -->
-	<bean id="componentLogInterceptor"
+	<bean id="componentLogInterceptor" depends-on="konfiguration"
 		class="de.bund.bva.isyfact.logging.util.LoggingMethodInterceptor">
-<!-- 		<property name="loggeDauer" value="${isylogging.component.loggeDauer}" /> -->
-<!-- 		<property name="loggeAufruf" value="${isylogging.component.loggeAufruf}" /> -->
-<!-- 		<property name="loggeErgebnis" value="${isylogging.component.loggeErgebnis}" /> -->
+		<property name="loggeDauer" value="${isylogging.component.loggeDauer}" />
+		<property name="loggeAufruf" value="${isylogging.component.loggeAufruf}" />
+		<property name="loggeErgebnis" value="${isylogging.component.loggeErgebnis}" />
 <!-- 		<property name="loggeDaten" value="${isylogging.boundary.loggeDaten}" /> -->
-<!-- 		<property name="loggeDatenBeiException" value="${isylogging.boundary.loggeDatenBeiException}" /> -->
+		<property name="loggeDatenBeiException" value="${isylogging.boundary.loggeDatenBeiException}" />
 	</bean>
 
 	<!-- AOP-Advice für das Logging konfigurieren -->
@@ -46,7 +46,9 @@
 
 		<!-- Pointcuts an den Komponentengrenzen -->
 		<aop:advisor order="1000" advice-ref="componentLogInterceptor"
-			pointcut="target(de.msg.terminfindung.core.erstellung.Erstellung)" />
+			pointcut="target(de.msg.terminfindung.core.erstellung.Erstellung) or
+					target(de.msg.terminfindung.core.teilnahme.Teilnahme) or
+					target(de.msg.terminfindung.core.verwaltung.Verwaltung)" />
 	</aop:config>
 
 </beans>
