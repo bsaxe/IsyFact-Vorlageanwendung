@@ -78,11 +78,11 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 		List<ZeitraumModel> viewZeitraumList = new ArrayList<>();
 		for (Long zeitraum_nr : model.getCheckedByUser().keySet())  {
 			if (model.getCheckedByUser().get(zeitraum_nr)) {
-				LOG.debug("Is  checked :" + zeitraum_nr);
+				LOG.trace("Is  checked :" + zeitraum_nr);
 				viewZeitraumList.add(model.getTerminfindung().findeZeitraumById(zeitraum_nr));
 			}
 			else {
-				LOG.debug("Not checked :" + zeitraum_nr);
+				LOG.trace("Not checked :" + zeitraum_nr);
 			}
 		}
 
@@ -92,7 +92,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 
 		} catch (TerminfindungBusinessException e) {
 
-			LOG.error("Fehler beim Löschen der Terminfindung: ",e);
+			LOG.error(e.getAusnahmeId(), "Fehler beim Löschen der Terminfindung: ",e);
 		}
 	}
 }

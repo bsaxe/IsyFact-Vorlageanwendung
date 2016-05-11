@@ -52,7 +52,4 @@ public abstract class FehlerSchluessel {
 
     /** Es ist ein technischer Fehler im Modul plisweb-gui aufgetreten. */
     public static final String MSG_ALLGEMEINER_TECHNISCHER_FEHLER = "TRMIN99999";
-    
-    
-    
 }

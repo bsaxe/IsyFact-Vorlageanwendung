@@ -27,6 +27,7 @@ import org.springframework.webflow.context.ExternalContext;
 
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 
 /**
  * Hilfsfunktionen für die Views.
@@ -54,7 +55,7 @@ public class ViewUtil implements Serializable{
 
         if (param == null) {
 
-            LOG.warn("Schluessel", "Requestparameter " + name + " konnte nicht gelesen werden.");
+            LOG.warn(FehlerSchluessel.MSG_ALLGEMEINER_TECHNISCHER_FEHLER, "Requestparameter {} konnte nicht gelesen werden.", name);
         }
         return param;
     }

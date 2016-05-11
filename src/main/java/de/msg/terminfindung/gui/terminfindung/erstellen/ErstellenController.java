@@ -13,6 +13,7 @@ import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
@@ -254,7 +255,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
             model.setTerminfindung(terminfindung);
             return true;
         } catch (TerminfindungBusinessException e) {
-            LOG.errorFachdaten("Fehler beim Erstellen der Terminfindung", e);
+            LOG.errorFachdaten(e.getAusnahmeId() , "Fehler beim Erstellen der Terminfindung", e);
             return false;
         }
     }

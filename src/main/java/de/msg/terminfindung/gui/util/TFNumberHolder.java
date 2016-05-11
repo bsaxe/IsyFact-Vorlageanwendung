@@ -61,7 +61,7 @@ public class TFNumberHolder implements Serializable{
                 terminfindungsNr = Long.parseLong(tfNumberString);
             }
             catch (NumberFormatException e) {
-                LOG.error("NumberFormatException beim Parsen von: " ,e.getMessage(),tfNumberString);
+                LOG.error(FehlerSchluessel.MSG_ALLGEMEINER_TECHNISCHER_FEHER_MIT_PARAMETER, "NumberFormatException beim Parsen von: {}", e ,tfNumberString);
                 throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_TERMINFINDUNGSNR_NICHT_KONVERTIERBAR, e, tfNumberString);
             }
             this.number = terminfindungsNr;
