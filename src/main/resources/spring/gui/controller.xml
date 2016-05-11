@@ -27,11 +27,9 @@
     <import resource="classpath:resources/plis-web/spring/controller.xml"/>
 
     <!-- Holder Bean für die Terminfindungsnummer, wird von außen als Requestparameter gesetzt -->
-
     <bean id="tfNumberHolder" class="de.msg.terminfindung.gui.util.TFNumberHolder"/>
 
     <!-- Flows -->
-
     <bean id="abstractController"
           class="de.msg.terminfindung.gui.terminfindung.AbstractController"
           abstract="true">

@@ -24,17 +24,22 @@
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
                           http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" abstract="true">
     <!-- Model -->
-	<var name="ausnahmeModel"
-		class="de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeModel" />
-		
+    <var name="globalConfigurationModel" class="de.bund.bva.isyfact.common.web.global.GlobalConfigurationModel"/>
+    <var name="ausnahmeModel" class="de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeModel"/>
+
+    <on-start>
+        <evaluate expression="globalConfigurationController.initializeConfigurationModel()"
+                  result="flowScope.globalConfigurationModel"/>
+    </on-start>
+
     <view-state id="fachlicherFehlerState" view="/WEB-INF/gui/common/fachlicherFehlerState.xhtml">
-    	<on-entry>
-    		<evaluate expression="ausnahmeController.initialisiereModel(ausnahmeModel, flowRequestContext)" />
-    	</on-entry>
+        <on-entry>
+            <evaluate expression="ausnahmeController.initialisiereModel(ausnahmeModel, flowRequestContext)"/>
+        </on-entry>
         <transition on="backToStart" to="backToStart"/>
     </view-state>
 
-	<end-state id="backToStart" view="flowRedirect:startFlow"/>
+    <end-state id="backToStart" view="flowRedirect:startFlow"/>
 
-    <exception-handler bean="flowExceptionHandler" />
+    <exception-handler bean="flowExceptionHandler"/>
 </flow>

@@ -20,24 +20,20 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-       http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
-	<!-- ====================================================================== 
-		Diese Spring-Konfiguration importiert die Komponenten der GUI. Autor Christian 
-		Hinken Version $Id: gui.xml 77863 2012-03-29 14:31:25Z sdm_dstuckert $ ====================================================================== -->
+    <!-- Definition der GUI-Controller -->
+    <import resource="gui/controller.xml"/>
 
-	<import resource="gui/controller.xml" />
-	<!-- Activates annotation-based bean configuration -->
-    <context:annotation-config />
+    <!-- Aktiviert Bean-Konfiguration auf Basis von Annotationen -->
+    <context:annotation-config/>
 
-    <!-- Import Spring MVC & Web Flow Configuration -->
-    <import resource="gui/webmvc-config.xml" />
-    <import resource="gui/webflow.xml" />
+    <!-- Konfiguration von Spring MVC & Web Flow -->
+    <import resource="gui/webflow.xml"/>
 
 </beans>

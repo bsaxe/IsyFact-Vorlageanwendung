@@ -21,11 +21,8 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:webflow="http://www.springframework.org/schema/webflow-config"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-                           http://www.springframework.org/schema/webflow-config
-                           http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd">
+                           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
     <import resource="classpath:resources/plis-web/spring/webflow.xml"/>
 
@@ -35,5 +32,12 @@
           class="de.bund.bva.pliscommon.sicherheit.web.DelegatingAccessDecisionManager">
         <property name="sicherheit" ref="sicherheit"/>
     </bean>
+
+<!--
+    <bean id="globalConfigurationModel"
+          class="de.bund.bva.isyfact.common.web.global.GlobalConfigurationModel">
+        <property name="jsEnabled" value="true"/>
+    </bean>
+-->
 
 </beans>
