@@ -3,9 +3,9 @@ package de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
@@ -17,7 +17,7 @@ import de.msg.terminfindung.gui.terminfindung.AbstractController;
  */
 public class AktualisierenController extends AbstractController<AktualisierenModel>{
 
-	private static final Logger LOG = Logger.getLogger(AktualisierenController.class);
+	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(AktualisierenController.class);
 
 	/**
 	 * Initialisiert das Model mit einer vorgegebenen Terminfindung.
@@ -26,7 +26,7 @@ public class AktualisierenController extends AbstractController<AktualisierenMod
 	 * @throws TerminfindungBusinessException TerminfindungTechnicalException
 	 */
 	public void initialisiereModel(AktualisierenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-		LOG.info("Initialisiere das Modell.");
+		
 		super.holeTerminfindung(model);
 	}
 	

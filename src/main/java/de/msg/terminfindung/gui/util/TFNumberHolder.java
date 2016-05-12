@@ -1,5 +1,10 @@
 package de.msg.terminfindung.gui.util;
 
+import java.io.Serializable;
+
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+
 /*
  * #%L
  * Terminfindung
@@ -24,10 +29,6 @@ package de.msg.terminfindung.gui.util;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 
-import org.apache.log4j.Logger;
-
-import java.io.Serializable;
-
 /**
  * Holder für eine Terminfindungsnummer, die als Request-Parameter übergeben wurde.
  * Der Holder wird in die Controller injected. Auf den gespeicherten Wert
@@ -39,7 +40,7 @@ import java.io.Serializable;
 public class TFNumberHolder implements Serializable{
 	private static final long serialVersionUID = -8673855660241394242L;
 
-	private static final Logger LOG = Logger.getLogger(TFNumberHolder.class);
+	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(TFNumberHolder.class);
 
     /** Die gespeicherte Terminfindungsnummer */
     private Long number = null;
@@ -60,7 +61,7 @@ public class TFNumberHolder implements Serializable{
                 terminfindungsNr = Long.parseLong(tfNumberString);
             }
             catch (NumberFormatException e) {
-                LOG.error("NumberFormatException beim Parsen von: " + tfNumberString);
+                LOG.error(FehlerSchluessel.MSG_ALLGEMEINER_TECHNISCHER_FEHER_MIT_PARAMETER, "NumberFormatException beim Parsen von: {}", e ,tfNumberString);
                 throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_TERMINFINDUNGSNR_NICHT_KONVERTIERBAR, e, tfNumberString);
             }
             this.number = terminfindungsNr;
@@ -68,7 +69,7 @@ public class TFNumberHolder implements Serializable{
         else {
             // Nichts tun, der bisher gespeicherte Wert bleibt gespeichert
 
-            LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert " + number);
+            LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert {}", number);
         }
     }
 }

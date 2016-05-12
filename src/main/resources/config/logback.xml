@@ -1,0 +1,35 @@
+<configuration scan="true" scanPeriod="1 minutes">
+
+	<!-- Eindeutige Identifikation der Instanz der Anwendung. -->
+	<!-- <contextName>terminfindung</contextName> -->
+
+	<!-- Pfad der Logdatei, ohne Endung -->
+	<!-- <property name="LOGFILE_PATH" value="logausgaben/terminfindung" /> -->
+
+	<!-- MDC in die Ausgabe mitaufnehmen. -->
+	<!-- <property name="INCLUDE_MDC" value="false" /> -->
+
+	<!-- Include der vorkonfigurierten Appender. -->
+	<include resource="resources/isylogging/logback/appender-entwicklung.xml" />
+
+	<!-- Root-Logger als Grundlage für alle Logger-Instanzen -->
+	<root level="trace">
+		<appender-ref ref="KONSOLE" />
+	</root>
+
+	<logger name="org.springframework" level="INFO" additivity="false">
+		<appender-ref ref="KONSOLE" />
+	</logger>
+	<logger name="org.hibernate" level="INFO" additivity="false">
+		<appender-ref ref="KONSOLE" />
+	</logger>
+	<logger name="net.sf.ehcache" level="INFO" additivity="false">
+		<appender-ref ref="KONSOLE" />
+	</logger>	
+	<logger name="org.dozer" level="INFO" additivity="false">
+		<appender-ref ref="KONSOLE" />
+	</logger>
+	<logger name="org.apache.commons" level="INFO" additivity="false">
+		<appender-ref ref="KONSOLE" />
+	</logger>
+</configuration>
