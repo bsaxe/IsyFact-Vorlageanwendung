@@ -69,7 +69,7 @@ public class TFNumberHolder implements Serializable{
         else {
             // Nichts tun, der bisher gespeicherte Wert bleibt gespeichert
 
-            LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert " + number);
+            LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert {}", number);
         }
     }
 }

@@ -36,8 +36,6 @@ public class LoginController extends AbstractController<LoginModel> {
 	 * @param model Das Modell
 	 */
 	public void initialisiereModel(LoginModel model) {
-
-		LOG.debug("Initialisiere LoginModell");
 	}
 
 	/**
@@ -48,7 +46,7 @@ public class LoginController extends AbstractController<LoginModel> {
 	 */
 	public boolean performLogin(LoginModel model, MessageContext context) {
 
-		LOG.infoFachdaten(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_STARTED, "Führe Login aus für Benutzer " + model.getUsername());
+		LOG.infoFachdaten(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_STARTED, "Führe Login aus für Benutzer {}", model.getUsername());
 		
 		SerializableAufrufKontextImpl akontext= new SerializableAufrufKontextImpl();
 		

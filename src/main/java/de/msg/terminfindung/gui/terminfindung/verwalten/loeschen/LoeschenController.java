@@ -52,8 +52,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 	 * @throws TerminfindungBusinessException 
 	 */
 	public void initialisiereModel(LoeschenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-
-		LOG.debug("Initialisiere das LoeschenModell.");
+		
 		super.holeTerminfindung(model);
 	}
 
@@ -78,11 +77,11 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 		List<ZeitraumModel> viewZeitraumList = new ArrayList<>();
 		for (Long zeitraum_nr : model.getCheckedByUser().keySet())  {
 			if (model.getCheckedByUser().get(zeitraum_nr)) {
-				LOG.trace("Is  checked :" + zeitraum_nr);
+				LOG.trace("Is  checked : {}", zeitraum_nr);
 				viewZeitraumList.add(model.getTerminfindung().findeZeitraumById(zeitraum_nr));
 			}
 			else {
-				LOG.trace("Not checked :" + zeitraum_nr);
+				LOG.trace("Not checked : {}", zeitraum_nr);
 			}
 		}
 

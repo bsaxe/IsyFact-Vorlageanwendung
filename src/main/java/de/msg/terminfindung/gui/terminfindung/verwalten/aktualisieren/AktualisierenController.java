@@ -26,7 +26,7 @@ public class AktualisierenController extends AbstractController<AktualisierenMod
 	 * @throws TerminfindungBusinessException TerminfindungTechnicalException
 	 */
 	public void initialisiereModel(AktualisierenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-		LOG.debug("Initialisiere das AktualisierenModell.");
+		
 		super.holeTerminfindung(model);
 	}
 	

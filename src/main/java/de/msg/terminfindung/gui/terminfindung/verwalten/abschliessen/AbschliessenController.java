@@ -49,7 +49,7 @@ public class AbschliessenController extends AbstractController<AbschliessenModel
      * @throws TerminfindungBusinessException
      */
     public void initialisiereModel(AbschliessenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-        LOG.debug("Initialisiere das AbschliessenModell.");
+        
         holeTerminfindung(model);
     }
 

@@ -56,8 +56,6 @@ public class TeilnehmenController extends AbstractController<TeilnehmenModel> {
      */
     public void initialisiereModel(TeilnehmenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
-        LOG.debug("Initialisiere das TeilnehmenModell.");
-
         super.holeTerminfindung(model);
         aktualisiereModel(model);
     }

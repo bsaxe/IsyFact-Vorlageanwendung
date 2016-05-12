@@ -46,8 +46,6 @@ public class VerwaltenController extends AbstractController<VerwaltenModel> {
      */
     public void initialisiereModel(VerwaltenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
-        LOG.debug("Initialisiere das VerwaltenModell");
-
         super.holeTerminfindung(model);
         aktualisiereModel(model);
     }

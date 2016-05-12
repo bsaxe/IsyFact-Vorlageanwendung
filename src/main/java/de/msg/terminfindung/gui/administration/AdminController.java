@@ -22,8 +22,6 @@ public class AdminController extends AbstractController<AdminModel> {
 	 * @param model Das Modell
 	 */
 	public void initialisiereModel(AdminModel model) {
-
-		LOG.debug("Initialisiere AdminModell");
 	}
 
 }

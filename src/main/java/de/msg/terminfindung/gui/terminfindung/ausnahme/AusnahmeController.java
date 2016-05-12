@@ -13,10 +13,6 @@ public class AusnahmeController {
 	
 	public void initialisiereModel(AusnahmeModel model, RequestContext context){
 		TerminfindungBusinessException exc = (TerminfindungBusinessException) context.getFlashScope().get(TransitionExecutingFlowExecutionExceptionHandler.ROOT_CAUSE_EXCEPTION_ATTRIBUTE);
-		model.setException(exc);
-		
-		LOG.debug("initialisiere AunahmeModell");
-		
-		
+		model.setException(exc);		
 	}
 }

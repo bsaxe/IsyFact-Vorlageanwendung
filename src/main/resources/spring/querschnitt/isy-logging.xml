@@ -22,7 +22,7 @@
 	<aop:aspectj-autoproxy />
 
 	<!-- Interceptor zum Loggen an Systemgrenzen. -->
-	<bean id="boundaryLogInterceptor" depends-on="konfiguration"
+	<bean id="boundaryLogInterceptor"
 		class="de.bund.bva.isyfact.logging.util.LoggingMethodInterceptor">
 		<property name="loggeDauer" value="${isylogging.boundary.loggeDauer}" />
 		<property name="loggeAufruf" value="${isylogging.boundary.loggeAufruf}" />
@@ -32,7 +32,7 @@
 	</bean>
 
 	<!-- Interceptor zum Loggen an Komponentengrenzen. -->
-	<bean id="componentLogInterceptor" depends-on="konfiguration"
+	<bean id="componentLogInterceptor"
 		class="de.bund.bva.isyfact.logging.util.LoggingMethodInterceptor">
 		<property name="loggeDauer" value="${isylogging.component.loggeDauer}" />
 		<property name="loggeAufruf" value="${isylogging.component.loggeAufruf}" />
