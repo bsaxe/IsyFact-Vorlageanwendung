@@ -38,7 +38,7 @@
 					<p>	
 						<h:outputText value="Die Terminfindung für diese Veranstaltung ist abgeschlossen."/><br/>
 						<h:outputText value="Der ausgewählte Termin ist der "/> 
-						<h:outputText value="#{verwaltenModel.terminfindung.defZeitraum.tag.datum}">
+						<h:outputText value="#{verwaltenModel.terminfindung.getTagForZeitraum(verwaltenModel.terminfindung.defZeitraum).datum}">
 							<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
 						</h:outputText>							
 						<h:outputText value=" (Zeitraum: #{verwaltenModel.terminfindung.defZeitraum.beschreibung})."/>

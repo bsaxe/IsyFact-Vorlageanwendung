@@ -244,4 +244,13 @@ public class TerminfindungModel implements Serializable {
         }
         return StringUtils.join(teilnehmerNamen, ", ");
     }
+    
+    public TagModel getTagForZeitraum(ZeitraumModel zeitraum){
+    	for (TagModel tagModel : getTage()) {
+			if(tagModel.getZeitraeume().contains(zeitraum)){
+				return tagModel;
+			}
+		}
+    	return null;
+    }
 }
