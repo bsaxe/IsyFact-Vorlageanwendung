@@ -27,27 +27,6 @@
         </constructor-arg>
     </bean>
 
-    <!-- Dieser Task sorgt für das regelmäßige neue Auslesen der Konfigurationsdateien -->
-    <bean id="konfigurationPollingTask" class="org.springframework.scheduling.concurrent.ScheduledExecutorTask">
-        <property name="delay" value="5000"/>
-        <property name="period" value="${konfiguration.reload.interval}"/>
-        <property name="runnable">
-            <bean class="org.springframework.scheduling.support.MethodInvokingRunnable">
-                <property name="targetObject" ref="konfiguration"/>
-                <property name="targetMethod" value="checkAndUpdate"/>
-            </bean>
-        </property>
-    </bean>
-
-    <!-- Diese Bean sorgt dafür, dass die angegebenen Tasks gemäß ihrem Scheduling ausgeführt werden. -->
-    <bean id="timerFactory" class="org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean">
-        <property name="scheduledExecutorTasks">
-            <list>
-                <ref bean="konfigurationPollingTask"/>
-            </list>
-        </property>
-    </bean>
-
     <bean id="propertyConfigurer"
           class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="ignoreUnresolvablePlaceholders" value="true"/>

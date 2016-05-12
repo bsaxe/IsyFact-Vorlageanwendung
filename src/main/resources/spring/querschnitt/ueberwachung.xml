@@ -20,12 +20,9 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-                           http://www.springframework.org/schema/task
-                           http://www.springframework.org/schema/task/spring-task.xsd
                            http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
@@ -78,9 +75,4 @@
         <property name="watchDogTimeOut" value="${admin.watchdog.timeout}"/>
     </bean>
 
-    <task:scheduled-tasks scheduler="scheduler">
-        <task:scheduled ref="administration" method="pruefeSystem" fixed-delay="${admin.watchdog.interval}"
-                        initial-delay="5000"/>
-    </task:scheduled-tasks>
-    <task:scheduler id="scheduler" pool-size="${admin.watchdog.threadpool.size}"/>
 </beans>
