@@ -27,7 +27,11 @@
                            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <bean id="erstellungMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
-
+    <bean id="verwaltenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="teilnehmenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="abschliessenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="loeschenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="aktualisierenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>	
     <bean id="watchdogMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.StatusMonitorMBean"/>
 
     <!-- ======================================================================
@@ -37,6 +41,16 @@
     <aop:config>
         <aop:advisor order="1000" advice-ref="erstellungMonitor"
                      pointcut="target(de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController)"/>
+        <aop:advisor order="1000" advice-ref="verwaltenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController)"/>
+        <aop:advisor order="1000" advice-ref="teilnehmenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController)"/>
+        <aop:advisor order="1000" advice-ref="abschliessenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController)"/>
+        <aop:advisor order="1000" advice-ref="loeschenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController)"/>
+        <aop:advisor order="1000" advice-ref="aktualisierenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController)"/>        
     </aop:config>
     <!--======================================================================
         Diese Bean erzeugt einen MBean-Exporter.
@@ -57,6 +71,16 @@
             <map>
                 <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Erstellung-Statistik&quot;"
                        value-ref="erstellungMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Verwaltung-Statistik&quot;"
+                       value-ref="verwaltenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Teilnehmen-Statistik&quot;"
+               		   value-ref="teilnehmenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Abschliessen-Statistik&quot;"
+                       value-ref="abschliessenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Loeschen-Statistik&quot;"
+                       value-ref="loeschenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Aktualisieren-Statistik&quot;"
+                       value-ref="aktualisierenMonitor"/>
                 <entry key="de.bund.bva.isyfact.terminfindung:type=StatusMonitor,name=&quot;Status-Ueberwachung&quot;"
                        value-ref="watchdogMonitor"/>
             </map>

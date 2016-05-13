@@ -22,7 +22,7 @@ public class TerminfindungWatchdog extends WatchdogImpl implements InitializingB
     public void afterPropertiesSet() throws Exception {
         addPruefung("Datenbank", new Callable<Boolean>() {
             @Override
-            public Boolean call() throws Exception {
+            public Boolean call() throws Exception {            	
                 final String watchdogQuery = konfiguration.getAsString(CONF_ADMIN_WATCHDOG_VALIDATION_QUERY);
                 entityManager.createNativeQuery(watchdogQuery).getSingleResult();
                 return true;
