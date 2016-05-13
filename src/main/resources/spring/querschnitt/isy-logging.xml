@@ -35,6 +35,14 @@
         <property name="loggeDatenBeiException" value="${isylogging.boundary.loggeDatenBeiException}"/>
     </bean>
 
+	<bean id="statusLogger"
+		class=" de.bund.bva.isyfact.logging.util.LogApplicationListener">
+		<property name="systemart" value="${isylogging.systemart}" />
+		<property name="systemname" value="${appName}" />
+		<property name="systemversion" value="${appVersion}" />
+	</bean>
+    
+
     <!-- AOP-Advice für das Logging konfigurieren -->
     <aop:config>
 
