@@ -26,11 +26,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 
 /**
- * Entity implementation class for Entity: TeilnehmerZeitraum Stellt die Entity/Tabelle fuer die Praeferenz eines
- * Teilnehmers dar Diese Zwischenentitaet/tabelle wird benoetigt, da jeder Teilnehmer zu mehreren Zeitraeumen eine
- * Praeferenz hat und jeder Zeitraum von mehreren Teilnehmern praeferiert werden kann
+ * Stellt die Entität für die Präferenz eines Teilnehmers dar. Wird benötigt, da jeder Teilnehmer zu mehreren
+ * Zeiträumen eine Präferenz hat und jeder Zeitraum von mehreren Teilnehmern präferiert werden kann.
  *
- * @author msg systems ag, Maximilian Falter
+ * @author msg systems ag, Stefan Dellmuth
  */
 @Entity
 public class TeilnehmerZeitraum extends AbstraktEntitaet {
@@ -40,10 +39,10 @@ public class TeilnehmerZeitraum extends AbstraktEntitaet {
     private Praeferenz praeferenz;
 
     @OneToOne
-    Teilnehmer teilnehmer;
+    private Teilnehmer teilnehmer;
 
     @OneToOne
-    Zeitraum zeitraum;
+    private Zeitraum zeitraum;
 
     public TeilnehmerZeitraum() {
 

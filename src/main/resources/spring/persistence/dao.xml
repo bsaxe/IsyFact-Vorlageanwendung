@@ -34,13 +34,7 @@
     <bean id="terminfindungDao" class="de.msg.terminfindung.persistence.dao.jpa.JpaTerminfindungDao"
           parent="abstractDao"/>
 
-    <bean id="zeitraumDao" class="de.msg.terminfindung.persistence.dao.jpa.JpaZeitraumDao"
-          parent="abstractDao"/>
-
     <bean id="teilnehmerDao" class="de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerDao"
-          parent="abstractDao"/>
-
-    <bean id="terminDao" class="de.msg.terminfindung.persistence.dao.jpa.JpaTerminDao"
           parent="abstractDao"/>
 
     <bean id="teilnehmerZeitraumDao" class="de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerZeitraumDao"
