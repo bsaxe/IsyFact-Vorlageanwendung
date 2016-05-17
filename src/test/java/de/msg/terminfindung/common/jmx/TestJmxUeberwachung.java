@@ -1,6 +1,7 @@
 package de.msg.terminfindung.common.jmx;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -12,7 +13,6 @@ import javax.management.ObjectName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,7 +21,6 @@ import de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenModel;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/spring/app-context.xml", "classpath:/spring/gui/controller.xml"})
-@ActiveProfiles("entwicklung")
 public class TestJmxUeberwachung {
 
 	@Autowired

@@ -89,7 +89,7 @@
         </bean>
     </beans>
 
-    <beans profile="entwicklung">        
+    <beans profile="entwicklung,test">        
 
         <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource" primary="true">
             <property name="URL" value="${jdbc.url}"/>
