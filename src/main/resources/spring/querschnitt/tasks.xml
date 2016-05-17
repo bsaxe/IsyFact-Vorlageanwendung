@@ -24,7 +24,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                            http://www.springframework.org/schema/task
-                           http://www.springframework.org/schema/task/spring-task.xsd">
+                           http://www.springframework.org/schema/task/spring-task.xsd" profile="produktion">
 
     <task:scheduled-tasks scheduler="scheduler">
         <task:scheduled ref="administration" method="pruefeSystem" fixed-delay="${admin.watchdog.interval}"

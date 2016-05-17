@@ -31,7 +31,7 @@
     <bean id="teilnehmenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
     <bean id="abschliessenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
     <bean id="loeschenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
-    <bean id="aktualisierenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>	
+    <bean id="aktualisierenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>	    
     <bean id="watchdogMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.StatusMonitorMBean"/>
 
     <!-- ======================================================================
