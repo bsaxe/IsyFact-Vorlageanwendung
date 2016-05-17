@@ -22,8 +22,11 @@
     <Teilnehmer id="2" name="Herbert"/>
     <Teilnehmer id="3" name="Sepp"/>
 
-    <Zeitraum id="1" beschreibung="9-11 Uhr"/>
-    <Zeitraum id="2" beschreibung="über Mittag"/>
+    <Terminfindung id="1" organisator_name="Klaus" veranstaltungname="Weihnachtsfeier 2016" />
+    <Tag id="1" datum="2016-12-12" terminfindung_id="1" />
+
+    <Zeitraum id="1" beschreibung="9-11 Uhr" tag_id="1"/>
+    <Zeitraum id="2" beschreibung="über Mittag" tag_id="1"/>
 
     <TeilnehmerZeitraum id="1" teilnehmer_id="1" zeitraum_id="1" praeferenz="0" />
     <TeilnehmerZeitraum id="2" teilnehmer_id="1" zeitraum_id="2" praeferenz="1" />

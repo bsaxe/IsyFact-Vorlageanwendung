@@ -119,10 +119,19 @@
         <servlet-name>remoting</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     </servlet>
+    <servlet>
+		<servlet-name>loadbalancer</servlet-name>
+		<servlet-class>de.bund.bva.pliscommon.ueberwachung.service.loadbalancer.LoadbalancerServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>		
+	</servlet>
     <servlet-mapping>
         <servlet-name>remoting</servlet-name>
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>loadbalancer</servlet-name>
+		<url-pattern>/Loadbalancer</url-pattern>
+	</servlet-mapping>
     <filter-mapping>
         <filter-name>SetCharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
