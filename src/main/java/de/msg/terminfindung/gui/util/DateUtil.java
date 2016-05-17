@@ -24,9 +24,11 @@ package de.msg.terminfindung.gui.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
-import de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenModel;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 
 /**

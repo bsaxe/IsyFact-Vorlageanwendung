@@ -1,5 +1,13 @@
 package de.msg.terminfindung.gui.terminfindung.verwalten.loeschen;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+
 /*
  * #%L
  * Terminfindung
@@ -23,17 +31,9 @@ package de.msg.terminfindung.gui.terminfindung.verwalten.loeschen;
 
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-import de.msg.terminfindung.persistence.entity.Zeitraum;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
-
-import javax.swing.text.View;
-import java.util.ArrayList;
-import java.util.List;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 /**
  * Controller fuer den Loeschen Flow
@@ -43,7 +43,7 @@ import java.util.List;
 @Controller
 public class LoeschenController extends AbstractController<LoeschenModel> {
 
-	private static final Logger LOG = Logger.getLogger(LoeschenController.class);
+	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(LoeschenController.class);
 
 	/**
 	 * Initialisiert das Model mit einer vorgegebenen Terminfindung.
@@ -52,8 +52,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 	 * @throws TerminfindungBusinessException 
 	 */
 	public void initialisiereModel(LoeschenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-
-		LOG.info("Initialisiere das Modell.");
+		
 		super.holeTerminfindung(model);
 	}
 
@@ -78,11 +77,11 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 		List<ZeitraumModel> viewZeitraumList = new ArrayList<>();
 		for (Long zeitraum_nr : model.getCheckedByUser().keySet())  {
 			if (model.getCheckedByUser().get(zeitraum_nr)) {
-				LOG.debug("Is  checked :" + zeitraum_nr);
+				LOG.trace("Is  checked : {}", zeitraum_nr);
 				viewZeitraumList.add(model.getTerminfindung().findeZeitraumById(zeitraum_nr));
 			}
 			else {
-				LOG.debug("Not checked :" + zeitraum_nr);
+				LOG.trace("Not checked : {}", zeitraum_nr);
 			}
 		}
 
@@ -92,7 +91,7 @@ public class LoeschenController extends AbstractController<LoeschenModel> {
 
 		} catch (TerminfindungBusinessException e) {
 
-			LOG.error("Fehler beim Löschen der Terminfindung: " + e.getMessage());
+			LOG.error(e.getAusnahmeId(), "Fehler beim Löschen der Terminfindung: ",e);
 		}
 	}
 }

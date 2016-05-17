@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd" profile="test,produktion">
+
+    <bean id="erstellungMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="verwaltenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="teilnehmenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="abschliessenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="loeschenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>
+    <bean id="aktualisierenMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.ServiceStatistikMBean"/>	    
+    <bean id="watchdogMonitor" class="de.bund.bva.pliscommon.ueberwachung.common.jmx.StatusMonitorMBean"/>
+
+    <!-- ======================================================================
+        Hier wird ein AOP-Advice für das
+        Monitoring von Services konfiguriert.
+        ====================================================================== -->
+    <aop:config>
+        <aop:advisor order="1000" advice-ref="erstellungMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController)"/>
+        <aop:advisor order="1000" advice-ref="verwaltenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController)"/>
+        <aop:advisor order="1000" advice-ref="teilnehmenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController)"/>
+        <aop:advisor order="1000" advice-ref="abschliessenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController)"/>
+        <aop:advisor order="1000" advice-ref="loeschenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController)"/>
+        <aop:advisor order="1000" advice-ref="aktualisierenMonitor"
+                     pointcut="target(de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController)"/>        
+    </aop:config>
+    <!--======================================================================
+        Diese Bean erzeugt einen MBean-Exporter.
+        Der MBeanExporter stellt die in der Property "Beans" angegebenen Spring-Beans als MBeans bereit. D.h. diese Beans
+        sind dann ueber JMX sichtbar. Der MBeanExporter nutzt die als "assembler" angegebene Bean um alle Informationen
+        fuer das Management-Interface der zu exportierenden MBeans zu ermitteln.
+        ====================================================================== -->
+    <bean id="mBeanExporter" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="assembler">
+            <bean class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+                <property name="attributeSource">
+                    <bean class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"/>
+                </property>
+            </bean>
+        </property>
+        <property name="autodetect" value="false"/>
+        <property name="beans">
+            <map>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Erstellung-Statistik&quot;"
+                       value-ref="erstellungMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Verwaltung-Statistik&quot;"
+                       value-ref="verwaltenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Teilnehmen-Statistik&quot;"
+               		   value-ref="teilnehmenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Abschliessen-Statistik&quot;"
+                       value-ref="abschliessenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Loeschen-Statistik&quot;"
+                       value-ref="loeschenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=ServiceStatistik,name=&quot;Aktualisieren-Statistik&quot;"
+                       value-ref="aktualisierenMonitor"/>
+                <entry key="de.bund.bva.isyfact.terminfindung:type=StatusMonitor,name=&quot;Status-Ueberwachung&quot;"
+                       value-ref="watchdogMonitor"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="administration" class="de.msg.terminfindung.gui.administration.TerminfindungWatchdog">
+        <property name="watchdogMBean" ref="watchdogMonitor"/>
+        <property name="konfiguration" ref="konfiguration"/>
+        <property name="entityManager" ref="entityManagerFactoryBean"/>
+        <property name="executor">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean">
+                <property name="queueCapacity" value="${admin.watchdog.threadpool.size}"/>
+            </bean>
+        </property>
+        <property name="watchDogTimeOut" value="${admin.watchdog.timeout}"/>
+    </bean>
+
+</beans>

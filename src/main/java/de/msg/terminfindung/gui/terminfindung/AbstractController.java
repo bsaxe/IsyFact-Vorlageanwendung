@@ -22,14 +22,17 @@ package de.msg.terminfindung.gui.terminfindung;
 
 
 import de.bund.bva.isyfact.common.web.global.GlobalFlowController;
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+import de.bund.bva.isyfact.logging.LogKategorie;
 import de.bund.bva.pliscommon.konfiguration.common.ReloadableKonfiguration;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
+import de.msg.terminfindung.common.konstanten.EreignissSchluessel;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import de.msg.terminfindung.gui.util.TFNumberHolder;
-import org.apache.log4j.Logger;
 
 
 /**
@@ -41,7 +44,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class AbstractController<T extends AbstractModel> {
 
-    private static final Logger LOG = Logger.getLogger(AbstractController.class);
+    private static final IsyLogger LOG = IsyLoggerFactory.getLogger(AbstractController.class);
 
     protected AwkWrapper awk;
 
@@ -55,27 +58,7 @@ public abstract class AbstractController<T extends AbstractModel> {
 
         model.setTestMode(this.isTestMode());
     }
-
-    /**
-     * Wandelt einen String in einen long Wert um.
-     * Wenn der String aufgrund einer NumberFormatException nicht
-     * umgewandelt werden kann, gibt die Methode 0L zurück
-     *
-     * @param str der String
-     * @return der String als long Wert
-     */
-    private long convertStringToLong(String str) {
-
-        long longValue;
-        try {
-            longValue = Long.parseLong(str.substring(0, str.length() - 1));
-        } catch (NumberFormatException e) {
-            LOG.warn("NumberFormatException beim Umwandlung des Strings " + str + " nach long. Gebe 0L als Ergebnis zurück.");
-            longValue = 0L;
-        }
-        return longValue;
-    }
-
+    
     /**
      * Holt die Terminfindung aus dem Anwendungkern.
      * Die Nummer der Terminfindung wird anhand des übergebenen Request
@@ -90,7 +73,7 @@ public abstract class AbstractController<T extends AbstractModel> {
             throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_KEINE_TERMINFINDUNGSNR);
         }
 
-        LOG.info("Hole Terminfindung vom Anwendungskern für Terminfindungsnummer " + tfNumberHolder.getNumber());
+        LOG.infoFachdaten(LogKategorie.JOURNAL, EreignissSchluessel.MSG_TERMINFINDUNG_GET, "Hole Terminfindung vom Anwendungskern für Terminfindungsnummer {}", tfNumberHolder.getNumber());
 
         TerminfindungModel terminfindung = awk.ladeTerminfindung(tfNumberHolder.getNumber());
         model.setTerminfindung(terminfindung);

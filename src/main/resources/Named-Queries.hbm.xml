@@ -19,7 +19,8 @@
   #L%
   -->
 
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <!-- ======================================================================
 	Dies ist eine Hibernate-Mapping Datei. Sie wird automatisch von JPA gefunden.
@@ -38,6 +39,10 @@
 	====================================================================== -->
 
 <hibernate-mapping default-lazy="true">
-<query name="leseZeitraumMitId"><![CDATA[select zr from Zeitraum zr where zr.zeitraum_Nr = :nr]]></query>
-<query name="leseTeilnehmerPraeferenzMitId"><![CDATA[select tZ from TeilnehmerZeitraum tZ where tZ.teilnehmer.teilnehmer_Nr = :nr]]></query>
- </hibernate-mapping>
+    <query name="leseZeitraumMitId">
+        <![CDATA[select zr from Zeitraum zr where zr.id = :nr]]>
+    </query>
+    <query name="leseTeilnehmerPraeferenzMitId">
+        <![CDATA[select tZ from TeilnehmerZeitraum tZ where tZ.teilnehmer.id = :nr]]>
+    </query>
+</hibernate-mapping>

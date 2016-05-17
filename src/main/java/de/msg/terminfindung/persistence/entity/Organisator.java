@@ -21,42 +21,39 @@ package de.msg.terminfindung.persistence.entity;
  */
 
 
-import java.io.Serializable;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
- * Entity implementation class for Entity: Organisator
- * Diese Entitaet stellt den Organisator einer Terminfindung dar
- * @author msg systems ag, Maximilian Falter
+ * Diese Entitaet stellt den Organisator einer Terminfindung dar.
  *
+ * @author msg systems ag, Maximilian Falter
  */
 
-@Embeddable @Access(AccessType.FIELD)
+@Embeddable
+@Access(AccessType.FIELD)
 public class Organisator implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "organisator_name")
-	private String name = "";
-	private static final long serialVersionUID = 1L;
-	
-	public Organisator() {
-		super();
-	}   
-	
-	public Organisator(String name) {
-		super();
-		this.name = name;
-	}
+    @Column(name = "organisator_name")
+    private String name = "";
 
-	public String getName() {
-		return this.name;
-	}
+    public Organisator() {
+    }
 
-	public void setName(String Name) {
-		this.name = Name;
-	}
-   
+    public Organisator(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String Name) {
+        this.name = Name;
+    }
+
 }

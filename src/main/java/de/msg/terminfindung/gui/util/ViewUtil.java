@@ -23,10 +23,11 @@ package de.msg.terminfindung.gui.util;
 
 import java.io.Serializable;
 
-import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-import org.apache.log4j.Logger;
 import org.springframework.webflow.context.ExternalContext;
+
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 
 /**
  * Hilfsfunktionen für die Views.
@@ -38,7 +39,7 @@ public class ViewUtil implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = Logger.getLogger(ViewUtil.class);
+	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(ViewUtil.class);
 
 
     /**
@@ -54,7 +55,7 @@ public class ViewUtil implements Serializable{
 
         if (param == null) {
 
-            LOG.warn("Requestparameter " + name + " konnte nicht gelesen werden.");
+            LOG.warn(FehlerSchluessel.MSG_ALLGEMEINER_TECHNISCHER_FEHLER, "Requestparameter {} konnte nicht gelesen werden.", name);
         }
         return param;
     }
@@ -75,7 +76,7 @@ public class ViewUtil implements Serializable{
 			result = Long.parseLong(paramValueStr);
 		}
 		catch (NumberFormatException e) {
-			LOG.warn("Request Parameter " + name + " konnte nicht in Long konvertiert werden (NumberFormatException), gebe 0L zurück");
+			LOG.warn("Request Parameter " + name + " konnte nicht in Long konvertiert werden, gebe 0L zurück",e.getMessage());
 		}
 		return new TFNumberHolder(result);
 	}

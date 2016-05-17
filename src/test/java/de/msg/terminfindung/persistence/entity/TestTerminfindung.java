@@ -23,7 +23,9 @@ package de.msg.terminfindung.persistence.entity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(BlockJUnit4ClassRunner.class)
 public class TestTerminfindung {
@@ -35,8 +37,8 @@ public class TestTerminfindung {
 		Zeitraum zeitraum1 = new Zeitraum();
 		Zeitraum zeitraum2 = new Zeitraum();
 		
-		zeitraum1.setZeitraum_Nr(1);
-		zeitraum2.setZeitraum_Nr(22);
+		zeitraum1.setId(1L);
+		zeitraum2.setId(22L);
 				
 		tag.getZeitraeume().add(zeitraum1);
 		tag.getZeitraeume().add(zeitraum2);

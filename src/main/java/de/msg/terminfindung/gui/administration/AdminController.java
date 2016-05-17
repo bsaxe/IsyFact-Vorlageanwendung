@@ -21,9 +21,10 @@ package de.msg.terminfindung.gui.administration;
  */
 
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 
 /**
@@ -34,7 +35,7 @@ import de.msg.terminfindung.gui.terminfindung.AbstractController;
 @Controller
 public class AdminController extends AbstractController<AdminModel> {
 
-	private static final Logger LOG = Logger.getLogger(AdminController.class);
+	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(AdminController.class);
 	
 	/**
 	 * Führt den Login-Vorgang aus.
@@ -42,8 +43,6 @@ public class AdminController extends AbstractController<AdminModel> {
 	 * @param model Das Modell
 	 */
 	public void initialisiereModel(AdminModel model) {
-
-		LOG.info("Initialisiere Modell");
 	}
 
 }

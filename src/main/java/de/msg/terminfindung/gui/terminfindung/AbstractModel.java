@@ -21,57 +21,29 @@ package de.msg.terminfindung.gui.terminfindung;
  */
 
 
-import de.msg.terminfindung.gui.terminfindung.model.RequestData;
-import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Basisklasse für alle Model.
- * Die Klasse bündelt Modell-Elemente, die in mehreren Views verwendet werden.
- * 
- * @author Dirk Jäger
+ * Basisklasse für alle View-Models. Die Klasse bündelt Modell-Elemente, die in mehreren Views verwendet werden.
+ *
+ * @author Dirk Jäger, msg systems ag
  */
 public abstract class AbstractModel implements Serializable {
-	
-	private static final long serialVersionUID = -2479477611892278312L;
+    private static final long serialVersionUID = -2479477611892278312L;
 
-	private TerminfindungModel terminfindung;	
-	private List<TagModel> tage = new ArrayList<>();
-	private long selectedZeitraumNr;
-	private RequestData requestData;
+    private TerminfindungModel terminfindung;
+
     private boolean testMode = false;
 
-	public RequestData getRequestData() {
-		return requestData;
-	}
+    public TerminfindungModel getTerminfindung() {
+        return terminfindung;
+    }
 
-	public void setRequestData(RequestData requestData) {
-		this.requestData = requestData;
-	}
-
-	public boolean zeitraumIsDefZeitraum(ZeitraumModel zeitraumModel){
-		return (zeitraumModel.getZeitraum_nr() == this.selectedZeitraumNr);
-	}
-
-	public void setTage(List<TagModel> termine) {
-		this.tage = termine;
-	}
-
-	public List<TagModel> getTage() {
-		return tage;
-	}
-	public TerminfindungModel getTerminfindung() {
-		return terminfindung;
-	}
-
-	public void setTerminfindung(TerminfindungModel terminfindung) {
-		this.terminfindung = terminfindung;
-	}
+    public void setTerminfindung(TerminfindungModel terminfindung) {
+        this.terminfindung = terminfindung;
+    }
 
     public boolean isTestMode() {
         return testMode;

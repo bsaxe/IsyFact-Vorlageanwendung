@@ -1,0 +1,50 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact">
+    <!-- Eine statische Anzeige für die Stammdaten einer Terminfindung auf Basis eines isy:panel. -->
+
+    <isy:panel>        
+        <f:facet name="panelBody">            
+            <h:panelGroup>
+						<p>							
+							<h:outputText value="Die Terminfindung wurde am " />
+							<h:outputText
+								value="#{terminfindung.createDate}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+							<h:outputText
+								value=" erstellt" />
+							<h:outputText rendered="#{terminfindung.updateDate ne null}" value=" und zuletzt von #{terminfindung.organisator.name} am "/>
+							<h:outputText rendered="#{terminfindung.updateDate ne null}"
+								value="#{terminfindung.updateDate}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+							<h:outputText rendered="#{terminfindung.updateDate ne null}" value=" aktualisiert" />
+							<h:outputText value="." />
+						</p>
+					</h:panelGroup>
+        </f:facet>
+    </isy:panel>
+
+</ui:composition>

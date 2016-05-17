@@ -1,0 +1,83 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <!-- Eine tabellarische Anzeige für die Termine einer Terminfindung auf Basis eines isy:panel. -->
+    <!-- Unterelemente können dazu benutzt werden, zusätzliche Zeilen in die Tabelle einzufügen -->
+
+    <table class="selectAbschliessen">
+        <tr>
+            <th>&nbsp;</th>
+            <ui:repeat var="tag" value="#{terminfindung.tage}">
+                <th class="borderTd #{tag.zeitraeume.contains(terminfindung.defZeitraum) ? 'ausgewaehlt' : ''}"
+                    colspan="#{tag.zeitraeume.size()}">
+                    <h:outputText value="#{tag.datum}">
+                        <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </th>
+            </ui:repeat>
+        </tr>
+        <tr>
+            <th>&nbsp;</th>
+            <ui:repeat var="tag" value="#{terminfindung.tage}">
+                <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+                    <th class="borderTd #{terminfindung.isFestgelegterZeitraum(zeitraum) ? 'ausgewaehlt' : ''}">
+                        <h:outputText value="#{zeitraum.beschreibung}"/>
+                    </th>
+                </ui:repeat>
+            </ui:repeat>
+        </tr>
+        <ui:repeat var="teilnehmer" value="#{terminfindung.teilnehmer}">
+            <tr>
+                <td class="borderTd">
+                    <h:outputText value="#{teilnehmer.name}"/>
+                </td>
+                <ui:repeat var="tag" value="#{terminfindung.tage}">
+                    <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+                        <td class="borderTd #{zeitraum.getPraeferenzFuerTeilnehmer(teilnehmer.name)}">
+                            &nbsp;
+                        </td>
+                    </ui:repeat>
+                </ui:repeat>
+            </tr>
+        </ui:repeat>
+        <tr>
+            <th class="anzahlTd">
+                <h:outputText value="#{msg['termin.zusagen']}"/>
+            </th>
+            <ui:repeat var="tag" value="#{terminfindung.tage}">
+                <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
+                    <td class="anzahlTd">
+                        <h:outputText value="#{zeitraum.zusagen}"/>
+                        <h:outputText value=" + (#{zeitraum.unsicher})"
+                                      rendered="#{zeitraum.unsicher > 0}"/>
+                    </td>
+                </ui:repeat>
+            </ui:repeat>
+        </tr>
+
+        <ui:insert/>
+    </table>
+
+</ui:composition>

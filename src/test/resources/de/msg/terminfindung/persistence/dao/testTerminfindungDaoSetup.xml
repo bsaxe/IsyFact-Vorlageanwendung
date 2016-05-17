@@ -18,6 +18,6 @@
   #L%
   -->
 <dataset>
-    <Terminfindung terminfnd_nr="1" organisator_name="Klaus" veranst_name="Weihnachtsfeier 2016" />
-    <Terminfindung terminfnd_nr="2" organisator_name="Herbert" veranst_name="Spieleabend IsyFact" />
+    <Terminfindung id="1" organisator_name="Klaus" veranstaltungname="Weihnachtsfeier 2016" />
+    <Terminfindung id="2" organisator_name="Herbert" veranstaltungname="Spieleabend IsyFact" />
 </dataset>

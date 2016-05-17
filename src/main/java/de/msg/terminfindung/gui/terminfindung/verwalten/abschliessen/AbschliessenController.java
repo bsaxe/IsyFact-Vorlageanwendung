@@ -1,5 +1,9 @@
 package de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen;
 
+
+
+
+
 /*
  * #%L
  * Terminfindung
@@ -19,63 +23,57 @@ package de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen;
  * limitations under the License.
  * #L%
  */
-
-
+import org.springframework.stereotype.Controller;
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
 
 /**
  * Controller fuer den Abschliessen Flow
- * 
- * @author msg systems ag, Maximilian Falter 
+ *
+ * @author msg systems ag, Maximilian Falter
  */
 @Controller
 public class AbschliessenController extends AbstractController<AbschliessenModel> {
 
-	private static final Logger LOG = Logger.getLogger(AbschliessenController.class);
+    private static final IsyLogger LOG = IsyLoggerFactory.getLogger(AbschliessenController.class);
 
-	/**
-	 * Diese Methode initialisiert das Model, d.h es wird zum einen, falls es
-	 * bereits existiert, geleert und zum anderen mit den Daten aus der
-	 * Datenbank gefüllt.
-	 * @throws TerminfindungBusinessException 
-	 */
-	public void initialisiereModel(AbschliessenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-
-		LOG.info("Initialisiere das Modell.");
-		model.getTage().clear();
-
-		super.holeTerminfindung(model);
-	}
+    /**
+     * Diese Methode initialisiert das Model, d.h es wird zum einen, falls es bereits existiert, geleert und zum anderen
+     * mit den Daten aus der Datenbank gefüllt.
+     *
+     * @throws TerminfindungBusinessException
+     */
+    public void initialisiereModel(AbschliessenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
+        
+        holeTerminfindung(model);
+    }
 
 
-	/**
-	 * Ruft den AWK auf, um einen definitiven Zeitraum (Tag) fuer die
-	 * Terminfindung festzulegen, zusaetzlich wird noch im Model die Variable
-	 * istAbgeschlossen auf true gesetzt, damit keine Aktionen, welche die
-	 * Terminfindung manipulieren koennten, ausfuehrbar sind.
-	 * 
-	 * @param model Das Modell
-	 */
-	public void schliesseTerminfindung(AbschliessenModel model) {
+    /**
+     * Ruft den AWK auf, um einen definitiven Zeitraum (Tag) fuer die Terminfindung festzulegen, zusaetzlich wird noch
+     * im Model die Variable istAbgeschlossen auf true gesetzt, damit keine Aktionen, welche die Terminfindung
+     * manipulieren koennten, ausfuehrbar sind.
+     *
+     * @param model Das Modell
+     */
+    public void schliesseTerminfindung(AbschliessenModel model) {
 
-		LOG.info("Schließe die Terminfindung ab.");
+        LOG.debug("Schließe die Terminfindung ab.");
 
-		AwkWrapper awk = super.getAwk();
+        AwkWrapper awk = super.getAwk();
 
-		long zeitraumNr = model.getSelectedZeitraumNr();
+        long zeitraumNr = model.getSelectedZeitraumNr();
 
-		try {
-			TerminfindungModel terminfindung = awk.setzeVeranstaltungstermin(model.getTerminfindung(), zeitraumNr);
-			model.setTerminfindung(terminfindung);		
-		}
-		catch (TerminfindungBusinessException e) {
-				LOG.error("Fehler beim Abschluss der Terminfindung: " + e.getMessage());
-		}
-	}
+        try {
+            TerminfindungModel terminfindung = awk.setzeVeranstaltungstermin(model.getTerminfindung(), zeitraumNr);
+            model.setTerminfindung(terminfindung);
+        } catch (TerminfindungBusinessException e) {
+            LOG.error("Fehler beim Abschluss der Terminfindung: " ,e);
+        }
+    }
 }

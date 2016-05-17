@@ -1,5 +1,26 @@
 package de.msg.terminfindung.gui.terminfindung.erstellen;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+
+import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
+import de.msg.terminfindung.gui.terminfindung.AbstractController;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
+import de.msg.terminfindung.gui.util.DataGenerator;
+import de.msg.terminfindung.gui.util.DateUtil;
+
 /*
  * #%L
  * Terminfindung
@@ -20,177 +41,222 @@ package de.msg.terminfindung.gui.terminfindung.erstellen;
  * #L%
  */
 
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import de.msg.terminfindung.gui.util.DataGenerator;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-
-import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
-import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import de.msg.terminfindung.gui.terminfindung.model.TagModel;
-import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-import de.msg.terminfindung.gui.util.DateUtil;
-
 /**
- * Controller für den Flow "Erstellen":
- * Erstellung einer neuen Terminfindung
+ * Controller für den Flow "Erstellen": Erstellung einer neuen Terminfindung
  *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
 @Controller
 public class ErstellenController extends AbstractController<ErstellenModel> {
 
-	private static final Logger LOG = Logger.getLogger(ErstellenController.class);	
-	
-	/** Die maximale Anzahl von Tagen, die eine Terminfindung enthalten kann */
-	public final int MAX_NUMBER_OF_DAYS = 10;
+    private static final IsyLogger LOG = IsyLoggerFactory.getLogger(ErstellenController.class);
 
-	/** Die Anzahl der Zeiträume, die ein Benutzer pro Tag angeben kann */
-	public final int ZEITRAEUME_PRO_TAG = 3;
+    public void initialisiereModel(ErstellenModel model) {
+        super.initialisiereModell(model);
 
-	public void initialisiereModel(ErstellenModel model) {
-		super.initialisiereModell(model);
+        // Platzhalter für Anzeige in Datums-Eingabefeld
+        model.setStringPlaceholderDate(DateUtil.format(DateUtil.getNDaysFromToday(1)));
 
-		// Platzhalter für Anzeige in Datums-Eingabefeld
-		model.setStringPlaceholderDate(DateUtil.format(DateUtil.getNDaysFromToday(1)));
-
-		if (model.isTestMode()) {
-			LOG.debug("TestMode: Erzeuge Tage");
-			model.setTage(DataGenerator.generateTage());
-			model.setName("Test-Veranstaltung");
-			model.setOrgName("Test-Organisation");
-		}
-	}
-
-	/**
-	 * Fügt einen Tag zur Liste der Tage hinzu.
-	 * 
-	 * @param model Das Modell
-	 */
-	public void addDatum(ErstellenModel model) {
-
-		Date addedDate;
-		List<ValidationMessage> validationMessages = new ArrayList<>();
-
-		// maximale Anzahl von Tagen schon vorhanden?
-		if (model.getTage().size() >= MAX_NUMBER_OF_DAYS) {
-			validationMessages.add(new ValidationMessage("DA",
-					"stringTempDate", "Datum",
-					"Bereits max. Anzahl an Daten hinzugefügt"));
-		}
-		// keine Eingabe vorhanden
-		else if (model.getStringTempDate() == null || model.getStringTempDate().equals("")) {
-			validationMessages.add(new ValidationMessage("DA",
-					"stringTempDate", "Datum", "Benötigtes Feld"));
-		}
-		// konvertiere in Datumsobjekt für weitere Prüfungen
-		else try {
-			addedDate = DateUtil.convertDate(model.getStringTempDate());
-				// Datum darf nicht in der Vergangenheit liegen
-			if (!DateUtil.getYesterday().before(addedDate)) {
-				validationMessages
-						.add(new ValidationMessage("DA", "stringTempDate",
-								"Datum",
-								"Das Datum darf nicht in der Vergangenheit liegen"));
-			}
-			// Datum darf nicht schon vorhanden sein
-			else if (DateUtil.containsDay(model.getTage(), addedDate)) {
-				validationMessages.add(new ValidationMessage("DA",
-						"stringTempDate", "Datum",
-						"Datum bereits hinzugefügt"));
-			}
-			// alle Tests bis hierhin bestanden, dann füge neuen Tag hinzu.
-			else {
-				LOG.debug("Füge Tag hinzu.");
-				// erzeuge ein neues Objekt für den Tag
-				TagModel tag = new TagModel();
-				// setze in dem neuen Objekt die Zeitraum-Objekte
-				erzeugeZeitraeume(tag);
-				// setze das Datum
-				tag.setDatum(addedDate);
-				// füge den Tag zum Model hinzu
-				model.getTage().add(tag);
-				return;
-			}
-
-		} catch (ParseException pe) {
-			validationMessages.add(new ValidationMessage("DA",
-					"stringTempDate", "Datum",
-					"Geben Sie ein gültiges Datum ein"));
-		}
-		this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
-	}
-
-	/**
-	 * Speichert die neu angelegte Terminfindung.
-     * Die Methode ruft dazu den Wrapper des Anwendungskerns mit den Daten auf,
-     * die im Modell vorliegen.
-	 * 
-	 * @param model Das Modell, dessen Inhalt gespeicehrt wird
-	 */
-	public void speichereModel(ErstellenModel model) {
-
-		LOG.debug("Speichere Terminfindung.");
-
-		try {
-			TerminfindungModel terminfindung = super.getAwk().erstelleTerminfindung(model.getOrgName(), model.getName(), model.getTage());
-			model.setTerminfindung(terminfindung);
-		} catch (TerminfindungBusinessException e) {
-
-			LOG.error("Fehler beim Erstellen der Terminfindung: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Loescht einen Tag aus der lokalen Liste der Tage (Daten)
-	 * 
-	 * @param model Das Modell
-	 */
-	public void delDatum(ErstellenModel model) {
-		model.getTage().remove(model.getSelectedTermin());
-	}
-
-	/**
-	 * Validiert das Modell vor dem Speichern.
-     * Es wird geprüft, ob die Pflichtfelder gefüllt sind.
-     *
-	 * @param model Das Modell
-	 * @return true wenn alle Pflichtfelder gefüllt sind, sonst false
-	 */
-	public boolean validiereEingabefelder (ErstellenModel model) {
-		List<ValidationMessage> validationMessages = new ArrayList<>();
-		if (model.getName().equals("")) {
-			validationMessages.add(new ValidationMessage("TI", "name",
-					"Titel", "Benötigtes Feld"));
-		}
-		if (model.getOrgName().equals("")) {
-			validationMessages.add(new ValidationMessage("NA", "orgName",
-					"Ihr Name", "Benötigtes Feld"));
-		}
-
-		this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
-
-		// Wenn die Liste der Message leer ist, gab es keine Validierungsfehler,
-		// Gib in diesem Fall true zurück
-		return (validationMessages.isEmpty());
-	}
+        if (model.isTestMode()) {
+            LOG.debug("TestMode: Erzeuge Tage");
+            model.setTage(DataGenerator.generateTage(getKonfiguration()));
+            model.setName("Test-Veranstaltung");
+            model.setOrgName("Test-Organisation");
+        }
+    }  
 
     /**
-     * Erzeugt die Default-Anzahl von Zeiträumen pro Tag.
-     * Die Methode wird beim Anlegen eines neuen Tages intern aufgerufen.
-     * @param tag Eine Referenz auf das {@link TagModel} Objekt, in dem die Zeiträume angelegt werden.
+     * Fügt einen Tag zur Liste der Tage hinzu.
+     *
+     * @param model Das Modell
      */
-    private void erzeugeZeitraeume (TagModel tag) {
+    public void fuegeDatumHinzu(ErstellenModel model) {
 
-		for (int i = 0; i <= ZEITRAEUME_PRO_TAG; i++) {
-			tag.getZeitraeume().add(new ZeitraumModel());
-		}
-	}
+        Date addedDate;
+        List<ValidationMessage> validationMessages = new ArrayList<>();
+
+        // maximale Anzahl von Tagen schon vorhanden?
+        if (model.getTage().size() >= getKonfiguration().getAsInteger("termin.tag.max.number")) {
+            validationMessages.add(new ValidationMessage("DA",
+                    "stringTempDate", "Datum",
+                    "Bereits max. Anzahl an Daten hinzugefügt"));
+        }
+        // keine Eingabe vorhanden
+        else if (model.getStringTempDate() == null || model.getStringTempDate().equals("")) {
+            validationMessages.add(new ValidationMessage("DA",
+                    "stringTempDate", "Datum", "Benötigtes Feld"));
+        }
+        // konvertiere in Datumsobjekt für weitere Prüfungen
+        else try {
+                addedDate = DateUtil.convertDate(model.getStringTempDate());
+                // Datum darf nicht in der Vergangenheit liegen
+                if (!DateUtil.getYesterday().before(addedDate)) {
+                    validationMessages
+                            .add(new ValidationMessage("DA", "stringTempDate",
+                                    "Datum",
+                                    "Das Datum darf nicht in der Vergangenheit liegen"));
+                }
+                // Datum darf nicht schon vorhanden sein
+                else if (DateUtil.containsDay(model.getTage(), addedDate)) {
+                    validationMessages.add(new ValidationMessage("DA",
+                            "stringTempDate", "Datum",
+                            "Datum bereits hinzugefügt"));
+                }
+                // alle Tests bis hierhin bestanden, dann füge neuen Tag hinzu.
+                else {
+                    LOG.debug("Füge Tag hinzu.");
+                    // erzeuge ein neues Objekt für den Tag
+                    TagModel tag = new TagModel();
+                    // setze in dem neuen Objekt die Zeitraum-Objekte
+                    //erzeugeZeitraeume(tag);
+                    // setze das Datum
+                    tag.setDatum(addedDate);
+                    tag.setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
+                    tag.setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
+                    // füge den Tag zum Model hinzu
+                    model.getTage().add(tag);
+                    Collections.sort(model.getTage());
+                    return;
+                }
+
+            } catch (ParseException pe) {
+                validationMessages.add(new ValidationMessage("DA",
+                        "stringTempDate", "Datum",
+                        "Geben Sie ein gültiges Datum ein"));
+            }
+        this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
+    }
+
+    /**
+     * Loescht einen Tag aus der lokalen Liste der Tage (Daten)
+     *
+     * @param model Das Modell
+     */
+    public void loescheDatum(ErstellenModel model) {
+        model.getTage().remove(model.getSelectedTermin());
+    }
+
+    /**
+     * Fügt einen Zaitraum zu der lokalen Liste der Zeitraeume (Daten)
+     *
+     * @param model Das Modell
+     */
+    public void fuegeZeitraumHinzu(ErstellenModel model) {
+
+        List<ValidationMessage> validationMessages = new ArrayList<>();
+
+        boolean zeitraumExists = false;
+        for (ZeitraumModel zeitraumModel : model.getSelectedTermin().getZeitraeume()) {
+            if (zeitraumModel.getBeschreibung().equalsIgnoreCase(model.getSelectedTermin().getVonZeitraum() + " - "
+                    + model.getSelectedTermin().getBisZeitraum())) {
+                zeitraumExists = true;
+            }
+        }
+        // maximale Anzahl von Tagen schon vorhanden?
+        if (model.getSelectedTermin().getZeitraeume().size() >= getKonfiguration().getAsInteger("termin.tag.zeitraum.max.number")) {
+            validationMessages.add(new ValidationMessage("DA",
+            		"zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
+                    "Bereits max. Anzahl an Daten hinzugefügt"));
+        }
+        else if (model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) == 0) {
+            validationMessages.add(new ValidationMessage("DA",
+                    "zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
+                    "Zeitraum beginnt und Enden um die gleiche Uhrzeit."));
+        } else if (model.getSelectedTermin().getVonZeitraum().compareTo(model.getSelectedTermin().getBisZeitraum()) > 0) {
+            validationMessages.add(new ValidationMessage("DA",
+                    "zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
+                    "Zeitraum startet nach seinem Ende."));
+        } else if (zeitraumExists) {
+            validationMessages.add(new ValidationMessage("DA",
+                    "zeitraeume_" + model.getSelectedTermin().getShortDate(), "Zeitraum",
+                    "Zeitraum existiert bereits."));
+        } else {
+            ZeitraumModel zeitraum = new ZeitraumModel();
+            zeitraum.setBeschreibung(model.getSelectedTermin().getVonZeitraum() + " - " + model.getSelectedTermin().getBisZeitraum());
+            model.getSelectedTermin().getZeitraeume().add(zeitraum);
+            model.getSelectedTermin().setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
+            model.getSelectedTermin().setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
+            Collections.sort(model.getSelectedTermin().getZeitraeume());
+            return;
+        }
+
+        this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
+    }
+
+    /**
+     * Löscht einen Zeitraum aus der lokalen Liste der Zeitraeume (Daten)
+     *
+     * @param model Das Modell
+     */
+    public void loescheZeitraum(ErstellenModel model) {
+        for (TagModel tag : model.getTage()) {
+            tag.getZeitraeume().remove(model.getSelectedZeitraum());
+        }
+    }
+
+    /**
+     * Validiert das Modell vor dem Speichern. Es wird geprüft, ob die Pflichtfelder gefüllt sind.
+     *
+     * @param model Das Modell
+     * @return true wenn alle Pflichtfelder gefüllt sind, sonst false
+     */
+    public boolean validiereStammdaten(ErstellenModel model) {
+        List<ValidationMessage> validationMessages = new ArrayList<>();
+        if (StringUtils.isBlank(model.getName())) {
+            validationMessages.add(new ValidationMessage("TI", "name", "Titel", "Benötigtes Feld"));
+        }
+        if (StringUtils.isBlank(model.getOrgName())) {
+            validationMessages.add(new ValidationMessage("NA", "orgName", "Ihr Name", "Benötigtes Feld"));
+        }
+
+        if (validationMessages.isEmpty()) {
+            return true;
+        } else {
+            globalFlowController.getValidationController().processValidationMessages(validationMessages);
+            return false;
+        }
+    }
+
+    /**
+     * Validiert das Modell vor dem Speichern. Es wird geprüft ob alle Tage mindestens einen Zeitraum beinhalten. Falls
+     * das Modell konsistent ist, wird es gespeichert.
+     */
+    public boolean validiereTermine(ErstellenModel model) {
+        List<ValidationMessage> validationMessages = new ArrayList<>();
+
+        for (TagModel tag : model.getTage()) {
+            if (tag.getZeitraeume().isEmpty()) {
+                validationMessages.add(new ValidationMessage("DA",
+                        "zeitraeume", "Datum",
+                        "Dem Datum " + tag.getShortDate() + " ist kein Zeitraum zugeordnet."));
+            }
+        }
+
+        if (validationMessages.isEmpty()) {
+            return speichereModel(model);
+        } else {
+            globalFlowController.getValidationController().processValidationMessages(validationMessages);
+            return false;
+        }
+    }
+
+    /**
+     * Speichert die neu angelegte Terminfindung. Die Methode ruft dazu den Wrapper des Anwendungskerns mit den Daten
+     * auf, die im Modell vorliegen.
+     *
+     * @param model Das Modell, dessen Inhalt gespeichert wird
+     */
+    private boolean speichereModel(ErstellenModel model) {
+
+        LOG.debug("Speichere Terminfindung.");
+
+        try {
+            TerminfindungModel terminfindung = getAwk().erstelleTerminfindung(model.getOrgName(), model.getName(), model.getTage());
+            model.setTerminfindung(terminfindung);
+            return true;
+        } catch (TerminfindungBusinessException e) {
+            LOG.errorFachdaten(e.getAusnahmeId() , "Fehler beim Erstellen der Terminfindung", e);
+            return false;
+        }
+    }
 }

@@ -21,11 +21,14 @@ package de.msg.terminfindung.gui.terminfindung.erstellen;
  */
 
 
-import java.io.Serializable;
-import java.util.Date;
-
 import de.msg.terminfindung.gui.terminfindung.AbstractModel;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
+import de.msg.terminfindung.gui.util.DataGenerator;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Model des Erstellen Flows
@@ -35,53 +38,97 @@ import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 
 public class ErstellenModel extends AbstractModel implements Serializable {
 
-	private static final long serialVersionUID = 1653204808232247581L;
+    private static final long serialVersionUID = 1653204808232247581L;
 
-	/** Speichert den Namen der Veranstaltungen aus der Eingabemaske **/
-	private String name ="";
-	/** Speichert den Namen der Organisation aus der Eingabemaske **/
-	private String orgName ="";
-	/** Speichert eine neu eingegebenes Datum als String */
-	private String stringTempDate ="";
-	/** Stellt den Platzhalterwert bereit, der im Datums-Eingabefeld angezeigt wird */
-	private String stringPlaceholderDate ="";
-	/** Speicher einen Tag, der in der Eingabemaske durch Klicken auf das Trash-Icon
-	 * zum Löschen ausgewählt wurde */
-	private TagModel selectedTermin;
+    /**
+     * Speichert den Namen der Veranstaltungen aus der Eingabemaske
+     **/
+    private String name;
+    /**
+     * Speichert den Namen der Organisation aus der Eingabemaske
+     **/
+    private String orgName;
+    /**
+     * Speichert eine neu eingegebenes Datum als String
+     */
+    private String stringTempDate = "";
+    /**
+     * Stellt den Platzhalterwert bereit, der im Datums-Eingabefeld angezeigt wird
+     */
+    private String stringPlaceholderDate = "";
+    /**
+     * Speicher einen Tag, der in der Eingabemaske durch Klicken auf das Trash-Icon zum Löschen ausgewählt wurde
+     */
+    private TagModel selectedTermin;
+    /**
+     * Speicher einen Zeitraum, der in der Eingabemaske durch Klicken auf das Trash-Icon zum Löschen ausgewählt wurde
+     */
+    private ZeitraumModel selectedZeitraum;
+    /**
+     * Zur Auswahl stehende mögliche Zeiträume
+     */
+    private List<String> alleZeitraeume = DataGenerator.getUhrzeitAuswahl();
 
-	public String getName() {
-		return name;
-	}
+    private List<TagModel> tage = new ArrayList<>();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getOrgName() {
-		return orgName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
-	}
+    public String getOrgName() {
+        return orgName;
+    }
 
-	public TagModel getSelectedTermin() {
-		return selectedTermin;
-	}
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
-	public void setSelectedTermin(TagModel selectedTermin) {
-		this.selectedTermin = selectedTermin;
-	}
+    public TagModel getSelectedTermin() {
+        return selectedTermin;
+    }
 
-	public String getStringTempDate() {
-		return stringTempDate;
-	}
+    public void setSelectedTermin(TagModel selectedTermin) {
+        this.selectedTermin = selectedTermin;
+    }
 
-	public void setStringTempDate(String stringTempDate) {
-		this.stringTempDate = stringTempDate;
-	}
+    public String getStringTempDate() {
+        return stringTempDate;
+    }
 
-	public String getStringPlaceholderDate() { return stringPlaceholderDate; }
+    public void setStringTempDate(String stringTempDate) {
+        this.stringTempDate = stringTempDate;
+    }
 
-	public void setStringPlaceholderDate(String stringPlaceholderDate) { this.stringPlaceholderDate = stringPlaceholderDate;	}
+    public ZeitraumModel getSelectedZeitraum() {
+        return selectedZeitraum;
+    }
+
+    public void setSelectedZeitraum(ZeitraumModel selectedZeitraum) {
+        this.selectedZeitraum = selectedZeitraum;
+    }
+
+    public List<String> getAlleZeitraeume() {
+        return alleZeitraeume;
+    }
+
+    public String getStringPlaceholderDate() {
+        return stringPlaceholderDate;
+    }
+
+    public void setStringPlaceholderDate(String stringPlaceholderDate) {
+        this.stringPlaceholderDate = stringPlaceholderDate;
+    }
+
+    public List<TagModel> getTage() {
+        return tage;
+    }
+
+    public void setTage(List<TagModel> termine) {
+        this.tage = termine;
+    }
+
 }

@@ -21,88 +21,53 @@ package de.msg.terminfindung.core.teilnahme.impl;
  */
 
 
-import java.util.Map;
-
 import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
 import de.msg.terminfindung.persistence.dao.TeilnehmerZeitraumDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
-import de.msg.terminfindung.persistence.dao.ZeitraumDao;
-import de.msg.terminfindung.persistence.entity.Praeferenz;
-import de.msg.terminfindung.persistence.entity.Teilnehmer;
-import de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum;
-import de.msg.terminfindung.persistence.entity.Terminfindung;
-import de.msg.terminfindung.persistence.entity.Zeitraum;
+import de.msg.terminfindung.persistence.entity.*;
+
+import java.util.Map;
 
 /**
+ * Diese Klasse implementiert den Anwendungsfall "Termine bestaetigen".
+ *
  * @author msg systems ag, Dirk Jäger
- * Diese Klasse implementiert den Anwendungsfall "Termine bestaetigen"
  */
-public class AwfTermineBestaetigen {
+class AwfTermineBestaetigen {
 
-	private TeilnehmerDao teilnehmerDao;
-	private TerminfindungDao terminfindungDao;
-	private ZeitraumDao zeitraumDao;
-	private TeilnehmerZeitraumDao teilnehmerZeitraumDao;
+    private final TerminfindungDao terminfindungDao;
+    private final TeilnehmerDao teilnehmerDao;
+    private final TeilnehmerZeitraumDao teilnehmerZeitraumDao;
 
-	public void bestaetigeTeilnahme(Terminfindung terminfindung, Teilnehmer teilnehmer, Map<Zeitraum, Praeferenz> terminwahl) {
+    AwfTermineBestaetigen(TerminfindungDao terminfindungDao, TeilnehmerDao teilnehmerDao, TeilnehmerZeitraumDao teilnehmerZeitraumDao) {
+        this.terminfindungDao = terminfindungDao;
+        this.teilnehmerDao = teilnehmerDao;
+        this.teilnehmerZeitraumDao = teilnehmerZeitraumDao;
+    }
 
-		//TODO: Überprüfen, dass Zeiträume aus der Map auch zur Terminfindung gehören
+    void bestaetigeTeilnahme(Terminfindung terminfindung, Teilnehmer teilnehmer, Map<Zeitraum, Praeferenz> terminwahl) {
 
-		// Erzeuge den Datensatz für den Teilnehmer
-		terminfindung.getTeilnehmer().add(teilnehmer);
-		teilnehmerDao.speichere(teilnehmer);
-		// terminfindungDao.updateTerminfindung(terminfindung);
+        //TODO: Überprüfen, dass Zeiträume aus der Map auch zur Terminfindung gehören
 
-		// Iteriere durch die übergebene Map und erzeuge fuer jedes Paar (Zeitraum/Preaferenzwerte) einen Datensatz
-		for (Zeitraum zeitraum : terminwahl.keySet()) {
+        // Erzeuge den Datensatz für den Teilnehmer
+        terminfindung.getTeilnehmer().add(teilnehmer);
+        teilnehmerDao.speichere(teilnehmer);
+        // terminfindungDao.updateTerminfindung(terminfindung);
 
-			// Erzeuge die Praeferenzen (Teilnehmer Zeitraum)
-			TeilnehmerZeitraum tz = new TeilnehmerZeitraum(teilnehmer, zeitraum, terminwahl.get(zeitraum));
-			
-			teilnehmerZeitraumDao.speichere(tz);
+        // Iteriere durch die übergebene Map und erzeuge fuer jedes Paar (Zeitraum/Preaferenzwerte) einen Datensatz
+        for (Zeitraum zeitraum : terminwahl.keySet()) {
 
-			// Verbinde die erzeugte Praeferenz mit dem Zeitraum, den sie betrifft
-			zeitraum.getTeilnehmerZeitraeume().add(tz);
-			// zeitraumDao.updateZeitraum(zeitraum);
-		}
-		
-		terminfindungDao.updateTerminfindung(terminfindung);
-	}
+            // Erzeuge die Praeferenzen (Teilnehmer Zeitraum)
+            TeilnehmerZeitraum tz = new TeilnehmerZeitraum(teilnehmer, zeitraum, terminwahl.get(zeitraum));
 
-	/*------------------------------------------------------------
-	 * Getter und Setter
-	 *------------------------------------------------------------*/
-	
-	public TeilnehmerDao getTeilnehmerDao() {
-		return teilnehmerDao;
-	}
+            teilnehmerZeitraumDao.speichere(tz);
 
-	public void setTeilnehmerDao(TeilnehmerDao teilnehmerDao) {
-		this.teilnehmerDao = teilnehmerDao;
-	}
+            // Verbinde die erzeugte Praeferenz mit dem Zeitraum, den sie betrifft
+            zeitraum.getTeilnehmerZeitraeume().add(tz);
+            // zeitraumDao.updateZeitraum(zeitraum);
+        }
 
-	public TerminfindungDao getTerminfindungDao() {
-		return terminfindungDao;
-	}
-
-	public void setTerminfindungDao(TerminfindungDao terminfindungDao) {
-		this.terminfindungDao = terminfindungDao;
-	}
-
-	public ZeitraumDao getZeitraumDao() {
-		return zeitraumDao;
-	}
-
-	public void setZeitraumDao(ZeitraumDao zeitraumDao) {
-		this.zeitraumDao = zeitraumDao;
-	}
-
-	public TeilnehmerZeitraumDao getTeilnehmerZeitraumDao() {
-		return teilnehmerZeitraumDao;
-	}
-
-	public void setTeilnehmerZeitraumDao(TeilnehmerZeitraumDao teilnehmerZeitraumDao) {
-		this.teilnehmerZeitraumDao = teilnehmerZeitraumDao;
-	}
+        terminfindungDao.aktualisiere(terminfindung);
+    }
 
 }

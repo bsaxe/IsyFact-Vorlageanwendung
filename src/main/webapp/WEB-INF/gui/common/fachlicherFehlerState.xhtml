@@ -1,0 +1,51 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+                template="/WEB-INF/gui/common/layout/commonSite.xhtml">
+
+    <ui:define name="inhaltsbereich">
+
+        <isy:panelGroup>
+            <isy:panel>
+                <f:facet name="panelHeader">
+                    Es ist ein Fehler aufgetreten!
+                </f:facet>
+                <f:facet name="panelBody">
+                    <div class="alert alert-warning" role="alert">
+						<span>
+                            <span class="icon icon-placeholder"/>
+							<strong>#{ausnahmeModel.exception.ausnahmeId}</strong>
+							<span>#{ausnahmeModel.exception.fehlertext}</span>
+						</span>
+                    </div>
+                    <p>
+                        <isy:button action="backToStart" value="Zurück zur Startseite"/>
+                    </p>
+                </f:facet>
+            </isy:panel>
+        </isy:panelGroup>
+
+    </ui:define>
+</ui:composition>

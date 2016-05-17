@@ -22,64 +22,94 @@ package de.msg.terminfindung.gui.terminfindung.model;
 
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
- * Die Klasse speichert die Daten eines Tags in der View Schicht.
- * Ein Tag hat einen Namen, ein Datum und eine Liste von Zeiträumen an diesem Datum.
+ * Die Klasse speichert die Daten eines Tags in der View Schicht. Ein Tag hat einen Namen, ein Datum und eine Liste von
+ * Zeiträumen an diesem Datum.
  *
  * @author msg systems ag, Maximilian Falter, Dirk Jäger
  */
-public class TagModel implements Serializable,Comparable<TagModel>{
+public class TagModel implements Serializable, Comparable<TagModel> {
 
-	private static final long serialVersionUID = -5975535556486949171L;
+    private static final long serialVersionUID = -5975535556486949171L;
 
-	private long tag_nr;
+    private Long id;
     private Date datum;
     private List<ZeitraumModel> zeitraeume = new ArrayList<>();
 
-	public TagModel() {
-		super();
-	}
+    /**
+     * der Ausgewählte Zeitraum von
+     */
+    private String vonZeitraum;
+    /**
+     * der Ausgewählte Zeitraum bis
+     */
+    private String bisZeitraum;
 
-	public TagModel(long tag_nr) {
-		super();
-		this.tag_nr = tag_nr;
-	}
-	
-	public long getTag_nr() {
-		return tag_nr;
-	}
+    public TagModel() {
 
-	public void setTag_nr(long tag_nr) {
-		this.tag_nr = tag_nr;
-	}
+    }
 
-	public Date getDatum() {
-		return datum;
-	}
+    public TagModel(Long id) {
+        this.id = id;
+    }
 
-	public void setDatum(Date datum) {
-		this.datum = datum;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public int getAnzahlZeitraeume() {
-		return zeitraeume.size();
-	}
+    public void setId(Long tag_nr) {
+        this.id = tag_nr;
+    }
 
-	public List<ZeitraumModel> getZeitraeume() {
-		return zeitraeume;
-	}
+    public Date getDatum() {
+        return datum;
+    }
 
-	public void setZeitraeume(List<ZeitraumModel> zeitraeume) {
-		this.zeitraeume = zeitraeume;
-	}
-	
-	@Override
-	public int compareTo(TagModel tag) {
-		return this.getDatum().compareTo(tag.getDatum());
+    public String getShortDate() {
+        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(datum);
+    }
 
-	}
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
+
+    public int getAnzahlZeitraeume() {
+        return zeitraeume.size();
+    }
+
+    public List<ZeitraumModel> getZeitraeume() {
+        return zeitraeume;
+    }
+
+    public void setZeitraeume(List<ZeitraumModel> zeitraeume) {
+        this.zeitraeume = zeitraeume;
+    }
+
+    @Override
+    public int compareTo(TagModel tag) {
+        return this.getDatum().compareTo(tag.getDatum());
+
+    }
+
+    public String getVonZeitraum() {
+        return vonZeitraum;
+    }
+
+    public void setVonZeitraum(String vonZeitraum) {
+        this.vonZeitraum = vonZeitraum;
+    }
+
+    public String getBisZeitraum() {
+        return bisZeitraum;
+    }
+
+    public void setBisZeitraum(String bisZeitraum) {
+        this.bisZeitraum = bisZeitraum;
+    }
 }

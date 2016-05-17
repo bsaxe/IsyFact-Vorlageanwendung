@@ -25,54 +25,54 @@ import java.io.Serializable;
 
 public class TeilnehmerZeitraumModel implements Serializable {
 
-	private long teilnehmerZeitraum_Nr;
+    private long id;
 
-	private PraeferenzModel praeferenz;
-	
-	private static final long serialVersionUID = 1L;
+    private PraeferenzModel praeferenz;
 
-	TeilnehmerModel teilnehmer;
-	
-	ZeitraumModel zeitraum;
+    private static final long serialVersionUID = 1L;
 
-	public TeilnehmerZeitraumModel() {
-		super();
-	}
+    TeilnehmerModel teilnehmer;
 
-	public TeilnehmerZeitraumModel(TeilnehmerModel teilnehmer, PraeferenzModel praeferenz) {
-		this.teilnehmer = teilnehmer;
-		this.praeferenz = praeferenz;
-	}
+    ZeitraumModel zeitraum;
 
-	public PraeferenzModel getPraeferenz() {
-		return this.praeferenz;
-	}
+    public TeilnehmerZeitraumModel() {
+        super();
+    }
 
-	public void setPraeferenz(PraeferenzModel praeferenz) {
-		this.praeferenz = praeferenz;
-	}
+    public TeilnehmerZeitraumModel(TeilnehmerModel teilnehmer, PraeferenzModel praeferenz) {
+        this.teilnehmer = teilnehmer;
+        this.praeferenz = praeferenz;
+    }
 
-	public long getTeilnehmerZeitraum_Nr() {
-		return teilnehmerZeitraum_Nr;
-	}
+    public PraeferenzModel getPraeferenz() {
+        return this.praeferenz;
+    }
 
-	public void setTeilnehmerZeitraum_Nr(long teilnehmerZeitraum_Nr) {
-		this.teilnehmerZeitraum_Nr = teilnehmerZeitraum_Nr;
-	}
+    public void setPraeferenz(PraeferenzModel praeferenz) {
+        this.praeferenz = praeferenz;
+    }
 
-	public TeilnehmerModel getTeilnehmer() {
-		return teilnehmer;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setTeilnehmer(TeilnehmerModel teilnehmer) {
-		this.teilnehmer = teilnehmer;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public ZeitraumModel getZeitraum() {
-		return zeitraum;
-	}
+    public TeilnehmerModel getTeilnehmer() {
+        return teilnehmer;
+    }
 
-	public void setZeitraum(ZeitraumModel zeitraum) {
-		this.zeitraum = zeitraum;
-	}
+    public void setTeilnehmer(TeilnehmerModel teilnehmer) {
+        this.teilnehmer = teilnehmer;
+    }
+
+    public ZeitraumModel getZeitraum() {
+        return zeitraum;
+    }
+
+    public void setZeitraum(ZeitraumModel zeitraum) {
+        this.zeitraum = zeitraum;
+    }
 }

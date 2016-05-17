@@ -23,7 +23,6 @@ package de.msg.terminfindung.persistence.dao;
 
 import java.util.Collection;
 
-import de.bund.bva.pliscommon.persistence.dao.Dao;
 import de.msg.terminfindung.persistence.entity.Teilnehmer;
 import de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum;
 /**
@@ -31,7 +30,7 @@ import de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum;
  * @author msg systems ag, Maximilian Falter
  *
  */
-public interface TeilnehmerDao extends Dao<Teilnehmer,Long>{
+public interface TeilnehmerDao extends AbstraktDao<Teilnehmer>{
 		
 	Collection<TeilnehmerZeitraum> ladePraeferenzZuTeilnehmer(Teilnehmer teilnehmer);
 }

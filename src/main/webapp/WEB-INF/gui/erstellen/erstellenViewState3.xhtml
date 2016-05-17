@@ -19,12 +19,10 @@
   -->
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
-	xmlns:debug="http://java.sun.com/jsf/composite/debug"
-	template="/WEB-INF/gui/common/layout/commonSite.xhtml">
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
 	<ui:define name="inhaltsbereich">
 		<isy:panelGroup>
@@ -40,15 +38,15 @@
 								Ihr Zugangslink für die Organisatorsicht
 								<p>
 									<a
-										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.terminfnd_Nr}">
-										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.terminfnd_Nr}
+										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.id}">
+										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.id}
 									</a>
 								</p>
 								Ihr Zugangslink für die Teilnehmersicht
 								<p>
 									<a
-										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.terminfnd_Nr}">
-										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.terminfnd_Nr}
+										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.id}">
+										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.id}
 									</a>
 								</p>
 							</div>

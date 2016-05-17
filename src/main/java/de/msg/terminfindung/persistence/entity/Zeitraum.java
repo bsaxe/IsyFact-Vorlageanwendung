@@ -21,82 +21,51 @@ package de.msg.terminfindung.persistence.entity;
  */
 
 
-import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 
 /**
- * Entity implementation class for Entity: Zeitraum
- * Stellt einen spezifischen Zeitraum fuer ein Datum (Tag) dar.
- * Der Zeitraum wird rein textuell beschrieben, z.B. "11:00-12:00" oder "abends"
+ * Entity implementation class for Entity: Zeitraum Stellt einen spezifischen Zeitraum fuer ein Datum (Tag) dar. Der
+ * Zeitraum wird rein textuell beschrieben, z.B. "11:00-12:00" oder "abends"
  *
  * @author msg systems ag, Maximilian Falter
  */
 @Entity
-@Table(name = "zeitraum")
-public class Zeitraum implements Serializable {
+public class Zeitraum extends AbstraktEntitaet {
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-	   
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "zeitraum_nr")
-	private long zeitraum_Nr;
-	
-	@Column(name = "beschreibung")
-	private String beschreibung;
-	
-	@OneToMany(fetch = FetchType.LAZY,cascade = { CascadeType.ALL})
-	@JoinColumn(name="zeitraum_nr", referencedColumnName="zeitraum_nr")
-	private List<TeilnehmerZeitraum> teilnehmerZeitraeume = new ArrayList<>();
+    private String beschreibung;
 
-	@ManyToOne
-	@JoinColumn(name = "tag_nr")
-	private Tag tag;
-	
-	public Zeitraum() {
-		super();
-	}   
-	public Zeitraum(String beschreibung) {
-		super();
-		this.beschreibung = beschreibung;
-	}
-	public long getZeitraum_Nr() {
-		return this.zeitraum_Nr;
-	}
-	public void setZeitraum_Nr(long zeitraumNr) {
-		this.zeitraum_Nr = zeitraumNr;
-	}
-	public String getBeschreibung() {
-		return beschreibung;
-	}
-	public void setBeschreibung(String beschreibung) {
-		this.beschreibung = beschreibung;
-	}
-	public List<TeilnehmerZeitraum> getTeilnehmerZeitraeume() {
-		return teilnehmerZeitraeume;
-	}
-	public void setTeilnehmerZeitraeume(List<TeilnehmerZeitraum> teilnehmerZeitraeume) {
-		this.teilnehmerZeitraeume = teilnehmerZeitraeume;
-	}
-	public Tag getTag() {
-		return tag;
-	}
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}   
-   
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "zeitraum_id")
+    private List<TeilnehmerZeitraum> teilnehmerZeitraeume = new ArrayList<>();
+
+    public Zeitraum() {
+    }
+
+    public Zeitraum(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public List<TeilnehmerZeitraum> getTeilnehmerZeitraeume() {
+        return teilnehmerZeitraeume;
+    }
+
+    public void setTeilnehmerZeitraeume(List<TeilnehmerZeitraum> teilnehmerZeitraeume) {
+        this.teilnehmerZeitraeume = teilnehmerZeitraeume;
+    }
+
 }

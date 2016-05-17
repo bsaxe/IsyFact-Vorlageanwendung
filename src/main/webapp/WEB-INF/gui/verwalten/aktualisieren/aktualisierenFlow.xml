@@ -1,0 +1,48 @@
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd" parent="basisFlow">
+
+	<var name="aktualisierenModel" 
+		class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenModel"/>
+
+	<var name="viewUtil" class="de.msg.terminfindung.gui.util.ViewUtil"/>
+	
+	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->	
+
+	<!-- Initialisiere das Modell-->	
+	<on-start>
+		<evaluate expression="aktualisierenController.initialisiereModel(aktualisierenModel)" />
+	</on-start>
+
+	<view-state id="aktualisierenViewState" >
+		<transition on="cancel" to="finished"/>
+		<transition on="save" to="validate"/>
+	</view-state>
+	
+	<decision-state id="validate">
+		<if test="aktualisierenController.aktualisiereTerminfindung(aktualisierenModel)" then="finished"
+			else="aktualisierenViewState" />
+	</decision-state>
+	
+	<end-state id="finished"/>
+</flow>

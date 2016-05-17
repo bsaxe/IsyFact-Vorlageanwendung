@@ -47,7 +47,7 @@ public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
     private TeilnehmerDao teilnehmerDao;
 
     @Autowired
-    private ZeitraumDao zeitraumDao;
+    private TerminfindungDao terminfindungDao;
 
     @Autowired
     private TeilnehmerZeitraumDao tzDao;
@@ -58,8 +58,8 @@ public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
     public void testSpeichern() {
         Teilnehmer teilnehmer = teilnehmerDao.sucheMitId(TEILNEHMER_NICHT_ZUGEORDNET);
 
-        Zeitraum morgens = zeitraumDao.sucheMitId(ZEITRAUM_MORGENS);
-        Zeitraum mittags = zeitraumDao.sucheMitId(ZEITRAUM_MITTAGS);
+        Zeitraum morgens = sucheZeitraum(ZEITRAUM_MORGENS);
+        Zeitraum mittags = sucheZeitraum(ZEITRAUM_MITTAGS);
 
         tzDao.speichere(new TeilnehmerZeitraum(teilnehmer, morgens, Praeferenz.JA));
         tzDao.speichere(new TeilnehmerZeitraum(teilnehmer, mittags, Praeferenz.WENN_ES_SEIN_MUSS));
@@ -71,8 +71,8 @@ public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
         TeilnehmerZeitraum teilnehmerZeitraum = tzDao.sucheMitId(TEILNEHMER_ZEITRAUM_ID);
 
         assertNotNull(teilnehmerZeitraum);
-        assertEquals(2, teilnehmerZeitraum.getTeilnehmer().getTeilnehmer_Nr());
-        assertEquals(ZEITRAUM_MITTAGS, Long.valueOf(teilnehmerZeitraum.getZeitraum().getZeitraum_Nr()));
+        assertEquals(Long.valueOf(2L), teilnehmerZeitraum.getTeilnehmer().getId());
+        assertEquals(ZEITRAUM_MITTAGS, teilnehmerZeitraum.getZeitraum().getId());
         assertEquals(Praeferenz.JA, teilnehmerZeitraum.getPraeferenz());
     }
 
@@ -84,6 +84,15 @@ public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
         tzDao.loesche(teilnehmerZeitraum);
 
         assertNull(tzDao.sucheMitId(TEILNEHMER_ZEITRAUM_ID));
+    }
+
+    private Zeitraum sucheZeitraum(Long zeitraumId) {
+        for (Zeitraum zeitraum : terminfindungDao.sucheMitId(1L).getTermine().get(0).getZeitraeume()) {
+            if (zeitraum.getId().equals(zeitraumId)) {
+                return zeitraum;
+            }
+        }
+        return null;
     }
 
 }

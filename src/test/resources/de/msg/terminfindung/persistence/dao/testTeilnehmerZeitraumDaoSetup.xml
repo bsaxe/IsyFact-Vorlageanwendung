@@ -18,15 +18,18 @@
   #L%
   -->
 <dataset>
-    <Teilnehmer teilnehmer_nr="1" name="Klaus"/>
-    <Teilnehmer teilnehmer_nr="2" name="Herbert"/>
-    <Teilnehmer teilnehmer_nr="3" name="Sepp"/>
+    <Teilnehmer id="1" name="Klaus"/>
+    <Teilnehmer id="2" name="Herbert"/>
+    <Teilnehmer id="3" name="Sepp"/>
 
-    <Zeitraum zeitraum_nr="1" beschreibung="9-11 Uhr"/>
-    <Zeitraum zeitraum_nr="2" beschreibung="über Mittag"/>
+    <Terminfindung id="1" organisator_name="Klaus" veranstaltungname="Weihnachtsfeier 2016" />
+    <Tag id="1" datum="2016-12-12" terminfindung_id="1" />
 
-    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="1" teilnehmer_nr="1" zeitraum_nr="1" praeferenz="0" />
-    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="2" teilnehmer_nr="1" zeitraum_nr="2" praeferenz="1" />
-    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="3" teilnehmer_nr="2" zeitraum_nr="1" praeferenz="2" />
-    <TeilnehmerZeitraum teilnehmerZeitraum_Nr="4" teilnehmer_nr="2" zeitraum_nr="2" praeferenz="1" />
+    <Zeitraum id="1" beschreibung="9-11 Uhr" tag_id="1"/>
+    <Zeitraum id="2" beschreibung="über Mittag" tag_id="1"/>
+
+    <TeilnehmerZeitraum id="1" teilnehmer_id="1" zeitraum_id="1" praeferenz="0" />
+    <TeilnehmerZeitraum id="2" teilnehmer_id="1" zeitraum_id="2" praeferenz="1" />
+    <TeilnehmerZeitraum id="3" teilnehmer_id="2" zeitraum_id="1" praeferenz="2" />
+    <TeilnehmerZeitraum id="4" teilnehmer_id="2" zeitraum_id="2" praeferenz="1" />
 </dataset>

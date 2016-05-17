@@ -21,11 +21,8 @@ package de.msg.terminfindung.sicherheit;
  */
 
 
-import java.io.Serializable;
-
-import org.apache.log4j.Logger;
-
-import de.bund.bva.pliscommon.aufrufkontext.impl.AufrufKontextImpl;
+import de.bund.bva.isyfact.logging.IsyLogger;
+import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.bund.bva.pliscommon.aufrufkontext.impl.AufrufKontextVerwalterImpl;
 import de.msg.terminfindung.gui.login.LoginController;
 
@@ -42,7 +39,7 @@ import de.msg.terminfindung.gui.login.LoginController;
  */
 public class SessionAufrufKontextVerwalter<T extends SerializableAufrufKontextImpl> extends AufrufKontextVerwalterImpl<T>{
 
-	private static final Logger LOG = Logger.getLogger(LoginController.class);
+	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(LoginController.class);
 
 	/**
 	 * Der LoginVerwalter, der den Aufrufkontext in der Session zwischenspeichert.
@@ -65,10 +62,10 @@ public class SessionAufrufKontextVerwalter<T extends SerializableAufrufKontextIm
 
 			// Ein paar Debug-Ausgaben
 			if (akontext != null) {
-				LOG.debug("Aufrufkontext erfolgreich ermittelt für Benutzer " + akontext.getDurchfuehrenderBenutzerKennung());
+				LOG.debugFachdaten("Aufrufkontext erfolgreich ermittelt für Benutzer: {}", akontext.getDurchfuehrenderBenutzerKennung());
 				
 			} else {
-				LOG.debug("Kein Aufrufkontext im LoginVerwalter vorhangen (Return war null)");
+				LOG.debug("Kein Aufrufkontext im LoginVerwalter vorhangen (null value)");
 			}
 			super.setAufrufKontext(akontext);
 		}		
@@ -86,10 +83,10 @@ public class SessionAufrufKontextVerwalter<T extends SerializableAufrufKontextIm
 
 		// Ein paar Debug-Ausgaben
 		if (akontext != null) {
-			LOG.debug("Speichere Aufrufkontext in LoginVerwalter für Benutzer " + akontext.getDurchfuehrenderBenutzerKennung());
+			LOG.debugFachdaten("Speichere Aufrufkontext in LoginVerwalter für Benutzer: {}",  akontext.getDurchfuehrenderBenutzerKennung());
 			
 		} else {
-			LOG.debug("Speichere Aufrufkontext 'null' in LoginVerwalter");
+			LOG.debug("Speichere Aufrufkontext {} in LoginVerwalter", akontext);
 		}
 		super.setAufrufKontext(akontext);
 	}

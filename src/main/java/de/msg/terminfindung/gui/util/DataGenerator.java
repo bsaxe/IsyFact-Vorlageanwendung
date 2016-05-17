@@ -1,5 +1,11 @@
 package de.msg.terminfindung.gui.util;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.bund.bva.pliscommon.konfiguration.common.ReloadableKonfiguration;
+
 /*
  * #%L
  * Terminfindung
@@ -22,12 +28,7 @@ package de.msg.terminfindung.gui.util;
 
 
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
-import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Generierung von Testdaten für manuelle Tests.
@@ -39,11 +40,12 @@ public class DataGenerator {
     /**
      * Erzeugte eine Dummy-Liste von Tagen mit Zeiträumen.
      * Zum Befüllen des Modells für Testzwecke gedacht.
+     * @param reloadableKonfiguration 
      *
      * @return Eine fest vorgegebene Test-Liste mit Terminen
      */
-    public static List<TagModel> generateTage()  {
-
+    public static List<TagModel> generateTage(ReloadableKonfiguration reloadableKonfiguration)  {
+    	DecimalFormat format = new DecimalFormat("00");		
         // Erzeuge eine Liste von drei Tagen
        List<TagModel> tage = new ArrayList<>();
         for (int i=0; i<=2; i++) {
@@ -51,6 +53,8 @@ public class DataGenerator {
             TagModel tag = new TagModel();
             // Tage beginnem vom aktuellen Datum an
             tag.setDatum(DateUtil.getNDaysFromToday(i));
+            tag.setVonZeitraum(reloadableKonfiguration.getAsString("termin.start.vorgabe"));
+            tag.setBisZeitraum(reloadableKonfiguration.getAsString("termin.ende.vorgabe"));
             tage.add(tag);
 
             // Erzeuge drei Zeiträume für jeden Tage
@@ -58,11 +62,22 @@ public class DataGenerator {
             for (int j=0; j<=2; j++) {
 
                 ZeitraumModel zeitraum = new ZeitraumModel();
-                zeitraum.setBeschreibung("Tag "+ i + ", Zeitraum " + j);
+                zeitraum.setBeschreibung( format.format(j+8) + ":00 - " + format.format(j+9) + ":00");
                 zeitraeume.add(zeitraum);
             }
             tag.setZeitraeume(zeitraeume);
         }
         return tage;
+    }
+    
+    public static List<String> getUhrzeitAuswahl(){
+    	List<String> uhrzeitAuswahl = new ArrayList<>();    
+    	DecimalFormat format = new DecimalFormat("00");
+    	for (int h = 0; h < 24; h++) {
+			for (int m = 0; m < 60; m=m+15) {								
+				uhrzeitAuswahl.add(format.format(h)+":" + format.format(m));				
+			}
+		}
+    	return uhrzeitAuswahl;
     }
 }

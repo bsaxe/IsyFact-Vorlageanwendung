@@ -21,14 +21,7 @@ package de.msg.terminfindung.persistence.entity;
  */
 
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: Teilnehmer
@@ -36,42 +29,25 @@ import javax.persistence.Table;
  * @author msg systems ag, Maximilian Falter
  */
 @Entity
-@Table(name = "teilnehmer")
-public class Teilnehmer implements Serializable {
+public class Teilnehmer extends AbstraktEntitaet {
+    private static final long serialVersionUID = 1L;
 
-	   
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "teilnehmer_nr")
-	private long teilnehmer_Nr;
-	
-	
-	@Column(name = "name")
-	private String name = "";
-	private static final long serialVersionUID = 1L;
-		
-	public Teilnehmer() {
-		super();
-			}   
-		
-	public Teilnehmer(String name) {
-		super();
-		this.name = name;
-	}
+    private String name;
 
-	public long getTeilnehmer_Nr() {
-		return this.teilnehmer_Nr;
-	}
+    public Teilnehmer() {
 
-	public void setTeilnehmer_Nr(long TeilnehmerNr) {
-		this.teilnehmer_Nr = TeilnehmerNr;
-	}   
-	public String getName() {
-		return this.name;
-	}
+    }
 
-	public void setName(String Name) {
-		this.name = Name;
-	}
+    public Teilnehmer(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String Name) {
+        this.name = Name;
+    }
 
 }
