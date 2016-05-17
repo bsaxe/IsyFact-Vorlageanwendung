@@ -23,6 +23,7 @@
                 <value>/resources/nachrichten/gui-linksnavigation.properties</value>
                 <value>/config/plis-webgui.properties</value>
                 <value>/config/terminfindung.properties</value>
+                <value>/config/jpa.properties</value>
             </list>
         </constructor-arg>
     </bean>
@@ -36,6 +37,7 @@
                 <value>classpath:/resources/nachrichten/gui-linksnavigation.properties</value>
                 <value>classpath:/config/plis-webgui.properties</value>
                 <value>classpath:/config/terminfindung.properties</value>
+                <value>classpath:/config/jpa.properties</value>
             </list>
         </property>
         <property name="order" value="100"/>

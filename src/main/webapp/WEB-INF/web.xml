@@ -122,7 +122,7 @@
     <servlet>
 		<servlet-name>loadbalancer</servlet-name>
 		<servlet-class>de.bund.bva.pliscommon.ueberwachung.service.loadbalancer.LoadbalancerServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>1</load-on-startup>		
 	</servlet>
     <servlet-mapping>
         <servlet-name>remoting</servlet-name>

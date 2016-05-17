@@ -89,8 +89,7 @@
         </bean>
     </beans>
 
-    <beans profile="entwicklung">
-        <context:property-placeholder location="classpath:config/jpa.properties"/>
+    <beans profile="entwicklung">        
 
         <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource" primary="true">
             <property name="URL" value="${jdbc.url}"/>
