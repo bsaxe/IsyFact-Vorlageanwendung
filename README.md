@@ -7,7 +7,10 @@ Die Vorlageanwendung der IsyFact zeigt anhand einer Anwendung zur gemeinsamen Pl
 In Kürze finden Sie hier eine Beschreibung, wie Sie eine Entwicklungsumgebung für die Vorlageanwendung aufbauen.
 
 ### Spring-Profile
-Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarbeit leichter zu gestalten. Das Profil `produktion` ist als Standard voreingestellt und startet die Anwendung unter Produktionsbedingungen. Das Profil `entwicklung` ist für den Betrieb innerhalb einer Entwicklungsumgebung vorgesehen und verwendet u.a. eine In-Memory-Datenbank.
+Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarbeit leichter zu gestalten. Das Profil `produktion` ist als Standard voreingestellt und startet die Anwendung unter Produktionsbedingungen. Das Profil `test` wird während der Ausführung von Tests verwendet und deaktiviert den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit. Das Profil `entwicklung` ist für den Betrieb innerhalb einer Entwicklungsumgebung vorgesehen und verwendet u.a. eine In-Memory-Datenbank (H2).
+
+### Maven-Profile
+Die Vorlageanwendung definiert das Maven-Profil `entwicklung`, das im Unterschied zum Standard-Profil eine In-Memory-Datenbank (H2) als Abhängigkeit definiert. Das Profil wird während der Entwicklung und zur Durchführung von Entwicklertests benutzt.
 
 ## IsyFact
 Die IsyFact ist eine Software Factory für den Bau von komplexen IT-Anwendungslandschaften, die vom Bundesverwaltungsamt entwickelt wurde. Sie bündelt bestehendes technisches Know-how um Anwendungssysteme effizienter entwickeln und betreiben zu können.
