@@ -1,4 +1,4 @@
-# IsyFact-Vorlageanwendung
+er# IsyFact-Vorlageanwendung
 Die Vorlageanwendung der IsyFact zeigt anhand einer Anwendung zur gemeinsamen Planung von Terminen die Möglichkeiten der IsyFact. Sie bietet dadurch ein leichten Einstieg in die Entwicklung mit der IsyFact und steht sowohl als Leitfaden als auch als Nachschlagewerk für die Entwicklung weiterer Anwendungen auf Basis der IsyFact zur Verfügung.
 
 **Wichtig:** Der aktuelle Stand der Anwendung entspricht dem einer Alpha-Version. Die Anwendung ist lauffähig und demonstriert bereits den Einsatz von Teilen der IsyFact-Standards. Sie ist allerdings nicht als fertig zu betrachten und kann möglicherweise gravierende Fehler beinhalten. Die Vorlageanwendung wird ständig von einem gemeinsamen Team des Bundesverwaltungsamts und der msg systems ag weiterentwickelt.
@@ -7,10 +7,14 @@ Die Vorlageanwendung der IsyFact zeigt anhand einer Anwendung zur gemeinsamen Pl
 In Kürze finden Sie hier eine Beschreibung, wie Sie eine Entwicklungsumgebung für die Vorlageanwendung aufbauen.
 
 ### Spring-Profile
-Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarbeit leichter zu gestalten. Das Profil `produktion` ist als Standard voreingestellt und startet die Anwendung unter Produktionsbedingungen. Das Profil `test` wird während der Ausführung von Tests verwendet und deaktiviert den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit. Das Profil `entwicklung` ist für den Betrieb innerhalb einer Entwicklungsumgebung vorgesehen und verwendet u.a. eine In-Memory-Datenbank (H2).
+Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarbeit leichter zu gestalten:
+* `produktion`: Ist als Standard voreingestellt und startet die Anwendung unter Produktionsbedingungen.
+* `test-unit`: Wird für die Ausführung von Komponententests benutzt. Verwendet eine In-Memory-Datenbank.
+* `test-integration`: Wird für die Ausführung von Integrationstests benutzt. Startet die komplette Anwendung, verwendet aber eine In-Memory-Datenbank (H2) und deaktiviert den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit.
+* `entwicklung`: Ist für den Betrieb innerhalb einer Entwicklungsumgebung vorgesehen. Verwendet eine H2-Datenbank und deaktiviert die Überwachung der Anwendung, den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit.
 
 ### Maven-Profile
-Die Vorlageanwendung definiert das Maven-Profil `entwicklung`, das im Unterschied zum Standard-Profil eine In-Memory-Datenbank (H2) als Abhängigkeit definiert. Das Profil wird während der Entwicklung und zur Durchführung von Entwicklertests benutzt.
+Die Vorlageanwendung definiert das Maven-Profil `entwicklung`, das im Unterschied zum Standard-Profil eine In-Memory-Datenbank (H2) als Abhängigkeit definiert. Das Profil wird während der Entwicklung und zur Durchführung von Komponenten- sowie Integrationstests benutzt.
 
 ## IsyFact
 Die IsyFact ist eine Software Factory für den Bau von komplexen IT-Anwendungslandschaften, die vom Bundesverwaltungsamt entwickelt wurde. Sie bündelt bestehendes technisches Know-how um Anwendungssysteme effizienter entwickeln und betreiben zu können.

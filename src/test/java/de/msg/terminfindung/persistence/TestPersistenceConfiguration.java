@@ -9,11 +9,8 @@ import de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerZeitraumDao;
 import de.msg.terminfindung.persistence.dao.jpa.JpaTerminfindungDao;
 import org.h2.jdbcx.JdbcDataSource;
 import org.hibernate.ejb.HibernatePersistence;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -37,22 +34,12 @@ import javax.sql.DataSource;
 @Configuration
 @ActiveProfiles(TestProfile.UNIT_TEST)
 @EnableTransactionManagement
-@PropertySource("classpath:/config/jpa.properties")
 public class TestPersistenceConfiguration {
 
     @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
-
-    @Bean
-    public DataSource dataSource(@Value("${database.url}") String url,
-                                 @Value("${database.user}") String user,
-                                 @Value("${database.password}") String password) {
+    public DataSource dataSource() {
         JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setUrl(url);
-        dataSource.setUser(user);
-        dataSource.setPassword(password);
+        dataSource.setUrl("jdbc:h2:mem:test-unit;MODE=Oracle;DB_CLOSE_DELAY=-1");
         return dataSource;
     }
 
