@@ -24,6 +24,7 @@ package de.msg.terminfindung.persistence.dao;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import de.msg.terminfindung.common.konstanten.TestProfile;
+import de.msg.terminfindung.persistence.TestPersistenceConfiguration;
 import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Profile;
@@ -42,7 +43,7 @@ import javax.persistence.PersistenceContext;
  * Hilfe entsprechender {@link org.springframework.test.context.TestExecutionListeners} konfiguriert wird.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/test-persistence.xml"})
+@ContextConfiguration(classes = TestPersistenceConfiguration.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionDbUnitTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @Profile(TestProfile.UNIT_TEST)
