@@ -1,4 +1,4 @@
-er# IsyFact-Vorlageanwendung
+# IsyFact-Vorlageanwendung
 Die Vorlageanwendung der IsyFact zeigt anhand einer Anwendung zur gemeinsamen Planung von Terminen die Möglichkeiten der IsyFact. Sie bietet dadurch ein leichten Einstieg in die Entwicklung mit der IsyFact und steht sowohl als Leitfaden als auch als Nachschlagewerk für die Entwicklung weiterer Anwendungen auf Basis der IsyFact zur Verfügung.
 
 **Wichtig:** Der aktuelle Stand der Anwendung entspricht dem einer Alpha-Version. Die Anwendung ist lauffähig und demonstriert bereits den Einsatz von Teilen der IsyFact-Standards. Sie ist allerdings nicht als fertig zu betrachten und kann möglicherweise gravierende Fehler beinhalten. Die Vorlageanwendung wird ständig von einem gemeinsamen Team des Bundesverwaltungsamts und der msg systems ag weiterentwickelt.
