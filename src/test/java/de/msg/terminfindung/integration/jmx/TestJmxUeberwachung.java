@@ -1,4 +1,4 @@
-package de.msg.terminfindung.common.jmx;
+package de.msg.terminfindung.integration.jmx;
 
 /*
  * #%L
