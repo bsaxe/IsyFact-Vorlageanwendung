@@ -38,8 +38,8 @@
 	<bean id="statusLogger"
 		class=" de.bund.bva.isyfact.logging.util.LogApplicationListener">
 		<property name="systemart" value="${isylogging.systemart}" />
-		<property name="systemname" value="${appName}" />
-		<property name="systemversion" value="${appVersion}" />
+        <property name="systemname" value="${isylogging.application.name}"/>
+        <property name="systemversion" value="${isylogging.application.version}"/>
 	</bean>
     
 
