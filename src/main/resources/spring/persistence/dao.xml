@@ -72,13 +72,26 @@
     </bean>
 
     <beans profile="produktion">
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-              destroy-method="close" p:driverClassName="oracle.jdbc.OracleDriver"
-              p:url="jdbc:oracle:thin:@localhost:1521:XE" p:username="terminfindung"
-              p:password="terminfindung" p:maxActive="5" p:testOnBorrow="true"
-              p:timeBetweenEvictionRunsMillis="180000" p:numTestsPerEvictionRun="5"
-              p:validationQuery="SELECT 1 from dual" p:maxWait="10000">
-        </bean>
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close" p:driverClassName="oracle.jdbc.OracleDriver">
+			<property name="url">
+				<value>${database.url}</value>
+			</property>
+			<property name="username">
+				<value>${database.username}</value>
+			</property>
+			<property name="password">
+				<value>${database.password}</value>
+			</property>
+			
+			<property name="validationQuery" value="${database.test.query}" />
+			<property name="testOnBorrow" value="${database.test.onborrow}" />
+			<property name="maxActive" value="${database.connections.max.active}" />
+			<property name="timeBetweenEvictionRunsMillis" value="${database.test.evictionrun.millis}" />
+			<property name="numTestsPerEvictionRun" value="${database.test.evictionrun.numtests}" />
+			<property name="maxWait" value="${database.timeout.driver.connect}" />
+			
+		</bean>
 
         <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -90,17 +103,16 @@
             </property>
             <property name="jpaProperties">
                 <props>
-                    <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
-                    <prop key="hibernate.connection.isolation">4</prop>
-                    <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                    <prop key="hibernate.connection.isolation">${database.connection.isolation}</prop>
+                    <prop key="hibernate.hbm2ddl.auto">${database.schema.updatemode}</prop>
                     <prop key="hibernate.connection.useUnicode">true</prop>
                     <prop key="hibernate.connection.characterEncoding">utf-8</prop>
                     <prop key="hibernate.jdbc.batch_size">0</prop>
                     <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
-                    <prop key="hibernate.show_sql">false</prop>
-                    <prop key="hibernate.format_sql">false</prop>
-                    <prop key="hibernate.default_schema">terminfindung</prop>
-                    <prop key="hibernate.ejb.cfgfile">hibernate.cfg.xml</prop>
+                    <prop key="hibernate.show_sql">${database.show_sql}</prop>
+                    <prop key="hibernate.format_sql">${database.format_sql}</prop>
+                    <prop key="hibernate.default_schema">${database.schema.default}</prop>
                     <prop key="hibernate.ejb.metamodel.generation">enabled</prop>
                 </props>
             </property>
