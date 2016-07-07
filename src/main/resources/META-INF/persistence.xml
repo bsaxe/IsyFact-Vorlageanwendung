@@ -29,8 +29,5 @@
 		<class>de.msg.terminfindung.persistence.entity.Organisator</class>
 		<class>de.msg.terminfindung.persistence.entity.Tag</class>
 		<class>de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum</class>
-		<properties>
-			<property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml" />
-		</properties>
 	</persistence-unit>
 </persistence>

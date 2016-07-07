@@ -50,7 +50,6 @@ public class LoginController extends AbstractController<LoginModel> {
 	Sicherheit<AufrufKontextImpl> sicherheit;
 	AufrufKontextVerwalter<SerializableAufrufKontextImpl> aufrufKontextVerwalter;
 	
-	Sicherheit<AufrufKontextImpl> s;
 	/**
 	 * Initialisiert das Modell des Loeschen Flows
 	 *
