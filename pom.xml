@@ -9,7 +9,7 @@
     <packaging>war</packaging>
 
     <name>Terminfindung</name>
-    <description>Terminfindung - Eine Vorlageanwendung für die Software-Factory 'IsyFact'</description>
+    <description>Die Vorlageanwendung der Software-Factory 'IsyFact'</description>
     <url>https://github.com/IsyFact/IsyFact-Vorlageanwendung</url>
 
     <organization>
@@ -28,14 +28,14 @@
             <name>IsyFact-Team</name>
             <email>isyfact@bva.bund.de</email>
             <organization>Bundesverwaltungsamt (BVA)</organization>
-            <organizationUrl>http://www.isyfact.de</organizationUrl>
+            <organizationUrl>http://www.bva.bund.de</organizationUrl>
         </developer>
     </developers>
 
     <scm>
         <connection>scm:git:git@github.com:IsyFact/IsyFact-Vorlageanwendung.git</connection>
         <developerConnection>scm:git:git@github.com:IsyFact/IsyFact-Vorlageanwendung.git</developerConnection>
-        <url>git@github.com:IsyFact/IsyFact-Vorlageanwendung.git</url>
+        <url>https://github.com/IsyFact/IsyFact-Vorlageanwendung</url>
     </scm>
 
     <properties>
