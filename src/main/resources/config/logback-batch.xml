@@ -36,19 +36,19 @@
         <appender-ref ref="KONSOLE"/>
     </root>
 
-    <logger name="org.springframework" level="INFO" additivity="false">
+    <logger name="org.springframework" level="WARN" additivity="false">
         <appender-ref ref="KONSOLE"/>
     </logger>
-    <logger name="org.hibernate" level="INFO" additivity="false">
+    <logger name="org.hibernate" level="WARN" additivity="false">
         <appender-ref ref="KONSOLE"/>
     </logger>
-    <logger name="net.sf.ehcache" level="INFO" additivity="false">
+    <logger name="net.sf.ehcache" level="WARN" additivity="false">
         <appender-ref ref="KONSOLE"/>
     </logger>
-    <logger name="org.dozer" level="INFO" additivity="false">
+    <logger name="org.dozer" level="WARN" additivity="false">
         <appender-ref ref="KONSOLE"/>
     </logger>
-    <logger name="org.apache.commons" level="INFO" additivity="false">
+    <logger name="org.apache.commons" level="WARN" additivity="false">
         <appender-ref ref="KONSOLE"/>
     </logger>
 </configuration>
