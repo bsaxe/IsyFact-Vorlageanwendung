@@ -22,18 +22,32 @@ package de.msg.terminfindung.common.konstanten;
 
 /**
  * iese Klasse enthält die Konstanten Ereitgnissschluessel
- * @author vadim
  *
+ * @author vadim
  */
 public abstract class EreignisSchluessel {
-	
-	/** Login im Gange */
-	public static final String MSG_LOGIN_STARTED = "USR00010";
-	/**	Benutzer eingeloggt */
-	public static final String MSG_LOGIN_SUCCESS = "USR00011";
-	/** Authenifizierung fehlgeschlagen */
-	public static final String MSG_LOGIN_FAILED = "USR00012";
-	
-	/** Hole Terminfindung */
-	public static final String MSG_TERMINFINDUNG_GET = "USR00020";
+
+    /**
+     * Login im Gange
+     */
+    public static final String MSG_LOGIN_STARTED = "USR00010";
+    /**
+     * Benutzer eingeloggt
+     */
+    public static final String MSG_LOGIN_SUCCESS = "USR00011";
+    /**
+     * Authenifizierung fehlgeschlagen
+     */
+    public static final String MSG_LOGIN_FAILED = "USR00012";
+
+    /**
+     * Hole Terminfindung
+     */
+    public static final String MSG_TERMINFINDUNG_GET = "USR00020";
+
+    public static final String MSG_BATCH_START_NEU = "BAT00001";
+    public static final String MSG_BATCH_START_WIEDERHOLUNG = "BAT00002";
+    public static final String MSG_BATCH_CHECKPOINT = "BAT00003";
+    public static final String MSG_BATCH_ROLLBACK = "BAT00004";
+    public static final String MSG_BATCH_BEENDET = "BAT00005";
 }

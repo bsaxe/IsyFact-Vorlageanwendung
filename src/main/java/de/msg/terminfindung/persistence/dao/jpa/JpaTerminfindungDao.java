@@ -22,10 +22,25 @@ package de.msg.terminfindung.persistence.dao.jpa;
 
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
+
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Implementierung fuer die TerminfindungDAO
- * @author msg systems ag, Maximilian Falter
  *
+ * @author msg systems ag, Maximilian Falter
  */
-public class JpaTerminfindungDao extends AbstraktJpaDao<Terminfindung> implements TerminfindungDao{
+public class JpaTerminfindungDao extends AbstraktJpaDao<Terminfindung> implements TerminfindungDao {
+
+    @Override
+    public List<Terminfindung> sucheVor(Date datum) {
+        TypedQuery<Terminfindung> q = getEntityManager().createNamedQuery("terminfindung.vor", Terminfindung.class);
+        q.setParameter("datum", datum, TemporalType.DATE);
+
+        return q.getResultList();
+    }
+
 }
