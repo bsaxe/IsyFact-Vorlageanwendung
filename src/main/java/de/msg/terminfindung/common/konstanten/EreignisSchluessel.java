@@ -25,7 +25,7 @@ package de.msg.terminfindung.common.konstanten;
  * @author vadim
  *
  */
-public abstract class EreignissSchluessel {
+public abstract class EreignisSchluessel {
 	
 	/** Login im Gange */
 	public static final String MSG_LOGIN_STARTED = "USR00010";
