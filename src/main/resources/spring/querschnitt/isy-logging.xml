@@ -35,23 +35,19 @@
         <property name="loggeDatenBeiException" value="${isylogging.boundary.loggeDatenBeiException}"/>
     </bean>
 
-	<bean id="statusLogger"
-		class=" de.bund.bva.isyfact.logging.util.LogApplicationListener">
-		<property name="systemart" value="${isylogging.systemart}" />
+    <bean id="statusLogger"
+          class=" de.bund.bva.isyfact.logging.util.LogApplicationListener">
+        <property name="systemart" value="${isylogging.systemart}"/>
         <property name="systemname" value="${isylogging.application.name}"/>
         <property name="systemversion" value="${isylogging.application.version}"/>
-	</bean>
-    
+    </bean>
+
 
     <!-- AOP-Advice für das Logging konfigurieren -->
     <aop:config>
-
         <!-- Pointcuts an den Komponentengrenzen -->
         <aop:advisor order="1000" advice-ref="componentLogInterceptor"
-                     pointcut="target(de.msg.terminfindung.core.erstellung.Erstellung) or
-					target(de.msg.terminfindung.core.teilnahme.Teilnahme) or
-					target(de.msg.terminfindung.core.verwaltung.Verwaltung) or
-					target(de.msg.terminfindung.core.datenpflege.Datenpflege)"/>
+                     pointcut="execution (public * de.msg.terminfindung.core.*.*.*(..))"/>
     </aop:config>
 
 </beans>
