@@ -1,8 +1,8 @@
 package de.msg.terminfindung.core.datenpflege.impl;
 
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.core.datenpflege.Datenpflege;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
-import de.msg.terminfindung.persistence.entity.Terminfindung;
 
 import java.util.Date;
 
@@ -13,16 +13,14 @@ import java.util.Date;
  */
 public class DatenpflegeImpl implements Datenpflege {
 
-    private final TerminfindungDao terminfindungDao;
+    private final AwfVergangeneTermineLoeschen awfVergangeneTermineLoeschen;
 
     public DatenpflegeImpl(TerminfindungDao terminfindungDao) {
-        this.terminfindungDao = terminfindungDao;
+        awfVergangeneTermineLoeschen = new AwfVergangeneTermineLoeschen(terminfindungDao);
     }
 
     @Override
-    public void loescheVergangeneTerminfindungen(Date loeschFrist) {
-        for (Terminfindung tf : terminfindungDao.sucheVor(loeschFrist)) {
-            terminfindungDao.loesche(tf);
-        }
+    public void loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException {
+        awfVergangeneTermineLoeschen.loescheVergangeneTerminfindungen(stichtag);
     }
 }

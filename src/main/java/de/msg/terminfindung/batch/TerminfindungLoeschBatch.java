@@ -11,10 +11,14 @@ import de.bund.bva.pliscommon.batchrahmen.batch.rahmen.BatchAusfuehrungsBean;
 import de.bund.bva.pliscommon.batchrahmen.batch.rahmen.BatchStartTyp;
 import de.bund.bva.pliscommon.batchrahmen.batch.rahmen.VerarbeitungsErgebnis;
 import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
+import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.konstanten.EreignisSchluessel;
 import de.msg.terminfindung.common.konstanten.KonfigurationSchluessel;
 import de.msg.terminfindung.core.datenpflege.Datenpflege;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,7 +36,7 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
 
     private final Konfiguration betrieblicheKonfiguration;
 
-    private Date loeschFrist;
+    private Date loeschfrist;
 
     private boolean testmodus;
 
@@ -59,13 +63,15 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
         // Ermittle Löschfrist
         loeschfristBerechnung.add(Calendar.DAY_OF_MONTH, (int) -loeschfristInTagen);
 
-        loeschFrist = loeschfristBerechnung.getTime();
+        loeschfrist = loeschfristBerechnung.getTime();
 
         boolean restart = startTyp == BatchStartTyp.RESTART;
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        String startMeldung = MessageSourceHolder.getMessage("batch.loeschen.start", format.format(loeschfrist));
         if (restart) {
-            LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_START_WIEDERHOLUNG, "Löschbatch wird wiederholt.");
+            LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_START_WIEDERHOLUNG, startMeldung);
         } else {
-            LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_START_NEU, "Löschbatch gestartet.");
+            LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_START_NEU, startMeldung);
         }
         return 0;
     }
@@ -73,7 +79,11 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
     @Override
     public VerarbeitungsErgebnis verarbeiteSatz() throws BatchAusfuehrungsException {
         if (!testmodus) {
-            datenpflege.loescheVergangeneTerminfindungen(loeschFrist);
+            try {
+                datenpflege.loescheVergangeneTerminfindungen(loeschfrist);
+            } catch (TerminfindungBusinessException tbe) {
+                throw new BatchAusfuehrungsException(tbe);
+            }
         }
 
         return new VerarbeitungsErgebnis(null, true);

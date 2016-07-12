@@ -44,6 +44,11 @@ public abstract class FehlerSchluessel {
     /** Die im Parameter {0} übergebene Liste ist leer */
     public static final String MSG_LISTE_LEER = "TRMIN90002";
 
+    /**
+     * Der übergebene Parameter {0} darf nicht in der Zukunft liegen und besitzt den ungültigen Wert {1}.
+     */
+    public static final String MSG_PARAMETER_DATUM_ZUKUNFT = "TRMIN90003";
+
     /**Die übergebene Terminfindungsnummer {0} konnte nicht in einen Long-Wert konvertiert werden.*/
     public static final String MSG_TERMINFINDUNGSNR_NICHT_KONVERTIERBAR = "TRMIN91000";
 

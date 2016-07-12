@@ -50,7 +50,8 @@
         <aop:advisor order="1000" advice-ref="componentLogInterceptor"
                      pointcut="target(de.msg.terminfindung.core.erstellung.Erstellung) or
 					target(de.msg.terminfindung.core.teilnahme.Teilnahme) or
-					target(de.msg.terminfindung.core.verwaltung.Verwaltung)"/>
+					target(de.msg.terminfindung.core.verwaltung.Verwaltung) or
+					target(de.msg.terminfindung.core.datenpflege.Datenpflege)"/>
     </aop:config>
 
 </beans>

@@ -36,6 +36,15 @@
         <appender-ref ref="KONSOLE"/>
     </root>
 
+    <logger name="de.bund.bva.pliscommon.batchrahmen" level="INFO" additivity="false">
+        <appender-ref ref="KONSOLE"/>
+    </logger>
+    <logger name="de.bund.bva.pliscommon" level="WARN" additivity="false">
+        <appender-ref ref="KONSOLE"/>
+    </logger>
+    <logger name="de.bund.bva.isyfact" level="WARN" additivity="false">
+        <appender-ref ref="KONSOLE"/>
+    </logger>
     <logger name="org.springframework" level="WARN" additivity="false">
         <appender-ref ref="KONSOLE"/>
     </logger>

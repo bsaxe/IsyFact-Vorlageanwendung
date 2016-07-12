@@ -39,7 +39,6 @@ public class JpaTerminfindungDao extends AbstraktJpaDao<Terminfindung> implement
     public List<Terminfindung> sucheVor(Date datum) {
         TypedQuery<Terminfindung> q = getEntityManager().createNamedQuery("terminfindung.vor", Terminfindung.class);
         q.setParameter("datum", datum, TemporalType.DATE);
-
         return q.getResultList();
     }
 
