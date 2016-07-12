@@ -23,6 +23,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+	xmlns:tf="http://bva.bund.de/jsf/facelets/terminfindung"
 	xmlns:debug="http://java.sun.com/jsf/composite/debug"
 	template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
@@ -41,9 +42,9 @@
 									label="Titel der Veranstaltung" required="true" />
 								<isy:formInput reference="orgName" value="#{erstellenModel.orgName}"
 									label="Ihr Name" required="true" />
-								<isy:formDate reference="stringTempDate"
-									value="#{erstellenModel.stringTempDate}" label="Tag ausw&auml;hlen"
-									placeholder="#{erstellenModel.stringPlaceholderDate}" />
+								<isy:formDate reference="newDate"
+									value="#{erstellenModel.newDate}" label="Tag ausw&auml;hlen"
+									placeholder="#{erstellenModel.placeholderDate}" />
 								<isy:button styleClass="buttonTerminAdd" action="add"
 									value="Tag hinzufügen" />
 							</div>
@@ -54,9 +55,7 @@
 										styleClass="chosenTable">
 										<h:column>
 											<f:facet name="header">Ausgew&auml;hlte Tage:</f:facet>
-											<h:outputText value="#{tag.datum}">
-												<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-											</h:outputText>
+											<h:outputText value="#{tag.datum}"/>
 										</h:column>
 										<h:column>
 											<h:commandLink action="loeschen">
