@@ -1,6 +1,5 @@
 package de.msg.terminfindung.gui.terminfindung.erstellen;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -13,7 +12,6 @@ import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
@@ -55,7 +53,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
         super.initialisiereModell(model);
 
         // Platzhalter für Anzeige in Datums-Eingabefeld
-        model.setStringPlaceholderDate(DateUtil.format(DateUtil.getNDaysFromToday(1)));
+        model.setPlaceholderDate(DateUtil.format(DateUtil.getNDaysFromToday(1)));
 
         if (model.isTestMode()) {
             LOG.debug("TestMode: Erzeuge Tage");
@@ -72,59 +70,80 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
      */
     public void fuegeDatumHinzu(ErstellenModel model) {
 
-        Date addedDate;
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
-        // maximale Anzahl von Tagen schon vorhanden?
-        if (model.getTage().size() >= getKonfiguration().getAsInteger("termin.tag.max.number")) {
+        if (istValideEingabe(model, validationMessages))
+        {
+        	Date neuesDatum = model.getNewDate();
+        	fuegeDatumZuModelHinzu(neuesDatum, model);
+        }
+        else
+        {
+        	globalFlowController.getValidationController().processValidationMessages(validationMessages);
+        }
+    }
+    
+    private void fuegeDatumZuModelHinzu(Date datum, ErstellenModel model)
+    {
+        LOG.debug("Füge Tag hinzu.");
+        TagModel tag = new TagModel();
+        tag.setDatum(datum);
+        tag.setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
+        tag.setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
+        model.getTage().add(tag);
+        Collections.sort(model.getTage());
+    }
+    
+    private boolean istValideEingabe(ErstellenModel model, List<ValidationMessage> validationMessages)
+    {
+    	if (maxAnzahlTageUeberschritten(model)) {
             validationMessages.add(new ValidationMessage("DA",
-                    "stringTempDate", "Datum",
+                    "newDate", "Datum",
                     "Bereits max. Anzahl an Daten hinzugefügt"));
+            return false;
         }
-        // keine Eingabe vorhanden
-        else if (model.getStringTempDate() == null || model.getStringTempDate().equals("")) {
+        else if (keineEingabe(model)) {
             validationMessages.add(new ValidationMessage("DA",
-                    "stringTempDate", "Datum", "Benötigtes Feld"));
+                    "newDate", "Datum", "Benötigtes Feld"));
+            return false;
         }
-        // konvertiere in Datumsobjekt für weitere Prüfungen
-        else try {
-                addedDate = DateUtil.convertDate(model.getStringTempDate());
-                // Datum darf nicht in der Vergangenheit liegen
-                if (!DateUtil.getYesterday().before(addedDate)) {
-                    validationMessages
-                            .add(new ValidationMessage("DA", "stringTempDate",
-                                    "Datum",
-                                    "Das Datum darf nicht in der Vergangenheit liegen"));
-                }
-                // Datum darf nicht schon vorhanden sein
-                else if (DateUtil.containsDay(model.getTage(), addedDate)) {
-                    validationMessages.add(new ValidationMessage("DA",
-                            "stringTempDate", "Datum",
-                            "Datum bereits hinzugefügt"));
-                }
-                // alle Tests bis hierhin bestanden, dann füge neuen Tag hinzu.
-                else {
-                    LOG.debug("Füge Tag hinzu.");
-                    // erzeuge ein neues Objekt für den Tag
-                    TagModel tag = new TagModel();
-                    // setze in dem neuen Objekt die Zeitraum-Objekte
-                    //erzeugeZeitraeume(tag);
-                    // setze das Datum
-                    tag.setDatum(addedDate);
-                    tag.setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
-                    tag.setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
-                    // füge den Tag zum Model hinzu
-                    model.getTage().add(tag);
-                    Collections.sort(model.getTage());
-                    return;
-                }
-
-            } catch (ParseException pe) {
-                validationMessages.add(new ValidationMessage("DA",
-                        "stringTempDate", "Datum",
-                        "Geben Sie ein gültiges Datum ein"));
-            }
-        this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
+    	
+	 	Date addedDate = model.getNewDate();
+        if (datumLiegtInVergangenheit(addedDate)) {
+            validationMessages
+                    .add(new ValidationMessage("DA", "newDate",
+                            "Datum",
+                            "Das Datum darf nicht in der Vergangenheit liegen"));
+            return false;
+        }
+        else if (datumBereitsVorhanden(model, addedDate)) {
+            validationMessages.add(new ValidationMessage("DA",
+                    "newDate", "Datum",
+                    "Datum bereits hinzugefügt"));
+            return false;
+        }
+    	
+    	return true;
+    }
+    
+    private boolean maxAnzahlTageUeberschritten(ErstellenModel model)
+    {
+    	return model.getTage().size() >= getKonfiguration().getAsInteger("termin.tag.max.number");
+    }
+    
+    private boolean keineEingabe(ErstellenModel model)
+    {
+    	return model.getNewDate() == null || model.getNewDate().equals("");
+    }
+    
+    private boolean datumLiegtInVergangenheit(Date date)
+    {
+    	return !DateUtil.getYesterday().before(date);
+    }
+    
+    private boolean datumBereitsVorhanden(ErstellenModel model, Date date)
+    {
+    	return DateUtil.containsDay(model.getTage(), date);
     }
 
     /**

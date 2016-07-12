@@ -32,9 +32,7 @@
             <ui:repeat var="tag" value="#{terminfindung.tage}">
                 <th class="borderTd #{tag.zeitraeume.contains(terminfindung.defZeitraum) ? 'ausgewaehlt' : ''}"
                     colspan="#{tag.zeitraeume.size()}">
-                    <h:outputText value="#{tag.datum}">
-                        <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
-                    </h:outputText>
+                    <h:outputText value="#{tag.datum}"/>
                 </th>
             </ui:repeat>
         </tr>

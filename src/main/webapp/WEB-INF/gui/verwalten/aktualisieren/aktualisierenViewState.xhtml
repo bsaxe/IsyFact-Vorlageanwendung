@@ -55,12 +55,8 @@
 								value="Die Terminfindung für diese Veranstaltung ist abgeschlossen." />
 							<br />
 							<h:outputText value="Der ausgewählte Termin ist der " />
-							<h:outputText
-								value="#{aktualisierenModel.terminfindung.defZeitraum.tag.datum}">
-								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-							</h:outputText>
-							<h:outputText
-								value=" (Zeitraum: #{aktualisierenModel.terminfindung.defZeitraum.beschreibung})." />
+							<h:outputText value="#{aktualisierenModel.terminfindung.defZeitraum.tag.datum}"/>
+							<h:outputText value=" (Zeitraum: #{aktualisierenModel.terminfindung.defZeitraum.beschreibung})." />
 						</p>
 					</h:panelGroup>
 					<div class="row row-df">

@@ -29,17 +29,10 @@
             <h:panelGroup>
 						<p>							
 							<h:outputText value="Die Terminfindung wurde am " />
-							<h:outputText
-								value="#{terminfindung.createDate}">
-								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-							</h:outputText>
-							<h:outputText
-								value=" erstellt" />
+							<h:outputText value="#{terminfindung.createDate}"/>
+							<h:outputText value=" erstellt" />
 							<h:outputText rendered="#{terminfindung.updateDate ne null}" value=" und zuletzt von #{terminfindung.organisator.name} am "/>
-							<h:outputText rendered="#{terminfindung.updateDate ne null}"
-								value="#{terminfindung.updateDate}">
-								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-							</h:outputText>
+							<h:outputText rendered="#{terminfindung.updateDate ne null}" value="#{terminfindung.updateDate}"/>
 							<h:outputText rendered="#{terminfindung.updateDate ne null}" value=" aktualisiert" />
 							<h:outputText value="." />
 						</p>
