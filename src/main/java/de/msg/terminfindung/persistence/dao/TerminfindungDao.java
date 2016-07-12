@@ -22,10 +22,22 @@ package de.msg.terminfindung.persistence.dao;
 
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * DAO fuer den Zugriff auf die Entity Terminfindung
  *
  * @author msg systems ag, Maximilian Falter
  */
 public interface TerminfindungDao extends AbstraktDao<Terminfindung> {
+
+    /**
+     * Sucht alle Terminfindungen, die vor dem angegebenen Datum stattgefunden haben.
+     *
+     * @param datum Stichtag
+     * @return eine Liste mit den gefundenen Terminfindungen.
+     */
+    List<Terminfindung> sucheVor(Date datum);
+
 }

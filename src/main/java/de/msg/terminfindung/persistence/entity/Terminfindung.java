@@ -33,6 +33,8 @@ import java.util.List;
  *
  * @author msg systems ag, Maximilian Falter
  */
+@NamedQueries({@NamedQuery(name = "terminfindung.vor", query =
+        "select tf from Terminfindung tf join tf.termine as t where tf.defZeitraum in elements(t.zeitraeume) and t.datum <= :datum")})
 @Entity
 public class Terminfindung extends AbstraktEntitaet {
     private static final long serialVersionUID = 1L;
@@ -61,16 +63,16 @@ public class Terminfindung extends AbstraktEntitaet {
     @JoinColumn(name = "terminfindung_id")
     @OrderBy("name ASC")
     private List<Teilnehmer> teilnehmer = new ArrayList<>();
-    
+
     /**
      * Erstellungsdatum der Terminfindung
      */
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
-    
+
     /**
-     * Letztes Bearbeitungsdatum der Terminfinung (Schließt die Bearbeitung der Teilnehmerliste oder 
-     * des Mappings der Teilnehmer zu Zeiträumen nicht mit ein)
+     * Letztes Bearbeitungsdatum der Terminfinung (Schließt die Bearbeitung der Teilnehmerliste oder des Mappings der
+     * Teilnehmer zu Zeiträumen nicht mit ein)
      */
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
@@ -122,25 +124,25 @@ public class Terminfindung extends AbstraktEntitaet {
 
     public void setOrganisator(Organisator organisator) {
         this.organisator = organisator;
-    }    
+    }
 
     public Date getCreateDate() {
-		return createDate;
-	}
+        return createDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	public Date getUpdateDate() {
-		return updateDate;
-	}
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
-	/**
+    /**
      * Sucht in einer Terminfindung nach einem Zeitraum mit der angegebenen Id.
      *
      * @param zeitraumId Die gesuchte Id

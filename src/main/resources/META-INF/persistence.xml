@@ -20,14 +20,17 @@
   -->
 
 <persistence version="2.1"
-	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="hibernatePersistence">
-		<class>de.msg.terminfindung.persistence.entity.Zeitraum</class>
-		<class>de.msg.terminfindung.persistence.entity.Teilnehmer</class>
-		<class>de.msg.terminfindung.persistence.entity.Terminfindung</class>
-		<class>de.msg.terminfindung.persistence.entity.Organisator</class>
-		<class>de.msg.terminfindung.persistence.entity.Tag</class>
-		<class>de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum</class>
-	</persistence-unit>
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="hibernatePersistence">
+        <!-- Batchrahmen -->
+        <mapping-file>resources/plis-batchrahmen/hibernate/hibernate-mapping.xml</mapping-file>
+        <!-- Anwendung -->
+        <class>de.msg.terminfindung.persistence.entity.Zeitraum</class>
+        <class>de.msg.terminfindung.persistence.entity.Teilnehmer</class>
+        <class>de.msg.terminfindung.persistence.entity.Terminfindung</class>
+        <class>de.msg.terminfindung.persistence.entity.Organisator</class>
+        <class>de.msg.terminfindung.persistence.entity.Tag</class>
+        <class>de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum</class>
+    </persistence-unit>
 </persistence>

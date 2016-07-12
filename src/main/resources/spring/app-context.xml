@@ -25,6 +25,7 @@
 
 	<import resource="spring-context.xml" />
 	<import resource="querschnitt/nachrichten.xml" />
+	<import resource="querschnitt/isy-aufrufkontext.xml"/>
 	<import resource="querschnitt/plis-sicherheit.xml" />
 	<import resource="querschnitt/plis-sicherheit-web.xml" />
 	<import resource="querschnitt/plis-konfiguration.xml" />
