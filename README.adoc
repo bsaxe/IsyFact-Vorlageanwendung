@@ -1,4 +1,11 @@
 = IsyFact-Vorlageanwendung
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 
 Die Vorlageanwendung der IsyFact zeigt anhand einer Anwendung zur gemeinsamen Planung von Terminen die Möglichkeiten der IsyFact. Sie bietet dadurch ein leichten Einstieg in die Entwicklung mit der IsyFact und steht sowohl als Leitfaden als auch als Nachschlagewerk für die Entwicklung weiterer Anwendungen auf Basis der IsyFact zur Verfügung.
 
