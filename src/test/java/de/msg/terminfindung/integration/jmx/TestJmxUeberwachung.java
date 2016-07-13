@@ -40,7 +40,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/spring/app-context.xml", "classpath:/spring/gui/controller.xml"})
+@ContextConfiguration(locations = {"/spring/app-context.xml", "/spring/gui/controller.xml"})
 @ActiveProfiles(TestProfile.INTEGRATION_TEST)
 public class TestJmxUeberwachung {
 

@@ -1,6 +1,5 @@
 package de.msg.terminfindung.persistence;
 
-import de.msg.terminfindung.common.konstanten.TestProfile;
 import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
 import de.msg.terminfindung.persistence.dao.TeilnehmerZeitraumDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
@@ -18,7 +17,6 @@ import org.springframework.orm.jpa.support.SharedEntityManagerBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -32,7 +30,6 @@ import javax.sql.DataSource;
  * @author Stefan Dellmuth, msg systems ag
  */
 @Configuration
-@ActiveProfiles(TestProfile.UNIT_TEST)
 @EnableTransactionManagement
 public class TestPersistenceConfiguration {
 
@@ -60,7 +57,7 @@ public class TestPersistenceConfiguration {
     }
 
     @Bean
-    public SharedEntityManagerBean entityManager(EntityManagerFactory emf) {
+    public SharedEntityManagerBean entityManagerFactoryBean(EntityManagerFactory emf) {
         SharedEntityManagerBean sharedEntityManager = new SharedEntityManagerBean();
         sharedEntityManager.setEntityManagerFactory(emf);
         return sharedEntityManager;

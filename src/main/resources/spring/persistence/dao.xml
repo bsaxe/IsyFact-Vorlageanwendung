@@ -22,14 +22,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
         http://www.springframework.org/schema/jdbc
         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-
-
 	    http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
@@ -72,32 +69,32 @@
     </bean>
 
     <beans profile="produktion">
-		<bean id="dataSource" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource"
-   		 	lazy-init="true">
-    		<property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource" />
-		    <property name="connectionPoolName" value="OracleUCP" />
-		    <property name="user" value="${database.username}" />
-		    <property name="password" value="${database.password}" />
-		    <property name="URL" value="${database.url}" />
-		    <property name="initialPoolSize" value="${database.connections.initial.size}" />
-		    <property name="minPoolSize" value="${database.connections.min.active}" />
-		    <property name="maxPoolSize" value="${database.connections.max.active}" />
-		    <property name="connectionWaitTimeout" value="${database.connections.wait.timeout}" />
-		    <property name="inactiveConnectionTimeout" value="${database.connections.inactive.timeout}" />
-		    <property name="timeToLiveConnectionTimeout" value="${database.connections.timetolive.timeout}" />
-		    <property name="abandonedConnectionTimeout" value="${database.connections.abandoned.timeout}" />
-		    <property name="maxConnectionReuseTime" value="${database.connections.max.reusetime}" />
-		    <property name="maxConnectionReuseCount" value="${database.connections.max.reusecount}" />
-		    <property name="validateConnectionOnBorrow" value="${database.connections.validate.onborrow}" />
-		    <property name="maxStatements" value="${database.connections.statement.cache}" />
-		    <property name="connectionProperties">
-		        <props merge="default">
-		            <prop key="oracle.net.disableOob">${database.jdbc.disable.oob}</prop>
-		            <prop key="oracle.net.CONNECT_TIMEOUT">${database.jdbc.timeout.connect}</prop>
-		            <prop key="oracle.jdbc.ReadTimeout">${database.jdbc.timeout.read}</prop>
-		        </props>
-   			</property>
-		</bean>
+        <bean id="dataSource" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource"
+              lazy-init="true">
+            <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
+            <property name="connectionPoolName" value="OracleUCP"/>
+            <property name="user" value="${database.username}"/>
+            <property name="password" value="${database.password}"/>
+            <property name="URL" value="${database.url}"/>
+            <property name="initialPoolSize" value="${database.connections.initial.size}"/>
+            <property name="minPoolSize" value="${database.connections.min.active}"/>
+            <property name="maxPoolSize" value="${database.connections.max.active}"/>
+            <property name="connectionWaitTimeout" value="${database.connections.wait.timeout}"/>
+            <property name="inactiveConnectionTimeout" value="${database.connections.inactive.timeout}"/>
+            <property name="timeToLiveConnectionTimeout" value="${database.connections.timetolive.timeout}"/>
+            <property name="abandonedConnectionTimeout" value="${database.connections.abandoned.timeout}"/>
+            <property name="maxConnectionReuseTime" value="${database.connections.max.reusetime}"/>
+            <property name="maxConnectionReuseCount" value="${database.connections.max.reusecount}"/>
+            <property name="validateConnectionOnBorrow" value="${database.connections.validate.onborrow}"/>
+            <property name="maxStatements" value="${database.connections.statement.cache}"/>
+            <property name="connectionProperties">
+                <props merge="default">
+                    <prop key="oracle.net.disableOob">${database.jdbc.disable.oob}</prop>
+                    <prop key="oracle.net.CONNECT_TIMEOUT">${database.jdbc.timeout.connect}</prop>
+                    <prop key="oracle.jdbc.ReadTimeout">${database.jdbc.timeout.read}</prop>
+                </props>
+            </property>
+        </bean>
 
         <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -130,15 +127,7 @@
             <property name="url" value="jdbc:h2:~/h2-entwicklung-db;MODE=Oracle"/>
             <property name="user" value="sa"/>
         </bean>
-    </beans>
 
-    <beans profile="test-integration">
-        <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource" primary="true">
-            <property name="url" value="jdbc:h2:mem:test-integration;MODE=Oracle;DB_CLOSE_DELAY=-1"/>
-        </bean>
-    </beans>
-
-    <beans profile="entwicklung,test-integration">
         <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
             <property name="persistenceProviderClass" value="org.hibernate.ejb.HibernatePersistence"/>

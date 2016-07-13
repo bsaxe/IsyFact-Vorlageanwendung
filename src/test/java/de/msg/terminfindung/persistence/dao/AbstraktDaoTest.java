@@ -28,6 +28,7 @@ import de.msg.terminfindung.persistence.TestPersistenceConfiguration;
 import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,6 +45,7 @@ import javax.persistence.PersistenceContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestPersistenceConfiguration.class)
+@ActiveProfiles(TestProfile.UNIT_TEST)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionDbUnitTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @Profile(TestProfile.UNIT_TEST)
