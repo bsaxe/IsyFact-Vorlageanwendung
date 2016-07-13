@@ -46,6 +46,20 @@
         <plis.web.version>3.0.40</plis.web.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>maven.oracle.com</id>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>https://maven.oracle.com</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
     <build>
         <resources>
             <resource>
@@ -339,13 +353,13 @@
         <!-- Datenbankanbindung -->
         <dependency>
             <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>12.1.0.2</version>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.1.0.2.0</version>
         </dependency>
         <dependency>
-        	<groupId>com.oracle</groupId>
-        	<artifactId>ucp</artifactId>
-        	<version>12.1.0.2</version>
+            <groupId>com.oracle</groupId>
+            <artifactId>ucp</artifactId>
+            <version>12.1.0.2.0</version>
         </dependency>
 
         <!-- Test -->
