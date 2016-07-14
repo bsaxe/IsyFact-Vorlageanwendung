@@ -32,6 +32,10 @@ Oracle bietet Bibliotheken über einen Downloadbereich oder ein eigenes Maven Re
  mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=<version> -Dpackaging=jar -Dfile=<Datei> -DgeneratePom=true
  mvn install:install-file -DgroupId=com.oracle -DartifactId=ucp -Dversion=<version> -Dpackaging=jar -Dfile=<Datei> -DgeneratePom=true
 
+=== Maven-Profile
+
+Die Vorlageanwendung definiert die Maven-Profile `entwicklung` und `produktion`. Das Profil `entwicklung` stellt eine Abhängigkeit zur H2-Datenbank her. Es wird während der Entwicklung und zur Durchführung von Komponenten- sowie Integrationstests benutzt. Das Profil `produktion` stellt eine Abhängigkeit zur Oracle-Datenbank 12c her. Es wird während produktionsnaher Tests und für den Build der produktiven Version benötigt.
+
 === Spring-Profile
 
 Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarbeit leichter zu gestalten:
@@ -40,10 +44,6 @@ Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarb
 * `test-unit`: Wird für die Ausführung von Komponententests benutzt. Verwendet eine In-Memory-Datenbank.
 * `test-integration`: Wird für die Ausführung von Integrationstests benutzt. Startet die komplette Anwendung, verwendet aber eine In-Memory-Datenbank (H2) und deaktiviert den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit.
 * `entwicklung`: Ist für den Betrieb innerhalb einer Entwicklungsumgebung vorgesehen. Verwendet eine H2-Datenbank und deaktiviert die Überwachung der Anwendung, den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit.
-
-=== Maven-Profile
-
-Die Vorlageanwendung definiert das Maven-Profil `entwicklung`, das im Unterschied zum Standard-Profil eine In-Memory-Datenbank (H2) als Abhängigkeit definiert. Das Profil wird während der Entwicklung und zur Durchführung von Komponenten- sowie Integrationstests benutzt.
 
 == IsyFact
 

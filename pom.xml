@@ -46,20 +46,6 @@
         <plis.web.version>3.0.40</plis.web.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>maven.oracle.com</id>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <url>https://maven.oracle.com</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-
     <build>
         <resources>
             <resource>
@@ -350,18 +336,6 @@
             <version>2.7.2</version>
         </dependency>
 
-        <!-- Datenbankanbindung -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ucp</artifactId>
-            <version>12.1.0.2.0</version>
-        </dependency>
-
         <!-- Test -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -409,6 +383,34 @@
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                     <version>${h2db.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>produktion</id>
+            <repositories>
+                <repository>
+                    <id>maven.oracle.com</id>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <url>https://maven.oracle.com</url>
+                    <layout>default</layout>
+                </repository>
+            </repositories>
+            <dependencies>
+                <dependency>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>ojdbc7</artifactId>
+                    <version>12.1.0.2.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>ucp</artifactId>
+                    <version>12.1.0.2.0</version>
                 </dependency>
             </dependencies>
         </profile>
