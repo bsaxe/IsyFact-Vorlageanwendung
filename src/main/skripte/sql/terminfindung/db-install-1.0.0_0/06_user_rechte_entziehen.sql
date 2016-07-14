@@ -1,0 +1,39 @@
+-- -----------------------------------------------------------------------------------------------------
+--
+-- #%L
+-- plis-persistence
+-- %%
+-- 
+-- %%
+-- See the NOTICE file distributed with this work for additional
+-- information regarding copyright ownership.
+-- The Federal Office of Administration (Bundesverwaltungsamt, BVA)
+-- licenses this file to you under the Apache License, Version 2.0 (the
+-- License). You may not use this file except in compliance with the
+-- License. You may obtain a copy of the License at
+-- 
+--     http://www.apache.org/licenses/LICENSE-2.0
+-- 
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+-- implied. See the License for the specific language governing
+-- permissions and limitations under the License.
+-- #L%
+--
+-- Dieses Skript entzieht alle nicht benötigte CREATE Rechte des Benutzers.
+-- 
+-- Erstellungsdatum:   13.07.16
+-- Erstellt durch:     Björn Saxe, msg systems
+-- 
+-- Datum der letzten   
+-- Änderung durch:     
+--
+-- Version: $Id: 06_user_rechte_entziehen.sql 159308 2014-08-19 13:11:09Z sdm_fdoerr $
+-- -----------------------------------------------------------------------------------------------------
+
+REVOKE CREATE SEQUENCE FROM &USERNAME;
+REVOKE CREATE PROCEDURE FROM &USERNAME;
+REVOKE CREATE TRIGGER FROM &USERNAME;
+REVOKE CREATE TABLE FROM &USERNAME;
+REVOKE CREATE VIEW FROM &USERNAME;
