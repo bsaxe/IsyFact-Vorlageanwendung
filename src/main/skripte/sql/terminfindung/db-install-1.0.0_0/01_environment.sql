@@ -54,7 +54,7 @@ DEFINE TABLESPACE_NAME          = 'terminfindung_schema_version';
 
 -- Name des Data-Files inklusiv vollständigen Pfad, 
 -- das dem Tablespace zugeordnet wird.
-DEFINE DATAFILE_NAME            = 'c:\temp\terminfindung_schema_version.ora';
+DEFINE DATAFILE_NAME            = 'c:\temp\terminfindung.ora';
 
 -- Größe des Data-Files incl. Einheit (z.B. 20G für 20 GB).
 DEFINE DATAFILE_SIZE            = '10M';

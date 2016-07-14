@@ -34,58 +34,80 @@
 
 PURGE recyclebin;
 
---------------------------------------------------------
---  DDL for Table TABLE1
---------------------------------------------------------
-CREATE TABLE TABLE1 (
-    COL_A VARCHAR2(255 CHAR),
-    COL_B VARCHAR2(255 CHAR),
-    COL_C VARCHAR2(255 CHAR),
-    COL_D NUMBER(19,0),
-    COL_E VARCHAR2(255 CHAR),
-    COL_F TIMESTAMP (6),
-    COL_G TIMESTAMP (6),
-    COL_H TIMESTAMP (6)
-);
+create table terminfindung.Tag (
+        id number(19,0) not null,
+        datum timestamp,
+        terminfindung_id number(19,0),
+        primary key (id)
+    );
 
---------------------------------------------------------
---  DDL for Table TABLE2
---------------------------------------------------------
-CREATE TABLE TABLE2 (
-    COL_A NUMBER(10,0),
-    COL_B TIMESTAMP (6),
-    COL_C VARCHAR2(255 CHAR) NOT NULL,
-    COL_D VARCHAR2(255 CHAR),
-    COL_E VARCHAR2(2 CHAR),
-    COL_F VARCHAR2(6 CHAR),
-    COL_G VARCHAR2(6 CHAR),
-    COL_H NUMBER(10,0),
-    COL_I NUMBER(1,0),
-    CONSTRAINT PK_TABLE2 PRIMARY KEY (COL_A) 
-);
+create table terminfindung.Teilnehmer (
+        id number(19,0) not null,
+        name varchar2(255 char),
+        terminfindung_id number(19,0),
+        primary key (id)
+    );
+    
+create table terminfindung.TeilnehmerZeitraum (
+        id number(19,0) not null,
+        praeferenz number(10,0),
+        teilnehmer_id number(19,0),
+        zeitraum_id number(19,0),
+        primary key (id)
+    );
 
-CREATE SEQUENCE SEQ_TABLE2 MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+create table terminfindung.Terminfindung (
+        id number(19,0) not null,
+        createDate timestamp,
+        organisator_name varchar2(255 char),
+        updateDate timestamp,
+        veranstaltungName varchar2(255 char),
+        zeitraum_nr number(19,0),
+        primary key (id)
+    );
 
-
---------------------------------------------------------
---  DDL for Table TABLE3
---------------------------------------------------------
-CREATE TABLE TABLE3 (
-    COL_A NUMBER(10,0),
-    COL_B VARCHAR2(255 CHAR) NOT NULL,
-    COL_C VARCHAR2(255 CHAR),
-    COL_D VARCHAR2(255 CHAR),
-    COL_E VARCHAR2(32 CHAR),
-    COL_F NUMBER(10,0),
-    COL_G VARCHAR2(4000 CHAR),
-    COL_H VARCHAR2(6 CHAR),
-    CONSTRAINT PK_TABLE3 PRIMARY KEY (COL_A) 
-);
-
-CREATE SEQUENCE SEQ_TABLE3 MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
-
---------------------------------------------------------
---  DDL for Index COL_D
---------------------------------------------------------
-CREATE INDEX IDX_TABLE1_COL_D ON TABLE1 (COL_D);
-
+create table terminfindung.Zeitraum (
+        id number(19,0) not null,
+        beschreibung varchar2(255 char),
+        tag_id number(19,0),
+        primary key (id)
+    );
+    
+create table terminfindung.batchstatus (
+        batchId varchar2(255 char) not null,
+        batchName varchar2(255 char),
+        batchStatus varchar2(255 char),
+        satzNummerLetztesCommit number(19,0),
+        schluesselLetztesCommit varchar2(255 char),
+        datumLetzterStart timestamp,
+        datumLetzterAbbruch timestamp,
+        datumLetzterErfolg timestamp,
+        primary key (batchId)
+    );
+    
+alter table terminfindung.Tag 
+        add constraint FK1477A4659C8A2 
+        foreign key (terminfindung_id) 
+        references terminfindung.Terminfindung;
+        
+alter table terminfindung.Teilnehmer 
+        add constraint FK550A971D4659C8A2 
+        foreign key (terminfindung_id) 
+        references terminfindung.Terminfindung;
+        
+alter table terminfindung.TeilnehmerZeitraum 
+        add constraint FKF2081DDAC74EFE32 
+        foreign key (zeitraum_id) 
+        references terminfindung.Zeitraum;
+        
+alter table terminfindung.Terminfindung 
+        add constraint FKDD29BCC4C74EFEDB 
+        foreign key (zeitraum_nr) 
+        references terminfindung.Zeitraum;
+        
+alter table terminfindung.Zeitraum 
+        add constraint FK1DC3F3BD91EA66E2 
+        foreign key (tag_id) 
+        references terminfindung.Tag;
+        
+create sequence terminfindung.hibernate_sequence;
