@@ -19,11 +19,11 @@ NOTE: In Kürze finden Sie hier eine vollständige Beschreibung, wie Sie eine En
 
 ==== Einbinden der Bibliotheken von Oracle
 
-Oracle bietet Bibliotheken über einen Downloadbereich oder ein eigenes Maven Repository an. Beide Zugriffswege setzen einen Oracle-Account voraus. Für die Vorlageanwendung benötigen Sie den passenden JBDC-Treiber sowie Oracles Unified Connection Pool (UCP).
+Oracle bietet Bibliotheken über einen Downloadbereich oder ein eigenes Maven Repository an. Beide Zugriffswege setzen einen Oracle-Account voraus. Für die Vorlageanwendung benötigen Sie den passenden JDBC-Treiber sowie Oracles Unified Connection Pool (UCP).
 
 ===== Zugriff über das Maven-Repository
 
-Über Oracles https://maven.oracle.com[Oracle-Maven-Repository] können Sie direkt den Zugang beantragen, indem Sie die Seite besuchen und den Anweisungen folgen. Damit Maven auf das Repository zugreifen darf, müssen Sie Ihren Oracle-Account in Ihrer Maven-Konfiguration hinterlegen. Dazu müssen Sie Ihre Maven-Konfiguration http://docs.oracle.com/middleware/1213/core/MAVEN/config_maven_repo.htm#MAVEN9013[wie hier beschrieben] anpassen. Wenn Sie das Passwort Ihres Oracle-Accounts nicht im Klartext in Ihre Maven-Konfiguration einfügen wollen, können Sie es http://maven.apache.org/guides/mini/guide-encryption.html[verschlüsseln].
+Über Oracles https://maven.oracle.com[Maven-Repository] können Sie direkt den Zugang beantragen, indem Sie die URL aufrufen und den Anweisungen folgen. Damit Maven auf das Repository zugreifen darf, müssen Sie Ihren Oracle-Account in Ihrer Maven-Konfiguration hinterlegen. Dazu müssen Sie Ihre Maven-Konfiguration http://docs.oracle.com/middleware/1213/core/MAVEN/config_maven_repo.htm#MAVEN9013[wie hier beschrieben] anpassen. Wenn Sie das Passwort Ihres Oracle-Accounts nicht im Klartext in Ihre Maven-Konfiguration einfügen wollen, können Sie es http://maven.apache.org/guides/mini/guide-encryption.html[verschlüsseln].
 
 ===== Zugriff über den Downloadbereich
 
