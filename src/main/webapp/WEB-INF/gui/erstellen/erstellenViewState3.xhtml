@@ -35,20 +35,20 @@
 					<div class="form-horizontal">
 						<div class="row row-df">
 							<div class="col-lg-4">
-								Ihr Zugangslink für die Organisatorsicht
+								Ihre Zugangslinks: 
 								<p>
 									<a
-										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.id}">
-										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.id}
+										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfref=#{accessRefMap.addDirectReference(erstellenModel.terminfindung.id)}">
+										Organisatorsicht
 									</a>
 								</p>
-								Ihr Zugangslink für die Teilnehmersicht
 								<p>
 									<a
-										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.id}">
-										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.id}
+										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfref=#{accessRefMap.getIndirectReference(erstellenModel.terminfindung.id)}">
+										Teilnehmersicht
 									</a>
 								</p>
+
 							</div>
 						</div>
 					</div>
