@@ -24,8 +24,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd" parent="basisFlow">
 	
+	<secured attributes="Administrieren"/>
+	
 	<var name="adminModel" class="de.msg.terminfindung.gui.administration.AdminModel" />
-	<var name="tfRef" class="java.lang.String"/>
 	
 	<!-- Initialisieren des Models -->
 	<on-start>
@@ -33,8 +34,6 @@
 	</on-start>
 	
 	<!-- Erster View -->
-	<view-state id="adminViewState1" model="adminModel">
-		<!--secured attributes="Administrieren"/-->
-	</view-state>
+	<view-state id="adminViewState1" model="adminModel"/>
 	
 </flow>
