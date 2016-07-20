@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 public class TerminfindungDaoTest extends AbstraktDaoTest {
 
     private static final Long TERMINFINDUNG_ID = 2L;
@@ -53,6 +55,20 @@ public class TerminfindungDaoTest extends AbstraktDaoTest {
         assertNotNull(terminfindung);
         assertEquals("Herbert", terminfindung.getOrganisator().getName());
         assertEquals("Spieleabend IsyFact", terminfindung.getVeranstaltungName());
+    }
+    
+    @Test
+    @DatabaseSetup("testTerminfindungDaoSetup.xml")
+    public void testFindeAlle()
+    {
+    	List<Terminfindung> alleTerminfindungen = terminfindungDao.findeAlle();
+    	
+    	assertNotNull(alleTerminfindungen);
+    	assertEquals(2, alleTerminfindungen.size());
+        assertEquals("Klaus", alleTerminfindungen.get(0).getOrganisator().getName());
+        assertEquals("Weihnachtsfeier 2016", alleTerminfindungen.get(0).getVeranstaltungName());
+        assertEquals("Herbert", alleTerminfindungen.get(1).getOrganisator().getName());
+        assertEquals("Spieleabend IsyFact", alleTerminfindungen.get(1).getVeranstaltungName());
     }
 
     @Test

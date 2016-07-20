@@ -41,6 +41,8 @@ public interface Verwaltung {
      * @throws TerminfindungBusinessException wenn es keine Terminfindung mit dieser ID gibt.
      */
     Terminfindung leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException;
+    
+    List<Terminfindung> leseAlleTerminfindungen();
 
     void loescheZeitraeume(Terminfindung terminfindung, List<Zeitraum> zeitraumList);
 

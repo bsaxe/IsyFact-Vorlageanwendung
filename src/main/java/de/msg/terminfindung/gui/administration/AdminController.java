@@ -28,7 +28,7 @@ import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 
 /**
- *  Controller des StartFlows
+ *  Controller des AdminFlows
  *
  * @author msg systems ag, Maximilian Falter
  */
@@ -37,12 +37,8 @@ public class AdminController extends AbstractController<AdminModel> {
 
 	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(AdminController.class);
 	
-	/**
-	 * Führt den Login-Vorgang aus.
-	 * 
-	 * @param model Das Modell
-	 */
 	public void initialisiereModel(AdminModel model) {
+		model.setAlleTerminfindungen(awk.ladeAlleTerminfindungen());
 	}
 
 }

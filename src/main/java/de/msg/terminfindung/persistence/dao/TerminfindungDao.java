@@ -40,4 +40,10 @@ public interface TerminfindungDao extends AbstraktDao<Terminfindung> {
      */
     List<Terminfindung> sucheVor(Date datum);
 
+    /**
+     * Gibt alle Terminfindungen zurück.
+     * 
+     * @return Alle Terminfindungen.
+     */
+	List<Terminfindung> findeAlle();
 }

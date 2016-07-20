@@ -45,6 +45,13 @@ public interface AwkWrapper {
      * @throws TerminfindungBusinessException im Falle einer ungültigen bzw. nicht vorhandener Terminfindungsnummer
      */
     TerminfindungModel ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException;
+    
+    /**
+     * Laden aller Terminfindungen.
+     * 
+     * @return Alle gespeicherten Terminfindungen.
+     */
+    List<TerminfindungModel> ladeAlleTerminfindungen();
 
     /**
      * Erstellt eine neue Terminfindung.

@@ -62,6 +62,11 @@ public class VerwaltungImpl implements Verwaltung {
         }
         return tf;
     }
+    
+	@Override
+	public List<Terminfindung> leseAlleTerminfindungen() {
+		return terminfindungDao.findeAlle();
+	}
 
     @Override
     public void setzeVeranstaltungstermin(Terminfindung terminfindung, long zeitraumNr) throws TerminfindungBusinessException {
@@ -77,5 +82,4 @@ public class VerwaltungImpl implements Verwaltung {
 	public void aktualisiereTerminfindung(Terminfindung terminfindung,  String organisatorName, String veranstaltungName) {
 		awfAktualisiereTerminfindung.aktualisiereTerminfindung(terminfindung, organisatorName, veranstaltungName);		
 	}
-
 }

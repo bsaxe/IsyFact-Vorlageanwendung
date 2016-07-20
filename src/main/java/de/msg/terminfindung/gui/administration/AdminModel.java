@@ -20,17 +20,29 @@ package de.msg.terminfindung.gui.administration;
  * #L%
  */
 
-
 import java.io.Serializable;
+import java.util.List;
 
 import de.msg.terminfindung.gui.terminfindung.AbstractModel;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 
 /**
- *  Model für Administrationsseiten
+ * Model für Administrationsseiten
  *
  * @author msg systems ag, Dirk Jäger
  */
 public class AdminModel extends AbstractModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private List<TerminfindungModel> alleTerminfindungen;
+
+	public void setAlleTerminfindungen(List<TerminfindungModel> alleTerminfindungen) {
+		this.alleTerminfindungen = alleTerminfindungen;
+	}
+
+	public List<TerminfindungModel> getAlleTerminfindungen() {
+		return alleTerminfindungen;
+	}
+
 }

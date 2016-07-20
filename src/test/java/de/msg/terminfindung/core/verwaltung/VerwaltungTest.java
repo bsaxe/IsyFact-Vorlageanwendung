@@ -31,6 +31,7 @@ import de.msg.terminfindung.persistence.entity.Zeitraum;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -58,8 +59,20 @@ public class VerwaltungTest extends AbstraktCoreTest {
         Zeitraum zeitraum = new Zeitraum();
         zeitraum.setBeschreibung("abends");
         tag.getZeitraeume().add(zeitraum);
+        
+        Terminfindung muster2 = new Terminfindung();
+        tag = new Tag();
+        muster2.getTermine().add(tag);
+        zeitraum = new Zeitraum();
+        zeitraum.setBeschreibung("morgens");
+        tag.getZeitraeume().add(zeitraum);
+        
+        List<Terminfindung> alleTermine = new ArrayList<>();
+        alleTermine.add(muster);
+        alleTermine.add(muster2);
 
         when(terminfindungDao.sucheMitId(TERMINFINDUNG_ID)).thenReturn(muster);
+        when(terminfindungDao.findeAlle()).thenReturn(alleTermine);
     }
 
     /**
@@ -83,5 +96,22 @@ public class VerwaltungTest extends AbstraktCoreTest {
         assertEquals("abends", zeitraeume.get(0).getBeschreibung());
     }
 
-
+    /**
+     * Test method for {@link de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl#leseAlleTerminfindungen()}.
+     *
+     */
+    @Test
+    public void testLeseAlleTerminfindungen() {
+    	Verwaltung verwaltung = new VerwaltungImpl(terminfindungDao);
+    	
+    	List<Terminfindung> alleTerminfindungen = verwaltung.leseAlleTerminfindungen();
+    	
+    	assertNotNull(alleTerminfindungen);
+        assertEquals(2, alleTerminfindungen.size());
+        
+        List<Zeitraum> zeitraeume = alleTerminfindungen.get(1).getTermine().get(0).getZeitraeume();
+        assertNotNull(zeitraeume);
+        assertEquals(1, zeitraeume.size());
+        assertEquals("morgens", zeitraeume.get(0).getBeschreibung());
+    }
 }
