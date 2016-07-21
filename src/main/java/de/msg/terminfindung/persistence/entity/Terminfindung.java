@@ -43,6 +43,7 @@ public class Terminfindung extends AbstraktEntitaet {
 	 * Indirekte Referenz zur Identifizierung in Views ohne Verwendung des
 	 * Primärschlüssels
 	 */
+	@Column(length = 36)
 	private String idRef;
 
 	private String veranstaltungName;
