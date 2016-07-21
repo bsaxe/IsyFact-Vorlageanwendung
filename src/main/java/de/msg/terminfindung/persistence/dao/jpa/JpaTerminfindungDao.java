@@ -59,4 +59,12 @@ public class JpaTerminfindungDao extends AbstraktJpaDao<Terminfindung> implement
         return allQuery.getResultList();
     }
 
+	@Override
+	public Terminfindung sucheMitReferenz(String ref) {
+        TypedQuery<Terminfindung> query = getEntityManager().createNamedQuery("terminfindung.ref", Terminfindung.class);
+        query.setParameter("ref", ref);
+        return query.getSingleResult();
+	}
+
+	
 }

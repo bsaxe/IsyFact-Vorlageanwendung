@@ -33,6 +33,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -45,6 +46,7 @@ import static org.mockito.Mockito.when;
 public class VerwaltungTest extends AbstraktCoreTest {
 
     private static final Long TERMINFINDUNG_ID = 1L;
+    private static final UUID TERMINFINDUNG_REF = UUID.fromString("ddec6dd1-4e7e-4e7f-8343-962414a63835");
 
     private TerminfindungDao terminfindungDao;
 
@@ -72,6 +74,7 @@ public class VerwaltungTest extends AbstraktCoreTest {
         alleTermine.add(muster2);
 
         when(terminfindungDao.sucheMitId(TERMINFINDUNG_ID)).thenReturn(muster);
+        when(terminfindungDao.sucheMitReferenz("ddec6dd1-4e7e-4e7f-8343-962414a63835")).thenReturn(muster);
         when(terminfindungDao.findeAlle()).thenReturn(alleTermine);
     }
 
@@ -84,7 +87,28 @@ public class VerwaltungTest extends AbstraktCoreTest {
     public void testLeseTerminfindung() throws TerminfindungBusinessException {
         Verwaltung verwaltung = new VerwaltungImpl(terminfindungDao);
 
-        Terminfindung tf = verwaltung.leseTerminfindung(1L);
+        Terminfindung tf = verwaltung.leseTerminfindung(TERMINFINDUNG_ID);
+
+        assertNotNull(tf);
+        assertNotNull(tf.getTermine());
+        assertEquals(1, tf.getTermine().size());
+
+        List<Zeitraum> zeitraeume = tf.getTermine().get(0).getZeitraeume();
+        assertNotNull(zeitraeume);
+        assertEquals(1, zeitraeume.size());
+        assertEquals("abends", zeitraeume.get(0).getBeschreibung());
+    }
+    
+    /**
+     * Test method for {@link de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl#leseTerminfindung(java.util.UUID)}.
+     *
+     * @throws TerminfindungBusinessException
+     */
+    @Test
+    public void testLeseTerminfindungReferenz() throws TerminfindungBusinessException {
+        Verwaltung verwaltung = new VerwaltungImpl(terminfindungDao);
+
+        Terminfindung tf = verwaltung.leseTerminfindung(TERMINFINDUNG_REF);
 
         assertNotNull(tf);
         assertNotNull(tf.getTermine());

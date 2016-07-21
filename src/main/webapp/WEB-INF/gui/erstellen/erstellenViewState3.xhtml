@@ -39,17 +39,16 @@
 								Ihre Zugangslinks: 
 								<p>
                                    	<h:outputLink id="organisatorSichtLink" value="verwaltenFlow" >
-                                   		<f:param name="tfref" value="#{accessRefMap.addDirectReference(erstellenModel.terminfindung.id)}"/>
+                                   		<f:param name="tfref" value="#{erstellenModel.terminfindung.idRef}"/>
                                    		<h:outputText value="Organisatorsicht" />
                                    	</h:outputLink>
 								</p>
 								<p>
 								    <h:outputLink id="teilnehmerSichtLink" value="teilnehmenFlow" >
-                                   		<f:param name="tfref" value="#{accessRefMap.getIndirectReference(erstellenModel.terminfindung.id)}"/>
+                                   		<f:param name="tfref" value="#{erstellenModel.terminfindung.idRef}"/>
                                    		<h:outputText value="Teilnehmersicht" />
                                    	</h:outputLink>
 								</p>
-
 							</div>
 						</div>
 					</div>

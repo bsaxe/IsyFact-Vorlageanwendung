@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /*
  * #%L
@@ -91,6 +92,13 @@ public class AwkWrapperImpl implements AwkWrapper {
 	public TerminfindungModel ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException {
 
 		Terminfindung tf = verwaltung.leseTerminfindung(terminfindungsNr);
+		return map(tf);
+	}
+	
+	@Override
+	public TerminfindungModel ladeTerminfindung(UUID terminfindungsRefNr) throws TerminfindungBusinessException {
+
+		Terminfindung tf = verwaltung.leseTerminfindung(terminfindungsRefNr);
 		return map(tf);
 	}
 

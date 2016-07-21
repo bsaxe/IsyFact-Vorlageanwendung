@@ -29,8 +29,8 @@
 
 	<view-state id="verwaltenViewState">
         <on-entry>
-            <set name="tfRef" value="requestParameters.tfref" type="java.lang.String" />
-            <evaluate expression="tfNumberHolder.updateIfNotNull(accessRefMap.getDirectReference(tfRef))"/>
+            <set name="tfRef" value="requestParameters.tfref" type="java.util.UUID" />
+            <evaluate expression="tfNumberHolder.updateRefIfNotNull(tfRef)"/>
             <evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)" />
         </on-entry>
 

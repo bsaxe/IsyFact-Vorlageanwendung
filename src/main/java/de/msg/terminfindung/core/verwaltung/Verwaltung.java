@@ -26,6 +26,7 @@ import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Interface der Anwendungskomponente "Verwaltung" zur Verwaltung von Terminfindungen
@@ -41,6 +42,14 @@ public interface Verwaltung {
      * @throws TerminfindungBusinessException wenn es keine Terminfindung mit dieser ID gibt.
      */
     Terminfindung leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException;
+    
+    /**
+     * Liest eine Terminfindung anhand ihrer Referenz-ID.
+     *
+     * @param terminfindung_ref Referenz-ID der Terminfindung
+     * @throws TerminfindungBusinessException wenn es keine Terminfindung mit dieser Referenz-ID gibt.
+     */
+    Terminfindung leseTerminfindung(UUID terminfindung_ref) throws TerminfindungBusinessException; 
     
     List<Terminfindung> leseAlleTerminfindungen();
 

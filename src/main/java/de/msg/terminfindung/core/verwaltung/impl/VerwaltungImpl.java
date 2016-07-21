@@ -29,6 +29,7 @@ import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Interface der Anwendungskomponente "Erstellung" zur Erstellung von Terminfindungen
@@ -59,6 +60,15 @@ public class VerwaltungImpl implements Verwaltung {
         Terminfindung tf = terminfindungDao.sucheMitId(terminfindung_nr);
         if (tf == null) {
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_TERMINFINDUNG_NICHT_GEFUNDEN, terminfindung_nr.toString());
+        }
+        return tf;
+    }
+    
+    @Override
+    public Terminfindung leseTerminfindung(UUID terminfindung_ref) throws TerminfindungBusinessException {
+        Terminfindung tf = terminfindungDao.sucheMitReferenz(terminfindung_ref.toString());
+        if (tf == null) {
+            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_TERMINFINDUNG_NICHT_GEFUNDEN, terminfindung_ref.toString());
         }
         return tf;
     }

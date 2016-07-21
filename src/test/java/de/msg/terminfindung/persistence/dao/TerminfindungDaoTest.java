@@ -36,6 +36,7 @@ import java.util.List;
 public class TerminfindungDaoTest extends AbstraktDaoTest {
 
     private static final Long TERMINFINDUNG_ID = 2L;
+    private static final String TERMINFINDUNG_REF = "ddec6dd1-4e7e-4e7f-8343-962414a63835";
 
     @Autowired
     private TerminfindungDao terminfindungDao;
@@ -55,6 +56,16 @@ public class TerminfindungDaoTest extends AbstraktDaoTest {
         assertNotNull(terminfindung);
         assertEquals("Herbert", terminfindung.getOrganisator().getName());
         assertEquals("Spieleabend IsyFact", terminfindung.getVeranstaltungName());
+    }
+    
+    @Test
+    @DatabaseSetup("testTerminfindungDaoSetup.xml")
+    public void testSuchenMitRef() {
+        Terminfindung terminfindung = terminfindungDao.sucheMitReferenz(TERMINFINDUNG_REF);
+
+        assertNotNull(terminfindung);
+        assertEquals("Klaus", terminfindung.getOrganisator().getName());
+        assertEquals("Weihnachtsfeier 2016", terminfindung.getVeranstaltungName());
     }
     
     @Test

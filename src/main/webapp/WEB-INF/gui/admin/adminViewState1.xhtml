@@ -66,13 +66,13 @@
 	                                   		</td>
 	                                   		<td>
 	                                   			<h:outputLink id="verwaltenLink" value="verwaltenFlow" >
-	                                   				<f:param name="tfref" value="#{accessRefMap.addDirectReference(tf.id)}"/>
+	                                   				<f:param name="tfref" value="#{tf.idRef}"/>
 	                                   				<h:outputText value="Verwalten" />
 	                                   			</h:outputLink>
 											</td>
 											<td>
 	                                   			<h:outputLink id="teilnehmenLink" value="teilnehmenFlow" >
-	                                   				<f:param name="tfref" value="#{accessRefMap.getIndirectReference(tf.id)}"/>
+	                                   				<f:param name="tfref" value="#{tf.idRef}"/>
 	                                   				<h:outputText value="Teilnehmen" />
 	                                   			</h:outputLink>
 											</td>
