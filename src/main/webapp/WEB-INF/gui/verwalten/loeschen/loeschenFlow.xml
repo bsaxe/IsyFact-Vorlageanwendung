@@ -27,8 +27,6 @@
 	<var name="loeschenModel"
 		 class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenModel"/>
 
-	<var name="viewUtil" class="de.msg.terminfindung.gui.util.ViewUtil"/>
-
 	<!-- Initialisiere das Modell-->
 	<on-start>
 		<evaluate expression="loeschenController.initialisiereModel(loeschenModel)" />

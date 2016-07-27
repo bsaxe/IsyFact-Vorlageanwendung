@@ -36,14 +36,6 @@ import java.util.UUID;
 public interface Verwaltung {
 
     /**
-     * Liest eine Terminfindung anhand ihrer ID.
-     *
-     * @param terminfindung_nr ID der Terminfindung
-     * @throws TerminfindungBusinessException wenn es keine Terminfindung mit dieser ID gibt.
-     */
-    Terminfindung leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException;
-    
-    /**
      * Liest eine Terminfindung anhand ihrer Referenz-ID.
      *
      * @param terminfindung_ref Referenz-ID der Terminfindung

@@ -97,14 +97,14 @@ public class AwkWrapperTest {
         Zeitraum zeitraum = new Zeitraum();
         zeitraum.setBeschreibung("abends");
         tag.getZeitraeume().add(zeitraum);
-        when(verwaltung.leseTerminfindung(anyLong())).thenReturn(muster);
+        when(verwaltung.leseTerminfindung(any(UUID.class))).thenReturn(muster);
     }
 
     @Test
     public void testBeanMapperPersistenzZuView() throws TerminfindungBusinessException {
         AwkWrapper awkWrapper = new AwkWrapperImpl(erstellung, verwaltung, teilnahme, beanMapper);
 
-        TerminfindungModel terminfindungModel = awkWrapper.ladeTerminfindung(1L);
+        TerminfindungModel terminfindungModel = awkWrapper.ladeTerminfindung(UUID.randomUUID());
 
         assertNotNull(terminfindungModel);
         assertNotNull(terminfindungModel.getTage());
@@ -129,7 +129,7 @@ public class AwkWrapperTest {
                 return tf;
             }
         });
-        when(verwaltung.leseTerminfindung(anyLong())).thenAnswer(new Answer<Terminfindung>() {
+        when(verwaltung.leseTerminfindung(any(UUID.class))).thenAnswer(new Answer<Terminfindung>() {
             @Override
             public Terminfindung answer(InvocationOnMock invocation) throws Throwable {
                 return tf;

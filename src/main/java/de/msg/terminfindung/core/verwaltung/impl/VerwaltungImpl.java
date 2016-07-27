@@ -56,15 +56,6 @@ public class VerwaltungImpl implements Verwaltung {
     }
 
     @Override
-    public Terminfindung leseTerminfindung(Long terminfindung_nr) throws TerminfindungBusinessException {
-        Terminfindung tf = terminfindungDao.sucheMitId(terminfindung_nr);
-        if (tf == null) {
-            throw new TerminfindungBusinessException(FehlerSchluessel.MSG_TERMINFINDUNG_NICHT_GEFUNDEN, terminfindung_nr.toString());
-        }
-        return tf;
-    }
-    
-    @Override
     public Terminfindung leseTerminfindung(UUID terminfindung_ref) throws TerminfindungBusinessException {
         Terminfindung tf = terminfindungDao.sucheMitReferenz(terminfindung_ref.toString());
         if (tf == null) {

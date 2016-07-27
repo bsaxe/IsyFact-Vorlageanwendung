@@ -39,15 +39,6 @@ import java.util.UUID;
 public interface AwkWrapper {
 
     /**
-     * Laden einer Terminfindung anhand der Terminfindungsnummer.
-     *
-     * @param terminfindungsNr Die Id einer Terminfindung
-     * @return die Terminfindung falls diese existiert, sonst null
-     * @throws TerminfindungBusinessException im Falle einer ungültigen bzw. nicht vorhandener Terminfindungsnummer
-     */
-    TerminfindungModel ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException;
-    
-    /**
      * Laden einer Terminfindung anhand der Terminfindungsreferenznummer.
      *
      * @param terminfindungsRefNr Die UUID-Referenz einer Terminfindung

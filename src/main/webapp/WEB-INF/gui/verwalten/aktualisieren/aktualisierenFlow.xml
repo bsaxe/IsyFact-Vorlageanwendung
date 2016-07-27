@@ -25,9 +25,7 @@
 	<var name="aktualisierenModel" 
 		class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenModel"/>
 
-	<var name="viewUtil" class="de.msg.terminfindung.gui.util.ViewUtil"/>
-	
-	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->	
+	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->
 
 	<!-- Initialisiere das Modell-->	
 	<on-start>

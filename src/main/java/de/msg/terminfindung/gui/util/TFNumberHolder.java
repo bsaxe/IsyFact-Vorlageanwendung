@@ -42,49 +42,14 @@ public class TFNumberHolder implements Serializable {
 
 	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(TFNumberHolder.class);
 
-	/** Die gespeicherte Terminfindungsnummer */
-	private Long number = null;
+	/** Die gespeicherte Referenz der Terminfindung */
 	private UUID ref = null;
 
 	public TFNumberHolder() {
 	}
 
-	public TFNumberHolder(Long number) {
-		this.number = number;
-	}
-
-	public Long getNumber() {
-		return number;
-	}
-
 	public UUID getRef() {
 		return ref;
-	}
-
-	public void updateIfNotNull(String tfNumberString) throws TerminfindungTechnicalException {
-
-		if (tfNumberString != null) {
-			// Wenn der übergebene String nicht null ist, wird versucht, ihn in
-			// einen Long Wert
-			// zu parsen und diesen als neue Terminfindungsnummer im Holder
-			// abzuspeichern
-
-			LOG.debug("Update der TF-Nummer : " + tfNumberString);
-			long terminfindungsNr;
-			try {
-				terminfindungsNr = Long.parseLong(tfNumberString);
-			} catch (NumberFormatException e) {
-				LOG.error(FehlerSchluessel.MSG_ALLGEMEINER_TECHNISCHER_FEHER_MIT_PARAMETER,
-						"NumberFormatException beim Parsen von: {}", e, tfNumberString);
-				throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_TERMINFINDUNGSNR_NICHT_KONVERTIERBAR, e,
-						tfNumberString);
-			}
-			this.number = terminfindungsNr;
-		} else {
-			// Nichts tun, der bisher gespeicherte Wert bleibt gespeichert
-
-			LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert {}", number);
-		}
 	}
 
 	public void updateRefIfNotNull(UUID u) {
@@ -93,7 +58,7 @@ public class TFNumberHolder implements Serializable {
 			LOG.debug("Update der TF-Referenz : " + u);
 			ref = u;
 		} else {
-			LOG.debug("Update angefordert für TF-Referenz ist null, behalte gespeicherten Wert {}", number);
+			LOG.debug("Update angefordert für TF-Referenz ist null, behalte gespeicherten Wert {}", ref);
 		}
 	}
 }

@@ -27,9 +27,7 @@
 	<var name="abschliessenModel" 
 		class="de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenModel"/>
 
-	<var name="viewUtil" class="de.msg.terminfindung.gui.util.ViewUtil"/>
-	
-	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->	
+	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->
 
 	<!-- Initialisiere das Modell-->	
 	<on-start>

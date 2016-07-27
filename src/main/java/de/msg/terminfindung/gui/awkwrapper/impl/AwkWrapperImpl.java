@@ -12,11 +12,7 @@ import org.dozer.Mapper;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /*
  * #%L
@@ -89,13 +85,6 @@ public class AwkWrapperImpl implements AwkWrapper {
 	}
 
 	@Override
-	public TerminfindungModel ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException {
-
-		Terminfindung tf = verwaltung.leseTerminfindung(terminfindungsNr);
-		return map(tf);
-	}
-	
-	@Override
 	public TerminfindungModel ladeTerminfindung(UUID terminfindungsRefNr) throws TerminfindungBusinessException {
 
 		Terminfindung tf = verwaltung.leseTerminfindung(terminfindungsRefNr);
@@ -109,7 +98,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 		if (terminfindungModel == null)
 			throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 
-		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getIdRef());
 
 		verwaltung.setzeVeranstaltungstermin(terminfindung, zeitraumNr);
 
@@ -128,7 +117,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 		// Übertrage die Datenstrukturen aus dem View in die Struktur des
 		// Anwendungskerns
 		// Lese die Terminfindung anhand ihrer Id
-		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getIdRef());
 
 		// Der Teilnehmer wird neu erzeugt, der Name wird übertragen
 		Teilnehmer teilnehmer = new Teilnehmer();
@@ -173,7 +162,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 		// Liste für den Aufruf des
 		// Anwendungskerns
 		List<Zeitraum> zeitraumList = new ArrayList<>();
-		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getIdRef());
 
 		// Hole zu jedem zu löschenden Zeitraum das entsprechende Objekt des
 		// Anwendungskerns
@@ -246,7 +235,7 @@ public class AwkWrapperImpl implements AwkWrapper {
 		if (terminfindungModel == null || veranstaltungsName == null || organisatorName == null)
 			throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG);
 
-		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getId());
+		Terminfindung terminfindung = verwaltung.leseTerminfindung(terminfindungModel.getIdRef());
 		verwaltung.aktualisiereTerminfindung(terminfindung, organisatorName, veranstaltungsName);
 		return map(terminfindung);
 	}
