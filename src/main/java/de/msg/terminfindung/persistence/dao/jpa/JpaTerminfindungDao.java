@@ -23,8 +23,13 @@ package de.msg.terminfindung.persistence.dao.jpa;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import java.util.Date;
 import java.util.List;
 
@@ -42,4 +47,24 @@ public class JpaTerminfindungDao extends AbstraktJpaDao<Terminfindung> implement
         return q.getResultList();
     }
 
+	@Override
+	public List<Terminfindung> findeAlle() {
+		EntityManager em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Terminfindung> cq = cb.createQuery(Terminfindung.class);
+        Root<Terminfindung> rootEntry = cq.from(Terminfindung.class);
+        CriteriaQuery<Terminfindung> all = cq.select(rootEntry);
+        TypedQuery<Terminfindung> allQuery = em.createQuery(all);
+        
+        return allQuery.getResultList();
+    }
+
+	@Override
+	public Terminfindung sucheMitReferenz(String ref) {
+        TypedQuery<Terminfindung> query = getEntityManager().createNamedQuery("terminfindung.ref", Terminfindung.class);
+        query.setParameter("ref", ref);
+        return query.getSingleResult();
+	}
+
+	
 }

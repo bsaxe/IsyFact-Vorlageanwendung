@@ -40,4 +40,20 @@ public interface TerminfindungDao extends AbstraktDao<Terminfindung> {
      */
     List<Terminfindung> sucheVor(Date datum);
 
+    /**
+     * Gibt alle Terminfindungen zurück.
+     * 
+     * @return Alle Terminfindungen.
+     */
+	List<Terminfindung> findeAlle();
+	
+	/**
+	 * Sucht nach Terminfindung per UUID.
+	 * 
+	 * 
+	 * @param ref String, der UUID enthält.
+	 * @return Wenn vorhanden, Terminfindung mit der Referenz, sonst null. 
+	 */
+	Terminfindung sucheMitReferenz(String uuid);
+	
 }

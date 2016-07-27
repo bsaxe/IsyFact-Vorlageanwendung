@@ -33,6 +33,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Diese Klasse implementiert den Anwendungsfall "Terminfindung erstellen"
@@ -84,6 +85,7 @@ class AwfTerminfindungErstellen {
 
         terminfindung.setTermine(termine);
         terminfindung.setCreateDate(new Date());
+        terminfindung.setIdRef(UUID.randomUUID().toString());
         dao.speichere(terminfindung);
         return terminfindung;
 

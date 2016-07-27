@@ -1,6 +1,7 @@
 package de.msg.terminfindung.gui.util;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
@@ -25,51 +26,74 @@ import de.bund.bva.isyfact.logging.IsyLoggerFactory;
  * #L%
  */
 
-
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 
 /**
- * Holder für eine Terminfindungsnummer, die als Request-Parameter übergeben wurde.
- * Der Holder wird in die Controller injected. Auf den gespeicherten Wert
- * hat der Controller, unabhängig vom Model, Zugriff. Ein einmal gespeicherter Wert
- * bleibt erhalten, bis er von einem neuen Wert überschrieben wird.
+ * Holder für eine Terminfindungsnummer, die als Request-Parameter übergeben
+ * wurde. Der Holder wird in die Controller injected. Auf den gespeicherten Wert
+ * hat der Controller, unabhängig vom Model, Zugriff. Ein einmal gespeicherter
+ * Wert bleibt erhalten, bis er von einem neuen Wert überschrieben wird.
  *
  * @author msg systems ag, Dirk Jäger
  */
-public class TFNumberHolder implements Serializable{
+public class TFNumberHolder implements Serializable {
 	private static final long serialVersionUID = -8673855660241394242L;
 
 	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(TFNumberHolder.class);
 
-    /** Die gespeicherte Terminfindungsnummer */
-    private Long number = null;
+	/** Die gespeicherte Terminfindungsnummer */
+	private Long number = null;
+	private UUID ref = null;
 
-    public TFNumberHolder() {}
-    public TFNumberHolder(Long number) { this.number = number; }
-    public Long getNumber() { return number; }
+	public TFNumberHolder() {
+	}
 
-    public void updateIfNotNull (String tfNumberString) throws TerminfindungTechnicalException{
+	public TFNumberHolder(Long number) {
+		this.number = number;
+	}
 
-        if (tfNumberString != null) {
-            // Wenn der übergebene String nicht null ist, wird versucht, ihn in einen Long Wert
-            // zu parsen und diesen als neue Terminfindungsnummer im Holder abzuspeichern
+	public Long getNumber() {
+		return number;
+	}
 
-            LOG.debug("Update der TF-Nummer : " + tfNumberString);
-            long terminfindungsNr;
-            try {
-                terminfindungsNr = Long.parseLong(tfNumberString);
-            }
-            catch (NumberFormatException e) {
-                LOG.error(FehlerSchluessel.MSG_ALLGEMEINER_TECHNISCHER_FEHER_MIT_PARAMETER, "NumberFormatException beim Parsen von: {}", e ,tfNumberString);
-                throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_TERMINFINDUNGSNR_NICHT_KONVERTIERBAR, e, tfNumberString);
-            }
-            this.number = terminfindungsNr;
-        }
-        else {
-            // Nichts tun, der bisher gespeicherte Wert bleibt gespeichert
+	public UUID getRef() {
+		return ref;
+	}
 
-            LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert {}", number);
-        }
-    }
+	public void updateIfNotNull(String tfNumberString) throws TerminfindungTechnicalException {
+
+		if (tfNumberString != null) {
+			// Wenn der übergebene String nicht null ist, wird versucht, ihn in
+			// einen Long Wert
+			// zu parsen und diesen als neue Terminfindungsnummer im Holder
+			// abzuspeichern
+
+			LOG.debug("Update der TF-Nummer : " + tfNumberString);
+			long terminfindungsNr;
+			try {
+				terminfindungsNr = Long.parseLong(tfNumberString);
+			} catch (NumberFormatException e) {
+				LOG.error(FehlerSchluessel.MSG_ALLGEMEINER_TECHNISCHER_FEHER_MIT_PARAMETER,
+						"NumberFormatException beim Parsen von: {}", e, tfNumberString);
+				throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_TERMINFINDUNGSNR_NICHT_KONVERTIERBAR, e,
+						tfNumberString);
+			}
+			this.number = terminfindungsNr;
+		} else {
+			// Nichts tun, der bisher gespeicherte Wert bleibt gespeichert
+
+			LOG.debug("Update angefordert für TF-Nummer ist null, behalte gespeicherten Wert {}", number);
+		}
+	}
+
+	public void updateRefIfNotNull(UUID u) {
+
+		if (u != null) {
+			LOG.debug("Update der TF-Referenz : " + u);
+			ref = u;
+		} else {
+			LOG.debug("Update angefordert für TF-Referenz ist null, behalte gespeicherten Wert {}", number);
+		}
+	}
 }

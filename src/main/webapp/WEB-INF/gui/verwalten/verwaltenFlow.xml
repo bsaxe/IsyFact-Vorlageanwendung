@@ -24,14 +24,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd" parent="basisFlow">
 
-	<var name="verwaltenModel" 
-		class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenModel" />
-    <var name="tfNummer" class="java.lang.String"/>
+	<var name="verwaltenModel" class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenModel" />
+    <var name="tfRef" class="java.lang.String"/>
 
 	<view-state id="verwaltenViewState">
         <on-entry>
-            <set name="tfNummer" value="requestParameters.tfnr" type="java.lang.String" />
-            <evaluate expression="tfNumberHolder.updateIfNotNull(tfNummer)"/>
+            <set name="tfRef" value="requestParameters.tfref" type="java.util.UUID" />
+            <evaluate expression="tfNumberHolder.updateRefIfNotNull(tfRef)"/>
             <evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)" />
         </on-entry>
 
@@ -55,6 +54,7 @@
 		<transition on="finished" to="verwaltenViewState"/>
 	</subflow-state>
 
-	<end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfnr=#{tfNumberHolder.number}" />
-
+	<!-- end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfnr=#{tfNumberHolder.number}" /-->
+	<!-- end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfref=#{accessRefMap.getIndirectReference(accessRefMap.getDirectReference(tfRef))}" /-->
+	<end-state id="changeViewState" view="flowRedirect:teilnehmenFlow" />
 </flow>

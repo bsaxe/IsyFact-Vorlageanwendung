@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +49,11 @@ public class TerminfindungModel implements Serializable {
      * Die Nummer (Id) der Terminfindung
      */
     private long id;
+    
+    /**
+     * Indirekte Referenz der Terminfindung
+     */
+    private UUID idRef;
 
     /**
      * Der vom Veranstalter letztlich ausgewählte Termin der Veranstaltung. Dieser Termin (=Zeitraum an einem Tag) wird
@@ -169,7 +175,15 @@ public class TerminfindungModel implements Serializable {
         this.id = id;
     }
 
-    public ZeitraumModel getDefZeitraum() {
+    public UUID getIdRef() {
+		return idRef;
+	}
+
+	public void setIdRef(UUID idRef) {
+		this.idRef = idRef;
+	}
+
+	public ZeitraumModel getDefZeitraum() {
         return defZeitraum;
     }
 

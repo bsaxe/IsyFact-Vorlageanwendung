@@ -58,6 +58,7 @@ create table terminfindung.TeilnehmerZeitraum (
 
 create table terminfindung.Terminfindung (
         id number(19,0) not null,
+        idref varchar2(36 char),
         createDate timestamp,
         organisator_name varchar2(255 char),
         updateDate timestamp,

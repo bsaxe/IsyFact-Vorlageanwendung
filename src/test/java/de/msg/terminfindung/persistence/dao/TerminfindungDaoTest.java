@@ -31,9 +31,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 public class TerminfindungDaoTest extends AbstraktDaoTest {
 
     private static final Long TERMINFINDUNG_ID = 2L;
+    private static final String TERMINFINDUNG_REF = "ddec6dd1-4e7e-4e7f-8343-962414a63835";
 
     @Autowired
     private TerminfindungDao terminfindungDao;
@@ -53,6 +56,30 @@ public class TerminfindungDaoTest extends AbstraktDaoTest {
         assertNotNull(terminfindung);
         assertEquals("Herbert", terminfindung.getOrganisator().getName());
         assertEquals("Spieleabend IsyFact", terminfindung.getVeranstaltungName());
+    }
+    
+    @Test
+    @DatabaseSetup("testTerminfindungDaoSetup.xml")
+    public void testSuchenMitRef() {
+        Terminfindung terminfindung = terminfindungDao.sucheMitReferenz(TERMINFINDUNG_REF);
+
+        assertNotNull(terminfindung);
+        assertEquals("Klaus", terminfindung.getOrganisator().getName());
+        assertEquals("Weihnachtsfeier 2016", terminfindung.getVeranstaltungName());
+    }
+    
+    @Test
+    @DatabaseSetup("testTerminfindungDaoSetup.xml")
+    public void testFindeAlle()
+    {
+    	List<Terminfindung> alleTerminfindungen = terminfindungDao.findeAlle();
+    	
+    	assertNotNull(alleTerminfindungen);
+    	assertEquals(2, alleTerminfindungen.size());
+        assertEquals("Klaus", alleTerminfindungen.get(0).getOrganisator().getName());
+        assertEquals("Weihnachtsfeier 2016", alleTerminfindungen.get(0).getVeranstaltungName());
+        assertEquals("Herbert", alleTerminfindungen.get(1).getOrganisator().getName());
+        assertEquals("Spieleabend IsyFact", alleTerminfindungen.get(1).getVeranstaltungName());
     }
 
     @Test

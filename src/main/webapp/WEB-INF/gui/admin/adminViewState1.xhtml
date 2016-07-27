@@ -32,15 +32,56 @@
 			<isy:panel>
 				<f:facet name="panelHeader">
 						Administration
+				</f:facet>
+			</isy:panel>
+			<isy:panel>
+				<f:facet name="panelHeader">
+						Alle Terminfindungen
 					</f:facet>
 				<f:facet name="panelBody">
-						<div class="row row-df">
-							<div class="col-lg-4">
-								<div style="text-align:center">
-									<p>Willkommen Administrator!</p>
-								</div>
-							</div>
+                    <div class="row row-df">
+                        <div class="col-lg-12 hscroll">
+	                        <table class="selectAbschliessen">
+	                        	<thead>
+	                        		<tr>
+							        	<th>ID</th>
+							          	<th>Veranstaltungsname</th>
+							          	<th>Organisator</th>
+							          	<th>Abgeschlossen</th>
+							          	<th>Gewählter Termin</th>
+							        </tr>
+	                        	</thead>		
+	                            <tbody>
+	                                <ui:repeat var="tf" value="#{adminModel.alleTerminfindungen}">
+	                                	<tr>
+	                                		<td>#{tf.id}</td>
+	                                   		<td>#{tf.veranstaltungName}</td>
+	                                   		<td>#{tf.organisator.name}</td>
+	                                   		<td class="anzahlTd">
+	                                   			<h:selectBooleanCheckbox value="#{tf.abgeschlossen}" disabled="true"/>
+	                                   		</td>
+	                                   		<td>
+	                                   			<h:outputText rendered="#{tf.abgeschlossen}" value="#{tf.getTagForZeitraum(tf.defZeitraum).datum}"/>							
+												<h:outputText rendered="#{tf.abgeschlossen}" value=" #{tf.defZeitraum.beschreibung}"/>
+	                                   		</td>
+	                                   		<td>
+	                                   			<h:outputLink id="verwaltenLink" value="verwaltenFlow" >
+	                                   				<f:param name="tfref" value="#{tf.idRef}"/>
+	                                   				<h:outputText value="Verwalten" />
+	                                   			</h:outputLink>
+											</td>
+											<td>
+	                                   			<h:outputLink id="teilnehmenLink" value="teilnehmenFlow" >
+	                                   				<f:param name="tfref" value="#{tf.idRef}"/>
+	                                   				<h:outputText value="Teilnehmen" />
+	                                   			</h:outputLink>
+											</td>
+	                                   	</tr>
+	                                </ui:repeat>
+	                         	</tbody>
+	                         </table>
 						</div>
+					</div>
 				</f:facet>
 			</isy:panel>
 		</isy:panelGroup>
