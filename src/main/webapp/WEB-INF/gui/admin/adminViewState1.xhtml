@@ -22,9 +22,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:sf="http://www.springframework.org/tags/faces"
 	xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
-	xmlns:debug="http://java.sun.com/jsf/composite/debug"
 	template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
 	<ui:define name="inhaltsbereich">
@@ -44,7 +42,6 @@
 	                        <table class="selectAbschliessen">
 	                        	<thead>
 	                        		<tr>
-							        	<th>ID</th>
 							          	<th>Veranstaltungsname</th>
 							          	<th>Organisator</th>
 							          	<th>Abgeschlossen</th>
@@ -54,7 +51,6 @@
 	                            <tbody>
 	                                <ui:repeat var="tf" value="#{adminModel.alleTerminfindungen}">
 	                                	<tr>
-	                                		<td>#{tf.id}</td>
 	                                   		<td>#{tf.veranstaltungName}</td>
 	                                   		<td>#{tf.organisator.name}</td>
 	                                   		<td class="anzahlTd">

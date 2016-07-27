@@ -24,16 +24,7 @@ package de.msg.terminfindung.gui.terminfindung.model;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.*;
 
 /**
  * Die Klasse speichert eine Terminfindung in der View-Schicht.
@@ -45,11 +36,6 @@ public class TerminfindungModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Die Nummer (Id) der Terminfindung
-     */
-    private long id;
-    
     /**
      * Indirekte Referenz der Terminfindung
      */
@@ -166,14 +152,6 @@ public class TerminfindungModel implements Serializable {
 
 
 	/* Getter und Setter */
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public UUID getIdRef() {
 		return idRef;
