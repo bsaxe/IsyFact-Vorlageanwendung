@@ -26,7 +26,7 @@ public class VerwaltenPageTest {
 
 	@Test
 	public void aendereStammdatenEinerTerminfindung() {
-		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten √§ndern", "Tester"));
+		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ‰ndern", "Tester"));
 		
 		verwaltenPage.aendereStammdaten("neuer Name", "neuer Organisator");
 		
@@ -35,7 +35,7 @@ public class VerwaltenPageTest {
 	
 	@Test
 	public void stammdatenVeranstaltungsnameDarfNichtLeerSein() {
-		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten √§ndern Name leer", "Tester"));
+		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ‰ndern Name leer", "Tester"));
 		
 		verwaltenPage.aendereStammdaten("", "neuer Organisator");
 		
@@ -44,7 +44,7 @@ public class VerwaltenPageTest {
 	
 	@Test
 	public void stammdatenOrganisatorDarfNichtLeerSein() {
-		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten √§ndern Organisator leer", "Tester"));
+		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ‰ndern Organisator leer", "Tester"));
 		
 		verwaltenPage.aendereStammdaten("neuer Name", "");
 		
@@ -66,7 +66,7 @@ public class VerwaltenPageTest {
 	@Test
 	public void termineLoeschen() {
 		erstellenPage.imBrowserGeoeffnet();
-		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Termin l√∂schen", "Tester",
+		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Termin lˆschen", "Tester",
 				Arrays.asList(LocalDate.now(), LocalDate.now().plusDays(1)),
 				Arrays.asList(LocalTime.of(9, 0), LocalTime.of(12, 0)),
 				Arrays.asList(LocalTime.of(10, 0), LocalTime.of(13, 0)));
@@ -82,7 +82,7 @@ public class VerwaltenPageTest {
 	@Test
 	public void terminfindungAbschliessen() {
 		erstellenPage.imBrowserGeoeffnet();
-		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Terminfindung abschlie√üen", "Test",
+		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Terminfindung abschlieﬂen", "Test",
 				Arrays.asList(LocalDate.now(), LocalDate.now().plusDays(1)), Arrays.asList(LocalTime.of(9, 0)),
 				Arrays.asList(LocalTime.of(10, 0)));
 
@@ -93,7 +93,7 @@ public class VerwaltenPageTest {
 		verwaltenPage.schliesseTerminfindungAb(1);
 		
 		verwaltenPage.zeigtNachricht(
-				"Die Terminfindung f√ºr diese Veranstaltung ist abgeschlossen.\nDer ausgew√§hlte Termin ist der "
+				"Die Terminfindung f¸r diese Veranstaltung ist abgeschlossen.\nDer ausgew‰hlte Termin ist der "
 						+ terminTag + " (Zeitraum: 09:00 - 10:00).");
 		verwaltenPage.stammdatenBearbeitenButtonIstDeaktiviert();
 		verwaltenPage.termineLoeschenButtonIstDeaktiviert();

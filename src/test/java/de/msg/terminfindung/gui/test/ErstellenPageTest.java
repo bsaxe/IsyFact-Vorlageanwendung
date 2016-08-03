@@ -42,7 +42,7 @@ public class ErstellenPageTest {
 
 		erstellenPage.fuegeTagHinzu(LocalDate.now());
 
-		erstellenPage.zeigtTooltipMitFehlertext("Datum bereits hinzugefÃ¼gt (DA)");
+		erstellenPage.zeigtTooltipMitFehlertext("Datum bereits hinzugefügt (DA)");
 	}
 
 	@Test
@@ -61,7 +61,7 @@ public class ErstellenPageTest {
 		erstellenPage.loescheAlleTage();
 		erstellenPage.fuegeNTageHinzu(6);
 
-		erstellenPage.zeigtTooltipMitFehlertext("Bereits max. Anzahl an Daten hinzugefÃ¼gt (DA)");
+		erstellenPage.zeigtTooltipMitFehlertext("Bereits max. Anzahl an Daten hinzugefügt (DA)");
 	}
 
 	@Test
@@ -91,11 +91,11 @@ public class ErstellenPageTest {
 		
 		erstellenPage.setzeNameUndOrganisator("", "Tester");
 		erstellenPage.erstelleTerminfindung();
-		erstellenPage.zeigtTooltipMitFehlertext("BenÃ¶tigtes Feld (TI)");
+		erstellenPage.zeigtTooltipMitFehlertext("Benötigtes Feld (TI)");
 		
 		erstellenPage.setzeNameUndOrganisator("Test Veranstaltung", "");
 		erstellenPage.erstelleTerminfindung();
-		erstellenPage.zeigtTooltipMitFehlertext("BenÃ¶tigtes Feld (NA)");
+		erstellenPage.zeigtTooltipMitFehlertext("Benötigtes Feld (NA)");
 	}
 
 	@Test

@@ -103,7 +103,7 @@ class TeilnahmeTabelle {
 					columnSpans.add(Integer.parseInt(column.attr("colspan")));
 					tage.add(LocalDate.parse(column.text(), ddMMyyyy));
 				}
-				// Zeitrï¿½ume ohne colspan
+				// Zeiträume ohne colspan
 				else if (column.attr("class").startsWith("borderTd ") && column.attr("colspan").isEmpty()) {
 					zeitraeume.add(column.text());
 				}
@@ -207,7 +207,7 @@ class TeilnahmeTabelle {
 		}
 	}
 
-	// Zuordnung der Spaltenindizes der Zeitraumspalten auf deren zugehÃ¶rigen
+	// Zuordnung der Spaltenindizes der Zeitraumspalten auf deren zugehörigen
 	// Tag
 	private LocalDate getTagFuerIndex(int idx) {
 		int tagIdx = 0;

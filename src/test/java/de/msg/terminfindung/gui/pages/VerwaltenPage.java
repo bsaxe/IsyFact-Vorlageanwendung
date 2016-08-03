@@ -32,7 +32,7 @@ public class VerwaltenPage {
 	@FindBy(xpath = ".//input[@value = 'Stammdaten bearbeiten']")
 	private WebElement stammdatenBearbeitenButton;
 
-	@FindBy(xpath = ".//input[@value = 'Termine lÃ¶schen']")
+	@FindBy(xpath = ".//input[@value = 'Termine löschen']")
 	private WebElement termineLoeschenButton;
 
 	@FindBy(xpath = ".//input[@value = 'Terminfindung abschliessen']")
@@ -41,7 +41,7 @@ public class VerwaltenPage {
 	@FindBy(xpath = ".//input[@value = 'Zur Teilnehmersicht']")
 	private WebElement teilnehmerSichtButton;
 
-	@FindBy(xpath = ".//input[@value = 'ZurÃ¼ck']")
+	@FindBy(xpath = ".//input[@value = 'Zurück']")
 	private WebElement stammdatenZurueckButton;
 
 	@FindBy(xpath = ".//input[@value = 'Speichern']")
@@ -56,7 +56,7 @@ public class VerwaltenPage {
 	@FindBy(xpath = ".//input[@value = 'Festlegen']")
 	private WebElement abschliessenFestlegenButton;
 
-	@FindBy(xpath = ".//input[@value = 'ZurÃ¼ck']")
+	@FindBy(xpath = ".//input[@value = 'Zurück']")
 	private WebElement abschliessenZurueckButton;
 
 	@FindBy(xpath = ".//input[contains(@name, 'waehleEinenZeitraum')]")
@@ -65,7 +65,7 @@ public class VerwaltenPage {
 	@FindBy(xpath = ".//input[contains(@name, 'selectedZeitraum')]")
 	private List<WebElement> waehleZeitraumCheckboxElements;
 
-	@FindBy(xpath = ".//input[@value = 'LÃ¶schen']")
+	@FindBy(xpath = ".//input[@value = 'Löschen']")
 	private WebElement termineLoeschenLoeschenButton;
 
 	@FindBy(xpath = ".//div[span[normalize-space(text())='Terminfindung Details']]/../..")

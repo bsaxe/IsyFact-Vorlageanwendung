@@ -40,7 +40,7 @@ public class ErstellenPage {
 	@FindBy(xpath = ".//input[contains(@id, 'newDate')]")
 	private WebElement neuesDatumInput;
 
-	@FindBy(xpath = ".//input[@value = 'Tag hinzufÃ¼gen']")
+	@FindBy(xpath = ".//input[@value = 'Tag hinzufügen']")
 	private WebElement tagHinzuButton;
 
 	@FindBy(xpath = ".//input[@value = 'Weiter']")
