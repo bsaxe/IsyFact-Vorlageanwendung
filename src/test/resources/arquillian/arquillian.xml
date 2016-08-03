@@ -1,0 +1,17 @@
+<arquillian xmlns="http://jboss.com/arquillian" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+	
+	<extension qualifier="webdriver">
+		<!-- property name="remoteReusable">true</property>
+		<property name="remoteAddress">http://192.168.56.2:4444/wd/hub/</property>
+		<property name="ieDriverBinary">c:/dev/webdriver/IEDriverServer.exe</property-->
+		<property name="chromeDriverBinary">c:/dev/webdriver/chromedriver.exe</property>
+		<property name="browser">chrome</property>
+	</extension>
+	
+	<extension qualifier="webdriver-firefox">
+		<!--property name="remoteReusable">true</property>
+		<property name="remoteAddress">http://192.168.56.2:4444/wd/hub/</property-->
+		<property name="browser">firefox</property>
+	</extension>	
+</arquillian>
