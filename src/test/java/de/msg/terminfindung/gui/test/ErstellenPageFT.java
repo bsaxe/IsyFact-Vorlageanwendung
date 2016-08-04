@@ -10,6 +10,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import de.msg.terminfindung.gui.pages.ErstellenPage;
@@ -17,7 +18,7 @@ import de.msg.terminfindung.gui.pages.TeilnehmenPage;
 
 @RunWith(Arquillian.class)
 @RunAsClient
-public class ErstellenPageTest {
+public class ErstellenPageFT {
 
 	@Page
 	private ErstellenPage erstellenPage;
@@ -42,7 +43,7 @@ public class ErstellenPageTest {
 
 		erstellenPage.fuegeTagHinzu(LocalDate.now());
 
-		erstellenPage.zeigtTooltipMitFehlertext("Datum bereits hinzugefügt (DA)");
+		erstellenPage.zeigtTooltipMitFehlertext("Datum bereits hinzugefÃ¼gt (DA)");
 	}
 
 	@Test
@@ -61,7 +62,7 @@ public class ErstellenPageTest {
 		erstellenPage.loescheAlleTage();
 		erstellenPage.fuegeNTageHinzu(6);
 
-		erstellenPage.zeigtTooltipMitFehlertext("Bereits max. Anzahl an Daten hinzugefügt (DA)");
+		erstellenPage.zeigtTooltipMitFehlertext("Bereits max. Anzahl an Daten hinzugefÃ¼gt (DA)");
 	}
 
 	@Test
@@ -91,11 +92,11 @@ public class ErstellenPageTest {
 		
 		erstellenPage.setzeNameUndOrganisator("", "Tester");
 		erstellenPage.erstelleTerminfindung();
-		erstellenPage.zeigtTooltipMitFehlertext("Benötigtes Feld (TI)");
+		erstellenPage.zeigtTooltipMitFehlertext("BenÃ¶tigtes Feld (TI)");
 		
 		erstellenPage.setzeNameUndOrganisator("Test Veranstaltung", "");
 		erstellenPage.erstelleTerminfindung();
-		erstellenPage.zeigtTooltipMitFehlertext("Benötigtes Feld (NA)");
+		erstellenPage.zeigtTooltipMitFehlertext("BenÃ¶tigtes Feld (NA)");
 	}
 
 	@Test

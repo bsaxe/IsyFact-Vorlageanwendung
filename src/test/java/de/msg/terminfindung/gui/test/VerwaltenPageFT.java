@@ -9,6 +9,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import de.msg.terminfindung.gui.pages.ErstellenPage;
@@ -16,7 +17,7 @@ import de.msg.terminfindung.gui.pages.VerwaltenPage;
 
 @RunWith(Arquillian.class)
 @RunAsClient
-public class VerwaltenPageTest {
+public class VerwaltenPageFT {
 
 	@Page
 	private VerwaltenPage verwaltenPage;
@@ -26,7 +27,7 @@ public class VerwaltenPageTest {
 
 	@Test
 	public void aendereStammdatenEinerTerminfindung() {
-		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ‰ndern", "Tester"));
+		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten √§ndern", "Tester"));
 		
 		verwaltenPage.aendereStammdaten("neuer Name", "neuer Organisator");
 		
@@ -35,7 +36,7 @@ public class VerwaltenPageTest {
 	
 	@Test
 	public void stammdatenVeranstaltungsnameDarfNichtLeerSein() {
-		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ‰ndern Name leer", "Tester"));
+		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten √§ndern Name leer", "Tester"));
 		
 		verwaltenPage.aendereStammdaten("", "neuer Organisator");
 		
@@ -44,7 +45,7 @@ public class VerwaltenPageTest {
 	
 	@Test
 	public void stammdatenOrganisatorDarfNichtLeerSein() {
-		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ‰ndern Organisator leer", "Tester"));
+		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten √§ndern Organisator leer", "Tester"));
 		
 		verwaltenPage.aendereStammdaten("neuer Name", "");
 		
@@ -66,7 +67,7 @@ public class VerwaltenPageTest {
 	@Test
 	public void termineLoeschen() {
 		erstellenPage.imBrowserGeoeffnet();
-		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Termin lˆschen", "Tester",
+		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Termin l√∂schen", "Tester",
 				Arrays.asList(LocalDate.now(), LocalDate.now().plusDays(1)),
 				Arrays.asList(LocalTime.of(9, 0), LocalTime.of(12, 0)),
 				Arrays.asList(LocalTime.of(10, 0), LocalTime.of(13, 0)));
@@ -82,7 +83,7 @@ public class VerwaltenPageTest {
 	@Test
 	public void terminfindungAbschliessen() {
 		erstellenPage.imBrowserGeoeffnet();
-		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Terminfindung abschlieﬂen", "Test",
+		String tfRef = erstellenPage.terminfindungErstelltMitZeiten("Test Terminfindung abschlie√üen", "Test",
 				Arrays.asList(LocalDate.now(), LocalDate.now().plusDays(1)), Arrays.asList(LocalTime.of(9, 0)),
 				Arrays.asList(LocalTime.of(10, 0)));
 
@@ -93,7 +94,7 @@ public class VerwaltenPageTest {
 		verwaltenPage.schliesseTerminfindungAb(1);
 		
 		verwaltenPage.zeigtNachricht(
-				"Die Terminfindung f¸r diese Veranstaltung ist abgeschlossen.\nDer ausgew‰hlte Termin ist der "
+				"Die Terminfindung f√ºr diese Veranstaltung ist abgeschlossen.\nDer ausgew√§hlte Termin ist der "
 						+ terminTag + " (Zeitraum: 09:00 - 10:00).");
 		verwaltenPage.stammdatenBearbeitenButtonIstDeaktiviert();
 		verwaltenPage.termineLoeschenButtonIstDeaktiviert();

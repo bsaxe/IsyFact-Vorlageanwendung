@@ -20,17 +20,10 @@ public class AdminPage {
 		LoginPage loginPage = Graphene.goTo(LoginPage.class);
 		loginPage.loginMit("admin", "admin");
 		Graphene.goTo(AdminPage.class);
+		Graphene.waitGui().until().element(panelHeadingElements.get(0)).is().visible();
 	}
 
 	public void zeigtAlleTerminfindungen() {
-//		List<String> panelHeadingText = new ArrayList<>();
-//		
-//		for (WebElement panelHeadingElement: panelHeadingElements)
-//		{
-//			panelHeadingText.add(panelHeadingElement.getText());
-//		}
-//		
-//		assertTrue(panelHeadingText.contains("Alle Terminfindungen"));
 		assertTrue(panelHeadingElements.stream().anyMatch(we -> we.getText().equals("Alle Terminfindungen")));
 	}
 

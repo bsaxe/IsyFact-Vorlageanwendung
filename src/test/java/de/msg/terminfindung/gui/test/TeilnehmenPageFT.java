@@ -9,6 +9,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import de.msg.terminfindung.gui.pages.ErstellenPage;
@@ -17,7 +18,7 @@ import de.msg.terminfindung.gui.pages.VerwaltenPage;
 
 @RunWith(Arquillian.class)
 @RunAsClient
-public class TeilnehmenPageTest {
+public class TeilnehmenPageFT {
 
 	@Page
 	private TeilnehmenPage teilnehmenPage;
