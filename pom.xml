@@ -482,7 +482,7 @@
 								<include>**/*PageFT.java</include>
 							</includes>
 							<systemProperties>
-								<arq.extension.graphene.url>http://192.168.56.1:8080/terminfindung/app/</arq.extension.graphene.url>
+								<arq.extension.graphene.url>http://localhost:8080/terminfindung/app/</arq.extension.graphene.url>
 							</systemProperties>
 
 						</configuration>
@@ -510,13 +510,32 @@
 									<reportNameSuffix>local-chrome</reportNameSuffix>
 								</configuration>
 							</execution>
-							<!--execution> <id>firefox</id> <goals> <goal>test</goal> </goals> 
-								<phase>test</phase> <configuration> <systemPropertyVariables> <arquillian.xml>arquillian/arquillian-remote-firefox.xml</arquillian.xml> 
-								</systemPropertyVariables> <reportNameSuffix>firefox</reportNameSuffix> </configuration> 
-								</execution> <execution> <id>chrome</id> <goals> <goal>test</goal> </goals> 
-								<phase>test</phase> <configuration> <systemPropertyVariables> <arquillian.xml>arquillian/arquillian-remote-chrome.xml</arquillian.xml> 
-								</systemPropertyVariables> <reportNameSuffix>chrome</reportNameSuffix> </configuration> 
-								</execution -->
+							<!--execution>
+							 	<id>firefox</id>
+							 		<goals>
+							 			<goal>test</goal>
+							 		</goals> 
+									<phase>test</phase>
+									<configuration>
+										<systemPropertyVariables>
+											<arquillian.xml>arquillian/arquillian-remote-firefox.xml</arquillian.xml> 
+										</systemPropertyVariables>
+										<reportNameSuffix>firefox</reportNameSuffix>
+									</configuration> 
+							</execution>
+							<execution>
+								<id>chrome</id>
+								<goals>
+									<goal>test</goal> 
+								</goals> 
+								<phase>test</phase>
+								<configuration>
+									<systemPropertyVariables>
+										<arquillian.xml>arquillian/arquillian-remote-chrome.xml</arquillian.xml> 
+									</systemPropertyVariables>
+									<reportNameSuffix>chrome</reportNameSuffix>
+								</configuration> 
+							</execution -->
 						</executions>
 					</plugin>
 				</plugins>
