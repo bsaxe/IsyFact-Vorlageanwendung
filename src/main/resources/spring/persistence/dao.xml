@@ -131,7 +131,6 @@
     <beans profile="entwicklung">
         <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource" primary="true">
             <property name="url" value="jdbc:h2:~/h2-entwicklung-db;MODE=Oracle"/>
-            <property name="user" value="sa"/>
         </bean>
 
         <bean id="entityManagerFactory"
