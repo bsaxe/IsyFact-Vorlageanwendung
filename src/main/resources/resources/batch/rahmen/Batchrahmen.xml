@@ -20,12 +20,6 @@
         Version $Id: Batchrahmen.xml 22100 2013-06-13 15:44:38Z dellmuts $
         ====================================================================== -->
 
-    <!--
-        <import resource="../../../spring/querschnitt/plis-sicherheit.xml"/>
-        <import resource="../../../spring/querschnitt/plis-konfiguration.xml"/>
-        <import resource="../../../spring/persistence/dao.xml"/>
-    -->
-
     <!-- ======================================================================
         Die Bean fuer den Batchrahmen. Diese Bean muss entwender "batchrahmen"
         genannt werden, oder ihr Name muss in der Property-Datei in Property
