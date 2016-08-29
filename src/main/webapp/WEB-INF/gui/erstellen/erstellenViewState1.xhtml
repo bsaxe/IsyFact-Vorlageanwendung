@@ -39,14 +39,14 @@
 						<div class="row row-df">
 							<div class="col-lg-4">
 								<isy:formInput reference="name" value="#{erstellenModel.name}"
-									label="Titel der Veranstaltung" required="true" />
+									label="Titel der Veranstaltung" required="true" id="veranstaltungTitelInput"/>
 								<isy:formInput reference="orgName" value="#{erstellenModel.orgName}"
-									label="Ihr Name" required="true" />
+									label="Ihr Name" required="true" id="organisatorInput"/>
 								<isy:formDate reference="newDate"
 									value="#{erstellenModel.newDate}" label="Tag ausw&auml;hlen"
-									placeholder="#{erstellenModel.placeholderDate}" />
+									placeholder="#{erstellenModel.placeholderDate}" id="datumInput"/>
 								<isy:button styleClass="buttonTerminAdd" action="add"
-									value="Tag hinzufügen" />
+									value="Tag hinzufügen" id="terminHinzuButton"/>
 							</div>
 							<div class="col-lg-1"></div>
 							<div class="col-lg-5">
@@ -55,7 +55,7 @@
 										styleClass="chosenTable">
 										<h:column>
 											<f:facet name="header">Ausgew&auml;hlte Tage:</f:facet>
-											<h:outputText value="#{tag.datum}"/>
+											<h:outputText value="#{tag.datum}" id="ausgewaehlterTag"/>
 										</h:column>
 										<h:column>
 											<h:commandLink action="loeschen">
@@ -63,6 +63,7 @@
 													style="max-height:15px" />
 												<f:setPropertyActionListener value="#{tag}"
 													target="#{erstellenModel.selectedTermin}" />
+												<f:attribute name="id" value="datumLoeschenLink" />	
 											</h:commandLink>
 										</h:column>
 									</h:dataTable>
@@ -72,7 +73,7 @@
 						<hr />
 						<isy:button action="back" value="Zurück" rendered="false" />
 						<isy:button action="continue" value="Weiter"
-							disabled="#{erstellenModel.tage.size() == 0}" />
+							disabled="#{erstellenModel.tage.size() == 0}" id="weiterButton"/>
 					</div>
 				</f:facet>
 			</isy:panel>

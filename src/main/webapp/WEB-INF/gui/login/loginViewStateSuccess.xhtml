@@ -31,20 +31,22 @@
 		<isy:panelGroup>
 			<isy:panel>
 				<f:facet name="panelHeader">
-					Benutzernanmeldung
+					Benutzeranmeldung
 				</f:facet>
 				<f:facet name="panelBody">
+					<f:attribute name="id" value="benutzeranmeldungPanelBody" />
 					<div class="form-horizontal">
 						<div class="row row-df">
 							<div class="col-lg-4">
-								<p>Anmeldung erfolgreich!</p>
+								<!--<p>Anmeldung erfolgreich!</p>-->
+								<h:outputText value="Anmeldung erfolgreich!" id="loginMeldung"/>
 							</div>
 						</div>
 					</div>
 					<div class="row row-df">
 						<div class="col-lg-4">
 							<div style="text-align: center">
-								<isy:button action="ok" value="OK" />
+								<isy:button action="ok" value="OK" id="okButton" />
 							</div>
 						</div>
 					</div>

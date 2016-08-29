@@ -1,5 +1,7 @@
 package de.msg.terminfindung.gui.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -53,7 +55,7 @@ public class TeilnehmenPageFT {
 	public void zeigtDatenDerTerminfindungAn() {
 		teilnehmenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test zeigt Daten an", "Tester"));
 		
-		teilnehmenPage.zeigtNameUndOrganisator("Test zeigt Daten an", "Tester");
+		assertTrue(teilnehmenPage.zeigtNameUndOrganisator("Test zeigt Daten an", "Tester"));
 	}
 
 	@Test
@@ -64,7 +66,8 @@ public class TeilnehmenPageFT {
 		verwaltenPage.schliesseTerminfindungAb(0);
 		
 		teilnehmenPage.ladeBestehendeTerminfindungImBrowser(ref);
-		teilnehmenPage.teilnahmeButtonsSindDeaktiviert();
+		
+		assertTrue(teilnehmenPage.teilnahmeButtonsSindDeaktiviert());
 	}
 
 	@Test
@@ -88,10 +91,10 @@ public class TeilnehmenPageFT {
 		teilnehmenPage.neuerTerminwunsch(0, 3, 6);
 		teilnehmenPage.neuerTeilnehmerMitAbsage("Peter");
 
-		teilnehmenPage.zeigtTeilnehmerMitZusageFuerTagUndZeitraum("Klaus", tage.get(0), "09:15 - 11:30");
-		teilnehmenPage.zeigtTeilnehmerMitZusageFuerTagUndZeitraum("Maria", tage.get(0), "09:15 - 11:30");
-		teilnehmenPage.zeigtTeilnehmerMitZusageFuerTagUndZeitraum("Maria", tage.get(1), "11:45 - 13:00");
-		teilnehmenPage.zeigtTeilnehmerKannNicht("Peter");
+		assertTrue(teilnehmenPage.zeigtTeilnehmerMitZusageFuerTagUndZeitraum("Klaus", tage.get(0), "09:15 - 11:30"));
+		assertTrue(teilnehmenPage.zeigtTeilnehmerMitZusageFuerTagUndZeitraum("Maria", tage.get(0), "09:15 - 11:30"));
+		assertTrue(teilnehmenPage.zeigtTeilnehmerMitZusageFuerTagUndZeitraum("Maria", tage.get(1), "11:45 - 13:00"));
+		assertTrue(teilnehmenPage.zeigtTeilnehmerKannNicht("Peter"));
 	}
 
 	@Test
@@ -99,10 +102,10 @@ public class TeilnehmenPageFT {
 		teilnehmenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Teilnahme ohne Name", "Tester"));
 		
 		teilnehmenPage.neuerTeilnehmer("");
-		teilnehmenPage.zeigtTooltipMitFehlertext("Bitte Namen eingeben (NA)");
+		assertTrue(teilnehmenPage.zeigtTooltipMitFehlertext("Bitte Namen eingeben (NA)"));
 
 		teilnehmenPage.neuerTeilnehmerMitAbsage("");
-		teilnehmenPage.zeigtTooltipMitFehlertext("Bitte Namen eingeben (NA)");
+		assertTrue(teilnehmenPage.zeigtTooltipMitFehlertext("Bitte Namen eingeben (NA)"));
 	}
 	
 	@Test
@@ -112,10 +115,10 @@ public class TeilnehmenPageFT {
 		
 		teilnehmenPage.neuerTeilnehmer("Peter");
 		teilnehmenPage.neuerTeilnehmer("Peter");
-		teilnehmenPage.zeigtTooltipMitFehlertext("Teilnehmer existiert bereits (NA)");
+		assertTrue(teilnehmenPage.zeigtTooltipMitFehlertext("Teilnehmer existiert bereits (NA)"));
 
 		teilnehmenPage.neuerTeilnehmerMitAbsage("Peter");
-		teilnehmenPage.zeigtTooltipMitFehlertext("Teilnehmer existiert bereits (NA)");
+		assertTrue(teilnehmenPage.zeigtTooltipMitFehlertext("Teilnehmer existiert bereits (NA)"));
 	}
 	
 	private String erstelleTerminfindung(String veranstaltungName, String organisator)

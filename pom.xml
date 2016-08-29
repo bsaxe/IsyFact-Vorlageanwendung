@@ -482,9 +482,12 @@
 								<include>**/*PageFT.java</include>
 							</includes>
 							<systemProperties>
-								<arq.extension.graphene.url>http://localhost:8080/terminfindung/app/</arq.extension.graphene.url>
+								<arq.extension.graphene.url>http://192.168.168.4:8080/terminfindung/app/</arq.extension.graphene.url>
 							</systemProperties>
-
+							<parallel>classes</parallel>
+        					<threadCount>2</threadCount>
+        					<forkCount>2</forkCount>
+        					<reuseForks>false</reuseForks>
 						</configuration>
 						<executions>
 							<execution>
@@ -497,7 +500,7 @@
 									<skip>true</skip>
 								</configuration>
 							</execution>
-							<execution>
+							<!--execution>
 								<id>local-chrome</id>
 								<goals>
 									<goal>test</goal>
@@ -509,8 +512,8 @@
 									</systemPropertyVariables>
 									<reportNameSuffix>local-chrome</reportNameSuffix>
 								</configuration>
-							</execution>
-							<!--execution>
+							</execution-->
+							<execution>
 							 	<id>firefox</id>
 							 		<goals>
 							 			<goal>test</goal>
@@ -535,7 +538,7 @@
 									</systemPropertyVariables>
 									<reportNameSuffix>chrome</reportNameSuffix>
 								</configuration> 
-							</execution -->
+							</execution>
 						</executions>
 					</plugin>
 				</plugins>

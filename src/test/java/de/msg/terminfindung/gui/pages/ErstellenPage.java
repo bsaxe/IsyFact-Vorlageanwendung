@@ -50,32 +50,29 @@ public class ErstellenPage {
 	@Drone
 	protected WebDriver browser;
 
-	@FindBy(xpath = ".//input[contains(@id, 'name')]")
+	@FindBy(xpath = ".//input[contains(@id, 'veranstaltungTitelInput')]")
 	private WebElement veranstaltungNameInput;
 
-	@FindBy(xpath = ".//input[contains(@id, 'orgName')]")
+	@FindBy(xpath = ".//input[contains(@id, 'organisatorInput')]")
 	private WebElement veranstaltungOrganisatorInput;
 
-	@FindBy(xpath = ".//input[contains(@id, 'newDate')]")
+	@FindBy(xpath = ".//input[contains(@id, 'datumInput')]")
 	private WebElement neuesDatumInput;
 
-	@FindBy(xpath = ".//input[@value = 'Tag hinzufügen']")
+	@FindBy(xpath = ".//input[contains(@id, 'terminHinzuButton')]")
 	private WebElement tagHinzuButton;
 
-	@FindBy(xpath = ".//input[@value = 'Weiter']")
+	@FindBy(xpath = ".//input[contains(@id, 'weiterButton')]")
 	private WebElement weiterButton;
 
-	@FindBy(xpath = ".//table[@class = 'chosenTable']//td[1]")
+	@FindBy(xpath = ".//td/span[contains(@id, 'ausgewaehlterTag')]")
 	private List<WebElement> ausgewaehlteTageElements;
 
-	@FindBy(xpath = ".//table[@class = 'chosenTable']//td[2]/a")
+	@FindBy(xpath = ".//a[contains(@id, 'datumLoeschenLink')]")
 	private List<WebElement> ausgewaehlteTageLoeschenElements;
 
 	@FindBy(xpath = ".//a[@data-toggle = 'tooltip']")
 	private FehlerTooltipFragment fehlerTooltip;
-
-	@FindBy(xpath = ".//div[@class='panel-body']/div/table/tbody/tr/td[1]")
-	private List<WebElement> ausgewaehlteTageBeiZeitenElements;
 
 	@FindBy(xpath = ".//table[@class = 'tableZeiten']//a[contains(@id, 'zeitraeume')]")
 	private List<WebElement> zeitraumHinzufuegenElements;
@@ -86,7 +83,7 @@ public class ErstellenPage {
 	@FindBy(xpath = ".//select[contains(@id, 'bisZeit')]")
 	private List<WebElement> zeitraumNeuBisElements;
 
-	@FindBy(xpath = ".//input[@value = 'Terminfindung erstellen']")
+	@FindBy(xpath = ".//input[contains(@id, 'terminfindungErstellenButton')]")
 	private WebElement terminfindungErstellenButton;
 
 	@FindBy(xpath = ".//a[contains(@id, 'organisatorSichtLink')]")
@@ -172,7 +169,7 @@ public class ErstellenPage {
 	}
 
 	public void fuegeZeitraumHinzu(LocalDate tag, String von, String bis) {
-		int idxOfDay = getIdxOfDayFromListOfWebElements(tag, ausgewaehlteTageBeiZeitenElements);
+		int idxOfDay = getIdxOfDayFromListOfWebElements(tag, ausgewaehlteTageElements);
 		Select fromSelect = new Select(zeitraumNeuVonElements.get(idxOfDay));
 		Select toSelect = new Select(zeitraumNeuBisElements.get(idxOfDay));
 
@@ -211,43 +208,35 @@ public class ErstellenPage {
 		return -1;
 	}
 
-	public void tagIstAusgewaehlt(LocalDate tag) {
-		assertTrue(selectedDaysContains(tag));
+	public boolean tagIstAusgewaehlt(LocalDate tag) {
+	    return selectedDaysContains(tag);
 	}
 
-	public void tagIstNichtAusgewaehlt(LocalDate tag) {
-		assertFalse(selectedDaysContains(tag));
+	public boolean tagIstNichtAusgewaehlt(LocalDate tag) {
+	    return !selectedDaysContains(tag);
 	}
 
-	public void zeigtTooltipMitFehlertext(String text) {
-		assertEquals(text, fehlerTooltip.getTooltipText());
+	public boolean zeigtTooltipMitFehlertext(String text) {
+	    return text.equals(fehlerTooltip.getTooltipText());
 	}
 
-	public void tageZurZeitauswahlVorhanden(List<LocalDate> tage) {
-		// List<LocalDate> shownDates = new ArrayList<>();
-		// for (WebElement we : ausgewaehlteTageBeiZeitenElements) {
-		// shownDates.add(LocalDate.parse(we.getText(), ddMMyyyy));
-		// }
-		//
-		// for (LocalDate tag : tage) {
-		// assertTrue(shownDates.contains(tag));
-		// }
-		assertTrue(ausgewaehlteTageBeiZeitenElements.stream().map(we -> LocalDate.parse(we.getText(), ddMMyyyy))
-				.collect(Collectors.toList()).equals(tage));
+	public boolean tageZurZeitauswahlVorhanden(List<LocalDate> tage) {
+	    return ausgewaehlteTageElements.stream().map(we -> LocalDate.parse(we.getText(), ddMMyyyy))
+					   .collect(Collectors.toList()).equals(tage);
 	}
 
-	public void enthaeltLinkZuTeilnehmerSicht() {
+	public boolean enthaeltLinkZuTeilnehmerSicht() {
 		String link = teilnehmenLink.getAttribute("href");
-		assertNotEquals(-1, link.indexOf("teilnehmenFlow?tfref="));
+		return link.indexOf("teilnehmenFlow?tfref=") != -1;
 	}
 
-	public void enthaeltLinkZuOrganisatorSicht() {
+	public boolean enthaeltLinkZuOrganisatorSicht() {
 		String link = verwaltenLink.getAttribute("href");
-		assertNotEquals(-1, link.indexOf("verwaltenFlow?tfref="));
+		return link.indexOf("verwaltenFlow?tfref=") != -1;
 	}
 
-	public void weiterButtonIstDeaktiviert() {
-		assertFalse(weiterButton.isEnabled());
+	public boolean weiterButtonIstAktiviert() {
+	    return weiterButton.isEnabled();
 	}
 
 	private void deleteAllDays() {
@@ -257,13 +246,6 @@ public class ErstellenPage {
 	}
 
 	private boolean selectedDaysContains(LocalDate tag) {
-		// List<LocalDate> selectedDays = new ArrayList<>();
-		//
-		// for (WebElement we : ausgewaehlteTageElements)
-		// selectedDays.add(LocalDate.parse(we.getText(), ddMMyyyy));
-		//
-		// return selectedDays.contains(tag);
-
 		return ausgewaehlteTageElements.stream().anyMatch(we -> LocalDate.parse(we.getText(), ddMMyyyy).equals(tag));
 	}
 }

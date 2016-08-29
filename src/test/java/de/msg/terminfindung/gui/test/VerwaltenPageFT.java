@@ -1,5 +1,8 @@
 package de.msg.terminfindung.gui.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /*
  * #%L
  * Terminfindung
@@ -48,28 +51,25 @@ public class VerwaltenPageFT {
 	@Test
 	public void aendereStammdatenEinerTerminfindung() {
 		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ändern", "Tester"));
-		
 		verwaltenPage.aendereStammdaten("neuer Name", "neuer Organisator");
 		
-		verwaltenPage.stammdatenDerTerminfindungSind("neuer Name", "neuer Organisator");
+		assertTrue(verwaltenPage.stammdatenDerTerminfindungSind("neuer Name", "neuer Organisator"));
 	}
 	
 	@Test
 	public void stammdatenVeranstaltungsnameDarfNichtLeerSein() {
 		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ändern Name leer", "Tester"));
-		
 		verwaltenPage.aendereStammdaten("", "neuer Organisator");
 		
-		verwaltenPage.zeigtTooltipMitFehlertext("Name der Veranstaltung kann nicht leer sein. (DA)");
+		assertTrue(verwaltenPage.zeigtTooltipMitFehlertext("Name der Veranstaltung kann nicht leer sein. (DA)"));
 	}
 	
 	@Test
 	public void stammdatenOrganisatorDarfNichtLeerSein() {
 		verwaltenPage.ladeBestehendeTerminfindungImBrowser(erstelleTerminfindung("Test Stammdaten ändern Organisator leer", "Tester"));
-		
 		verwaltenPage.aendereStammdaten("neuer Name", "");
 		
-		verwaltenPage.zeigtTooltipMitFehlertext("Name des Organisators kann nicht leer sein (DA)");
+		assertTrue(verwaltenPage.zeigtTooltipMitFehlertext("Name des Organisators kann nicht leer sein (DA)"));
 	}
 
 	@Test
@@ -78,10 +78,10 @@ public class VerwaltenPageFT {
 		
 		verwaltenPage.schliesseTerminfindungAb(0);
 		
-		verwaltenPage.stammdatenBearbeitenButtonIstDeaktiviert();
-		verwaltenPage.termineLoeschenButtonIstDeaktiviert();
-		verwaltenPage.terminfindungAbschliessenButtonIstDeaktiviert();
-		verwaltenPage.teilnehmerSichtButtonIstAktiviert();
+		assertFalse(verwaltenPage.stammdatenBearbeitenButtonIstAktiviert());
+		assertFalse(verwaltenPage.termineLoeschenButtonIstAktiviert());
+		assertFalse(verwaltenPage.terminfindungAbschliessenButtonIstAktiviert());
+		assertTrue(verwaltenPage.teilnehmerSichtButtonIstAktiviert());
 	}
 
 	@Test
@@ -93,11 +93,10 @@ public class VerwaltenPageFT {
 				Arrays.asList(LocalTime.of(10, 0), LocalTime.of(13, 0)));
 
 		verwaltenPage.ladeBestehendeTerminfindungImBrowser(tfRef);
-		
 		verwaltenPage.loescheDatum(0, 3);
 		
-		verwaltenPage.enthaeltNichtTermin(LocalDate.now(), "09:00 - 10:00");
-		verwaltenPage.enthaeltNichtTermin(LocalDate.now().plusDays(1), "12:00 - 13:00");
+		assertFalse(verwaltenPage.enthaeltTermin(LocalDate.now(), "09:00 - 10:00"));
+		assertFalse(verwaltenPage.enthaeltTermin(LocalDate.now().plusDays(1), "12:00 - 13:00"));
 	}
 
 	@Test
@@ -110,16 +109,15 @@ public class VerwaltenPageFT {
 		String terminTag = LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
 		verwaltenPage.ladeBestehendeTerminfindungImBrowser(tfRef);
-		
 		verwaltenPage.schliesseTerminfindungAb(1);
 		
-		verwaltenPage.zeigtNachricht(
+		assertTrue(verwaltenPage.zeigtNachricht(
 				"Die Terminfindung für diese Veranstaltung ist abgeschlossen.\nDer ausgewählte Termin ist der "
-						+ terminTag + " (Zeitraum: 09:00 - 10:00).");
-		verwaltenPage.stammdatenBearbeitenButtonIstDeaktiviert();
-		verwaltenPage.termineLoeschenButtonIstDeaktiviert();
-		verwaltenPage.terminfindungAbschliessenButtonIstDeaktiviert();
-		verwaltenPage.teilnehmerSichtButtonIstAktiviert();
+						+ terminTag + " (Zeitraum: 09:00 - 10:00)."));
+		assertFalse(verwaltenPage.stammdatenBearbeitenButtonIstAktiviert());
+		assertFalse(verwaltenPage.termineLoeschenButtonIstAktiviert());
+		assertFalse(verwaltenPage.terminfindungAbschliessenButtonIstAktiviert());
+		assertTrue(verwaltenPage.teilnehmerSichtButtonIstAktiviert());
 	}
 	
 	private String erstelleTerminfindung(String veranstaltungName, String organisator)

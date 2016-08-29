@@ -141,56 +141,39 @@ public class VerwaltenPage {
 		Graphene.waitGui().until().element(termineLoeschenLoeschenButton).is().visible();
 	}
 
-	public void stammdatenDerTerminfindungSind(String name, String organisator) {
-		assertEquals(terminfindungDetails.getVeranstaltungsName(), name);
-		assertEquals(terminfindungDetails.getOrganisator(), organisator);
+	public boolean stammdatenDerTerminfindungSind(String name, String organisator) {
+	    return name.equals(terminfindungDetails.getVeranstaltungsName()) &&
+		   organisator.equals(terminfindungDetails.getOrganisator());
 	}
 
-	public void stammdatenBearbeitenButtonIstAktiviert() {
-		assertTrue(stammdatenBearbeitenButton.isEnabled());
+	public boolean stammdatenBearbeitenButtonIstAktiviert() {
+	    return stammdatenBearbeitenButton.isEnabled();
 	}
 
-	public void stammdatenBearbeitenButtonIstDeaktiviert() {
-		assertFalse(stammdatenBearbeitenButton.isEnabled());
+	public boolean terminfindungAbschliessenButtonIstAktiviert() {
+	    return terminfindungAbschliessenButton.isEnabled();
 	}
 
-	public void terminfindungAbschliessenButtonIstAktiviert() {
-		assertTrue(terminfindungAbschliessenButton.isEnabled());
+	public boolean termineLoeschenButtonIstAktiviert() {
+	    return termineLoeschenButton.isEnabled();
 	}
 
-	public void terminfindungAbschliessenButtonIstDeaktiviert() {
-		assertFalse(terminfindungAbschliessenButton.isEnabled());
+	public boolean teilnehmerSichtButtonIstAktiviert() {
+	    return teilnehmerSichtButton.isEnabled();
 	}
 
-	public void termineLoeschenButtonIstAktiviert() {
-		assertTrue(termineLoeschenButton.isEnabled());
+	public boolean enthaeltTermin(LocalDate tag, String zeitraum) {
+	    String html = teilnahmeTabelleElement.getAttribute("outerHTML");
+	    TeilnahmeTabelle tabelle = TeilnahmeTabelle.parseFromHtml(html);
+
+	    return tabelle.enthaeltTagMitZeitraum(tag, zeitraum);
 	}
 
-	public void termineLoeschenButtonIstDeaktiviert() {
-		assertFalse(termineLoeschenButton.isEnabled());
+	public boolean zeigtNachricht(String nachricht) {
+	    return nachricht.equals(abgeschlossenNachrichtElement.getText());
 	}
 
-	public void teilnehmerSichtButtonIstAktiviert() {
-		assertTrue(teilnehmerSichtButton.isEnabled());
-	}
-
-	public void teilnehmerSichtButtonIstDeaktiviert() {
-		assertFalse(teilnehmerSichtButton.isEnabled());
-	}
-
-	public void enthaeltNichtTermin(LocalDate tag, String zeitraum) {
-		String html = teilnahmeTabelleElement.getAttribute("outerHTML");
-		TeilnahmeTabelle tabelle = TeilnahmeTabelle.parseFromHtml(html);
-
-		assertFalse(tabelle.enthaeltTagMitZeitraum(tag, zeitraum));
-	}
-
-	public void zeigtNachricht(String nachricht) {
-		String foo = abgeschlossenNachrichtElement.getText();
-		assertTrue(foo.equals(nachricht));
-	}
-
-	public void zeigtTooltipMitFehlertext(String text) {
-		assertEquals(text, fehlerTooltip.getTooltipText());
+	public boolean zeigtTooltipMitFehlertext(String text) {
+	    return text.equals(fehlerTooltip.getTooltipText());
 	}
 }

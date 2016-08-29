@@ -41,90 +41,88 @@ import de.msg.terminfindung.gui.pages.fragments.TerminfindungDetailsFragment;
 
 public class TeilnehmenPage {
 
-	@Drone
-	protected WebDriver browser;
-	
-	@ArquillianResource
-	private URL baseUrl;
-	
-	private static String pageUrl = "teilnehmenFlow?tfref=";
+    @Drone
+    protected WebDriver browser;
 
-	@FindBy(xpath = ".//input[contains(@value, 'Speichern')]")
-	private WebElement speichernButton;
+    @ArquillianResource
+    private URL baseUrl;
 
-	@FindBy(xpath = ".//input[contains(@value, 'Ich kann nicht')]")
-	private WebElement absagenButton;
+    private static String pageUrl = "teilnehmenFlow?tfref=";
 
-	@FindBy(xpath = ".//div[span[normalize-space(text()) = 'Terminfindung Details']]/../..")
-	private TerminfindungDetailsFragment terminfindungDetails;
-	
-	@FindBy(xpath = ".//a[@data-toggle = 'tooltip']")
-	private FehlerTooltipFragment fehlerTooltip;
+    @FindBy(xpath = ".//input[contains(@id, 'teilnahmeButton')]")
+    private WebElement teilnahmeButton;
 
-	@FindBy(xpath = ".//input[contains(@id, 'teilnehmerName')]")
-	private WebElement teilnehmerNameInput;
+    @FindBy(xpath = ".//input[contains(@id, 'absageButton')]")
+    private WebElement absagenButton;
 
-	@FindBy(xpath = ".//table//input[@type = 'radio']")
-	private List<WebElement> zusagenRadioSelectElements;
+    @FindBy(xpath = ".//div[span[normalize-space(text()) = 'Terminfindung Details']]/../..")
+    private TerminfindungDetailsFragment terminfindungDetails;
 
-	@FindBy(xpath = ".//table[@class = 'selectAbschliessen']")
-	private WebElement teilnahmeTabelleElement;
+    @FindBy(xpath = ".//a[@data-toggle = 'tooltip']")
+    private FehlerTooltipFragment fehlerTooltip;
 
-	public void ladeBestehendeTerminfindungImBrowser(String terminfindungsRef) {
-		browser.get(baseUrl + pageUrl + terminfindungsRef);
-		Graphene.waitGui().until().element(speichernButton).is().visible();
+    @FindBy(xpath = ".//input[contains(@id, 'teilnehmerNameInput')]")
+    private WebElement teilnehmerNameInput;
+
+    @FindBy(xpath = ".//table//input[@type = 'radio']")
+    private List<WebElement> zusagenRadioSelectElements;
+
+    @FindBy(xpath = ".//table[@class = 'selectAbschliessen']")
+    private WebElement teilnahmeTabelleElement;
+
+    public void ladeBestehendeTerminfindungImBrowser(String terminfindungsRef) {
+	browser.get(baseUrl + pageUrl + terminfindungsRef);
+	Graphene.waitGui().until().element(teilnahmeButton).is().visible();
+    }
+
+    public void neuerTerminwunsch(int... terminWunschIndex) {
+	for (int idx : terminWunschIndex) {
+	    assertTrue(idx < zusagenRadioSelectElements.size());
+	    zusagenRadioSelectElements.get(idx).click();
 	}
+    }
 
-	public void neuerTerminwunsch(int... terminWunschIndex) {
-		for (int idx : terminWunschIndex) {
-			assertTrue(idx < zusagenRadioSelectElements.size());
-			zusagenRadioSelectElements.get(idx).click();
-		}
-	}
+    public void neuerTeilnehmer(String name) {
+	teilnehmerNameInput.clear();
+	teilnehmerNameInput.sendKeys(name);
 
-	public void neuerTeilnehmer(String name) {
-		teilnehmerNameInput.clear();
-		teilnehmerNameInput.sendKeys(name);
+	teilnahmeButton.click();
+	Graphene.waitGui().until().element(teilnahmeButton).is().visible();
+    }
 
-		speichernButton.click();
-		Graphene.waitGui().until().element(speichernButton).is().visible();
-	}
-	
-	public void neuerTeilnehmerMitAbsage(String name)
-	{
-		teilnehmerNameInput.clear();
-		teilnehmerNameInput.sendKeys(name);
-		
-		absagenButton.click();
-		Graphene.waitGui().until().element(speichernButton).is().visible();
-	}
+    public void neuerTeilnehmerMitAbsage(String name) {
+	teilnehmerNameInput.clear();
+	teilnehmerNameInput.sendKeys(name);
 
-	public void zeigtNameUndOrganisator(String name, String organisator) {
-		assertEquals(terminfindungDetails.getVeranstaltungsName(), name);
-		assertEquals(terminfindungDetails.getOrganisator(), organisator);
-	}
+	absagenButton.click();
+	Graphene.waitGui().until().element(teilnahmeButton).is().visible();
+    }
 
-	public void zeigtTeilnehmerMitZusageFuerTagUndZeitraum(String name, LocalDate tag, String zeitraum) {
-		String html = teilnahmeTabelleElement.getAttribute("outerHTML");
-		TeilnahmeTabelle tabelle = TeilnahmeTabelle.parseFromHtml(html);
+    public boolean zeigtNameUndOrganisator(String name, String organisator) {
+	return name.equals(terminfindungDetails.getVeranstaltungsName()) && 
+	       organisator.equals(terminfindungDetails.getOrganisator());
+    }
 
-		assertTrue(tabelle.hatZugesagt(name, tag, zeitraum) || tabelle.hatBedingtZugesagt(name, tag, zeitraum));
-	}
+    public boolean zeigtTeilnehmerMitZusageFuerTagUndZeitraum(String name, LocalDate tag, String zeitraum) {
+	String html = teilnahmeTabelleElement.getAttribute("outerHTML");
+	TeilnahmeTabelle tabelle = TeilnahmeTabelle.parseFromHtml(html);
 
-	public void teilnahmeButtonsSindDeaktiviert() {
-		assertFalse(speichernButton.isEnabled());
-		assertFalse(absagenButton.isEnabled());
-	}
-	
-	public void zeigtTooltipMitFehlertext(String text) {
-		assertEquals(text, fehlerTooltip.getTooltipText());
-	}
+	return (tabelle.hatZugesagt(name, tag, zeitraum) || tabelle.hatBedingtZugesagt(name, tag, zeitraum));
+    }
 
-	public void zeigtTeilnehmerKannNicht(String name) {
-		String html = teilnahmeTabelleElement.getAttribute("outerHTML");
-		TeilnahmeTabelle tabelle = TeilnahmeTabelle.parseFromHtml(html);
-		
-		assertTrue(tabelle.hatAllesAbgesagt(name));
-	}
+    public boolean teilnahmeButtonsSindDeaktiviert() {
+	return !teilnahmeButton.isEnabled() && !absagenButton.isEnabled();
+    }
+
+    public boolean zeigtTooltipMitFehlertext(String text) {
+	return text.equals(fehlerTooltip.getTooltipText());
+    }
+
+    public boolean zeigtTeilnehmerKannNicht(String name) {
+	String html = teilnahmeTabelleElement.getAttribute("outerHTML");
+	TeilnahmeTabelle tabelle = TeilnahmeTabelle.parseFromHtml(html);
+
+	return tabelle.hatAllesAbgesagt(name);
+    }
 
 }

@@ -3,7 +3,7 @@
 	
 	<extension qualifier="webdriver">
 		<property name="remoteReusable">true</property>
-		<property name="remoteAddress">http://192.168.56.2:4444/wd/hub/</property>
+		<property name="remoteAddress">http://192.168.168.200:4444/wd/hub/</property>
 		<property name="browser">chrome</property>
 	</extension>	
 	

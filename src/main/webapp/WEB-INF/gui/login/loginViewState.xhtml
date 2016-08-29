@@ -38,16 +38,16 @@
 						<div class="row row-df">
 							<div class="col-lg-4">
 								<isy:formInput reference="username" value="#{loginModel.username}"
-									label="Benutzername" required="true" />
+									label="Benutzername" required="true" id="usernameInput"/>
 								<isy:formInputPassword reference="password" value="#{loginModel.password}"
-									label="Passwort" required="true" />
+									label="Passwort" required="true" id="passwordInput"/>
 							</div>
 						</div>
 						<div class="row row-df">
 							<div class="col-lg-4">
 								<div style="text-align:center">
 									<isy:button action="performLoginAction"
-										value="Anmelden" />
+										value="Anmelden" id="anmeldenButton"/>
 								</div>
 							</div>
 						</div>

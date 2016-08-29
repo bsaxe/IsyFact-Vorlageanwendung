@@ -35,19 +35,19 @@ public class LoginPage {
 	@Drone
 	private WebDriver browser;
 	
-	@FindBy(xpath = ".//input[contains(@id, 'username')]")
+	@FindBy(xpath = ".//input[contains(@id, 'usernameInput')]")
 	private WebElement usernameElement;
 
-	@FindBy(xpath = ".//input[contains(@id, 'password')]")
+	@FindBy(xpath = ".//input[contains(@id, 'passwordInput')]")
 	private WebElement passwordElement;
 
-	@FindBy(xpath = ".//input[contains(@value, 'Anmelden')]")
+	@FindBy(xpath = ".//input[contains(@id, 'anmeldenButton')]")
 	private WebElement submitElement;
 
 	@FindBy(xpath = ".//div[starts-with(@class, 'alert')]//strong")
 	private WebElement anmeldungFehlgeschlagenNachrichtElement;
 
-	@FindBy(xpath = ".//div[starts-with(@id, 'inhaltsbereichForm')]//p")
+	@FindBy(xpath = ".//span[contains(@id, 'loginMeldung')]")
 	private WebElement anmeldungErfolgreichNachrichtElement;
 
 	public void loginMit(String username, String password) {
@@ -62,11 +62,11 @@ public class LoginPage {
 		Graphene.waitGui().until().element(passwordElement).is().visible();
 	}
 
-	public void zeigtLoginFehlgeschlagenNachricht(String message) {
-		assertTrue(anmeldungFehlgeschlagenNachrichtElement.getText().contains(message));
+	public boolean zeigtLoginFehlgeschlagenNachricht(String message) {
+	    return anmeldungFehlgeschlagenNachrichtElement.getText().contains(message);
 	}
 
-	public void zeigtLoginErfolgreichNachricht(String message) {
-		assertTrue(anmeldungErfolgreichNachrichtElement.getText().contains(message));
+	public boolean zeigtLoginErfolgreichNachricht(String message) {
+	    return anmeldungErfolgreichNachrichtElement.getText().contains(message);
 	}
 }

@@ -1,5 +1,7 @@
 package de.msg.terminfindung.gui.test;
 
+import static org.junit.Assert.assertTrue;
+
 /*
  * #%L
  * Terminfindung
@@ -24,7 +26,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import de.msg.terminfindung.gui.pages.AdminPage;
@@ -38,8 +39,8 @@ public class AdminPageFT {
 	
 	@Test
 	public void zeigtBeimStartAlleTerminfindungen() {
-		adminPage.alsAdminAngemeldetUndImBrowserGeoeffnet();
-		
-		adminPage.zeigtAlleTerminfindungen();
+	    adminPage.alsAdminAngemeldetUndImBrowserGeoeffnet();
+	
+	    assertTrue(adminPage.zeigtAlleTerminfindungen());
 	}
 }
