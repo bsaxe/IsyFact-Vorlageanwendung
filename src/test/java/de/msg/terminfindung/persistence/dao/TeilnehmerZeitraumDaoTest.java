@@ -35,13 +35,13 @@ import static org.junit.Assert.*;
 
 public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
 
-    private static final Long TEILNEHMER_NICHT_ZUGEORDNET = 3L;
+    private static final Long TEILNEHMER_NICHT_ZUGEORDNET = 300L;
 
-    private static final Long ZEITRAUM_MORGENS = 1L;
+    private static final Long ZEITRAUM_MORGENS = 100L;
 
-    private static final Long ZEITRAUM_MITTAGS = 2L;
+    private static final Long ZEITRAUM_MITTAGS = 200L;
 
-    private static final Long TEILNEHMER_ZEITRAUM_ID = 4L;
+    private static final Long TEILNEHMER_ZEITRAUM_ID = 400L;
 
     @Autowired
     private TeilnehmerDao teilnehmerDao;
@@ -71,7 +71,7 @@ public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
         TeilnehmerZeitraum teilnehmerZeitraum = tzDao.sucheMitId(TEILNEHMER_ZEITRAUM_ID);
 
         assertNotNull(teilnehmerZeitraum);
-        assertEquals(Long.valueOf(2L), teilnehmerZeitraum.getTeilnehmer().getId());
+        assertEquals(Long.valueOf(200L), teilnehmerZeitraum.getTeilnehmer().getId());
         assertEquals(ZEITRAUM_MITTAGS, teilnehmerZeitraum.getZeitraum().getId());
         assertEquals(Praeferenz.JA, teilnehmerZeitraum.getPraeferenz());
     }
@@ -87,7 +87,7 @@ public class TeilnehmerZeitraumDaoTest extends AbstraktDaoTest {
     }
 
     private Zeitraum sucheZeitraum(Long zeitraumId) {
-        for (Zeitraum zeitraum : terminfindungDao.sucheMitId(1L).getTermine().get(0).getZeitraeume()) {
+        for (Zeitraum zeitraum : terminfindungDao.sucheMitId(100L).getTermine().get(0).getZeitraeume()) {
             if (zeitraum.getId().equals(zeitraumId)) {
                 return zeitraum;
             }

@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
 
 public class TeilnehmerDaoTest extends AbstraktDaoTest {
 
-    private static final Long TEILNEHMER_ID = 2L;
+    private static final Long TEILNEHMER_ID = 200L;
 
     @Autowired
     private TeilnehmerDao teilnehmerDao;
