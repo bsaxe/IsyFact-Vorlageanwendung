@@ -50,10 +50,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.anyListOf;
-import static org.mockito.Mockito.anyMapOf;
 import static org.mockito.Mockito.*;
 
 /**
@@ -227,7 +224,11 @@ public class AwkWrapperTest {
         assertEquals("Teilnehmer3", teilnehmer.get(2).getName());
 
         List<Tag> tage = tf.getTermine();
-        assertEquals("Teilnehmer1", tage.get(0).getZeitraeume().get(0).getTeilnehmerZeitraeume().get(0).getTeilnehmer().getName());
+        assertEquals(1, tage.get(0).getZeitraeume().get(0).getTeilnehmerZeitraeume().size());
+
+        for (TeilnehmerZeitraum teilnehmerZeitraum : tage.get(0).getZeitraeume().get(0).getTeilnehmerZeitraeume()) {
+            assertEquals("Teilnehmer1", teilnehmerZeitraum.getTeilnehmer().getName());
+        }
     }
 
     private static Date parseDate(String dateAsString) {
