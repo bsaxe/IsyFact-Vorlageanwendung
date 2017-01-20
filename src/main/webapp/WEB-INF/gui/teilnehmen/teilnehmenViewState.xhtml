@@ -7,9 +7,9 @@
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-  
+
        http://www.apache.org/licenses/LICENSE-2.0
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,13 +45,13 @@
                                                     reference="teilnehmerName"
                                                     value="#{teilnehmenModel.teilnehmerName}"
                                                     placeholder="Name"
-                                                    rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"/>
+                                                    rendered="#{!teilnehmenModel.terminfindung.abgeschlossen}"
+                                                    id="teilnehmerNameInput"/>
                                         </td>
                                         <ui:repeat var="tag" value="#{teilnehmenModel.terminfindung.tage}">
                                             <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
                                                 <td class="radioJVN">
                                                     <h:selectOneRadio required="true"
-
                                                                       layout="pageDirection"
                                                                       disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"
                                                                       value="#{teilnehmenModel.zeitraumAuswahl.checkedRadio[zeitraum.id]}">
@@ -84,9 +84,9 @@
                     <div class="row row-df">
                         <div class="col-lg-12">
                             <isy:button action="saveAllFalse" value="#{msg['aktion.absage']}"
-                                        disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"/>
+                                        disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" id="absageButton"/>
                             <isy:button action="save" value="#{msg['aktion.speichern']}"
-                                        disabled="#{teilnehmenModel.terminfindung.abgeschlossen}"/>
+                                        disabled="#{teilnehmenModel.terminfindung.abgeschlossen}" id="teilnahmeButton"/>
                         </div>
                     </div>
                 </f:facet>
@@ -95,4 +95,3 @@
         </isy:panelGroup>
     </ui:define>
 </ui:composition>
-
