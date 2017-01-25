@@ -27,9 +27,11 @@
 	<var name="loeschenModel"
 		 class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenModel"/>
 
+	<input name="terminfindung" type="de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel"/>
+
 	<!-- Initialisiere das Modell-->
 	<on-start>
-		<evaluate expression="loeschenController.initialisiereModel(loeschenModel)" />
+		<evaluate expression="loeschenModel.setTerminfindung(terminfindung)"/>
 	</on-start>
 
 	<view-state id="loeschenViewState">
@@ -42,6 +44,8 @@
 		</transition>
 	</view-state>
 
-	<end-state id="finished"/>
+    <end-state id="finished">
+        <output name="loeschenTerminfindung" value="loeschenModel.getTerminfindung()"/>
+    </end-state>
 
 </flow>

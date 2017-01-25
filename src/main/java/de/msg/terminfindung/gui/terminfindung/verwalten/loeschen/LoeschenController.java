@@ -1,12 +1,15 @@
 package de.msg.terminfindung.gui.terminfindung.verwalten.loeschen;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Controller;
-
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import de.msg.terminfindung.gui.terminfindung.AbstractController;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
+import org.springframework.stereotype.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * #%L
@@ -17,9 +20,9 @@ import de.bund.bva.isyfact.logging.IsyLoggerFactory;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,13 +30,6 @@ import de.bund.bva.isyfact.logging.IsyLoggerFactory;
  * limitations under the License.
  * #L%
  */
-
-
-import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.gui.terminfindung.AbstractController;
-import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
-import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 /**
  * Controller fuer den Loeschen Flow
@@ -44,17 +40,6 @@ import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 public class LoeschenController extends AbstractController<LoeschenModel> {
 
 	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(LoeschenController.class);
-
-	/**
-	 * Initialisiert das Model mit einer vorgegebenen Terminfindung.
-	 * 
-	 * @param model Das Model
-	 * @throws TerminfindungBusinessException 
-	 */
-	public void initialisiereModel(LoeschenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-		
-		super.holeTerminfindung(model);
-	}
 
 	/**
 	 * Setzt die Datenstruktur für die Auswahl der zu löschenden Zeiträume zurück.

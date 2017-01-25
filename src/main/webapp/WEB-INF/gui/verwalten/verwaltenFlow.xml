@@ -27,34 +27,45 @@
 	<var name="verwaltenModel" class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenModel" />
     <var name="tfRef" class="java.lang.String"/>
 
-	<view-state id="verwaltenViewState">
-        <on-entry>
-            <set name="tfRef" value="requestParameters.tfref" type="java.util.UUID" />
-            <evaluate expression="tfNumberHolder.updateRefIfNotNull(tfRef)"/>
-            <evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)" />
-        </on-entry>
+	<on-start>
+		<set name="tfRef" value="requestParameters.tfref" type="java.util.UUID" />
+		<evaluate expression="tfNumberHolder.updateRefIfNotNull(tfRef)"/>
+		<evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)" />
+	</on-start>
 
+	<view-state id="verwaltenViewState">
         <transition on="abschliessen" to="abschliessenViewState" />
 		<transition on="loeschen" to="loeschenViewState" />
-		<transition on="changeView" to="changeViewState" />
+		<transition on="teilnehmen" to="teilnehmenViewState" />
 		<transition on="aktualisiere" to="aktualisierenViewState" />
 	</view-state>
 
 	<subflow-state id="abschliessenViewState" subflow="abschliessenFlow" >
-		<transition on="finished" to="verwaltenViewState">						
-			<evaluate expression="verwaltenController.initialisiereModel(verwaltenModel)"/>			
+		<input name="terminfindung" value="verwaltenController.kopiereTerminfindungModel()"/>
+		<output name="abschliessenTerminfindung"/>
+
+		<transition on="finished" to="verwaltenViewState">
+			<evaluate expression="verwaltenModel.setTerminfindung(abschliessenTerminfindung)"/>
 		</transition>
 	</subflow-state>
 
 	<subflow-state id="loeschenViewState" subflow="loeschenFlow">
-		<transition on="finished" to="verwaltenViewState"/>
+		<input name="terminfindung" value="verwaltenController.kopiereTerminfindungModel()"/>
+		<output name="loeschenTerminfindung"/>
+
+		<transition on="finished" to="verwaltenViewState">
+			<evaluate expression="verwaltenModel.setTerminfindung(loeschenTerminfindung)"/>
+		</transition>
 	</subflow-state>
 	
 	<subflow-state id="aktualisierenViewState" subflow="aktualisierenFlow">
-		<transition on="finished" to="verwaltenViewState"/>
+		<input name="terminfindung" value="verwaltenController.kopiereTerminfindungModel()"/>
+		<output name="aktualisierenTerminfindung"/>
+
+		<transition on="finished" to="verwaltenViewState">
+			<evaluate expression="verwaltenModel.setTerminfindung(aktualisierenTerminfindung)"/>
+		</transition>
 	</subflow-state>
 
-	<!-- end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfnr=#{tfNumberHolder.number}" /-->
-	<!-- end-state id="changeViewState" view="flowRedirect:teilnehmenFlow?tfref=#{accessRefMap.getIndirectReference(accessRefMap.getDirectReference(tfRef))}" /-->
-	<end-state id="changeViewState" view="flowRedirect:teilnehmenFlow" />
+	<end-state id="teilnehmenViewState" view="flowRedirect:teilnehmenFlow" />
 </flow>
