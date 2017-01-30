@@ -20,7 +20,7 @@ public class DatenpflegeImpl implements Datenpflege {
     }
 
     @Override
-    public void loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException {
-        awfVergangeneTermineLoeschen.loescheVergangeneTerminfindungen(stichtag);
+    public int loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException {
+        return awfVergangeneTermineLoeschen.loescheVergangeneTerminfindungen(stichtag);
     }
 }
