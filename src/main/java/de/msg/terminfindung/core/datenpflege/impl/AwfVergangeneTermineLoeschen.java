@@ -47,9 +47,10 @@ class AwfVergangeneTermineLoeschen {
      * stattgefunden haben.
      *
      * @param stichtag Stichtag
+     * @return Anzahl der gelöschten Terminfindungen.
      * @throws TerminfindungBusinessException falls das Datum ungültig ist.
      */
-    void loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException {
+    int loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException {
 
         if (stichtag == null) {
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG, "stichtag", "null");
@@ -58,9 +59,13 @@ class AwfVergangeneTermineLoeschen {
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_DATUM_ZUKUNFT, "stichtag", stichtag.toString());
         }
 
+        int anzahlGeloescht = 0;
         for (Terminfindung tf : terminfindungDao.sucheVor(stichtag)) {
             terminfindungDao.loesche(tf);
+            anzahlGeloescht++;
         }
+
+        return anzahlGeloescht;
     }
 
 }
