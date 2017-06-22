@@ -1,6 +1,7 @@
+@chcp 1252
 rem #######################################################################
 rem # #%L
-rem # plis-persistence
+rem # isy-persistence
 rem # %%
 rem # 
 rem # %%
@@ -20,18 +21,17 @@ rem # implied. See the License for the specific language governing
 rem # permissions and limitations under the License.
 rem # #L%
 rem #
-rem # Richtet die Datenbank für das System XXX_PLATZHALTER_SYSTEMNAME_XXX ein.
+rem # Richtet die Datenbank für das System Terminfindung ein.
 rem #
 rem # Erstellungsdatum:           13.07.16
 rem # Erstellt durch:             Björn Saxe, msg systems
 rem #
-rem # Datum der letzten Änderung: 
-rem # Änderung durch:             
+rem # Datum der letzten Änderung:
+rem # Änderung durch:
 rem #
-rem # Version: $Id: install-db-schema.bat 159308 2014-08-19 13:11:09Z sdm_fdoerr $
 rem ########################################################################
 
-sqlplus -S /nolog @00_install-main.sql 01_environment.sql logs/ausgabe.log
+sqlplus -S /nolog @00_install-main.sql 01_environment.sql ausgabe.log
 
-findstr /r "SP2-[0-9][0-9][0-9][0-9]: ORA-[0-9][0-9][0-9][0-9][0-9]:" logs\ausgabe.log
+findstr /r "SP2-[0-9][0-9][0-9][0-9]: ORA-[0-9][0-9][0-9][0-9][0-9]:" ausgabe.log
 

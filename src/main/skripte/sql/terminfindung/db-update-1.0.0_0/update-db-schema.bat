@@ -1,6 +1,7 @@
+@chcp 1252
 rem #######################################################################
 rem # #%L
-rem # plis-persistence
+rem # isy-persistence
 rem # %%
 rem # 
 rem # %%
@@ -28,9 +29,8 @@ rem #
 rem # Datum der letzten Änderung: XXX_PLATZHALTER_ÄNDERUNGSDATUM_XXX
 rem # Änderung durch:             XXX_PLATZHALTER_ÄNDERER_XXX
 rem #
-rem # Version: $Id: update-db-schema.bat 159308 2014-08-19 13:11:09Z sdm_fdoerr $
 rem ########################################################################
 
-sqlplus -S /nolog @00_update-main.sql 01_environment.sql  logs/ausgabe.log
+sqlplus -S /nolog @00_update-main.sql 01_environment.sql ausgabe.log
 
-findstr /r "SP2-[0-9][0-9][0-9][0-9]: ORA-[0-9][0-9][0-9][0-9][0-9]:" logs\ausgabe.log
+findstr /r "SP2-[0-9][0-9][0-9][0-9]: ORA-[0-9][0-9][0-9][0-9][0-9]:" ausgabe.log

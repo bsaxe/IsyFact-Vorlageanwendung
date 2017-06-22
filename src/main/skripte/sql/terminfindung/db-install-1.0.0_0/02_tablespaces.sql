@@ -1,7 +1,7 @@
 -- -----------------------------------------------------------------------------------------------------
 --
 -- #%L
--- plis-persistence
+-- isy-persistence
 -- %%
 -- 
 -- %%
@@ -21,7 +21,7 @@
 -- permissions and limitations under the License.
 -- #L%
 --
--- Dieses Skript erzeugt die benötigte Tablespaces des Systems XXX_PLATZHALTER_SYSTEMNAME_XXX.
+-- Dieses Skript erzeugt die benötigten Tablespaces des Systems Terminfindung.
 -- 
 -- Erstellungsdatum:            13.07.216
 -- Erstellt durch:              Björn Saxe, msg systems
@@ -29,8 +29,7 @@
 -- Datum der letzten Änderung:  
 -- Änderung durch:              
 --
--- Version: $Id: 02_tablespaces.sql 159308 2014-08-19 13:11:09Z sdm_fdoerr $
 -- -----------------------------------------------------------------------------------------------------
 
--- Tablespaces erzeugen: XXX_PLATZHALTER_SYSTEMNAME_XXX
+-- Tablespaces erzeugen: Terminfindung
 CREATE SMALLFILE TABLESPACE &TABLESPACE_NAME DATAFILE '&DATAFILE_NAME' SIZE &DATAFILE_SIZE AUTOEXTEND ON NEXT &AUTOEXTEND_NEXT_SIZE MAXSIZE &AUTOEXTEND_MAX_SIZE;
