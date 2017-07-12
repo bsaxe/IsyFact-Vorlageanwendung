@@ -1,7 +1,7 @@
 -- -----------------------------------------------------------------------------------------------------
 --
 -- #%L
--- plis-persistence
+-- isy-persistence
 -- %%
 -- 
 -- %%
@@ -21,7 +21,7 @@
 -- permissions and limitations under the License.
 -- #L%
 --
--- Dieses Skript enthält alle Umgebungsvariablen des Systems XXX_PLATZHALTER_SYSTEMNAME_XXX für die Umgebung XXX_PLATZHALTER_UMGEBUNG_XXX .
+-- Dieses Skript enthält alle Umgebungsvariablen des Systems Terminfindung.
 -- 
 -- Erstellungsdatum:           13.07.2016
 -- Erstellt durch:             Björn Saxe, msg systems
@@ -29,7 +29,6 @@
 -- Datum der letzten Änderung: 
 -- Änderung durch:             
 --
--- Version: $Id: 01_environment.sql 159308 2014-08-19 13:11:09Z sdm_fdoerr $
 -- -----------------------------------------------------------------------------------------------------
 
 -- -------------------------------------
@@ -38,7 +37,7 @@
 -- Oracle-Datenbankverbindung (Connection-String) 
 -- in der Form <user-id>/<pwd>@<IP-Adresse>:<port>/<db-instanz>
 -- für den SYS-Admin.
-DEFINE SYSADMIN_CONNECTION      = 'system/geheim@127.0.0.1:1521/xe';
+DEFINE SYSADMIN_CONNECTION      = 'system/system@127.0.0.1:1521/xe';
 
 -- Oracle-Datenbankverbindung (Connection-String) 
 -- in der Form <user-id>/<pwd>@<IP-Adresse>:<port>/<db-instanz>

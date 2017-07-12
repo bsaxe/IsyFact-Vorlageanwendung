@@ -16,8 +16,9 @@ public interface Datenpflege {
      * stattgefunden haben.
      *
      * @param stichtag Stichtag
+     * @return Anzahl der gelöschten Terminfindungen.
      * @throws TerminfindungBusinessException falls das Datum ungültig ist.
      */
-    void loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException;
+    int loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException;
 
 }

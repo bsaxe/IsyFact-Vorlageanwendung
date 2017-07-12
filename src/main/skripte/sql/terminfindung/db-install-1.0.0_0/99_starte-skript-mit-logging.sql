@@ -1,7 +1,7 @@
 -- -----------------------------------------------------------------------------------------------------
 --
 -- #%L
--- plis-persistence
+-- isy-persistence
 -- %%
 -- 
 -- %%
@@ -26,7 +26,6 @@
 --            P_SCHRITT: Die Nummer des Schrittes
 --            P_BESCHREIBUNG: Die Beschreibung des Schrittes
 --
--- Version: $Id: 99_starte-skript-mit-logging.sql 159830 2014-08-25 08:27:40Z sdm_kbaessler $
 -- -----------------------------------------------------------------------------------------------------
 
 DEFINE P_SKRIPT = &1;

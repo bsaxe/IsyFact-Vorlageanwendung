@@ -1,12 +1,12 @@
 package de.msg.terminfindung.gui.terminfindung.verwalten;
 
-import org.springframework.stereotype.Controller;
-
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import org.springframework.stereotype.Controller;
 
 /*
  * #%L
@@ -43,11 +43,25 @@ public class VerwaltenController extends AbstractController<VerwaltenModel> {
      *
      * @param model Das Model
      * @throws TerminfindungBusinessException
+     * @throws TerminfindungTechnicalException
      */
     public void initialisiereModel(VerwaltenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-
-        super.holeTerminfindung(model);
+        holeTerminfindung(model);
         aktualisiereModel(model);
+    }
+
+    /**
+     * Kopiert das TerminfindungModel zur Übergabe an einen Subflow, damit dort das Originalmodel nicht verändert werden kann.
+     *
+     * @return Eine Kopie des TerminfindungModel.
+     * @throws TerminfindungTechnicalException
+     * @throws TerminfindungBusinessException
+     */
+    public TerminfindungModel kopiereTerminfindungModel() throws TerminfindungTechnicalException, TerminfindungBusinessException {
+        VerwaltenModel verwaltenModel = new VerwaltenModel();
+        holeTerminfindung(verwaltenModel);
+
+        return verwaltenModel.getTerminfindung();
     }
 
     /**

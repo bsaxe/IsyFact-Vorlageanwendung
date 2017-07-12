@@ -27,7 +27,7 @@ import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungFehlg
 import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungTechnicalException;
 
 /**
- * Einfache Implementierung eines Access Managers gemäß plis-sicherheit.
+ * Einfache Implementierung eines Access Managers gemäß isy-sicherheit.
  *
  * @author msg systems ag, Dirk Jäger
  */

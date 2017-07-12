@@ -18,17 +18,17 @@
   #L%
   -->
 <dataset>
-    <Teilnehmer id="1" name="Klaus"/>
-    <Teilnehmer id="2" name="Herbert"/>
-    <Teilnehmer id="3" name="Sepp"/>
+    <Teilnehmer id="100" name="Klaus"/>
+    <Teilnehmer id="200" name="Herbert"/>
+    <Teilnehmer id="300" name="Sepp"/>
 
-    <Zeitraum id="1" beschreibung="9-11 Uhr"/>
-    <Zeitraum id="2" beschreibung="über Mittag"/>
+    <Zeitraum id="100" beschreibung="9-11 Uhr"/>
+    <Zeitraum id="200" beschreibung="über Mittag"/>
 
-    <TeilnehmerZeitraum teilnehmer_id="1" zeitraum_id="1" praeferenz="0" />
-    <TeilnehmerZeitraum teilnehmer_id="1" zeitraum_id="2" praeferenz="1" />
-    <TeilnehmerZeitraum teilnehmer_id="2" zeitraum_id="1" praeferenz="2" />
-    <TeilnehmerZeitraum teilnehmer_id="2" zeitraum_id="2" praeferenz="1" />
-    <TeilnehmerZeitraum teilnehmer_id="3" zeitraum_id="1" praeferenz="1" />
-    <TeilnehmerZeitraum teilnehmer_id="3" zeitraum_id="2" praeferenz="2" />
+    <TeilnehmerZeitraum teilnehmer_id="100" zeitraum_id="100" praeferenz="0" />
+    <TeilnehmerZeitraum teilnehmer_id="100" zeitraum_id="200" praeferenz="1" />
+    <TeilnehmerZeitraum teilnehmer_id="200" zeitraum_id="100" praeferenz="2" />
+    <TeilnehmerZeitraum teilnehmer_id="200" zeitraum_id="200" praeferenz="1" />
+    <TeilnehmerZeitraum teilnehmer_id="300" zeitraum_id="100" praeferenz="1" />
+    <TeilnehmerZeitraum teilnehmer_id="300" zeitraum_id="200" praeferenz="2" />
 </dataset>

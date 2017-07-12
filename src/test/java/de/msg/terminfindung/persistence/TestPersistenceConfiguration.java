@@ -1,13 +1,16 @@
 package de.msg.terminfindung.persistence;
 
+import com.github.springtestdbunit.bean.DatabaseConfigBean;
+import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
 import de.msg.terminfindung.persistence.dao.TeilnehmerDao;
 import de.msg.terminfindung.persistence.dao.TeilnehmerZeitraumDao;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerDao;
 import de.msg.terminfindung.persistence.dao.jpa.JpaTeilnehmerZeitraumDao;
 import de.msg.terminfindung.persistence.dao.jpa.JpaTerminfindungDao;
+import org.dbunit.ext.h2.H2DataTypeFactory;
 import org.h2.jdbcx.JdbcDataSource;
-import org.hibernate.ejb.HibernatePersistence;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -41,9 +44,25 @@ public class TestPersistenceConfiguration {
     }
 
     @Bean
+    public DatabaseConfigBean dbUnitDatabaseConfig() {
+        DatabaseConfigBean dbConfig = new DatabaseConfigBean();
+        dbConfig.setDatatypeFactory(new H2DataTypeFactory());
+        return dbConfig;
+    }
+
+    @Bean
+    public DatabaseDataSourceConnectionFactoryBean dbUnitDatabaseConnection(DataSource dataSource,
+        DatabaseConfigBean databaseConfigBean) {
+        DatabaseDataSourceConnectionFactoryBean dbConnection =
+            new DatabaseDataSourceConnectionFactoryBean(dataSource);
+        dbConnection.setDatabaseConfig(databaseConfigBean);
+        return dbConnection;
+    }
+
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setPersistenceProviderClass(HibernatePersistence.class);
+        em.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         em.setPersistenceUnitName("hibernatePersistence");
         em.setDataSource(dataSource);
         em.setJpaDialect(new HibernateJpaDialect());

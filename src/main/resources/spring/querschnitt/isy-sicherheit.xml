@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  Terminfindung
+  %%
+  Copyright (C) 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!-- Über diese Bean wird die Komponente Sicherheit Einsatzbereit gemacht -->
+    <bean id="sicherheit" class="de.bund.bva.pliscommon.sicherheit.impl.SicherheitImpl">
+        <property name="rollenRechteDateiPfad" value="/resources/sicherheit/rollenrechte.xml"/>
+        <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+        <!-- <property name="accessManager" ref="camsAccessManager"/> -->
+        <property name="accessManager" ref="dummyAccessManager"/>
+        <property name="konfiguration" ref="konfiguration"/>
+        <property name="aufrufKontextFactory" ref="aufrufKontextFactory"/>
+    </bean>
+
+    <!-- Zur Überwachung der Verfügbarkeit des Cams -->
+    <bean id="sicherheitAdmin"
+          class="de.bund.bva.pliscommon.sicherheit.impl.SicherheitAdminImpl">
+        <!--<property name="accessManager" ref="camsAccessManager"/> -->
+    </bean>
+
+    <!-- Konfiguration der CAMS Implementierung des AccessManagers -->
+    <!-- <bean id="camsAccessManager" class="de.bund.bva.pliscommon.sicherheit.cams.CamsAccessManagerImpl"
+        depends-on="konfiguration"> <constructor-arg index="0"> <value>classpath:/config/cams-webagent.conf</value>
+        </constructor-arg> <constructor-arg index="1"> <ref bean="konfiguration"/>
+        </constructor-arg> </bean> -->
+
+    <!-- Konfiguration der Dummy Implementierung des AccessManagers -->
+    <bean id="dummyAccessManager" class="de.msg.terminfindung.sicherheit.AccessManagerDummy"/>
+
+    <bean id="loginVerwalter" class="de.msg.terminfindung.sicherheit.LoginVerwalter"
+          scope="session"/>
+
+    <!-- <sec:user-service> -->
+    <!-- <sec:user authorities="ROLE" name="name" password="password" disabled="true"
+        /> -->
+    <!-- </sec:user-service> -->
+
+    <!-- Definiere Bean-Scopes -->
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="thread">
+                    <bean class="org.springframework.context.support.SimpleThreadScope"/>
+                </entry>
+                <entry key="request">
+                    <bean class="org.springframework.web.context.request.RequestScope"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+    <!-- <bean id="accessDecisionManager" class="de.bund.bva.pliscommon.sicherheit.web.DelegatingAccessDecisionManager">
+        <property name="sicherheit" ref="sicherheit" /> </bean> -->
+    <!-- ======================================================================
+        custom authentication provider setzen um Sicherheits Komponente für Rollen
+        Ermittlung zu verwenden ====================================================================== -->
+
+    <!-- <bean id="webflowAuthenticationProvider" class="de.bund.bva.pliscommon.aufrufkontext.http.WebFlowAuthenticationProvider">
+        <sec:custom-authentication-provider /> </bean> -->
+    <!--======================================================================
+        Dummy User Service ====================================================================== -->
+    <!-- <sec:user-service> <sec:user authorities="ROLE" name="name" password="password"
+        disabled="true" /> </sec:user-service> -->
+
+    <!-- Konfiguration von Spring Security -->
+    <!-- <sec:http entry-point-ref="camsPreAuthenticatedProcessingFilterEntryPoint"
+        create-session="never" /> -->
+    <!-- <sec:authentication-manager alias="authenticationManager" /> <bean
+        id="camsPreAuthenticatedProcessingFilterEntryPoint" class="org.spring framework.security.ui.preauth.PreAuthenticatedProcessingFilterEntryPoint"
+        /> -->
+    <!-- Für Tests ohne Cams das folgende Bean auskommentieren. -->
+    <!-- <bean id="camsProcessingFilter" class="de.bund.bva.pliscommon.aufrufkontext.http.CamsAuthenticationProcessingFilter">
+        <sec:custom-filter position="PRE_AUTH_FILTER" /> <property name="authenticationManager"
+        ref="authenticationManager" /> <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"
+        /> <property name="httpHeaderParser"> <bean class="de.bund.bva.pliscommon.aufrufkontext.http
+        .HttpHeaderParser" /> </property> </bean> -->
+
+</beans>
+ 	

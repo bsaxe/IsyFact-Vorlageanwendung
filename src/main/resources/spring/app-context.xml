@@ -26,9 +26,9 @@
 	<import resource="spring-context.xml" />
 	<import resource="querschnitt/nachrichten.xml" />
 	<import resource="querschnitt/isy-aufrufkontext.xml"/>
-	<import resource="querschnitt/plis-sicherheit.xml" />
-	<import resource="querschnitt/plis-sicherheit-web.xml" />
-	<import resource="querschnitt/plis-konfiguration.xml" />
+	<import resource="querschnitt/isy-sicherheit.xml" />
+	<import resource="querschnitt/isy-sicherheit-web.xml" />
+	<import resource="querschnitt/isy-konfiguration.xml" />
 	<import resource="querschnitt/isy-logging.xml" />
     <import resource="querschnitt/ueberwachung.xml" />
 	<import resource="querschnitt/tasks.xml" />

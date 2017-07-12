@@ -28,8 +28,8 @@
     <import resource="spring-context.xml"/>
     <import resource="querschnitt/nachrichten.xml"/>
     <import resource="querschnitt/isy-aufrufkontext-batch.xml"/>
-    <import resource="querschnitt/plis-sicherheit.xml"/>
-    <import resource="querschnitt/plis-konfiguration.xml"/>
+    <import resource="querschnitt/isy-sicherheit.xml"/>
+    <import resource="querschnitt/isy-konfiguration.xml"/>
     <import resource="querschnitt/isy-logging.xml"/>
 
     <import resource="awk/komponenten.xml"/>

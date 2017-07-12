@@ -7,9 +7,9 @@
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-  
+
        http://www.apache.org/licenses/LICENSE-2.0
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,14 +19,12 @@
   -->
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:sf="http://www.springframework.org/tags/faces"
-	xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
-	xmlns:isye="http://java.sun.com/jsf/composite/isyfact_ext"
-	xmlns:debug="http://java.sun.com/jsf/composite/debug"
-	template="/WEB-INF/gui/common/layout/commonSite.xhtml">
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+				xmlns:isye="http://java.sun.com/jsf/composite/isyfact_ext"
+				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
 	<ui:define name="inhaltsbereich">
 		<isy:panelGroup>
@@ -41,7 +39,7 @@
 							class="tableZeiten">
 							<h:column>
 								<f:facet name="header">Datum</f:facet>
-								<h:outputText value="#{tag.datum}"/>
+								<h:outputText value="#{tag.datum}" id="ausgewaehlterTag"/>
 							</h:column>
 							<h:column>
 								<f:facet name="header">Zeitraum</f:facet>
@@ -56,32 +54,32 @@
 												style="max-height:15px" />
 											<f:setPropertyActionListener value="#{zeitraum}"
 												target="#{erstellenModel.selectedZeitraum}" />
+												<f:attribute name="id" value="datumLoeschenLink"/>
 										</h:commandLink>
 									</h:column>
 								</h:dataTable>
 							</h:column>
 							<h:column>
 								<h:selectOneMenu id="vonZeit" value="#{tag.vonZeitraum}" converter="calCon">
-									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="von" 
-									itemValue="#{von}" itemLabel="#{von}"/>																						
-								</h:selectOneMenu>									
-								<h:selectOneMenu id="bisZeit" value="#{tag.bisZeitraum}">								
-									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="bis" 
+									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="von"
+									itemValue="#{von}" itemLabel="#{von}"/>
+								</h:selectOneMenu>
+								<h:selectOneMenu id="bisZeit" value="#{tag.bisZeitraum}">
+									<f:selectItems value="#{erstellenModel.alleZeitraeume}" var="bis"
 									itemValue="#{bis}" itemLabel="#{bis}"/>
-								</h:selectOneMenu>								
+								</h:selectOneMenu>
 								<isye:validatingIconButton id="zeitraeume_#{tag.shortDate}" action="hinzufuegen"
 									imageLib="images" imageName="add_icon.png" reference="zeitraeume_#{tag.shortDate}"
-									inLine="true">	
+									inLine="true">
 									<f:setPropertyActionListener value="#{tag}" for="actionEvent"
-										target="#{erstellenModel.selectedTermin}" />															
-	            				</isye:validatingIconButton>	            				
+										target="#{erstellenModel.selectedTermin}" />
+	            				</isye:validatingIconButton>
 							</h:column>
 						</h:dataTable>
-						<hr />						
-						<isy:button id="buttonBack" action="back" value="Zur&uuml;ck" />
-						<isye:validatingButton id="buttonTest" action="create" inLine="true"
-							value="Terminfindung erstellen" reference="zeitraeume" >							
-            			</isye:validatingButton>           				
+						<hr />
+						<isy:button action="back" value="Zur&uuml;ck" id="zurueckButton"/>
+						<isye:validatingButton action="create" inLine="true" value="Terminfindung erstellen"
+							reference="zeitraeume" id="terminfindungErstellenButton" />         				
 					</div>
 				</f:facet>
 			</isy:panel>

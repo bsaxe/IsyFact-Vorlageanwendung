@@ -1,6 +1,6 @@
 ########################################################################
 # #%L
-# plis-persistence
+# isy-persistence
 # %%
 # 
 # %%
@@ -20,15 +20,14 @@
 # permissions and limitations under the License.
 # #L%
 #
-# Richtet die Datenbank für das System XXX_PLATZHALTER_SYSTEMNAME_XXX ein.
+# Richtet die Datenbank für das System Terminfindung ein.
 #
-# Erstellungsdatum:           XXX_PLATZHALTER_ERSTELLDATUM_XXX
-# Erstellt durch:             XXX_PLATZHALTER_ERSTELLER_XXX
+# Erstellungsdatum:           13.07.16
+# Erstellt durch:             Björn Saxe, msg systems
 #
-# Datum der letzten Änderung: XXX_PLATZHALTER_ÄNDERUNGSDATUM_XXX
-# Änderung durch:             XXX_PLATZHALTER_ÄNDERER_XXX
+# Datum der letzten Änderung:
+# Änderung durch:
 #
-# Version: $Id: install-db-schema.sh 159250 2014-08-19 06:31:06Z sdm_fdoerr $
 #######################################################################
 
 #!/bin/bash

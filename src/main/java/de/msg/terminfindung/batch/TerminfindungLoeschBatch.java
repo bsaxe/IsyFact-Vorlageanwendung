@@ -6,6 +6,9 @@ import de.bund.bva.isyfact.logging.LogKategorie;
 import de.bund.bva.pliscommon.batchrahmen.batch.exception.BatchAusfuehrungsException;
 import de.bund.bva.pliscommon.batchrahmen.batch.konfiguration.BatchKonfiguration;
 import de.bund.bva.pliscommon.batchrahmen.batch.protokoll.BatchErgebnisProtokoll;
+import de.bund.bva.pliscommon.batchrahmen.batch.protokoll.MeldungTyp;
+import de.bund.bva.pliscommon.batchrahmen.batch.protokoll.StatistikEintrag;
+import de.bund.bva.pliscommon.batchrahmen.batch.protokoll.VerarbeitungsMeldung;
 import de.bund.bva.pliscommon.batchrahmen.batch.rahmen.AuthenticationCredentials;
 import de.bund.bva.pliscommon.batchrahmen.batch.rahmen.BatchAusfuehrungsBean;
 import de.bund.bva.pliscommon.batchrahmen.batch.rahmen.BatchStartTyp;
@@ -32,6 +35,10 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
 
     private static final IsyLogger LOG = IsyLoggerFactory.getLogger(TerminfindungLoeschBatch.class);
 
+    private BatchErgebnisProtokoll protokoll;
+
+    private static final String ANZAHL_GELOESCHT = "ANZAHL_GELOESCHT";
+
     private final Datenpflege datenpflege;
 
     private final Konfiguration betrieblicheKonfiguration;
@@ -48,6 +55,9 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
     @Override
     public int initialisieren(BatchKonfiguration konfiguration, long satzNummer, String dbKey, BatchStartTyp startTyp,
                               Date datumLetzterErfolg, BatchErgebnisProtokoll protokoll) throws BatchAusfuehrungsException {
+
+        this.protokoll = protokoll;
+        protokoll.registriereStatistikEintrag(new StatistikEintrag(ANZAHL_GELOESCHT, "Anzahl gelöschter Terminfindungen"));
 
         testmodus = leseWahrheitswert(KonfigurationSchluessel.BATCH_TESTMODUS, konfiguration);
 
@@ -70,6 +80,7 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
         String startMeldung = MessageSourceHolder.getMessage("batch.loeschen.start", format.format(loeschfrist));
         if (restart) {
             LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_START_WIEDERHOLUNG, startMeldung);
+            protokoll.ergaenzeMeldung(new VerarbeitungsMeldung("RESTART", MeldungTyp.INFO,"Batch wird im Restartmodus gestartet."));
         } else {
             LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_START_NEU, startMeldung);
         }
@@ -80,8 +91,10 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
     public VerarbeitungsErgebnis verarbeiteSatz() throws BatchAusfuehrungsException {
         if (!testmodus) {
             try {
-                datenpflege.loescheVergangeneTerminfindungen(loeschfrist);
+                int anzahlGeloescht = datenpflege.loescheVergangeneTerminfindungen(loeschfrist);
+                protokoll.getStatistikEintrag(ANZAHL_GELOESCHT).setWert(anzahlGeloescht);
             } catch (TerminfindungBusinessException tbe) {
+                protokoll.ergaenzeMeldung(new VerarbeitungsMeldung(tbe.getAusnahmeId(), MeldungTyp.FEHLER, tbe.getMessage()));
                 throw new BatchAusfuehrungsException(tbe);
             }
         }
@@ -92,11 +105,13 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
     @Override
     public void batchBeendet() {
         LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_BEENDET, "Löschbatch beendet.");
+        protokoll.ergaenzeMeldung(new VerarbeitungsMeldung("ENDE", MeldungTyp.INFO, "Batch beendet."));
     }
 
     @Override
     public void checkpointGeschrieben(long satzNummer) throws BatchAusfuehrungsException {
         LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_CHECKPOINT, "Löschbatch: Checkpoint geschrieben.");
+        protokoll.ergaenzeMeldung(new VerarbeitungsMeldung("COMMIT", MeldungTyp.INFO,"Checkpunkt geschrieben."));
     }
 
     @Override
@@ -107,6 +122,7 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
     @Override
     public void rollbackDurchgefuehrt() {
         LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_CHECKPOINT, "Löschbatch: Rollback durchgeführt.");
+        protokoll.ergaenzeMeldung(new VerarbeitungsMeldung("ROLLBACK", MeldungTyp.WARNUNG,"Rollback durchgeführt."));
     }
 
     @Override

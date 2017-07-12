@@ -35,7 +35,7 @@ public abstract class FehlerSchluessel {
 	/** Die übergebene Terminfindungsnummer {0} konnte keiner Terminfindung zugeordnet werden.*/
     public static final String MSG_TERMINFINDUNG_NICHT_GEFUNDEN = "TRMIN10011";
 	
-	/** Es ist ein technischer Fehler im Modul plisweb-gui aufgetreten: {0} . */
+	/** Es ist ein technischer Fehler im Modul isyweb-gui aufgetreten: {0} . */
     public static final String MSG_ALLGEMEINER_TECHNISCHER_FEHER_MIT_PARAMETER = "TRMIN90000";
 
     /** Der übergebene Parameter {0} besitzt den ungültigen Wert {1}. */
@@ -55,6 +55,6 @@ public abstract class FehlerSchluessel {
     /**Es wurde keine Terminfindungsnummer gesetzt.*/
     public static final String MSG_KEINE_TERMINFINDUNGSNR = "TRMIN91001";
 
-    /** Es ist ein technischer Fehler im Modul plisweb-gui aufgetreten. */
+    /** Es ist ein technischer Fehler im Modul isyweb-gui aufgetreten. */
     public static final String MSG_ALLGEMEINER_TECHNISCHER_FEHLER = "TRMIN99999";
 }

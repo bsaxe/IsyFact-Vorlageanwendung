@@ -20,15 +20,14 @@ package de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren;
  * #L%
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
-import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller für den Aktualisieren flow
@@ -39,17 +38,6 @@ public class AktualisierenController extends AbstractController<AktualisierenMod
 
 	private static final IsyLogger LOG = IsyLoggerFactory.getLogger(AktualisierenController.class);
 
-	/**
-	 * Initialisiert das Model mit einer vorgegebenen Terminfindung.
-	 * 
-	 * @param model Das Model
-	 * @throws TerminfindungBusinessException TerminfindungTechnicalException
-	 */
-	public void initialisiereModel(AktualisierenModel model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
-		
-		super.holeTerminfindung(model);
-	}
-	
 	public boolean aktualisiereTerminfindung(AktualisierenModel model){
 		
 		List<ValidationMessage> validationMessages = new ArrayList<>();

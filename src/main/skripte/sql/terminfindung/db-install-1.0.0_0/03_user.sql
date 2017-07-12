@@ -1,7 +1,7 @@
 -- -----------------------------------------------------------------------------------------------------
 --
 -- #%L
--- plis-persistence
+-- isy-persistence
 -- %%
 -- 
 -- %%
@@ -21,7 +21,7 @@
 -- permissions and limitations under the License.
 -- #L%
 --
--- Dieses Skript erzeugt die benötigte Benutzer und Rechte für das System XXX_PLATZHALTER_SYSTEMNAME_XXX.
+-- Dieses Skript erzeugt die benötigten Benutzer und Rechte für das System Terminfindung.
 --
 -- Erstellungsdatum:            13.07.16
 -- Erstellt durch:              Björn Saxe, msg systems
@@ -29,7 +29,6 @@
 -- Datum der letzten Änderung:  
 -- Änderung durch:              
 --
--- Version: $Id: 03_user.sql 159308 2014-08-19 13:11:09Z sdm_fdoerr $
 -- -----------------------------------------------------------------------------------------------------
 
 CREATE USER &USERNAME IDENTIFIED BY &PASSWORD DEFAULT TABLESPACE &TABLESPACE_NAME QUOTA &TABLESPACE_QUOTA ON &TABLESPACE_NAME;
