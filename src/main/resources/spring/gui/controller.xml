@@ -10,13 +10,12 @@
 	#L% -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-	<!-- Allgemeine Controller -->
-	<import resource="classpath:resources/plis-web/spring/controller.xml" />
-
+    <!-- Allgemeine Controller -->
+    <import resource="classpath:resources/plis-web/spring/controller.xml"/>
 
     <!-- Holder Bean für die Terminfindungsnummer, wird von außen als Requestparameter gesetzt -->
     <bean id="tfNumberHolder" class="de.msg.terminfindung.gui.util.TFNumberHolder"/>
@@ -31,54 +30,45 @@
         <property name="globalFlowController" ref="globalFlowController"/>
     </bean>
 
-	<bean id="erstellenController"
-		class="de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController"
-		parent="abstractController" />
+    <bean id="erstellenController"
+          class="de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController"
+          parent="abstractController"/>
 
-	<bean id="teilnehmenController"
-		class="de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController"
-		parent="abstractController" />
+    <bean id="teilnehmenController"
+          class="de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController"
+          parent="abstractController"/>
 
-	<bean id="verwaltenController"
-		class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController"
-		parent="abstractController" />
+    <bean id="verwaltenController"
+          class="de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController"
+          parent="abstractController"/>
 
-	<bean id="abschliessenController"
-		class="de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController"
-		parent="abstractController" />
+    <bean id="abschliessenController"
+          class="de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController"
+          parent="abstractController"/>
 
-	<bean id="loeschenController"
-		class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController"
-		parent="abstractController" />
+    <bean id="loeschenController"
+          class="de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController"
+          parent="abstractController"/>
 
-	<bean id="aktualisierenController"
-		class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController"
-		parent="abstractController" />
+    <bean id="aktualisierenController"
+          class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController"
+          parent="abstractController"/>
 
-	<bean id="ausnahmeController"
-		class="de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeController" />
+    <bean id="ausnahmeController" class="de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeController"/>
 
-	<bean id="loginController" class="de.msg.terminfindung.gui.login.LoginController"
-		parent="abstractController">
-		<property name="sicherheit" ref="sicherheit" />
-		<property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter" />
-	</bean>
+    <bean id="loginController" class="de.msg.terminfindung.gui.login.LoginController"
+          parent="abstractController">
+        <property name="sicherheit" ref="sicherheit"/>
+        <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+    </bean>
 
-	<bean id="adminController" class="de.msg.terminfindung.gui.administration.AdminController"
-		parent="abstractController" />
+    <bean id="adminController" class="de.msg.terminfindung.gui.administration.AdminController"
+          parent="abstractController"/>
 
-	<aop:config proxy-target-class="true">
-		<!-- Pointcuts an den Systemgrenzen -->
-		<aop:advisor order="1000" advice-ref="boundaryLogInterceptor"
-			pointcut="target(de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenController) or 
-					target(de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenController) or
-					target(de.msg.terminfindung.gui.terminfindung.verwalten.VerwaltenController) or
-					target(de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenController) or
-					target(de.msg.terminfindung.gui.terminfindung.verwalten.loeschen.LoeschenController) or
-					target(de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenController) or
-					target(de.msg.terminfindung.gui.terminfindung.ausnahme.AusnahmeController) or
-					target(de.msg.terminfindung.gui.login.LoginController) or
-					target(de.msg.terminfindung.gui.administration.AdminController)"/>
-	</aop:config>
+    <aop:config proxy-target-class="true">
+        <!-- Pointcuts an den Systemgrenzen -->
+        <aop:advisor order="1000" advice-ref="boundaryLogInterceptor"
+                     pointcut="execution(public * de.msg.terminfindung.gui..*Controller.*(..))"/>
+    </aop:config>
 
 </beans>

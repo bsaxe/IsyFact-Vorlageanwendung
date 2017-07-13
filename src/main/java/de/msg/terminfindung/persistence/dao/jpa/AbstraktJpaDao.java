@@ -25,7 +25,7 @@ import de.msg.terminfindung.persistence.dao.AbstraktDao;
 import de.msg.terminfindung.persistence.entity.AbstraktEntitaet;
 
 /**
- * Abstrakte Basisklasse für JPA-basierte DAOs. Fügt gegenüber der abstrakten Klasse aus plis-persistence eine Methode
+ * Abstrakte Basisklasse für JPA-basierte DAOs. Fügt gegenüber der abstrakten Klasse aus isy-persistence eine Methode
  * zum Aktualisieren der Entität hinzu und legt den Typ des Primärschlüssels auf {@link Long} fest.
  *
  * @author Stefan Dellmuth, msg systems ag

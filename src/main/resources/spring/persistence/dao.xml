@@ -21,17 +21,12 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
         http://www.springframework.org/schema/jdbc
         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-        http://www.springframework.org/schema/context
-	    http://www.springframework.org/schema/context/spring-context-4.1.xsd
 	    http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
@@ -74,17 +69,42 @@
     </bean>
 
     <beans profile="produktion">
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-              destroy-method="close" p:driverClassName="oracle.jdbc.OracleDriver"
-              p:url="jdbc:oracle:thin:@localhost:1521:XE" p:username="terminfindung"
-              p:password="terminfindung" p:maxActive="5" p:testOnBorrow="true"
-              p:timeBetweenEvictionRunsMillis="180000" p:numTestsPerEvictionRun="5"
-              p:validationQuery="SELECT 1 from dual" p:maxWait="10000">
-        </bean>
+        <bean id="dataSource" class="de.bund.bva.pliscommon.persistence.datasource.PlisDataSource">
+    		<property name="schemaVersion" value="1.0.0"/>
+			<property name="invalidSchemaVersionAction" value="${database.invalidSchemaVersionAction}"/>
+			<property name="targetDataSource" ref="targetDataSource"/>
+    	</bean>
+    
+		<bean id="targetDataSource" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource"
+   		 	lazy-init="true">
+    		<property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource" />
+		    <property name="connectionPoolName" value="OracleUCP"/>
+		    <property name="user" value="${database.username}"/>
+		    <property name="password" value="${database.password}"/>
+		    <property name="URL" value="${database.url}" />
+		    <property name="initialPoolSize" value="${database.connections.initial.size}" />
+		    <property name="minPoolSize" value="${database.connections.min.active}" />
+		    <property name="maxPoolSize" value="${database.connections.max.active}" />
+		    <property name="connectionWaitTimeout" value="${database.connections.wait.timeout}" />
+		    <property name="inactiveConnectionTimeout" value="${database.connections.inactive.timeout}" />
+		    <property name="timeToLiveConnectionTimeout" value="${database.connections.timetolive.timeout}" />
+		    <property name="abandonedConnectionTimeout" value="${database.connections.abandoned.timeout}" />
+		    <property name="maxConnectionReuseTime" value="${database.connections.max.reusetime}" />
+		    <property name="maxConnectionReuseCount" value="${database.connections.max.reusecount}" />
+		    <property name="validateConnectionOnBorrow" value="${database.connections.validate.onborrow}" />
+		    <property name="maxStatements" value="${database.connections.statement.cache}" />
+		    <property name="connectionProperties">
+		        <props merge="default">
+		            <prop key="oracle.net.disableOob">${database.jdbc.disable.oob}</prop>
+		            <prop key="oracle.net.CONNECT_TIMEOUT">${database.jdbc.timeout.connect}</prop>
+		            <prop key="oracle.jdbc.ReadTimeout">${database.jdbc.timeout.read}</prop>
+		        </props>
+   			</property>
+		</bean>
 
         <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            <property name="persistenceProviderClass" value="org.hibernate.ejb.HibernatePersistence"/>
+            <property name="persistenceProviderClass" value="org.hibernate.jpa.HibernatePersistenceProvider"/>
             <property name="persistenceUnitName" value="hibernatePersistence"/>
             <property name="dataSource" ref="dataSource"/>
             <property name="jpaDialect">
@@ -92,34 +112,31 @@
             </property>
             <property name="jpaProperties">
                 <props>
-                    <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
-                    <prop key="hibernate.connection.isolation">4</prop>
-                    <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                    <prop key="hibernate.connection.isolation">${database.connection.isolation}</prop>
+                    <prop key="hibernate.hbm2ddl.auto">${database.schema.updatemode}</prop>
                     <prop key="hibernate.connection.useUnicode">true</prop>
                     <prop key="hibernate.connection.characterEncoding">utf-8</prop>
                     <prop key="hibernate.jdbc.batch_size">0</prop>
                     <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
-                    <prop key="hibernate.show_sql">false</prop>
-                    <prop key="hibernate.format_sql">false</prop>
-                    <prop key="hibernate.default_schema">terminfindung</prop>
-                    <prop key="hibernate.ejb.cfgfile">hibernate.cfg.xml</prop>
+                    <prop key="hibernate.show_sql">${database.show_sql}</prop>
+                    <prop key="hibernate.format_sql">${database.format_sql}</prop>
+                    <prop key="hibernate.default_schema">${database.schema.default}</prop>
                     <prop key="hibernate.ejb.metamodel.generation">enabled</prop>
                 </props>
             </property>
         </bean>
     </beans>
 
-    <beans profile="entwicklung,test">        
-
+    <beans profile="entwicklung">
         <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource" primary="true">
-            <property name="URL" value="${jdbc.url}"/>
-            <property name="user" value="${jdbc.user}"/>
-            <property name="password" value="${jdbc.password}"/>
+            <property name="url" value="jdbc:h2:~/h2-terminfindung-entwicklung;MODE=Oracle"/>
+            <property name="user" value="sa"/>
         </bean>
 
         <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            <property name="persistenceProviderClass" value="org.hibernate.ejb.HibernatePersistence"/>
+            <property name="persistenceProviderClass" value="org.hibernate.jpa.HibernatePersistenceProvider"/>
             <property name="persistenceUnitName" value="hibernatePersistence"/>
             <property name="dataSource" ref="dataSource"/>
             <property name="jpaDialect">

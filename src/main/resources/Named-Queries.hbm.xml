@@ -39,9 +39,6 @@
 	====================================================================== -->
 
 <hibernate-mapping default-lazy="true">
-    <query name="leseZeitraumMitId">
-        <![CDATA[select zr from Zeitraum zr where zr.id = :nr]]>
-    </query>
     <query name="leseTeilnehmerPraeferenzMitId">
         <![CDATA[select tZ from TeilnehmerZeitraum tZ where tZ.teilnehmer.id = :nr]]>
     </query>

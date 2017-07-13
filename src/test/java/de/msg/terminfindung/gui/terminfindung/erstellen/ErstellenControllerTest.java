@@ -114,7 +114,7 @@ public class ErstellenControllerTest {
     }
 
     @Test
-    public void testValidiereStammdatenOrganisatorUngültig() throws TerminfindungBusinessException {
+    public void testValidiereStammdatenOrganisatorUngueltig() throws TerminfindungBusinessException {
         // Vorbereitung des Testobjekts
         ErstellenController controller = new ErstellenController();
 
@@ -142,7 +142,7 @@ public class ErstellenControllerTest {
     }
 
     @Test
-    public void testValidiereStammdatenNameUngültig() throws TerminfindungBusinessException {
+    public void testValidiereStammdatenNameUngueltig() throws TerminfindungBusinessException {
         // Vorbereitung des Testobjekts
         ErstellenController controller = new ErstellenController();
 

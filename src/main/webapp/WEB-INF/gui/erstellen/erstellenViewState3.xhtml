@@ -21,6 +21,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 				xmlns:ui="http://java.sun.com/jsf/facelets"
 				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
 				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
@@ -35,19 +36,18 @@
 					<div class="form-horizontal">
 						<div class="row row-df">
 							<div class="col-lg-4">
-								Ihr Zugangslink für die Organisatorsicht
+								Ihre Zugangslinks: 
 								<p>
-									<a
-										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.id}">
-										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/verwaltenFlow?tfnr=#{erstellenModel.terminfindung.id}
-									</a>
+                                   	<h:outputLink id="organisatorSichtLink" value="verwaltenFlow" >
+                                   		<f:param name="tfref" value="#{erstellenModel.terminfindung.idRef}"/>
+                                   		<h:outputText value="Organisatorsicht" />
+                                   	</h:outputLink>
 								</p>
-								Ihr Zugangslink für die Teilnehmersicht
 								<p>
-									<a
-										href="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.id}">
-										#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}#{request.servletPath}/teilnehmenFlow?tfnr=#{erstellenModel.terminfindung.id}
-									</a>
+								    <h:outputLink id="teilnehmerSichtLink" value="teilnehmenFlow" >
+                                   		<f:param name="tfref" value="#{erstellenModel.terminfindung.idRef}"/>
+                                   		<h:outputText value="Teilnehmersicht" />
+                                   	</h:outputLink>
 								</p>
 							</div>
 						</div>

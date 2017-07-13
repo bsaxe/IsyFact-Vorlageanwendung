@@ -50,10 +50,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.anyListOf;
-import static org.mockito.Mockito.anyMapOf;
 import static org.mockito.Mockito.*;
 
 /**
@@ -97,14 +94,14 @@ public class AwkWrapperTest {
         Zeitraum zeitraum = new Zeitraum();
         zeitraum.setBeschreibung("abends");
         tag.getZeitraeume().add(zeitraum);
-        when(verwaltung.leseTerminfindung(anyLong())).thenReturn(muster);
+        when(verwaltung.leseTerminfindung(any(UUID.class))).thenReturn(muster);
     }
 
     @Test
     public void testBeanMapperPersistenzZuView() throws TerminfindungBusinessException {
         AwkWrapper awkWrapper = new AwkWrapperImpl(erstellung, verwaltung, teilnahme, beanMapper);
 
-        TerminfindungModel terminfindungModel = awkWrapper.ladeTerminfindung(1L);
+        TerminfindungModel terminfindungModel = awkWrapper.ladeTerminfindung(UUID.randomUUID());
 
         assertNotNull(terminfindungModel);
         assertNotNull(terminfindungModel.getTage());
@@ -129,7 +126,7 @@ public class AwkWrapperTest {
                 return tf;
             }
         });
-        when(verwaltung.leseTerminfindung(anyLong())).thenAnswer(new Answer<Terminfindung>() {
+        when(verwaltung.leseTerminfindung(any(UUID.class))).thenAnswer(new Answer<Terminfindung>() {
             @Override
             public Terminfindung answer(InvocationOnMock invocation) throws Throwable {
                 return tf;
@@ -227,7 +224,11 @@ public class AwkWrapperTest {
         assertEquals("Teilnehmer3", teilnehmer.get(2).getName());
 
         List<Tag> tage = tf.getTermine();
-        assertEquals("Teilnehmer1", tage.get(0).getZeitraeume().get(0).getTeilnehmerZeitraeume().get(0).getTeilnehmer().getName());
+        assertEquals(1, tage.get(0).getZeitraeume().get(0).getTeilnehmerZeitraeume().size());
+
+        for (TeilnehmerZeitraum teilnehmerZeitraum : tage.get(0).getZeitraeume().get(0).getTeilnehmerZeitraeume()) {
+            assertEquals("Teilnehmer1", teilnehmerZeitraum.getTeilnehmer().getName());
+        }
     }
 
     private static Date parseDate(String dateAsString) {

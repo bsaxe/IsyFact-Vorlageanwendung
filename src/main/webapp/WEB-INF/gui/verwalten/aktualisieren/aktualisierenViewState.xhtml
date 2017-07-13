@@ -7,9 +7,9 @@
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-  
+
        http://www.apache.org/licenses/LICENSE-2.0
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,6 @@
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:f="http://java.sun.com/jsf/core"
 				xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
-				xmlns:c="http://java.sun.com/jsp/jstl/core"
 				xmlns:tf="http://bva.bund.de/jsf/facelets/terminfindung"
 				template="/WEB-INF/gui/common/layout/commonSite.xhtml">
 
@@ -35,14 +34,14 @@
 						Stammdaten aktualisieren
 					</f:facet>
 				<f:facet name="panelBody">
-					
+
 					<div class="form-horizontal readonly">
-						<div class="row row-df">						
+						<div class="row row-df">
 							<div class="col-lg-4">
 								<isy:formInput reference="formular1"
 									value="#{aktualisierenModel.terminfindung.veranstaltungName}"
 									label="Name der Veranstaltung:" readonly="false" />
-									
+
 								<isy:formInput reference="formular3"
 									value="#{aktualisierenModel.terminfindung.organisator.name}"
 									label="Name des Organisators:" readonly="false" />
@@ -55,22 +54,20 @@
 								value="Die Terminfindung für diese Veranstaltung ist abgeschlossen." />
 							<br />
 							<h:outputText value="Der ausgewählte Termin ist der " />
-							<h:outputText
-								value="#{aktualisierenModel.terminfindung.defZeitraum.tag.datum}">
-								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-							</h:outputText>
-							<h:outputText
-								value=" (Zeitraum: #{aktualisierenModel.terminfindung.defZeitraum.beschreibung})." />
+							<h:outputText value="#{aktualisierenModel.terminfindung.defZeitraum.tag.datum}"/>
+							<h:outputText value=" (Zeitraum: #{aktualisierenModel.terminfindung.defZeitraum.beschreibung})." />
 						</p>
 					</h:panelGroup>
 					<div class="row row-df">
                         <div class="col-lg-12">
-                            <isy:button action="cancel" value="#{msg['aktion.zurueck']}"/>
+                            <isy:button action="cancel" value="#{msg['aktion.zurueck']}"
+										id="zurueckButton"/>
                             <isy:button action="save" value="#{msg['aktion.speichern']}"
-                                        disabled="#{aktualisierenModel.terminfindung.abgeschlossen}"/>
+                                        disabled="#{aktualisierenModel.terminfindung.abgeschlossen}"
+										id="speichernButton"/>
                         </div>
                     </div>
-		        </f:facet>					
+		        </f:facet>
 			</isy:panel>
 			<tf:statuszeile terminfindung="#{aktualisierenModel.terminfindung}"/>
 		</isy:panelGroup>

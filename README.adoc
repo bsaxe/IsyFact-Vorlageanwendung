@@ -1,0 +1,67 @@
+= IsyFact-Vorlageanwendung
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Die Vorlageanwendung der IsyFact zeigt anhand einer Anwendung zur gemeinsamen Planung von Terminen die Möglichkeiten der IsyFact. Sie bietet dadurch ein leichten Einstieg in die Entwicklung mit der IsyFact und steht sowohl als Leitfaden als auch als Nachschlagewerk für die Entwicklung weiterer Anwendungen auf Basis der IsyFact zur Verfügung.
+
+WARNING: Der aktuelle Stand der Anwendung entspricht dem einer Alpha-Version. Die Anwendung ist lauffähig und demonstriert bereits den Einsatz von Teilen der IsyFact-Standards. Sie ist allerdings nicht als fertig zu betrachten und kann möglicherweise gravierende Fehler beinhalten. Die Vorlageanwendung wird ständig von einem gemeinsamen Team des Bundesverwaltungsamts und der msg systems ag weiterentwickelt.
+
+== Entwicklungsumgebung
+
+=== Aufbau der Entwicklungsumgebung
+
+NOTE: In Kürze finden Sie hier eine vollständige Beschreibung, wie Sie eine Entwicklungsumgebung für die Vorlageanwendung aufbauen. Die folgenden Notizen stellen lediglich Teilaspekte des Aufbaus dar.
+
+==== Einbinden der Bibliotheken von Oracle
+
+Oracle bietet Bibliotheken über einen Downloadbereich oder ein eigenes Maven Repository an. Beide Zugriffswege setzen einen Oracle-Account voraus. Für die Vorlageanwendung benötigen Sie den passenden JDBC-Treiber sowie Oracles Unified Connection Pool (UCP).
+
+===== Zugriff über das Maven-Repository
+
+Über Oracles https://maven.oracle.com[Maven-Repository] können Sie direkt den Zugang beantragen, indem Sie die URL aufrufen und den Anweisungen folgen. Damit Maven auf das Repository zugreifen darf, müssen Sie Ihren Oracle-Account in Ihrer Maven-Konfiguration hinterlegen. Dazu müssen Sie Ihre Maven-Konfiguration http://docs.oracle.com/middleware/1213/core/MAVEN/config_maven_repo.htm#MAVEN9013[wie hier beschrieben] anpassen. Wenn Sie das Passwort Ihres Oracle-Accounts nicht im Klartext in Ihre Maven-Konfiguration einfügen wollen, können Sie es http://maven.apache.org/guides/mini/guide-encryption.html[verschlüsseln].
+
+===== Zugriff über den Downloadbereich
+
+Über Oracles http://www.oracle.com/technetwork/database/features/jdbc/default-2280470.html[Downloadbereich] können Sie die Bibliotheken herunterladen und in Ihr lokales Maven-Repository installieren. Hierzu sind die folgenden Befehle nötig:
+
+ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=<version> -Dpackaging=jar -Dfile=<Datei> -DgeneratePom=true
+ mvn install:install-file -DgroupId=com.oracle -DartifactId=ucp -Dversion=<version> -Dpackaging=jar -Dfile=<Datei> -DgeneratePom=true
+
+=== Maven-Profile
+
+Die Vorlageanwendung definiert die Maven-Profile `entwicklung` und `produktion`. Das Profil `entwicklung` stellt eine Abhängigkeit zur H2-Datenbank her. Es wird während der Entwicklung und zur Durchführung von Komponenten- sowie Integrationstests benutzt. Das Profil `produktion` stellt eine Abhängigkeit zur Oracle-Datenbank 12c her. Es wird während produktionsnaher Tests und für den Build der produktiven Version benötigt.
+
+=== Spring-Profile
+
+Die Vorlageanwendung stellt einige Spring-Profile bereit, um die Entwicklungsarbeit leichter zu gestalten:
+
+* `produktion`: Ist als Standard voreingestellt und startet die Anwendung unter Produktionsbedingungen. Für den Betrieb wird eine Oracle-Datenbank vorausgesetzt.
+* `test-unit`: Wird für die Ausführung von Komponententests benutzt. Verwendet eine In-Memory-Datenbank.
+* `test-integration`: Wird für die Ausführung von Integrationstests benutzt. Startet die komplette Anwendung, verwendet aber eine In-Memory-Datenbank (H2) und deaktiviert den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit.
+* `entwicklung`: Ist für den Betrieb innerhalb einer Entwicklungsumgebung vorgesehen. Verwendet eine H2-Datenbank und deaktiviert die Überwachung der Anwendung, den Selbsttest sowie die Beobachtung von Änderungen der betrieblichen Konfiguration zur Laufzeit.
+
+== IsyFact
+
+Die IsyFact ist eine Software Factory für den Bau von komplexen IT-Anwendungslandschaften, die vom Bundesverwaltungsamt entwickelt wurde. Sie bündelt bestehendes technisches Know-how um Anwendungssysteme effizienter entwickeln und betreiben zu können.
+
+Weiterführende Informationen erhalten Sie auf: http://www.isyfact.de/
+
+== Lizenz
+
+Copyright &copy; 2015 - 2016 Bundesverwaltungsamt (BVA), msg systems ag.
+
+Licensed under the Apache License, Version 2.0 (the "License"). You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+== Kontakt
+
+* Homepage:  http://www.isyfact.de/
+* E-Mail: isyfact@bva.bund.de

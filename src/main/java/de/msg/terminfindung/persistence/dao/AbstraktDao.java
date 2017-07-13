@@ -24,7 +24,7 @@ import de.bund.bva.pliscommon.persistence.dao.Dao;
 import de.msg.terminfindung.persistence.entity.AbstraktEntitaet;
 
 /**
- * Basis-Interface alle DAOs der Anwendung. Fügt gegenüber des Interfaces aus plis-persistence eine Methode zum
+ * Basis-Interface alle DAOs der Anwendung. Fügt gegenüber des Interfaces aus isy-persistence eine Methode zum
  * Aktualisieren der Entität hinzu und legt den Typ des Primärschlüssels auf {@link Long} fest.
  *
  * @author Stefan Dellmuth, msg systems ag

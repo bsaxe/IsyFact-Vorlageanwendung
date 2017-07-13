@@ -24,15 +24,7 @@ package de.msg.terminfindung.gui.terminfindung.model;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.*;
 
 /**
  * Die Klasse speichert eine Terminfindung in der View-Schicht.
@@ -45,9 +37,9 @@ public class TerminfindungModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Die Nummer (Id) der Terminfindung
+     * Indirekte Referenz der Terminfindung
      */
-    private long id;
+    private UUID idRef;
 
     /**
      * Der vom Veranstalter letztlich ausgewählte Termin der Veranstaltung. Dieser Termin (=Zeitraum an einem Tag) wird
@@ -161,15 +153,15 @@ public class TerminfindungModel implements Serializable {
 
 	/* Getter und Setter */
 
-    public long getId() {
-        return id;
-    }
+    public UUID getIdRef() {
+		return idRef;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setIdRef(UUID idRef) {
+		this.idRef = idRef;
+	}
 
-    public ZeitraumModel getDefZeitraum() {
+	public ZeitraumModel getDefZeitraum() {
         return defZeitraum;
     }
 

@@ -26,6 +26,7 @@ import de.msg.terminfindung.gui.terminfindung.model.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Interface des Anwendungskern-Wrappers (AWK-Wrapper). Der AWK-Wrapper kapselt den Anwendungskern und stellt Methoden
@@ -38,13 +39,20 @@ import java.util.Map;
 public interface AwkWrapper {
 
     /**
-     * Laden einer Terminfindung anhand der Terminfindungsnummer.
+     * Laden einer Terminfindung anhand der Terminfindungsreferenznummer.
      *
-     * @param terminfindungsNr Die Id einer Terminfindung
+     * @param terminfindungsRefNr Die UUID-Referenz einer Terminfindung
      * @return die Terminfindung falls diese existiert, sonst null
-     * @throws TerminfindungBusinessException im Falle einer ungültigen bzw. nicht vorhandener Terminfindungsnummer
+     * @throws TerminfindungBusinessException im Falle einer ungültigen bzw. nicht vorhandener Terminfindungreferenznummer
      */
-    TerminfindungModel ladeTerminfindung(long terminfindungsNr) throws TerminfindungBusinessException;
+    TerminfindungModel ladeTerminfindung(UUID terminfindungsRefNr) throws TerminfindungBusinessException;
+    
+    /**
+     * Laden aller Terminfindungen.
+     * 
+     * @return Alle gespeicherten Terminfindungen.
+     */
+    List<TerminfindungModel> ladeAlleTerminfindungen();
 
     /**
      * Erstellt eine neue Terminfindung.

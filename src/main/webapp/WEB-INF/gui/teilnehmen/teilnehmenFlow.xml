@@ -18,22 +18,20 @@
   limitations under the License.
   #L%
   -->
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 <flow xmlns="http://www.springframework.org/schema/webflow"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd" parent="basisFlow">
 
-	<var name="teilnehmenModel"
-		class="de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenModel" />
-	<var name="viewUtil" class="de.msg.terminfindung.gui.util.ViewUtil"/>
-	<var name="tfNummer" class="de.msg.terminfindung.gui.util.TFNumberHolder"/>
+	<var name="teilnehmenModel" class="de.msg.terminfindung.gui.terminfindung.teilnehmen.TeilnehmenModel" />
+	<var name="tfRef" class="java.lang.String"/>
 
 	<view-state id="teilnehmenViewState">
 
         <on-entry>
-            <set name="tfNummer" value="requestParameters.tfnr" type="java.lang.String" />
-            <evaluate expression="tfNumberHolder.updateIfNotNull(tfNummer)"/>
+            <set name="tfRef" value="requestParameters.tfref" type="java.util.UUID" />
+            <evaluate expression="tfNumberHolder.updateRefIfNotNull(tfRef)"/>
             <evaluate expression="teilnehmenController.initialisiereModel(teilnehmenModel)" />
         </on-entry>
 

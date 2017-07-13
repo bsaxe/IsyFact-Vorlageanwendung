@@ -25,8 +25,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -43,7 +43,7 @@ public class Zeitraum extends AbstraktEntitaet {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "zeitraum_id")
-    private List<TeilnehmerZeitraum> teilnehmerZeitraeume = new ArrayList<>();
+    private Set<TeilnehmerZeitraum> teilnehmerZeitraeume = new HashSet<>();
 
     public Zeitraum() {
     }
@@ -60,11 +60,11 @@ public class Zeitraum extends AbstraktEntitaet {
         this.beschreibung = beschreibung;
     }
 
-    public List<TeilnehmerZeitraum> getTeilnehmerZeitraeume() {
+    public Set<TeilnehmerZeitraum> getTeilnehmerZeitraeume() {
         return teilnehmerZeitraeume;
     }
 
-    public void setTeilnehmerZeitraeume(List<TeilnehmerZeitraum> teilnehmerZeitraeume) {
+    public void setTeilnehmerZeitraeume(Set<TeilnehmerZeitraum> teilnehmerZeitraeume) {
         this.teilnehmerZeitraeume = teilnehmerZeitraeume;
     }
 

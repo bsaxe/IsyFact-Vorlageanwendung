@@ -25,13 +25,12 @@
 	<var name="aktualisierenModel" 
 		class="de.msg.terminfindung.gui.terminfindung.verwalten.aktualisieren.AktualisierenModel"/>
 
-	<var name="viewUtil" class="de.msg.terminfindung.gui.util.ViewUtil"/>
+	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->
+	<input name="terminfindung" type="de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel"/>
 	
-	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->	
-
 	<!-- Initialisiere das Modell-->	
 	<on-start>
-		<evaluate expression="aktualisierenController.initialisiereModel(aktualisierenModel)" />
+		<evaluate expression="aktualisierenModel.setTerminfindung(terminfindung)"/>
 	</on-start>
 
 	<view-state id="aktualisierenViewState" >
@@ -44,5 +43,7 @@
 			else="aktualisierenViewState" />
 	</decision-state>
 	
-	<end-state id="finished"/>
+	<end-state id="finished">
+        <output name="aktualisierenTerminfindung" value="aktualisierenModel.getTerminfindung()"/>
+    </end-state>
 </flow>

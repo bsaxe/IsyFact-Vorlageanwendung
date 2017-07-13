@@ -30,6 +30,7 @@
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" lazy-init="false">
         <property name="basenames">
             <list>
+                <value>resources/nachrichten/batchtexte</value>
                 <value>resources/nachrichten/fehler</value>
                 <value>resources/nachrichten/maskentexte</value>
                 <value>resources/nachrichten/titles</value>

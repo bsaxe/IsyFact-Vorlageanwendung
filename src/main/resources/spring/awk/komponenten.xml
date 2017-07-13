@@ -37,4 +37,8 @@
         <constructor-arg ref="teilnehmerZeitraumDao"/>
     </bean>
 
+    <bean id="datenpflege" class="de.msg.terminfindung.core.datenpflege.impl.DatenpflegeImpl">
+        <constructor-arg ref="terminfindungDao"/>
+    </bean>
+
 </beans>

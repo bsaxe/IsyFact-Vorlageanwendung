@@ -1,5 +1,7 @@
 package de.msg.terminfindung.gui.terminfindung;
 
+import java.util.UUID;
+
 /*
  * #%L
  * Terminfindung
@@ -28,7 +30,7 @@ import de.bund.bva.isyfact.logging.LogKategorie;
 import de.bund.bva.pliscommon.konfiguration.common.ReloadableKonfiguration;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.exception.TerminfindungTechnicalException;
-import de.msg.terminfindung.common.konstanten.EreignissSchluessel;
+import de.msg.terminfindung.common.konstanten.EreignisSchluessel;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.gui.awkwrapper.AwkWrapper;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
@@ -69,13 +71,13 @@ public abstract class AbstractController<T extends AbstractModel> {
      */
     protected void holeTerminfindung(T model) throws TerminfindungTechnicalException, TerminfindungBusinessException {
 
-        if (tfNumberHolder.getNumber() == null) {
+        if (tfNumberHolder.getRef() == null) {
             throw new TerminfindungTechnicalException(FehlerSchluessel.MSG_KEINE_TERMINFINDUNGSNR);
         }
 
-        LOG.infoFachdaten(LogKategorie.JOURNAL, EreignissSchluessel.MSG_TERMINFINDUNG_GET, "Hole Terminfindung vom Anwendungskern für Terminfindungsnummer {}", tfNumberHolder.getNumber());
+        LOG.infoFachdaten(LogKategorie.JOURNAL, EreignisSchluessel.MSG_TERMINFINDUNG_GET, "Hole Terminfindung vom Anwendungskern für Terminfindungsreferenz {}", tfNumberHolder.getRef());
 
-        TerminfindungModel terminfindung = awk.ladeTerminfindung(tfNumberHolder.getNumber());
+        TerminfindungModel terminfindung = awk.ladeTerminfindung(tfNumberHolder.getRef());
         model.setTerminfindung(terminfindung);
     }
 

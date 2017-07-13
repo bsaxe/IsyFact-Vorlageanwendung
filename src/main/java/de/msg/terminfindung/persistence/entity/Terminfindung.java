@@ -20,111 +20,129 @@ package de.msg.terminfindung.persistence.entity;
  * #L%
  */
 
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.UUID;
 
 /**
- * Entity implementation class for Entity: Terminfindung Haupt-Entitaet, von hier aus kann zu den abhängigen Entitäten
- * navigiert werden.
+ * Entity implementation class for Entity: Terminfindung Haupt-Entitaet, von
+ * hier aus kann zu den abhängigen Entitäten navigiert werden.
  *
  * @author msg systems ag, Maximilian Falter
  */
+@NamedQueries({
+		@NamedQuery(name = "terminfindung.vor", query = "select tf from Terminfindung tf join tf.termine as t where tf.defZeitraum in elements(t.zeitraeume) and t.datum <= :datum"),
+		@NamedQuery(name = "terminfindung.ref", query = "select tf from Terminfindung tf where tf.idRef = :ref") })
 @Entity
 public class Terminfindung extends AbstraktEntitaet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String veranstaltungName;
+	/**
+	 * Indirekte Referenz zur Identifizierung in Views ohne Verwendung des
+	 * Primärschlüssels
+	 */
+	@Column(length = 36)
+	private String idRef;
 
-    @Embedded
-    private Organisator organisator;
+	private String veranstaltungName;
 
-    @OneToOne
-    @JoinColumn(name = "zeitraum_nr")
-    private Zeitraum defZeitraum;
+	@Embedded
+	private Organisator organisator;
 
-    /**
-     * Liste der zur Terminfindung gehörenden Tage.
-     */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "terminfindung_id")
-    @OrderBy("datum ASC")
-    private List<Tag> termine = new ArrayList<>();
+	@OneToOne
+	@JoinColumn(name = "zeitraum_nr")
+	private Zeitraum defZeitraum;
 
-    /**
-     * Liste der zur Teminfindung gehörender Teilnehmer
-     */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "terminfindung_id")
-    @OrderBy("name ASC")
-    private List<Teilnehmer> teilnehmer = new ArrayList<>();
-    
-    /**
-     * Erstellungsdatum der Terminfindung
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    
-    /**
-     * Letztes Bearbeitungsdatum der Terminfinung (Schließt die Bearbeitung der Teilnehmerliste oder 
-     * des Mappings der Teilnehmer zu Zeiträumen nicht mit ein)
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
+	/**
+	 * Liste der zur Terminfindung gehörenden Tage.
+	 */
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "terminfindung_id")
+	@OrderBy("datum ASC")
+	private List<Tag> termine = new ArrayList<>();
 
-    public Terminfindung() {
+	/**
+	 * Liste der zur Teminfindung gehörender Teilnehmer
+	 */
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "terminfindung_id")
+	@OrderBy("name ASC")
+	private List<Teilnehmer> teilnehmer = new ArrayList<>();
 
-    }
+	/**
+	 * Erstellungsdatum der Terminfindung
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
 
-    public Terminfindung(String veranstaltungName, Organisator organisator) {
-        this.veranstaltungName = veranstaltungName;
-        this.organisator = organisator;
-    }
+	/**
+	 * Letztes Bearbeitungsdatum der Terminfinung (Schließt die Bearbeitung der
+	 * Teilnehmerliste oder des Mappings der Teilnehmer zu Zeiträumen nicht mit
+	 * ein)
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updateDate;
 
-    public String getVeranstaltungName() {
-        return veranstaltungName;
-    }
+	public Terminfindung() {
 
-    public void setVeranstaltungName(String veranstName) {
-        this.veranstaltungName = veranstName;
-    }
+	}
 
-    public Zeitraum getDefZeitraum() {
-        return defZeitraum;
-    }
+	public Terminfindung(String veranstaltungName, Organisator organisator) {
+		this.veranstaltungName = veranstaltungName;
+		this.organisator = organisator;
+	}
 
-    public void setDefZeitraum(Zeitraum defZeitraum) {
-        this.defZeitraum = defZeitraum;
-    }
+	public String getIdRef() {
+		return idRef;
+	}
 
-    public List<Tag> getTermine() {
-        return termine;
-    }
+	public void setIdRef(String idRef) {
+		this.idRef = idRef;
+	}
 
-    public void setTermine(List<Tag> termine) {
-        this.termine = termine;
-    }
+	public String getVeranstaltungName() {
+		return veranstaltungName;
+	}
 
-    public List<Teilnehmer> getTeilnehmer() {
-        return teilnehmer;
-    }
+	public void setVeranstaltungName(String veranstName) {
+		this.veranstaltungName = veranstName;
+	}
 
-    public void setTeilnehmer(List<Teilnehmer> teilnehmer) {
-        this.teilnehmer = teilnehmer;
-    }
+	public Zeitraum getDefZeitraum() {
+		return defZeitraum;
+	}
 
-    public Organisator getOrganisator() {
-        return organisator;
-    }
+	public void setDefZeitraum(Zeitraum defZeitraum) {
+		this.defZeitraum = defZeitraum;
+	}
 
-    public void setOrganisator(Organisator organisator) {
-        this.organisator = organisator;
-    }    
+	public List<Tag> getTermine() {
+		return termine;
+	}
 
-    public Date getCreateDate() {
+	public void setTermine(List<Tag> termine) {
+		this.termine = termine;
+	}
+
+	public List<Teilnehmer> getTeilnehmer() {
+		return teilnehmer;
+	}
+
+	public void setTeilnehmer(List<Teilnehmer> teilnehmer) {
+		this.teilnehmer = teilnehmer;
+	}
+
+	public Organisator getOrganisator() {
+		return organisator;
+	}
+
+	public void setOrganisator(Organisator organisator) {
+		this.organisator = organisator;
+	}
+
+	public Date getCreateDate() {
 		return createDate;
 	}
 
@@ -141,23 +159,27 @@ public class Terminfindung extends AbstraktEntitaet {
 	}
 
 	/**
-     * Sucht in einer Terminfindung nach einem Zeitraum mit der angegebenen Id.
-     *
-     * @param zeitraumId Die gesuchte Id
-     * @return Der Zeitraum, wenn er in der Terminfindung vorhanden ist, sonst null.
-     */
-    public Zeitraum findeZeitraumById(long zeitraumId) {
+	 * Sucht in einer Terminfindung nach einem Zeitraum mit der angegebenen Id.
+	 *
+	 * @param zeitraumId
+	 *            Die gesuchte Id
+	 * @return Der Zeitraum, wenn er in der Terminfindung vorhanden ist, sonst
+	 *         null.
+	 */
+	public Zeitraum findeZeitraumById(long zeitraumId) {
 
-        Zeitraum result = null;
-        if (termine == null) return null;
+		Zeitraum result = null;
+		if (termine == null)
+			return null;
 
-        for (Tag t : termine) {
-            if (t.getZeitraeume() != null) {
-                for (Zeitraum z : t.getZeitraeume()) {
-                    if (z.getId() == zeitraumId) result = z;
-                }
-            }
-        }
-        return result;
-    }
+		for (Tag t : termine) {
+			if (t.getZeitraeume() != null) {
+				for (Zeitraum z : t.getZeitraeume()) {
+					if (z.getId() == zeitraumId)
+						result = z;
+				}
+			}
+		}
+		return result;
+	}
 }

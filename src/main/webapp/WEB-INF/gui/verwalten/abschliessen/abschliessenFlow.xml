@@ -27,13 +27,12 @@
 	<var name="abschliessenModel" 
 		class="de.msg.terminfindung.gui.terminfindung.verwalten.abschliessen.AbschliessenModel"/>
 
-	<var name="viewUtil" class="de.msg.terminfindung.gui.util.ViewUtil"/>
-	
-	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->	
+	<!-- Die Terminfindung wird aus dem Parent Flow übergeben -->
+	<input name="terminfindung" type="de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel"/>
 
 	<!-- Initialisiere das Modell-->	
 	<on-start>
-		<evaluate expression="abschliessenController.initialisiereModel(abschliessenModel)" />
+		<evaluate expression="abschliessenModel.setTerminfindung(terminfindung)"/>
 	</on-start>
 
 	<view-state id="abschliessenViewState" >
@@ -42,6 +41,8 @@
 			<evaluate expression="abschliessenController.schliesseTerminfindung(abschliessenModel)"></evaluate>
 		</transition>
 	</view-state>
-	
-	<end-state id="finished"/>
+
+    <end-state id="finished">
+        <output name="abschliessenTerminfindung" value="abschliessenModel.getTerminfindung()"/>
+    </end-state>
 </flow>

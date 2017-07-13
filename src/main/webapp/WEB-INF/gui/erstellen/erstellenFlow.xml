@@ -25,8 +25,7 @@
         http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd" parent="basisFlow">
 
 	<!-- Model -->
-	<var name="erstellenModel"
-		class="de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenModel" />
+	<var name="erstellenModel" class="de.msg.terminfindung.gui.terminfindung.erstellen.ErstellenModel" />
 	<!-- Initialisieren des Models -->
 	<on-start>
 		<evaluate expression="erstellenController.initialisiereModel(erstellenModel)" />

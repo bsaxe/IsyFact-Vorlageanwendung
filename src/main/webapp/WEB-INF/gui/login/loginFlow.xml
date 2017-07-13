@@ -25,12 +25,14 @@
         http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
 	
 	<!-- Model -->
-	<var name="loginModel"
-		class="de.msg.terminfindung.gui.login.LoginModel" />
+	<var name="loginModel" class="de.msg.terminfindung.gui.login.LoginModel" />
+	
+	<var name="adminRight" class="java.lang.String"/>
 	
 	<!-- Initialisieren des Models -->
 	<on-start>
 		<evaluate expression="loginController.initialisiereModel(loginModel)" />
+		<set name="adminRight" value="'Administrieren'"></set>
 	</on-start>
 	
 	<!-- Erster View -->
@@ -41,14 +43,14 @@
 	</view-state>
 	
 	<!-- Bestätigung -->
-	
 	<view-state id="loginViewStateSuccess" model="loginModel">
-		<transition on="ok" to="loginFinished"/>
+		<transition on="ok" to="isUserOrAdmin"/>
 	</view-state>
+	
+	<decision-state id="isUserOrAdmin">
+		<if test="loginController.getSicherheit().getBerechtigungsManager().hatRecht(adminRight)" then="adminView" else="userView"/>
+	</decision-state>
 
-	<!-- Ende -->
-
-	<end-state id="loginFinished">
-	</end-state>
-
+	<end-state id="adminView" view="flowRedirect:adminFlow"/>
+	<end-state id="userView" view="flowRedirect:startFlow"/>
 </flow>

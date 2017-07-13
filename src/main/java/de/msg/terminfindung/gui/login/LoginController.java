@@ -21,10 +21,6 @@ package de.msg.terminfindung.gui.login;
  */
 
 
-import org.springframework.binding.message.MessageBuilder;
-import org.springframework.binding.message.MessageContext;
-import org.springframework.stereotype.Controller;
-
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.bund.bva.isyfact.logging.LogKategorie;
@@ -33,9 +29,12 @@ import de.bund.bva.pliscommon.aufrufkontext.impl.AufrufKontextImpl;
 import de.bund.bva.pliscommon.sicherheit.Berechtigungsmanager;
 import de.bund.bva.pliscommon.sicherheit.Sicherheit;
 import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungTechnicalException;
-import de.msg.terminfindung.common.konstanten.EreignissSchluessel;
+import de.msg.terminfindung.common.konstanten.EreignisSchluessel;
 import de.msg.terminfindung.gui.terminfindung.AbstractController;
 import de.msg.terminfindung.sicherheit.SerializableAufrufKontextImpl;
+import org.springframework.binding.message.MessageBuilder;
+import org.springframework.binding.message.MessageContext;
+import org.springframework.stereotype.Controller;
 
 /**
  * Controller des Login Flows
@@ -50,7 +49,6 @@ public class LoginController extends AbstractController<LoginModel> {
 	Sicherheit<AufrufKontextImpl> sicherheit;
 	AufrufKontextVerwalter<SerializableAufrufKontextImpl> aufrufKontextVerwalter;
 	
-	Sicherheit<AufrufKontextImpl> s;
 	/**
 	 * Initialisiert das Modell des Loeschen Flows
 	 *
@@ -67,7 +65,7 @@ public class LoginController extends AbstractController<LoginModel> {
 	 */
 	public boolean performLogin(LoginModel model, MessageContext context) {
 
-		LOG.infoFachdaten(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_STARTED, "Führe Login aus für Benutzer {}", model.getUsername());
+		LOG.infoFachdaten(LogKategorie.JOURNAL, EreignisSchluessel.MSG_LOGIN_STARTED, "Führe Login aus für Benutzer {}", model.getUsername());
 		
 		SerializableAufrufKontextImpl akontext= new SerializableAufrufKontextImpl();
 		
@@ -80,12 +78,12 @@ public class LoginController extends AbstractController<LoginModel> {
 			@SuppressWarnings("unused")
 			Berechtigungsmanager bmanager  = sicherheit.getBerechtigungsManagerUndAuthentifiziere(akontext);
 
-			LOG.info(LogKategorie.JOURNAL,EreignissSchluessel.MSG_LOGIN_SUCCESS,"Authentifizierung war erfolgreich");
+			LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_LOGIN_SUCCESS, "Authentifizierung war erfolgreich");
 			
 		}
 		catch (AuthentifizierungTechnicalException e) {
-			
-			LOG.info(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_FAILED, "Authentifizierung ist fehlgeschlagen", e);
+
+			LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_LOGIN_FAILED, "Authentifizierung ist fehlgeschlagen", e);
 			
 			context.addMessage(new MessageBuilder().error().defaultText("Authentifizierung ist fehlgeschlagen").build());
 		    return false;
