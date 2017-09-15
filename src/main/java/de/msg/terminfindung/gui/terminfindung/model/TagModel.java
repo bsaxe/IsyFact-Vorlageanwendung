@@ -20,13 +20,13 @@ package de.msg.terminfindung.gui.terminfindung.model;
  * #L%
  */
 
-
 import java.io.Serializable;
-import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+import de.bund.bva.isyfact.datetime.format.OutFormat;
 
 /**
  * Die Klasse speichert die Daten eines Tags in der View Schicht. Ein Tag hat einen Namen, ein Datum und eine Liste von
@@ -39,17 +39,18 @@ public class TagModel implements Serializable, Comparable<TagModel> {
     private static final long serialVersionUID = -5975535556486949171L;
 
     private Long id;
-    private Date datum;
+
+    private LocalDate datum;
     private List<ZeitraumModel> zeitraeume = new ArrayList<>();
 
     /**
      * der Ausgewählte Zeitraum von
      */
-    private String vonZeitraum;
+    private LocalTime vonZeitraum;
     /**
      * der Ausgewählte Zeitraum bis
      */
-    private String bisZeitraum;
+    private LocalTime bisZeitraum;
 
     public TagModel() {
 
@@ -67,15 +68,15 @@ public class TagModel implements Serializable, Comparable<TagModel> {
         this.id = tag_nr;
     }
 
-    public Date getDatum() {
+    public LocalDate getDatum() {
         return datum;
     }
 
     public String getShortDate() {
-        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(datum);
+        return datum.format(OutFormat.DATUM);
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(LocalDate datum) {
         this.datum = datum;
     }
 
@@ -97,19 +98,19 @@ public class TagModel implements Serializable, Comparable<TagModel> {
 
     }
 
-    public String getVonZeitraum() {
+    public LocalTime getVonZeitraum() {
         return vonZeitraum;
     }
 
-    public void setVonZeitraum(String vonZeitraum) {
+    public void setVonZeitraum(LocalTime vonZeitraum) {
         this.vonZeitraum = vonZeitraum;
     }
 
-    public String getBisZeitraum() {
+    public LocalTime getBisZeitraum() {
         return bisZeitraum;
     }
 
-    public void setBisZeitraum(String bisZeitraum) {
+    public void setBisZeitraum(LocalTime bisZeitraum) {
         this.bisZeitraum = bisZeitraum;
     }
 }

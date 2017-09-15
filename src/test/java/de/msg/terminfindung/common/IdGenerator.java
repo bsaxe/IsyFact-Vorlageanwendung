@@ -27,17 +27,13 @@ package de.msg.terminfindung.common;
  */
 public class IdGenerator {
 
-    private Long nextId;
+    private long nextId;
 
-    public IdGenerator() {
-        this(1L);
-    }
-
-    public IdGenerator(Long startId) {
+    public IdGenerator(long startId) {
         nextId = startId;
     }
 
-    public Long nextId() {
+    public long nextId() {
         return nextId++;
     }
 

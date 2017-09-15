@@ -139,6 +139,11 @@
             <groupId>de.bund.bva.isyfact</groupId>
             <artifactId>isy-batchrahmen</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-datetime</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <!-- GUI & AWK -->
         <dependency>

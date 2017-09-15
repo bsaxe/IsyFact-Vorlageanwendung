@@ -1,10 +1,10 @@
 package de.msg.terminfindung.core.datenpflege.impl;
 
+import java.time.LocalDate;
+
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.core.datenpflege.Datenpflege;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
-
-import java.util.Date;
 
 /**
  * Implementierung der Anwendungskomponente "Datenpflege" zur Pflege des Datenbestands.
@@ -20,7 +20,7 @@ public class DatenpflegeImpl implements Datenpflege {
     }
 
     @Override
-    public int loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException {
+    public int loescheVergangeneTerminfindungen(LocalDate stichtag) throws TerminfindungBusinessException {
         return awfVergangeneTermineLoeschen.loescheVergangeneTerminfindungen(stichtag);
     }
 }

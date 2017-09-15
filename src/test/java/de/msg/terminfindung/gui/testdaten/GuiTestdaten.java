@@ -20,12 +20,20 @@ package de.msg.terminfindung.gui.testdaten;
  * #L%
  */
 
-import de.msg.terminfindung.common.IdGenerator;
-import de.msg.terminfindung.gui.terminfindung.model.*;
-
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
+import de.bund.bva.isyfact.datetime.zeitraum.core.Zeitraum;
+import de.msg.terminfindung.common.IdGenerator;
+import de.msg.terminfindung.gui.terminfindung.model.OrganisatorModel;
+import de.msg.terminfindung.gui.terminfindung.model.PraeferenzModel;
+import de.msg.terminfindung.gui.terminfindung.model.TagModel;
+import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerModel;
+import de.msg.terminfindung.gui.terminfindung.model.TeilnehmerZeitraumModel;
+import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
+import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 
 /**
  * Erstellt Testdaten für GUI-Tests, d.h. Tests des AWK-Wrappers und der Controller.
@@ -43,11 +51,14 @@ public class GuiTestdaten {
     private static final IdGenerator TEILNEHMER_ZEITRAUM_IDS = new IdGenerator(600L);
 
     public static TagModel erstelleTermin() {
-        TagModel tagModel = new TagModel(TAG_IDS.nextId());
-        tagModel.setDatum(new Date());
 
-        ZeitraumModel zeitraumModel1 = new ZeitraumModel(ZEITRAUM_IDS.nextId(), "morgens");
-        ZeitraumModel zeitraumModel2 = new ZeitraumModel(ZEITRAUM_IDS.nextId(), "abends");
+        TagModel tagModel = new TagModel(TAG_IDS.nextId());
+        tagModel.setDatum(DateTimeUtil.localDateNow());
+
+        ZeitraumModel zeitraumModel1 = new ZeitraumModel(ZEITRAUM_IDS.nextId(),
+            Zeitraum.of(ZonedDateTime.now(), ZonedDateTime.now().plusHours(1)));
+        ZeitraumModel zeitraumModel2 = new ZeitraumModel(ZEITRAUM_IDS.nextId(),
+            Zeitraum.of(ZonedDateTime.now(), ZonedDateTime.now().plusHours(1)));
 
         tagModel.getZeitraeume().add(zeitraumModel1);
         tagModel.getZeitraeume().add(zeitraumModel2);

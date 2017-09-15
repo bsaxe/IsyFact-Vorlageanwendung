@@ -20,11 +20,19 @@ package de.msg.terminfindung.persistence.entity;
  * #L%
  */
 
-import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
 /**
  * Entity implementation class for Entity: Terminfindung Haupt-Entitaet, von
@@ -74,16 +82,14 @@ public class Terminfindung extends AbstraktEntitaet {
 	/**
 	 * Erstellungsdatum der Terminfindung
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createDate;
+    private LocalDateTime createDate;
 
 	/**
 	 * Letztes Bearbeitungsdatum der Terminfinung (Schließt die Bearbeitung der
 	 * Teilnehmerliste oder des Mappings der Teilnehmer zu Zeiträumen nicht mit
 	 * ein)
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updateDate;
+    private LocalDateTime updateDate;
 
 	public Terminfindung() {
 
@@ -142,20 +148,20 @@ public class Terminfindung extends AbstraktEntitaet {
 		this.organisator = organisator;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+    public LocalDateTime getCreateDate() {
+        return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
 	}
 
-	public Date getUpdateDate() {
-		return updateDate;
+    public LocalDateTime getUpdateDate() {
+        return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
 	}
 
 	/**

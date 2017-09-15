@@ -20,8 +20,7 @@ package de.msg.terminfindung.core.verwaltung.impl;
  * #L%
  */
 
-import java.util.Date;
-
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 
@@ -41,7 +40,7 @@ public class AwfAktualisiereTerminfindung {
 	public void aktualisiereTerminfindung(Terminfindung terminfindung, String organisatorName, String veranstaltungName){
 		terminfindung.setVeranstaltungName(veranstaltungName);
 		terminfindung.getOrganisator().setName(organisatorName);
-		terminfindung.setUpdateDate(new Date());
+		terminfindung.setUpdateDate(DateTimeUtil.localDateTimeNow());
 		terminfindungDao.aktualisiere(terminfindung);
 	}
 }

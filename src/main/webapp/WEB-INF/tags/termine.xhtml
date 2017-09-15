@@ -22,7 +22,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+>
     <!-- Eine tabellarische Anzeige für die Termine einer Terminfindung auf Basis eines isy:panel. -->
     <!-- Unterelemente können dazu benutzt werden, zusätzliche Zeilen in die Tabelle einzufügen -->
 
@@ -41,7 +41,7 @@
             <ui:repeat var="tag" value="#{terminfindung.tage}">
                 <ui:repeat var="zeitraum" value="#{tag.zeitraeume}">
                     <th class="borderTd #{terminfindung.isFestgelegterZeitraum(zeitraum) ? 'ausgewaehlt' : ''}">
-                        <h:outputText value="#{zeitraum.beschreibung}"/>
+                        <h:outputText value="#{zeitraum.zeitraum}"/>
                     </th>
                 </ui:repeat>
             </ui:repeat>

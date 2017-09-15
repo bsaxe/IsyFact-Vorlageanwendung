@@ -25,6 +25,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bund.bva.isyfact.datetime.zeitraum.core.Zeitraum;
+
 /**
  * Die Klasse speichert einen Zeitraum in der View-Schicht.
  *
@@ -42,7 +44,7 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable {
     /**
      * Beschreibung des Zeitraums.
      */
-    private String beschreibung;
+    private Zeitraum zeitraum;
     /**
      * Der Tag, an dem der Zeitraum liegt.
      */
@@ -129,10 +131,10 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable {
         this.teilnehmerZeitraeume = teilnehmerZeitraeume;
     }
 
-    public ZeitraumModel(long id, String beschreibung) {
+    public ZeitraumModel(long id, Zeitraum zeitraum) {
         super();
         this.id = id;
-        this.beschreibung = beschreibung;
+        this.zeitraum = zeitraum;
     }
 
     public ZeitraumModel() {
@@ -147,12 +149,12 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable {
         this.id = id;
     }
 
-    public String getBeschreibung() {
-        return beschreibung;
+    public Zeitraum getZeitraum() {
+        return zeitraum;
     }
 
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
+    public void setZeitraum(Zeitraum zeitraum) {
+        this.zeitraum = zeitraum;
     }
 
     public TagModel getTag() {
@@ -165,7 +167,7 @@ public class ZeitraumModel implements Comparable<ZeitraumModel>, Serializable {
 
     @Override
     public int compareTo(ZeitraumModel o) {
-        return getBeschreibung().compareTo(o.getBeschreibung());
+        return zeitraum.getAnfangszeit().compareTo(o.getZeitraum().getAnfangszeit());
     }
 
 }

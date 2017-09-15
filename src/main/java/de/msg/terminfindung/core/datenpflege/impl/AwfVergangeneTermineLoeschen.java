@@ -20,13 +20,13 @@ package de.msg.terminfindung.core.datenpflege.impl;
  * #L%
  */
 
+import java.time.LocalDate;
 
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
-
-import java.util.Date;
 
 /**
  * Diese Klasse implementiert den Anwendungsfall "Vergangene Termine löschen"
@@ -50,12 +50,12 @@ class AwfVergangeneTermineLoeschen {
      * @return Anzahl der gelöschten Terminfindungen.
      * @throws TerminfindungBusinessException falls das Datum ungültig ist.
      */
-    int loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException {
+    int loescheVergangeneTerminfindungen(LocalDate stichtag) throws TerminfindungBusinessException {
 
         if (stichtag == null) {
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_UNGUELTIG, "stichtag", "null");
         }
-        if (stichtag.after(new Date())) {
+        if (stichtag.isAfter(DateTimeUtil.localDateNow())) {
             throw new TerminfindungBusinessException(FehlerSchluessel.MSG_PARAMETER_DATUM_ZUKUNFT, "stichtag", stichtag.toString());
         }
 

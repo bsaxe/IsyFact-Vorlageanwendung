@@ -39,7 +39,8 @@
 						<h:outputText value="Die Terminfindung für diese Veranstaltung ist abgeschlossen."/><br/>
 						<h:outputText value="Der ausgewählte Termin ist der "/>
 						<h:outputText value="#{verwaltenModel.terminfindung.getTagForZeitraum(verwaltenModel.terminfindung.defZeitraum).datum}"/>
-						<h:outputText value=" (Zeitraum: #{verwaltenModel.terminfindung.defZeitraum.beschreibung})."/>
+                        <h:outputText
+                                value=" (Zeitraum: #{verwaltenModel.terminfindung.defZeitraum.zeitraum})."/>
 					</p>
 					</h:panelGroup>
 					<div class="form-horizontal">

@@ -60,7 +60,8 @@
 	                                   		</td>
 	                                   		<td>
 	                                   			<h:outputText rendered="#{tf.abgeschlossen}" value="#{tf.getTagForZeitraum(tf.defZeitraum).datum}"/>
-												<h:outputText rendered="#{tf.abgeschlossen}" value=" #{tf.defZeitraum.beschreibung}"/>
+                                                <h:outputText rendered="#{tf.abgeschlossen}"
+                                                              value="#{tf.defZeitraum.zeitraum}"/>
 	                                   		</td>
 	                                   		<td>
 	                                   			<h:outputLink id="verwaltenLink" value="verwaltenFlow" >

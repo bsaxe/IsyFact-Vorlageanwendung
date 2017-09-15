@@ -20,14 +20,14 @@ package de.msg.terminfindung.core.verwaltung.impl;
  * #L%
  */
 
+import java.util.Iterator;
+import java.util.List;
+
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
-
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Diese Klasse implementiert den Anwendungsfall "Termine loeschen"
@@ -66,16 +66,10 @@ class AwfTermineLoeschen {
         }
 
         // Falls nach dem Löschen ein Tag keine Zeiträume mehr hat, wird der Tag gelöscht.
-        Iterator<Tag> tagIterator = terminfindung.getTermine().iterator();
-        while (tagIterator.hasNext()) {
-            Tag tag = tagIterator.next();
-            if (tag.getZeitraeume().isEmpty()) {
-                tagIterator.remove();
-            }
-        }
+        terminfindung.getTermine().removeIf(t -> t.getZeitraeume().isEmpty());
 
         if(deleted){
-        	terminfindung.setUpdateDate(new Date());
+            terminfindung.setUpdateDate(DateTimeUtil.localDateTimeNow());
         }
         terminfindungDao.aktualisiere(terminfindung);
     }

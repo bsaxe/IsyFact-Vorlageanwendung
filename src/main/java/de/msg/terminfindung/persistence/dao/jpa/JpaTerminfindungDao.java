@@ -20,18 +20,16 @@ package de.msg.terminfindung.persistence.dao.jpa;
  * #L%
  */
 
-import de.msg.terminfindung.persistence.dao.TerminfindungDao;
-import de.msg.terminfindung.persistence.entity.Terminfindung;
-
+import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import java.util.Date;
-import java.util.List;
+import de.msg.terminfindung.persistence.dao.TerminfindungDao;
+import de.msg.terminfindung.persistence.entity.Terminfindung;
 
 /**
  * Implementierung fuer die TerminfindungDAO
@@ -41,9 +39,9 @@ import java.util.List;
 public class JpaTerminfindungDao extends AbstraktJpaDao<Terminfindung> implements TerminfindungDao {
 
     @Override
-    public List<Terminfindung> sucheVor(Date datum) {
+    public List<Terminfindung> sucheVor(LocalDate datum) {
         TypedQuery<Terminfindung> q = getEntityManager().createNamedQuery("terminfindung.vor", Terminfindung.class);
-        q.setParameter("datum", datum, TemporalType.DATE);
+        q.setParameter("datum", datum);
         return q.getResultList();
     }
 

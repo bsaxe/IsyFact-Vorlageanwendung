@@ -1,14 +1,16 @@
 package de.msg.terminfindung.gui.terminfindung.erstellen;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
-
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import de.bund.bva.isyfact.datetime.format.InFormat;
+import de.bund.bva.isyfact.datetime.format.OutFormat;
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
+import de.bund.bva.isyfact.datetime.zeitraum.core.Zeitraum;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
@@ -17,7 +19,8 @@ import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.TerminfindungModel;
 import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.gui.util.DataGenerator;
-import de.msg.terminfindung.gui.util.DateUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
 
 /*
  * #%L
@@ -53,7 +56,7 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
         super.initialisiereModell(model);
 
         // Platzhalter für Anzeige in Datums-Eingabefeld
-        model.setPlaceholderDate(DateUtil.format(DateUtil.getNDaysFromToday(1)));
+        model.setPlaceholderDate(DateTimeUtil.localDateNow().plusDays(1).format(OutFormat.DATUM));
 
         if (model.isTestMode()) {
             LOG.debug("TestMode: Erzeuge Tage");
@@ -74,22 +77,24 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 
         if (istValideEingabe(model, validationMessages))
         {
-        	Date neuesDatum = model.getNewDate();
-        	fuegeDatumZuModelHinzu(neuesDatum, model);
+            LocalDate neuesDatum = model.getNewDate();
+            fuegeDatumZuModelHinzu(neuesDatum, model);
         }
         else
         {
         	globalFlowController.getValidationController().processValidationMessages(validationMessages);
         }
     }
-    
-    private void fuegeDatumZuModelHinzu(Date datum, ErstellenModel model)
+
+    private void fuegeDatumZuModelHinzu(LocalDate datum, ErstellenModel model)
     {
         LOG.debug("Füge Tag hinzu.");
         TagModel tag = new TagModel();
         tag.setDatum(datum);
-        tag.setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
-        tag.setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
+        tag.setVonZeitraum(
+            LocalTime.parse(getKonfiguration().getAsString("termin.start.vorgabe"), InFormat.ZEIT_0H));
+        tag.setBisZeitraum(
+            LocalTime.parse(getKonfiguration().getAsString("termin.ende.vorgabe"), InFormat.ZEIT_0H));
         model.getTage().add(tag);
         Collections.sort(model.getTage());
     }
@@ -107,8 +112,8 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
                     "newDate", "Datum", "Benötigtes Feld"));
             return false;
         }
-    	
-	 	Date addedDate = model.getNewDate();
+
+        LocalDate addedDate = model.getNewDate();
         if (datumLiegtInVergangenheit(addedDate)) {
             validationMessages
                     .add(new ValidationMessage("DA", "newDate",
@@ -135,15 +140,15 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
     {
     	return model.getNewDate() == null || model.getNewDate().equals("");
     }
-    
-    private boolean datumLiegtInVergangenheit(Date date)
+
+    private boolean datumLiegtInVergangenheit(LocalDate date)
     {
-    	return !DateUtil.getYesterday().before(date);
+        return date.isBefore(DateTimeUtil.localDateNow());
     }
-    
-    private boolean datumBereitsVorhanden(ErstellenModel model, Date date)
+
+    private boolean datumBereitsVorhanden(ErstellenModel model, LocalDate date)
     {
-    	return DateUtil.containsDay(model.getTage(), date);
+        return model.getTage().stream().anyMatch(t -> t.getDatum().isEqual(date));
     }
 
     /**
@@ -164,13 +169,10 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
 
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
-        boolean zeitraumExists = false;
-        for (ZeitraumModel zeitraumModel : model.getSelectedTermin().getZeitraeume()) {
-            if (zeitraumModel.getBeschreibung().equalsIgnoreCase(model.getSelectedTermin().getVonZeitraum() + " - "
-                    + model.getSelectedTermin().getBisZeitraum())) {
-                zeitraumExists = true;
-            }
-        }
+        Zeitraum neuerZeitraum = Zeitraum
+            .of(model.getSelectedTermin().getVonZeitraum(), model.getSelectedTermin().getBisZeitraum());
+        boolean zeitraumExists = model.getSelectedTermin().getZeitraeume().contains(neuerZeitraum);
+
         // maximale Anzahl von Tagen schon vorhanden?
         if (model.getSelectedTermin().getZeitraeume().size() >= getKonfiguration().getAsInteger("termin.tag.zeitraum.max.number")) {
             validationMessages.add(new ValidationMessage("DA",
@@ -191,15 +193,26 @@ public class ErstellenController extends AbstractController<ErstellenModel> {
                     "Zeitraum existiert bereits."));
         } else {
             ZeitraumModel zeitraum = new ZeitraumModel();
-            zeitraum.setBeschreibung(model.getSelectedTermin().getVonZeitraum() + " - " + model.getSelectedTermin().getBisZeitraum());
+            zeitraum.setZeitraum(Zeitraum
+                .of(model.getSelectedTermin().getVonZeitraum(), model.getSelectedTermin().getBisZeitraum()));
             model.getSelectedTermin().getZeitraeume().add(zeitraum);
-            model.getSelectedTermin().setVonZeitraum(getKonfiguration().getAsString("termin.start.vorgabe"));
-            model.getSelectedTermin().setBisZeitraum(getKonfiguration().getAsString("termin.ende.vorgabe"));
+
+            neuerZeitraumFelderZuruecksetzen(model);
             Collections.sort(model.getSelectedTermin().getZeitraeume());
             return;
         }
 
         this.globalFlowController.getValidationController().processValidationMessages(validationMessages);
+    }
+
+    private void neuerZeitraumFelderZuruecksetzen(ErstellenModel model) {
+        LocalTime vorgabeAnfang =
+            LocalTime.parse(getKonfiguration().getAsString("termin.start.vorgabe"), InFormat.ZEIT_0H);
+        LocalTime vorgabeEnde =
+            LocalTime.parse(getKonfiguration().getAsString("termin.ende.vorgabe"), InFormat.ZEIT_0H);
+
+        model.getSelectedTermin().setVonZeitraum(vorgabeAnfang);
+        model.getSelectedTermin().setBisZeitraum(vorgabeEnde);
     }
 
     /**

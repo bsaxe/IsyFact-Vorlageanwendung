@@ -1,8 +1,8 @@
 package de.msg.terminfindung.core.datenpflege;
 
-import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
+import java.time.LocalDate;
 
-import java.util.Date;
+import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 
 /**
  * Schnittstelle der Anwendungskomponente "Datenpflege" zur Pflege der Bestandsdaten.
@@ -19,6 +19,6 @@ public interface Datenpflege {
      * @return Anzahl der gelöschten Terminfindungen.
      * @throws TerminfindungBusinessException falls das Datum ungültig ist.
      */
-    int loescheVergangeneTerminfindungen(Date stichtag) throws TerminfindungBusinessException;
+    int loescheVergangeneTerminfindungen(LocalDate stichtag) throws TerminfindungBusinessException;
 
 }

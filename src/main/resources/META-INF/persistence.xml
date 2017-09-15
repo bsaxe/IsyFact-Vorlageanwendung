@@ -26,11 +26,15 @@
         <!-- Batchrahmen -->
         <mapping-file>resources/plis-batchrahmen/hibernate/hibernate-mapping.xml</mapping-file>
         <!-- Anwendung -->
+        <class>de.bund.bva.isyfact.datetime.zeitraum.persistence.ZeitraumEntitaet</class>
         <class>de.msg.terminfindung.persistence.entity.Zeitraum</class>
         <class>de.msg.terminfindung.persistence.entity.Teilnehmer</class>
         <class>de.msg.terminfindung.persistence.entity.Terminfindung</class>
         <class>de.msg.terminfindung.persistence.entity.Organisator</class>
         <class>de.msg.terminfindung.persistence.entity.Tag</class>
         <class>de.msg.terminfindung.persistence.entity.TeilnehmerZeitraum</class>
+        <class>de.bund.bva.isyfact.datetime.persistence.jpa.LocalDateAttributeConverter</class>
+        <class>de.bund.bva.isyfact.datetime.persistence.jpa.LocalDateTimeAttributeConverter</class>
+        <class>de.bund.bva.isyfact.datetime.persistence.jpa.ZonedDateTimeAttributeConverter</class>
     </persistence-unit>
 </persistence>

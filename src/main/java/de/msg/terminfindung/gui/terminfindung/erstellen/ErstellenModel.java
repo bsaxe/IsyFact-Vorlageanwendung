@@ -20,16 +20,17 @@ package de.msg.terminfindung.gui.terminfindung.erstellen;
  * #L%
  */
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
 import de.msg.terminfindung.gui.terminfindung.AbstractModel;
 import de.msg.terminfindung.gui.terminfindung.model.TagModel;
 import de.msg.terminfindung.gui.terminfindung.model.ZeitraumModel;
 import de.msg.terminfindung.gui.util.DataGenerator;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Model des Erstellen Flows
@@ -52,7 +53,7 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 	/**
 	 * Speichert eine neu eingegebenes Datum
 	 */
-	private Date newDate = Calendar.getInstance().getTime();
+	private LocalDate newDate = DateTimeUtil.localDateNow();
 	/**
 	 * Stellt den Platzhalterwert bereit, der im Datums-Eingabefeld angezeigt
 	 * wird
@@ -71,7 +72,7 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 	/**
 	 * Zur Auswahl stehende mögliche Zeiträume
 	 */
-	private List<String> alleZeitraeume = DataGenerator.getUhrzeitAuswahl();
+	private List<LocalTime> alleZeitraeume = DataGenerator.getUhrzeitAuswahl();
 
 	private List<TagModel> tage = new ArrayList<>();
 
@@ -99,11 +100,11 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 		this.selectedTermin = selectedTermin;
 	}
 
-	public Date getNewDate() {
+	public LocalDate getNewDate() {
 		return newDate;
 	}
 
-	public void setNewDate(Date newDate) {
+	public void setNewDate(LocalDate newDate) {
 		this.newDate = newDate;
 	}
 
@@ -115,7 +116,7 @@ public class ErstellenModel extends AbstractModel implements Serializable {
 		this.selectedZeitraum = selectedZeitraum;
 	}
 
-	public List<String> getAlleZeitraeume() {
+	public List<LocalTime> getAlleZeitraeume() {
 		return alleZeitraeume;
 	}
 

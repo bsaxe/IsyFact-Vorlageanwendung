@@ -20,16 +20,19 @@ package de.msg.terminfindung.core.erstellung.impl;
  * #L%
  */
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
+import de.bund.bva.isyfact.datetime.zeitraum.persistence.ZeitraumEntitaet;
 import de.msg.terminfindung.core.AbstraktCoreTest;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test für den Anwendungsfall "Terminfindung erstellen".
@@ -47,13 +50,13 @@ public class AwfTerminfindungErstellenTest extends AbstraktCoreTest {
 
         List<Tag> termine = createDummyListTermine(); // erzeuge einen Testdatensatz
 
-        // Ermittele die Anzahl von Terminen und die Anzahl von Zeiträumen je Tag
+        // Ermittle die Anzahl von Terminen und die Anzahl von Zeiträumen je Tag
         int anzahlTermineVorher = termine.size();
         int[] anzahlZeitraeumeVorher = countZeitraueme(termine);
 
         // Rufe die Methode auf den Testdaten auf.
         // Erwartung: die Methode ändert die Daten nicht,
-        // weil alle Zeiträume eine Beschreibung ungleich dem leeren String ("") haben.
+        // weil alle Zeiträume eine intern nicht null sind.
         bereinigeZeitraeumeInTerminliste.invoke(awfTerminfindungErstellen, termine);
 
         int anzahlTermineNachher = termine.size();
@@ -64,24 +67,23 @@ public class AwfTerminfindungErstellenTest extends AbstraktCoreTest {
             assert (anzahlZeitraeumeVorher[i] == anzahlZeitraeumeNachher[i]);
         }
 
-        // Setze jetzt die Beschreibungen aller Zeiträume im ersten Tag auf ""
+        // Setze jetzt die internen Zeiträume aller Zeiträume im ersten Tag auf null
         for (Zeitraum zeitraum : termine.get(0).getZeitraeume()) {
-            zeitraum.setBeschreibung("");
+            zeitraum.setZeitraum(null);
         }
-        // Setze zusätzlich dei Beschreibung des ersten Zeitraums im zweiten Tag ""
-        termine.get(1).getZeitraeume().get(0).setBeschreibung("");
+        // Setze zusätzlich die Beschreibung des ersten Zeitraums im zweiten Tag auf null
+        termine.get(1).getZeitraeume().get(0).setZeitraum(null);
 
         // Rufe noch einmal die Methode auf
         // Erwartung: der erste Tag wird komplett entfernt, weil er nur Zeiträume mit leerer Beschreibung enthält
         // im zweiten Tag wird nur der erste Zeitraum entfernt.
-
         bereinigeZeitraeumeInTerminliste.invoke(awfTerminfindungErstellen, termine);
 
         anzahlTermineNachher = termine.size();
 
-        assert (anzahlTermineNachher == anzahlTermineVorher - 1);
-        assert (termine.get(0).getZeitraeume().size() == anzahlZeitraeumeVorher[1] - 1);
-        assert (termine.get(0).getZeitraeume().get(0).getBeschreibung().equals("Testzeitraum1001"));
+        assertEquals(anzahlTermineNachher, anzahlTermineVorher - 1);
+        assertEquals(termine.get(0).getZeitraeume().size(), anzahlZeitraeumeVorher[1] - 1);
+        assertNotNull(termine.get(0).getZeitraeume().get(0).getZeitraum());
     }
 
     private List<Tag> createDummyListTermine() {
@@ -95,7 +97,7 @@ public class AwfTerminfindungErstellenTest extends AbstraktCoreTest {
             for (int k = 0; k <= 4; k++) {
                 Zeitraum zeitraum = new Zeitraum();
                 zeitraum.setId(1000L * i + k);
-                zeitraum.setBeschreibung("Testzeitraum" + zeitraum.getId());
+                zeitraum.setZeitraum(new ZeitraumEntitaet());
                 tag.getZeitraeume().add(zeitraum);
             }
         }

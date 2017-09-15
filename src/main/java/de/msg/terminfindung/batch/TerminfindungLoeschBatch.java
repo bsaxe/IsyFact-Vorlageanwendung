@@ -1,5 +1,10 @@
 package de.msg.terminfindung.batch;
 
+import java.time.LocalDate;
+import java.util.Date;
+
+import de.bund.bva.isyfact.datetime.format.OutFormat;
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.bund.bva.isyfact.logging.LogKategorie;
@@ -20,11 +25,6 @@ import de.msg.terminfindung.common.konstanten.EreignisSchluessel;
 import de.msg.terminfindung.common.konstanten.KonfigurationSchluessel;
 import de.msg.terminfindung.core.datenpflege.Datenpflege;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Batch zum Löschen von Terminen, die eine gewisse Zeit zurückliegen. Die genaue Zeitspanne wird in der betrieblichen
  * Konfiguration festgelegt.
@@ -43,7 +43,7 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
 
     private final Konfiguration betrieblicheKonfiguration;
 
-    private Date loeschfrist;
+    private LocalDate loeschfrist;
 
     private boolean testmodus;
 
@@ -63,21 +63,11 @@ public class TerminfindungLoeschBatch implements BatchAusfuehrungsBean {
 
         long loeschfristInTagen = leseZahl(KonfigurationSchluessel.BATCH_FRIST_LOESCHEN, konfiguration);
 
-        // Heute um Mitternacht
-        Calendar loeschfristBerechnung = Calendar.getInstance();
-        loeschfristBerechnung.set(Calendar.HOUR_OF_DAY, 0);
-        loeschfristBerechnung.set(Calendar.MINUTE, 0);
-        loeschfristBerechnung.set(Calendar.SECOND, 0);
-        loeschfristBerechnung.set(Calendar.MILLISECOND, 0);
-
-        // Ermittle Löschfrist
-        loeschfristBerechnung.add(Calendar.DAY_OF_MONTH, (int) -loeschfristInTagen);
-
-        loeschfrist = loeschfristBerechnung.getTime();
+        loeschfrist = DateTimeUtil.localDateNow().minusDays(loeschfristInTagen);
 
         boolean restart = startTyp == BatchStartTyp.RESTART;
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        String startMeldung = MessageSourceHolder.getMessage("batch.loeschen.start", format.format(loeschfrist));
+        String startMeldung =
+            MessageSourceHolder.getMessage("batch.loeschen.start", loeschfrist.format(OutFormat.DATUM));
         if (restart) {
             LOG.info(LogKategorie.JOURNAL, EreignisSchluessel.MSG_BATCH_START_WIEDERHOLUNG, startMeldung);
             protokoll.ergaenzeMeldung(new VerarbeitungsMeldung("RESTART", MeldungTyp.INFO,"Batch wird im Restartmodus gestartet."));

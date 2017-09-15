@@ -22,8 +22,14 @@
     <Teilnehmer id="200" name="Herbert"/>
     <Teilnehmer id="300" name="Sepp"/>
 
-    <Zeitraum id="100" beschreibung="9-11 Uhr"/>
-    <Zeitraum id="200" beschreibung="über Mittag"/>
+    <ZeitraumEntitaet id="100" anfang="2017-09-14T08:00Z[UTC]" ende="2017-09-14T09:00Z[UTC]"
+                      ohnedatum="true"/>
+    <ZeitraumEntitaet id="200" anfang="2017-09-14T09:00Z[UTC]" ende="2017-09-14T10:00Z[UTC]"
+                      ohnedatum="true"/>
+
+
+    <Zeitraum id="100" zeitraum_id="100" tag_id="100"/>
+    <Zeitraum id="200" zeitraum_id="200" tag_id="100"/>
 
     <TeilnehmerZeitraum id="100" teilnehmer_id="100" zeitraum_id="100" praeferenz="0" />
     <TeilnehmerZeitraum id="200" teilnehmer_id="100" zeitraum_id="200" praeferenz="1" />

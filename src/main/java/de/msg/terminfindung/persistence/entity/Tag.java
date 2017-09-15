@@ -20,11 +20,14 @@ package de.msg.terminfindung.persistence.entity;
  * #L%
  */
 
-
-import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 
 /**
@@ -36,7 +39,7 @@ import java.util.List;
 public class Tag extends AbstraktEntitaet {
     private static final long serialVersionUID = 1L;
 
-    private Date datum;
+    private LocalDate datum;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "tag_id")
@@ -46,15 +49,15 @@ public class Tag extends AbstraktEntitaet {
     public Tag() {
     }
 
-    public Tag(Date datum) {
+    public Tag(LocalDate datum) {
         this.datum = datum;
     }
 
-    public Date getDatum() {
+    public LocalDate getDatum() {
         return this.datum;
     }
 
-    public void setDatum(Date Datum) {
+    public void setDatum(LocalDate Datum) {
         this.datum = Datum;
     }
 

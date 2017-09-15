@@ -20,7 +20,11 @@ package de.msg.terminfindung.core.verwaltung;
  * #L%
  */
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
+import de.bund.bva.isyfact.datetime.zeitraum.persistence.ZeitraumEntitaet;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.core.AbstraktCoreTest;
 import de.msg.terminfindung.core.verwaltung.impl.VerwaltungImpl;
@@ -30,10 +34,6 @@ import de.msg.terminfindung.persistence.entity.Terminfindung;
 import de.msg.terminfindung.persistence.entity.Zeitraum;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -58,14 +58,14 @@ public class VerwaltungTest extends AbstraktCoreTest {
         Tag tag = new Tag();
         muster.getTermine().add(tag);
         Zeitraum zeitraum = new Zeitraum();
-        zeitraum.setBeschreibung("abends");
+        zeitraum.setZeitraum(new ZeitraumEntitaet());
         tag.getZeitraeume().add(zeitraum);
         
         Terminfindung muster2 = new Terminfindung();
         tag = new Tag();
         muster2.getTermine().add(tag);
         zeitraum = new Zeitraum();
-        zeitraum.setBeschreibung("morgens");
+        zeitraum.setZeitraum(new ZeitraumEntitaet());
         tag.getZeitraeume().add(zeitraum);
         
         List<Terminfindung> alleTermine = new ArrayList<>();
@@ -94,7 +94,7 @@ public class VerwaltungTest extends AbstraktCoreTest {
         List<Zeitraum> zeitraeume = tf.getTermine().get(0).getZeitraeume();
         assertNotNull(zeitraeume);
         assertEquals(1, zeitraeume.size());
-        assertEquals("abends", zeitraeume.get(0).getBeschreibung());
+        assertNotNull(zeitraeume.get(0).getZeitraum());
     }
 
     /**
@@ -113,6 +113,6 @@ public class VerwaltungTest extends AbstraktCoreTest {
         List<Zeitraum> zeitraeume = alleTerminfindungen.get(1).getTermine().get(0).getZeitraeume();
         assertNotNull(zeitraeume);
         assertEquals(1, zeitraeume.size());
-        assertEquals("morgens", zeitraeume.get(0).getBeschreibung());
+        assertNotNull(zeitraeume.get(0).getZeitraum());
     }
 }

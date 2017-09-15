@@ -20,20 +20,16 @@ package de.msg.terminfindung.core.erstellung.impl;
  * #L%
  */
 
+import java.util.List;
+import java.util.UUID;
 
+import de.bund.bva.isyfact.datetime.util.DateTimeUtil;
 import de.msg.terminfindung.common.exception.TerminfindungBusinessException;
 import de.msg.terminfindung.common.konstanten.FehlerSchluessel;
 import de.msg.terminfindung.persistence.dao.TerminfindungDao;
 import de.msg.terminfindung.persistence.entity.Organisator;
 import de.msg.terminfindung.persistence.entity.Tag;
 import de.msg.terminfindung.persistence.entity.Terminfindung;
-import de.msg.terminfindung.persistence.entity.Zeitraum;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Diese Klasse implementiert den Anwendungsfall "Terminfindung erstellen"
@@ -84,7 +80,7 @@ class AwfTerminfindungErstellen {
         bereinigeZeitraeumeInTerminliste(termine);
 
         terminfindung.setTermine(termine);
-        terminfindung.setCreateDate(new Date());
+        terminfindung.setCreateDate(DateTimeUtil.localDateTimeNow());
         terminfindung.setIdRef(UUID.randomUUID().toString());
         dao.speichere(terminfindung);
         return terminfindung;
@@ -92,36 +88,13 @@ class AwfTerminfindungErstellen {
     }
 
     /**
-     * Bereinigt die Zeiträume in der übergebenen Liste von Terminen. Leere Zeiträume (ohne Beschreibung) werden
+     * Bereinigt die Zeiträume in der übergebenen Liste von Terminen. Leere Zeiträume (null) werden
      * gelöscht. Wenn für einen Tag kein Zeitraum vorhanden ist, wird der gesamte Tag gelöscht.
      *
      * @param termine Die Liste der Termine
      */
     private void bereinigeZeitraeumeInTerminliste(List<Tag> termine) {
-        // Durchlaufe die übergebene Liste der Termine
-
-        Tag tag;
-        Zeitraum zeitraum;
-
-        // Durchlaufe für jeden Tag die Liste der Zeiträume
-
-        Iterator<Tag> iterTermin = termine.iterator();
-        while (iterTermin.hasNext()) {
-            tag = iterTermin.next();
-            boolean allEmpty = true;
-
-            Iterator<Zeitraum> iterZeitraum = tag.getZeitraeume().iterator();
-            while (iterZeitraum.hasNext()) {
-                zeitraum = iterZeitraum.next();
-                if (StringUtils.isBlank(zeitraum.getBeschreibung())) {
-                    iterZeitraum.remove();
-                } else {
-                    allEmpty = false;
-                }
-            }
-            if (allEmpty) {
-                iterTermin.remove();
-            }
-        }
+        termine.forEach(tag -> tag.getZeitraeume().removeIf(zeitraum -> zeitraum.getZeitraum() == null));
+        termine.removeIf(t -> t.getZeitraeume().isEmpty());
     }
 }
